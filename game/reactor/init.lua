@@ -1,0 +1,2 @@
+-- Reactor is an *awesome* feature in HAMBERGAR which enables player to create their unique own spells/buff. --
+-- Reactor is composed with Buff Reactor, Chain Reactor, Spell Reactor

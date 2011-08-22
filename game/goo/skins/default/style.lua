@@ -35,6 +35,7 @@ style['goo skillbutton'] = {
 }
 style['goo learnbutton'] = {
 	textColor = {0,0,0},
+	yMargin = -20,
 	textFont = fonts.midfont,
 }
 style['goo bottompanel'] = {

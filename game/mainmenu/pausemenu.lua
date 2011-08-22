@@ -19,7 +19,7 @@ b_continue:setPos( 10, height )
 b_continue:setText( 'Continue' )
 b_continue:sizeToText()
 b_continue.onClick = function(self,button)
-	GetGameSystem():gotoState()
+	GetGameSystem():popState()
 	pausemenu:onClose()
 end
 height = height + 50

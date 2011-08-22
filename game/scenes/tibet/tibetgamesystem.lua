@@ -43,8 +43,6 @@ function SetCharacter(c)
 	chr = c
 end
 
-
-
 hpbar = AssassinHPBar:new(function()return GetCharacter():getHPPercent() end,30,30,200)
 mpbar = AssassinMPBar:new(function()return GetCharacter():getMPPercent() end,30,60,200)
 local manager = nil
@@ -104,15 +102,6 @@ function TibetGameSystem:loadCheckpoint()
 end
 
 function TibetGameSystem:update(dt)
---[[
-	local walk = false
-	local x,y = 0,0
-	for k,v in pairs(commandshifts) do
-		if love.keyboard.isDown(k) then
-			walk = true
-			x,y=x+v[1],y+v[2]
-		end
-	end]]
 	local x,y,walk = controller:GetWalkDirection()
 	GetCharacter().direction = {normalize(x,y)}
 	if walk then
@@ -176,7 +165,7 @@ end
 
 function TibetGameSystem:keyreleased(k)
 	if k=='escape' then
-		self:gotoState('pause')
+		self:pushState('pause')
 	end
 --	buttongroup:keyreleased(k)
 end
@@ -225,6 +214,11 @@ function paused:enterState()
 	local pausemenu = love.filesystem.load('mainmenu/pausemenu.lua')()
 	pausemenu:birth()
 end
+function paused:pushedState()
+	local pausemenu = love.filesystem.load('mainmenu/pausemenu.lua')()
+	pausemenu:birth()
+end
+
 
 function paused:draw()
 	map:draw()

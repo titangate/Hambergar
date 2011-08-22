@@ -58,9 +58,6 @@ function Assassin:draw()
 	love.graphics.draw(assassinpistol,self.x,self.y,facing,1,1,20,32)
 	self:drawBuff()
 	love.graphics.setColor(255,255,255,255)
-	if self.lockunit then
-		love.graphics.circle('fill',self.lockunit.x,self.lockunit.y,64)
-	end
 end
 
 local DWSAssassin = Assassin:addState('DWS')

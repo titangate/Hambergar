@@ -49,6 +49,22 @@ b_startgame.onClick = function( self, button )
 end
 height = height + 50
 
+local b_grid = goo.menuitem:new( mainmenu )
+b_grid:setPos( 10, height )
+b_grid:setText( 'GRID' )
+b_grid:sizeToText()
+b_grid.onClick = function( self, button )
+	require 'scenes.grid.grid'
+	local gs = require 'scenes.grid.gridgamesystem'
+--	require 'scenes.tibet.intro'
+	mainmenu:onClose()
+	SetGameSystem(gs)
+	GetGameSystem():load()
+	GetGameSystem():runMap(Grid,'opening')
+	pushsystem(GetGameSystem())
+end
+height = height + 50
+
 local b_option = goo.menuitem:new( mainmenu )
 b_option:setPos( 10, height )
 b_option:setText( 'Options' )

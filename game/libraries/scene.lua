@@ -30,7 +30,7 @@ function Map:initialize(w,h)
 	self.destroys = {}
 	self.updatable = {}
 	self.waypoints = {}
-	self.aimap = AIMap:new(30,30,40)
+--	self.aimap = AIMap:new(30,30,40)
 	self:registerListener(gamelistener)
 	self.count = {}
 	self.blood = {}
@@ -58,7 +58,7 @@ end
 function Map:setBlock(x,y,b)
 --	print (x,y,b)
 	if b then
-		x,y=self.aimap:scaleUp(self.aimap:scaleDown(x,y))
+--		x,y=self.aimap:scaleUp(self.aimap:scaleDown(x,y))
 --		print (x,y)
 		local body = love.physics.newBody(self.world,x,y)
 		local shape = love.physics.newRectangleShape(body,0,0,40,40)
@@ -69,21 +69,21 @@ function Map:setBlock(x,y,b)
 			self.waypoints[b] = {x,y}
 		end
 		local mb = MapBlock:new(body,shape,b)
-		self.aimap:setBlock(x,y,mb)
+--		self.aimap:setBlock(x,y,mb)
 		shape:setData(mb)
 		mb:registerListener(gamelistener)
 	else
-		map:removeUnit(self.aimap:getBlock(x,y))
-		self.aimap:setBlock(x,y,nil)
+--		map:removeUnit(self.aimap:getBlock(x,y))
+--		self.aimap:setBlock(x,y,nil)
 	end	
 end
 
 function Map:getBlock(x,y)
-	return self.aimap:getBlock(x,y)
+--	return self.aimap:getBlock(x,y)
 end
 
 function Map:findPath(start,goal)
-	return self.aimap:astar(start,goal)
+--	return self.aimap:astar(start,goal)
 end
 
 

@@ -1,7 +1,26 @@
+preloadlist(
+{
+	assassin = {
+		'units.class.assassin.lua',
+	},
+	electrician = {
+		'units.class.electrician',
+		'units.other.drainable',
+	},
+	commonenemies = {
+		'units.enemies.box.lua',
+	},
+	tibet = {
+		'units.enemies.ial',
+		'units.enemies.bosshans'
+	}
+}
+)
+--[[
 require ('units.enemies.box.lua')
 require "units.enemies.lizardguard"
 
-require ('units.missiles.pistol.lua')
+--require ('units.missiles.pistol.lua')
 
 require ('units.class.assassin.lua')
 require 'units.class.electrician'
@@ -10,3 +29,4 @@ require 'units.enemies.bosshans'
 
 
 require 'units.other.drainable'
+]]

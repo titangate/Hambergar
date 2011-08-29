@@ -1,3 +1,8 @@
+--[[require 'libraries.scene'
+require 'libraries.unit'
+require 'libraries.hud'
+require 'libraries.conversation']]
+preload('electrician','commonenemies','tibet')
 function GetCharacter()
 	return chr
 end

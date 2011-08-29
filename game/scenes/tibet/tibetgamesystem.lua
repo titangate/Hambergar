@@ -1,4 +1,8 @@
-
+--[[require 'libraries.scene'
+require 'libraries.unit'
+require 'libraries.hud'
+require 'libraries.conversation']]
+preload('assassin','commonenemies','tibet')
 tibetbackground = {cloudtime = 0}
 batches = nil
 cloud = love.graphics.newImage('assets/tile/cloud.png')

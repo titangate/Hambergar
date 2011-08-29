@@ -3,7 +3,7 @@
 -- Date: 2010-02-25
 
 --require 'goo/MiddleClass'
-require 'goo/MindState'
+--require 'goo/MindState'
 -- Initialization
 local goo = {}
 --goo.animation = require 'goo.animation.animation'

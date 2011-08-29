@@ -1,3 +1,5 @@
+--require 'libraries.scene'
+--require 'libraries.unit'
 Tibet2 = Map:subclass('Tibet2')
 
 function Tibet2:initialize(w,h)

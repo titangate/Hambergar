@@ -1,40 +1,40 @@
 --require ('objectlua')
 --Object = objectlua.Object
-require 'goo.MiddleClass'
-require 'goo.MindState'
---[[
+require 'MiddleClass'
+require 'MindState'
+
+require 'libraries.system'
+require "libraries.mainmenu"
+require 'libraries.controller'
+require 'libraries.TEsound'
 require ('libraries/camera.lua')
 require ('libraries/scene.lua')
 require ('libraries/unit.lua')
 require 'libraries.animatedactor'
+require ('libraries/buff.lua')
+require ('libraries/ai.lua')
+require "libraries.tutorial"
 require ('libraries/skill.lua')
 require ('libraries/skilleffect.lua')
 require ('libraries/missile.lua')
 require ('libraries/button.lua')
 require ('libraries/particles.lua')
-require ('libraries/buff.lua')
-require ('libraries/ai.lua')
 require ('libraries/hud.lua')
 require ('abilities/init.lua')
 require ('units/init.lua')
 require ('libraries/timer.lua')
-require ('libraries/system.lua')
 require "libraries.uiitem"
 require "libraries.item"
 require "libraries.tilemap"
 require "libraries.sound"
 require 'scenes.init'
 require "items.init"
-require "libraries.tutorial"
 require "libraries.conversation"
 require "editor.init"
-require 'libraries.TEsound']]
-goo=require "goo.goo"
-anim = require "anim.anim"
-
-require "libraries.mainmenu"
-require 'libraries.controller'
 require 'libraries.TEsound'
+goo=require "goo.goo"
+anim = require "anim.anim"--[[]]
+require 'units.init'
 screen = {
 	width = love.graphics.getWidth(),
 	height = love.graphics.getHeight(),

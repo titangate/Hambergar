@@ -4,11 +4,30 @@ function ImageLoader:initialize()
 	self.loadingthread = love.thread.newThread('loadingthread','libraries/loadingthread.lua')
 end
 
+Loadscreen = {}
+function Loadscreen:load()
+	if currentsystem ~= self then
+		pushsystem(self)
+	end
+end
+function Loadscreen:update(dt)
+	if #loadscreen>0 then
+		self.name = table.remove(loadscreen)
+		self.images[self.name] = love.image.newImageData(self.name)
+	else
+		popsystem()
+	end
+end
+function Loadscreen:draw()
+	love.graphics.printf(self.name)
+end
+loadable = {}
 function ImageLoader:loaddata(name)
 	if type(name)~='string' then return name end
 	if not name then return end
 	if not self.images[name] then
 		self.images[name] = love.image.newImageData(name)
+--		table.insert(loadable,name)
 	end
 	return self.images[name]
 end
@@ -17,7 +36,6 @@ local lgn = love.graphics.newImage
 function love.graphics.newImage(name)
 	return lgn(il:loaddata(name))
 end
-
 
 Listener = Object:subclass('Listener')
 function Listener:initialize()
@@ -252,4 +270,28 @@ function table.load( sfile )
    return tables[1]
 end
 -- close do
+end
+
+local preloadlists = {}
+function preloadlist(list)
+	for k,v in pairs(list) do
+		preloadlists[k] = preloadlists[k]or{} 
+		for i,name in ipairs(v) do
+			table.insert(preloadlists[k],name)
+		end
+	end
+end
+
+function preload(...)
+	for k,v in ipairs(preloadlists) do
+		print (k,v)
+	end
+	for k,name in ipairs(arg) do
+		if preloadlists[name] then
+			for i,v in ipairs(preloadlists[name]) do
+				print (v,'preloaded')
+				require (v)
+			end
+		end
+	end
 end

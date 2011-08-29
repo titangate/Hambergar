@@ -1,3 +1,5 @@
+--require 'libraries.scene'
+--require 'libraries.unit'
 Tibet1 = Map:subclass('Tibet1')
 function Tibet1:initialize(w,h)
 	super.initialize(self,w,h)

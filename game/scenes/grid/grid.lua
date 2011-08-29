@@ -1,4 +1,5 @@
-
+--require 'libraries.scene'
+--require 'libraries.unit'
 function GetCharacter()
 	return chr
 end
@@ -101,13 +102,13 @@ function Grid:draw()
 		end
 		love.graphics.setScissor()
 	else
-	for x,y in self.aimap.terrain:keys() do
+--[[	for x,y in self.aimap.terrain:keys() do
 		love.graphics.setLineWidth(5)
 		love.graphics.setColor(40,238,75,255)
 		love.graphics.rectangle('line',x*40,y*40,40,40)
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.setLineWidth(1.5)
-	end
+	end]]
 	end
 end
 

@@ -90,7 +90,7 @@ function AssassinCharacterPanel:initialize(unit)
 			function()
 				local percent = self.unit.damagereduction.Electric
 				percent = percent or 1
-				local bonus = self.unit.armor.Electric or 0
+				local bonusw = self.unit.armor.Electric or 0
 				return bonus..'/'..string.format('%.1f',percent*100).."%"
 			end},
 			{image = nil,text='Fire Resistance',data=

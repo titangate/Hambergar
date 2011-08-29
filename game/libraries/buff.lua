@@ -10,7 +10,7 @@ function b_Stun:initialize(priority,actor)
 self.r = 0
 end
 
-local stunimg = love.graphics.newImage('assets/buff/stun.png')
+requireImage( 'assets/buff/stun.png','stunimg' )
 function b_Stun:buff(unit,dt)
  	unit.state = 'slide'
 --	unit:switchChannelSkill(nil)
@@ -18,7 +18,7 @@ function b_Stun:buff(unit,dt)
 	self.r = self.r+3.14*dt
 end
 function b_Stun:draw(unit)
-	love.graphics.draw(stunimg,unit.x,unit.y,self.r,1,1,32,32)
+	love.graphics.draw(img.stunimg,unit.x,unit.y,self.r,1,1,32,32)
 end
 b_Stim = Buff:subclass('b_Stim')
 function b_Stim:initialize(movementspeedbuffpercent,spellspeedbuffpercent)
@@ -42,5 +42,5 @@ function b_Summon:buff(unit,dt)
 	self.r = self.r+3.14*dt
 end
 function b_Summon:draw(unit)
-	love.graphics.draw(stunimg,unit.x,unit.y,self.r,1,1,32,32)
+	love.graphics.draw(img.stunimg,unit.x,unit.y,self.r,1,1,32,32)
 end

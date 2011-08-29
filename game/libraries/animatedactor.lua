@@ -56,7 +56,7 @@ function Animation:subSequence(start,finish)
 end
 
 animation = {}
-animation.explosion = Animation:new(love.graphics.newImage('assets/explosion.png'),96,96,0.03,1.5,1.5,48,48)
+ Animation:new(love.graphics.newImage('assets/explosion.png'),96,96,0.03,1.5,1.5,48,48,animation.explosion)
 
 ExplosionActor = Object:subclass('ExplosionActor')
 function ExplosionActor:initialize(x,y)

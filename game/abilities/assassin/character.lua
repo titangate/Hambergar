@@ -90,7 +90,7 @@ function AssassinCharacterPanel:initialize(unit)
 			function()
 				local percent = self.unit.damagereduction.Electric
 				percent = percent or 1
-				local bonusw = self.unit.armor.Electric or 0
+				local bonus = self.unit.armor.Electric or 0
 				return bonus..'/'..string.format('%.1f',percent*100).."%"
 			end},
 			{image = nil,text='Fire Resistance',data=
@@ -160,7 +160,7 @@ end
 
 local pioneer = love.graphics.newImage('assets/UI/river.png')
 function AssassinCharacterPanel:draw()
-	love.graphics.draw(pioneer,love.graphics.getWidth()-350,love.graphics.getHeight()-420)
+	love.graphics.draw(img.pioneer,love.graphics.getWidth()-350,love.graphics.getHeight()-420)
 	goo:draw()
 --	drawcollections()
 end

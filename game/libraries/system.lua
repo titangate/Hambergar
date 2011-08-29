@@ -32,9 +32,14 @@ function ImageLoader:loaddata(name)
 	return self.images[name]
 end
 local il = ImageLoader:new()
-local lgn = love.graphics.newImage
+lgn = love.graphics.newImage
 function love.graphics.newImage(name)
 	return lgn(il:loaddata(name))
+end
+
+img={}
+function requireImage(path,label)
+	img[label]=love.graphics.newImage(path)
 end
 
 Listener = Object:subclass('Listener')

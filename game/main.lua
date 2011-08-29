@@ -105,12 +105,12 @@ function love.run()
 	end
 end]]
 
-gameicon = love.graphics.newImage('gameicon.png')
+requireImage( 'gameicon.png','gameicon' )
 function love.load()
 	goo:load()
 	f=love.graphics.newFont("awesome.ttf",20)
 	love.graphics.setFont(f)
-	love.graphics.setIcon(gameicon)
+	love.graphics.setIcon(img.gameicon)
 	pushsystem(MainMenu)
 --	UI.load()
 	mainmenu = require "mainmenu.mainmenu"

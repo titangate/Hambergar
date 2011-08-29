@@ -7,7 +7,7 @@ mainmenu.birth = function(self)
 	anim:easy( self, 'opacity', 0, 255, 1, 'quadInOut')
 	anim:easy( self, 'xscale', 3, 1, 1, 'quadInOut')
 	anim:easy( self, 'yscale', 3, 1, 1, 'quadInOut')
-	MainMenu:refreshWithImage(gameicon)
+	MainMenu:refreshWithImage(img.gameicon)
 end
 mainmenu.onClose = function(self)
 	self.closetime = 0.5

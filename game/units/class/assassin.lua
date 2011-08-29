@@ -46,16 +46,16 @@ function Assassin:getSkillpanelData()
 	}
 end
 
-assassinpose = love.graphics.newImage('assets/assassin/assassinpose copy.png')
-assassinpistol = love.graphics.newImage('assets/assassin/assassinpistol copy.png')
+requireImage('assets/assassin/assassinpose copy.png','assassinpose')
+requireImage('assets/assassin/assassinpistol copy.png','assassinpistol')
 function Assassin:draw()
 	if self.invisible then
 		love.graphics.setColor(255,255,255,100)
 	end
 	local facing = GetOrderDirection()
 	facing = math.atan2(facing[2],facing[1])
-	love.graphics.draw(assassinpose,self.x,self.y,facing,1,1,20,32)
-	love.graphics.draw(assassinpistol,self.x,self.y,facing,1,1,20,32)
+	love.graphics.draw(img.assassinpose,self.x,self.y,facing,1,1,20,32)
+	love.graphics.draw(img.assassinpistol,self.x,self.y,facing,1,1,20,32)
 	self:drawBuff()
 	love.graphics.setColor(255,255,255,255)
 end
@@ -69,7 +69,7 @@ function DWSAssassin:enterState()
 	end
 	if not self.particles then
 		self.particles = {}
-		local p = love.graphics.newParticleSystem(part1, 1000)
+		local p = love.graphics.newParticleSystem(img.part1, 1000)
 		p:setEmissionRate(200)
 		p:setSpeed(30, 40)
 		p:setSize(0.25, 0.5)
@@ -83,7 +83,7 @@ function DWSAssassin:enterState()
 		p:setRadialAcceleration(0)
 		p:stop()
 		table.insert(self.particles, p)
-		local p = love.graphics.newParticleSystem(part1, 1000)
+		local p = love.graphics.newParticleSystem(img.part1, 1000)
 		p:setEmissionRate(200)
 		p:setSpeed(30, 40)
 		p:setSize(0.25, 0.5)
@@ -97,7 +97,7 @@ function DWSAssassin:enterState()
 		p:setRadialAcceleration(0)
 		p:stop()
 		table.insert(self.particles, p)
-		local p = love.graphics.newParticleSystem(part1, 1000)
+		local p = love.graphics.newParticleSystem(img.part1, 1000)
 		p:setEmissionRate(200)
 		p:setSpeed(30, 40)
 		p:setSize(0.25, 0.5)

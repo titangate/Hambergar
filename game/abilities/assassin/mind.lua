@@ -50,7 +50,7 @@ ripcircle = love.graphics.newImage('assets/ripcircle.png')
 MindRipFieldActor = Object:subclass('MindRipFieldActor')
 function MindRipFieldActor:initialize(x,y)
 	self.x,self.y=x,y
-	local p = love.graphics.newParticleSystem(rip, 1000)
+	local p = love.graphics.newParticleSystem(img.rip, 1000)
 	p:setEmissionRate(500)
 	p:setSpeed(300, 400)
 	p:setGravity(0)
@@ -96,7 +96,7 @@ function MindRipFieldActor:draw()
 	love.graphics.draw(self.system,0,0)
 	local scale = self.dt/self.time
 	love.graphics.setColor(255,255*(1-scale),255*(1-scale),255*(1-scale))
-	love.graphics.draw(ripcircle,self.x,self.y,0,scale*2,scale*2,128,128)
+	love.graphics.draw(img.ripcircle,self.x,self.y,0,scale*2,scale*2,128,128)
 	love.graphics.setColor(255,255,255,255)
 end
 
@@ -104,7 +104,7 @@ MindDrainActor=Object:subclass('MindDrainActor')
 function MindDrainActor:initialize(unit,x,y)
 	self.unit = unit
 	self.x,self.y=x,y
-	local p = love.graphics.newParticleSystem(pulse,1000)
+	local p = love.graphics.newParticleSystem(img.pulse,1000)
 	p:setEmissionRate(20)
 	p:setSpeed(0, 0)
 	p:setGravity(0)

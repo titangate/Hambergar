@@ -12,7 +12,7 @@ end
 local drawintroflow = AnimationGoal:new(48)
 drawintroflow.flows = {}
 drawintroflow.spawntime = 0
-local p = love.graphics.newParticleSystem(part1, 1000)
+local p = love.graphics.newParticleSystem(img.part1, 1000)
 p:setPosition(0,0)
 p:setEmissionRate(50)
 p:setGravity(0,0)
@@ -45,9 +45,9 @@ end
 
 function drawintroflow:draw()
 		love.graphics.setColor(255,255,255,100)
-	love.graphics.drawq(cloud,cloudquad,self.cloudtime*0.9,0,120,4,4,2000,2000)
-	love.graphics.drawq(cloud,cloudquad,self.cloudtime*0.6,-792,0,3,3,2000,2000)
-	love.graphics.drawq(cloud,cloudquad,self.cloudtime*0.4,552,0,2,2,2000,2000)
+	love.graphics.drawq(img.cloud,cloudquad,self.cloudtime*0.9,0,120,4,4,2000,2000)
+	love.graphics.drawq(img.cloud,cloudquad,self.cloudtime*0.6,-792,0,3,3,2000,2000)
+	love.graphics.drawq(img.cloud,cloudquad,self.cloudtime*0.4,552,0,2,2,2000,2000)
 	love.graphics.setColor(255,255,255,255)	
 end
 
@@ -57,7 +57,7 @@ function DrawIntroText:initialize(time,string)
 	self.z = 10
 	self.string = string
 	x,y = love.graphics.getWidth(),love.graphics.getHeight()/2
-	local p = love.graphics.newParticleSystem(part1, 1000)
+	local p = love.graphics.newParticleSystem(img.part1, 1000)
 	p:setPosition(x,y)
 	p:setEmissionRate(50)
 	p:setGravity(0,0)

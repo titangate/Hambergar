@@ -15,14 +15,14 @@ love.graphics.setRenderTarget()
 
 love.graphics.setColor(255,255,255,255)
 function gridbackground:draw()
-love.graphics.draw(greenearth,t.x/10,t.y/10)
-love.graphics.draw(ore1,t.x/3+190,t.y/3-200)
-love.graphics.draw(ore2,t.x/7+400,t.y/7+188)
-love.graphics.draw(bg,-1000,-1000)
+love.graphics.draw(img.greenearth,t.x/10,t.y/10)
+love.graphics.draw(img.ore1,t.x/3+190,t.y/3-200)
+love.graphics.draw(img.ore2,t.x/7+400,t.y/7+188)
+love.graphics.draw(img.bg,-1000,-1000)
 end
-ore1 = love.graphics.newImage('assets/ore1.png')
-ore2 = love.graphics.newImage('assets/ore2.png')
-greenearth = love.graphics.newImage('assets/greenearth.png')
+requireImage( 'assets/ore1.png','ore1' )
+requireImage( 'assets/ore2.png','ore2' )
+requireImage( 'assets/greenearth.png','greenearth' )
 earth = {}
 function earth:draw()
 end
@@ -75,7 +75,7 @@ function Grid:update(dt)
 	super.update(self,dt)
 end
 
-gridfilter = love.graphics.newImage("assets/gridfilter.png")
+requireImage( "assets/gridfilter.png",gridfilter )
 function Grid:draw()
 	super.draw(self)
 	for i,v in ipairs(self.flows) do
@@ -86,7 +86,7 @@ function Grid:draw()
 		--print (love.graphics.getHeight()*(3-self.birthtime)/3+gridfilter:getHeight())
 		--print (600*(1-self.birthtime)+gridfilter:getHeight()*2,self.birthtime)
 		map.camera:revert()
-		love.graphics.draw(gridfilter,0,600*(1-self.birthtime)-gridfilter:getHeight(),0,25,1,0,0)
+		love.graphics.draw(img.gridfilter,0,600*(1-self.birthtime)-gridfilter:getHeight(),0,25,1,0,0)
 		map.camera:apply()
 		for x,y in self.aimap.terrain:keys() do
 			love.graphics.setLineWidth(5)
@@ -108,7 +108,7 @@ function Grid:draw()
 end
 
 function Grid:generateFlow(x,y,direction)
-	local p = love.graphics.newParticleSystem(sparkle, 1000)
+	local p = love.graphics.newParticleSystem(img.sparkle, 1000)
 	p:setPosition(x,y)
 	p:setEmissionRate(50)
 	p:setGravity(0,0)

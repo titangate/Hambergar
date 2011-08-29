@@ -27,7 +27,7 @@ function ElectricianAbiTree:initialize(unit)
 	self.cpu:setSkill(unit.skills.cpu,pulse)
 	self.cpu.chip = pcb.cpu
 	
-	local p = love.graphics.newParticleSystem(pulse,1024)
+	local p = love.graphics.newParticleSystem(img.pulse,1024)
 	print ((pcb.battery.x+pcb.battery.w/2)*scale,(pcb.battery.y+pcb.battery.h/2)*scale,'battery')
 	p:setEmissionRate(100)
 	p:setSpeed(200, 100)
@@ -41,7 +41,7 @@ function ElectricianAbiTree:initialize(unit)
 	p:setTangentialAcceleration(-250)
 	self.batterpos=p
 	
-	local p = love.graphics.newParticleSystem(pulse,1024)
+	local p = love.graphics.newParticleSystem(img.pulse,1024)
 	print ((pcb.battery.x+pcb.battery.w/2)*scale,(pcb.battery.y+pcb.battery.h/2)*scale,'battery')
 	p:setEmissionRate(100)
 	p:setSpeed(200, 100)

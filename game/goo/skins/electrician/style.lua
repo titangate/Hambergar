@@ -20,23 +20,23 @@ fonts.oldsans32 = love.graphics.newFont(GOO_SKINPATH .. 'oldsansblack.ttf', 32)
 fonts.bigfont = love.graphics.newFont("awesome.ttf",25)
 fonts.midfont = love.graphics.newFont("awesome.ttf",19)
 fonts.smallfont = love.graphics.newFont("awesome.ttf",13)
-attritubebackground = love.graphics.newImage(GOO_SKINPATH .. 'attritubebackground.png')
+requireImage( GOO_SKINPATH .. 'attritubebackground.png','attritubebackground')
 
 
 
-batteryimg = love.graphics.newImage(GOO_SKINPATH .. 'battery.png')
+requireImage(GOO_SKINPATH .. 'battery.png','batteryimg')
 
 local levelimg = love.graphics.newImage(GOO_SKINPATH .. 'electricianlevel.png')
 local levelquad = love.graphics.newQuad(0,0,24,24,48,24)
 function drawSkillLevel(x,y,current,max)
 	levelquad:setViewport(0,0,24,24)
 	for i=1,current do
-		love.graphics.drawq(levelimg,levelquad,x+i*12-12,y)
+		love.graphics.drawq(img.levelimg,levelquad,x+i*12-12,y)
 	end
 	if max then
 		levelquad:setViewport(24,0,24,24)
 		for i=current+1,max do
-			love.graphics.drawq(levelimg,levelquad,x+i*12-12,y)
+			love.graphics.drawq(img.levelimg,levelquad,x+i*12-12,y)
 		end
 	end
 end
@@ -45,12 +45,12 @@ end
 function drawDrainLevel(x,y,current,max)
 	levelquad:setViewport(0,0,24,24)
 	for i=1,current do
-		love.graphics.drawq(levelimg,levelquad,x+i*12-12,y)
+		love.graphics.drawq(img.levelimg,levelquad,x+i*12-12,y)
 	end
 	if max then
 		levelquad:setViewport(24,0,24,24)
 		for i=current+1,max do
-			love.graphics.drawq(levelimg,levelquad,x+i*12-12,y)
+			love.graphics.drawq(img.levelimg,levelquad,x+i*12-12,y)
 		end
 	end
 end

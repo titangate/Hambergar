@@ -16,9 +16,9 @@ love.graphics.setLineWidth(1.5)
 
 love.graphics.setColor(255,255,255,255)
 function gridbackground:draw()
-love.graphics.draw(greenearth,GetCharacter().x/10,GetCharacter().y/10)
-love.graphics.draw(ore1,GetCharacter().x/3+190,GetCharacter().y/3-200)
-love.graphics.draw(ore2,GetCharacter().x/7+400,GetCharacter().y/7+188)
+love.graphics.draw(img.greenearth,GetCharacter().x/10,GetCharacter().y/10)
+love.graphics.draw(img.ore1,GetCharacter().x/3+190,GetCharacter().y/3-200)
+love.graphics.draw(img.ore2,GetCharacter().x/7+400,GetCharacter().y/7+188)
 --[[for i = 1,50 do
 	local n = i*40
 	love.graphics.line(n,0,n,2000)
@@ -91,15 +91,15 @@ function Grid:draw()
 		--print (love.graphics.getHeight()*(3-self.birthtime)/3+gridfilter:getHeight())
 		--print (600*(1-self.birthtime)+gridfilter:getHeight()*2,self.birthtime)
 		map.camera:revert()
-		love.graphics.draw(gridfilter,0,600*(1-self.birthtime)-gridfilter:getHeight(),0,25,1,0,0)
+		love.graphics.draw(img.gridfilter,0,600*(1-self.birthtime)-gridfilter:getHeight(),0,25,1,0,0)
 		map.camera:apply()
-		for x,y in self.aimap.terrain:keys() do
+	--[[	for x,y in self.aimap.terrain:keys() do
 			love.graphics.setLineWidth(5)
 			love.graphics.setColor(40,238,75,255)
 			love.graphics.rectangle('line',x*40,y*40,40,40)
 			love.graphics.setColor(255,255,255,255)
 			love.graphics.setLineWidth(1.5)
-		end
+		end]]
 		love.graphics.setScissor()
 	else
 --[[	for x,y in self.aimap.terrain:keys() do
@@ -113,7 +113,7 @@ function Grid:draw()
 end
 
 function Grid:generateFlow(x,y,direction)
-	local p = love.graphics.newParticleSystem(sparkle, 1000)
+	local p = love.graphics.newParticleSystem(img.sparkle, 1000)
 	p:setPosition(x,y)
 	p:setEmissionRate(50)
 	p:setGravity(0,0)

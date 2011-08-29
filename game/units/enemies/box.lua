@@ -1,5 +1,5 @@
 Box = Unit:subclass('Box')
-local boxpic = love.graphics.newImage('box.png')
+requireImage('box.png','boxpic')
 deadquad = love.graphics.newQuad(0,0,32,8,32,32)
 function Box:initialize(x,y,controller)
 	super.initialize(self,x,y,16,100)
@@ -13,7 +13,7 @@ function Box:damage(type,amount,source)
 end
 
 function Box:draw()
-	love.graphics.draw(boxpic,self.x,self.y,self.body:getAngle(),1,1,16,16)
+	love.graphics.draw(img.boxpic,self.x,self.y,self.body:getAngle(),1,1,16,16)
 	self:drawBuff()
 end
 
@@ -76,7 +76,7 @@ end
 function BoxDead:draw()
 	love.graphics.setColor(255,255,255,math.max(0,255*(1-self.dt/self.time)))
 	for k,unit in ipairs(self.bodies) do
-		love.graphics.drawq(boxpic,deadquad,unit:getX(),unit:getY(),unit:getAngle(),1,1,16,4)
+		love.graphics.drawq(img.boxpic,deadquad,unit:getX(),unit:getY(),unit:getAngle(),1,1,16,4)
 	end
 	love.graphics.setColor(255,255,255,255)
 end

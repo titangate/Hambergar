@@ -16,7 +16,7 @@ function Bullet:persist(unit,coll)
 end
 
 function Bullet:draw()
-	love.graphics.draw(bullet,self.x,self.y,self.body:getAngle(),1,1,16,16)
+	love.graphics.draw(img.bullet,self.x,self.y,self.body:getAngle(),1,1,16,16)
 end
 MomentumBullet = Missile:subclass('MomentumBullet')
 function MomentumBullet:createBody(world)
@@ -35,7 +35,7 @@ end
 
 function MomentumBullet:draw()
 	love.graphics.setColor(80,234,255,255)
-	love.graphics.draw(bullet,self.x,self.y,self.body:getAngle(),1,1,16,16)
+	love.graphics.draw(img.bullet,self.x,self.y,self.body:getAngle(),1,1,16,16)
 	love.graphics.setColor(255,255,255,255)
 end
 

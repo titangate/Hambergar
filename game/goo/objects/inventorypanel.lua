@@ -10,7 +10,7 @@ end
 function goo.itembuttonslot:draw()
 	super.draw(self)
 	if self.isEquipment then
-		love.graphics.draw(slotimg)
+		love.graphics.draw(img.slotimg)
 	end
 end
 
@@ -50,7 +50,7 @@ end
 
 function goo.itembutton:draw()
 	
-	love.graphics.draw(slotimg)
+	love.graphics.draw(img.slotimg)
 	if self.item then
 		self.item:draw(32,32)
 	end
@@ -243,15 +243,15 @@ end
 function goo.inventory:draw()
 	local x,y = 0,0
 	self:setColor(255,255,255)
-	love.graphics.drawq(attritubebackground,quads.topleft,x-10,y-10)
-	love.graphics.drawq(attritubebackground,quads.topright,x+self.w,y-10)
-	love.graphics.drawq(attritubebackground,quads.botleft,x-10,y+self.h)
-	love.graphics.drawq(attritubebackground,quads.botright,x+self.w,y+self.h)
-	love.graphics.drawq(attritubebackground,quads.top,x,y-10,0,self.w,1)
-	love.graphics.drawq(attritubebackground,quads.bot,x,y+self.h,0,self.w,1)
-	love.graphics.drawq(attritubebackground,quads.left,x-10,y,0,1,self.h)
-	love.graphics.drawq(attritubebackground,quads.right,x+self.w,y,0,1,self.h)
-	love.graphics.drawq(attritubebackground,quads.mid,x,y,0,self.w,self.h)
+	love.graphics.drawq(img.attritubebackground,quads.topleft,x-10,y-10)
+	love.graphics.drawq(img.attritubebackground,quads.topright,x+self.w,y-10)
+	love.graphics.drawq(img.attritubebackground,quads.botleft,x-10,y+self.h)
+	love.graphics.drawq(img.attritubebackground,quads.botright,x+self.w,y+self.h)
+	love.graphics.drawq(img.attritubebackground,quads.top,x,y-10,0,self.w,1)
+	love.graphics.drawq(img.attritubebackground,quads.bot,x,y+self.h,0,self.w,1)
+	love.graphics.drawq(img.attritubebackground,quads.left,x-10,y,0,1,self.h)
+	love.graphics.drawq(img.attritubebackground,quads.right,x+self.w,y,0,1,self.h)
+	love.graphics.drawq(img.attritubebackground,quads.mid,x,y,0,self.w,self.h)
 end
 
 function goo.inventory:save()

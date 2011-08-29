@@ -1,6 +1,6 @@
 
 PeacockFeather = Item:subclass('PeacockFeather')
-feather = love.graphics.newImage('assets/item/feather.png')
+requireImage( 'assets/item/feather.png','feather' )
 
 function PeacockFeather:initialize(x,y)
 	super.initialize(self,'trophy',x,y)
@@ -76,5 +76,5 @@ end
 
 function PeacockFeather:draw(x,y)
 	if not x then x,y = self.body:getPosition() end
-	love.graphics.draw(feather,x,y,0,1,1,24,24)
+	love.graphics.draw(img.feather,x,y,0,1,1,24,24)
 end

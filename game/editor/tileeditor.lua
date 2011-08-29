@@ -46,7 +46,7 @@ function inAABB(x,y,aabb)
 end
 
 function TileEditor:loadTile(filename)
-	image = love.graphics.newImage(filename)
+	image = love.graphics.newImage( filename )
 	tile = TileMap:new(image,50,50,40)
 	tileindex = #tiles
 	table.insert(tiles,tile)

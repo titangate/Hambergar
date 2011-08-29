@@ -1,5 +1,5 @@
 DisplayBar = Object:subclass('DisplayBar')
-barbackground = love.graphics.newImage('assets/UI/barbackground.png')
+requireImage( 'assets/UI/barbackground.png','barbackground' )
 
 function DisplayBar:initialize(funcr,x,y,length)
 	self.funcr = funcr
@@ -19,9 +19,9 @@ function AssassinHPBar:update(dt)
 end
 
 function AssassinHPBar:draw()
-	love.graphics.draw(barbackground,self.x,self.y,0,self.length,1)
+	love.graphics.draw(img.barbackground,self.x,self.y,0,self.length,1)
 	love.graphics.setColor(255,80,80,255)
-	love.graphics.draw(barbackground,self.x,self.y,0,self.length*self.funcr(),1)
+	love.graphics.draw(img.barbackground,self.x,self.y,0,self.length*self.funcr(),1)
 	love.graphics.setColor(255,255,255,255)
 	self.trail:draw()
 end
@@ -44,9 +44,9 @@ function AssassinMPBar:update(dt)
 	self.trail:update(dt)
 end
 function AssassinMPBar:draw()
-	love.graphics.draw(barbackground,self.x,self.y,0,self.length,1)
+	love.graphics.draw(img.barbackground,self.x,self.y,0,self.length,1)
 	love.graphics.setColor(80,80,255,255)
-	love.graphics.draw(barbackground,self.x,self.y,0,self.length*self.funcr(),1)
+	love.graphics.draw(img.barbackground,self.x,self.y,0,self.length*self.funcr(),1)
 	love.graphics.setColor(255,255,255,255)
 	self.trail:draw()
 end
@@ -81,8 +81,8 @@ function SkillButton:released()
 	end
 end
 
-assassincd = love.graphics.newImage('assets/UI/assassincd.png')
-scrollpanel = love.graphics.newImage('assets/UI/scrollpanel.png')
+requireImage( 'assets/UI/assassincd.png','assassincd' )
+requireImage( 'assets/UI/scrollpanel.png','scrollpanel' )
 AssassinSkillButton = SkillButton:subclass('AssassinSkillButton')
 
 function AssassinSkillButton:draw()
@@ -173,7 +173,7 @@ function AssassinSkillButtonGroup:initialize(unit)
 end
 
 CDActor = Object:subclass('CDActor')
-local cd = love.graphics.newImage('assets/UI/cd.png')
+requireImage( 'assets/UI/cd.png','cd' )
 function CDActor:draw(x,y,percent)
 	if x then
 		self.x,self.y = x,y

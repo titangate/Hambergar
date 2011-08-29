@@ -11,7 +11,7 @@ function b_HealthPotion:stop(unit)
 end
 
 HealthPotion = Item:subclass('HealthPotion')
-local healthpotion = love.graphics.newImage('assets/item/healthpotion.png')
+requireImage( 'assets/item/healthpotion.png','healthpotion' )
 function HealthPotion:initialize(x,y)
 	super.initialize(self,'consumable',x,y)
 	self.name = "HEALTH POTION"
@@ -87,7 +87,7 @@ end
 
 function HealthPotion:draw(x,y)
 	if not x then x,y = self.body:getPosition() end
-	love.graphics.draw(healthpotion,x,y,0,1,1,24,24)
+	love.graphics.draw(img.healthpotion,x,y,0,1,1,24,24)
 end
 
 BigHealthPotion = HealthPotion:subclass('BigHealthPotion')

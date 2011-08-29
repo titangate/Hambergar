@@ -45,7 +45,7 @@ function Item:isEquipment()
 	return self.equipped
 end
 
-slotimg = love.graphics.newImage('assets/UI/slot.png')
+requireImage( 'assets/UI/slot.png','slotimg' )
 ItemSlot = Button:subclass('ItemSlot')
 function ItemSlot:initialize(group,x,y,w,h,id)
 	self.id = id

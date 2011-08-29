@@ -134,7 +134,7 @@ end
 FlamingSpearTrail = Object:subclass('FlamingSpearTrail')
 function FlamingSpearTrail:initialize(b)
 	self.bullet = b
-	local p = love.graphics.newParticleSystem(part1, 1000)
+	local p = love.graphics.newParticleSystem(img.part1, 1000)
 	p:setEmissionRate(100)
 	p:setSpeed(100, 100)
 	p:setGravity(0)
@@ -175,7 +175,7 @@ function FlamingSpearMissile:initialize(...)
 end
 function FlamingSpearMissile:draw()
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.draw(flamingspear,self.x,self.y,self.body:getAngle(),2,2,16,16)
+	love.graphics.draw(img.flamingspear,self.x,self.y,self.body:getAngle(),2,2,16,16)
 	love.graphics.setColor(255,255,255,255)
 end
 function FlamingSpearMissile:add(unit,coll)
@@ -223,7 +223,7 @@ volcano = love.graphics.newImage('assets/ial/volcano.png')
 VolcanoActor = Object:subclass('FlamingSpearTrail')
 function VolcanoActor:initialize(x,y)
 	self.x,self.y = x,y
-	local p = love.graphics.newParticleSystem(pulse, 1000)
+	local p = love.graphics.newParticleSystem(img.pulse, 1000)
 	p:setEmissionRate(300)
 	p:setSpeed(100, 200)
 	p:setGravity(0)
@@ -258,7 +258,7 @@ end
 
 function VolcanoActor:draw()
 	love.graphics.setColor(255,255,255,math.min(3-self.dt,1)*255)
-	love.graphics.draw(volcano,self.x,self.y,self.r,1,1,128,128)
+	love.graphics.draw(img.volcano,self.x,self.y,self.r,1,1,128,128)
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.draw(self.p)
 end
@@ -420,7 +420,7 @@ end
 StompActor = Object:subclass('StompActor')
 function StompActor:initialize(x,y)
 	self.x,self.y=x,y
-	local p = love.graphics.newParticleSystem(rip, 1000)
+	local p = love.graphics.newParticleSystem(img.rip, 1000)
 	p:setEmissionRate(500)
 	p:setSpeed(300, 400)
 	p:setGravity(0)
@@ -466,7 +466,7 @@ function StompActor:draw()
 	love.graphics.draw(self.system,0,0)
 	local scale = self.dt/self.time
 	love.graphics.setColor(0,0,0,255*(1-scale))
-	love.graphics.draw(ripcircle,self.x,self.y,0,scale*2,scale*2,128,128)
+	love.graphics.draw(img.ripcircle,self.x,self.y,0,scale*2,scale*2,128,128)
 	love.graphics.setColor(255,255,255,255)
 end
 
@@ -556,7 +556,7 @@ function BossHans:initialize(x,y,controller)
 	}
 	self:resetAnimation()
 	self.controller = controller
-	local p = love.graphics.newParticleSystem(part1, 1000)
+	local p = love.graphics.newParticleSystem(img.part1, 1000)
 	p:setEmissionRate(200)
 	p:setSpeed(300, 250)
 	p:setSize(0.25, 1)

@@ -1,7 +1,13 @@
-icontable={}
-icontable.life = love.graphics.newImage('assets/assassin/life.png')
-icontable.mind = love.graphics.newImage('assets/assassin/mind.png')
-icontable.weapon = love.graphics.newImage('assets/assassin/weapon.png')
+
+requireImage( 'assets/assassin/life.png','icontable.life' )
+requireImage( 'assets/assassin/mind.png','icontable.mind' )
+requireImage( 'assets/assassin/weapon.png','icontable.weapon' )
+icontable=
+{
+	life = img['icontable.life'],
+	mind = img['icontable.mind'],
+	weapon = img['icontable.weapon'],
+}
 
 
 AttributeItem = Object:subclass('AttributeItem')
@@ -12,14 +18,14 @@ function HPAttributeItem:initialize(hpfunc,maxhpfunc,w)
 	self.h = 15
 end
 function HPAttributeItem:draw(x,y)
-	love.graphics.draw(icontable.life,x,y)
+	love.graphics.draw(img['icontable.life'],x,y)
 	love.graphics.printf('HP',x+20,y,self.w,"left")
 	local hp,maxhp = self.hpfunc(),self.maxhpfunc()
 	love.graphics.printf(hp..'/'..maxhp,x,y,self.w,"right")
 end
 MPAttributeItem = HPAttributeItem:subclass('MPAttributeItem')
 function MPAttributeItem:draw(x,y)
-	love.graphics.draw(icontable.mind,x,y)
+	love.graphics.draw(img['icontable.mind'],x,y)
 	love.graphics.printf('Mind Power',x+20,y,self.w,"left")
 	local hp,maxhp = self.hpfunc(),self.maxhpfunc()
 	love.graphics.printf(hp..'/'..maxhp,x,y,self.w,"right")
@@ -31,7 +37,7 @@ function SimpleAttributeItem:initialize(hpfunc,description,icon,w)
 	self.h = 15
 end
 function SimpleAttributeItem:draw(x,y)
-	if self.icon then love.graphics.draw(icontable[self.icon],x,y) end
+	if self.icon then love.graphics.draw(img['icontable.'..self.icon],x,y) end
 	love.graphics.printf(self.description(),x+20,y,self.w,"left")
 	love.graphics.printf(self.hpfunc(),x,y,self.w,"right")
 end
@@ -48,7 +54,7 @@ function DescriptionAttributeItem:draw(x,y)
 	love.graphics.printf(self.description(),x,y,self.w,"left")
 end
 
-attritubebackground = love.graphics.newImage('assets/UI/attritubebackground.png')
+requireImage( 'assets/UI/attritubebackground.png','attritubebackground' )
 local quads = {
 	topleft = love.graphics.newQuad(0,0,10,10,40,40),
 	topright = love.graphics.newQuad(30,0,10,10,40,40),
@@ -84,15 +90,15 @@ function AttributeCollection:draw(x,y)
 	end
 	table.insert(draws,function()
 		love.graphics.setFont(smallfont)
-		love.graphics.drawq(attritubebackground,quads.topleft,x-10,y-10)
-		love.graphics.drawq(attritubebackground,quads.topright,x+self.w,y-10)
-		love.graphics.drawq(attritubebackground,quads.botleft,x-10,y+self.h)
-		love.graphics.drawq(attritubebackground,quads.botright,x+self.w,y+self.h)
-		love.graphics.drawq(attritubebackground,quads.top,x,y-10,0,self.w,1)
-		love.graphics.drawq(attritubebackground,quads.bot,x,y+self.h,0,self.w,1)
-		love.graphics.drawq(attritubebackground,quads.left,x-10,y,0,1,self.h)
-		love.graphics.drawq(attritubebackground,quads.right,x+self.w,y,0,1,self.h)
-		love.graphics.drawq(attritubebackground,quads.mid,x,y,0,self.w,self.h)
+		love.graphics.drawq(img.attritubebackground,quads.topleft,x-10,y-10)
+		love.graphics.drawq(img.attritubebackground,quads.topright,x+self.w,y-10)
+		love.graphics.drawq(img.attritubebackground,quads.botleft,x-10,y+self.h)
+		love.graphics.drawq(img.attritubebackground,quads.botright,x+self.w,y+self.h)
+		love.graphics.drawq(img.attritubebackground,quads.top,x,y-10,0,self.w,1)
+		love.graphics.drawq(img.attritubebackground,quads.bot,x,y+self.h,0,self.w,1)
+		love.graphics.drawq(img.attritubebackground,quads.left,x-10,y,0,1,self.h)
+		love.graphics.drawq(img.attritubebackground,quads.right,x+self.w,y,0,1,self.h)
+		love.graphics.drawq(img.attritubebackground,quads.mid,x,y,0,self.w,self.h)
 		local h = 0
 		for i=1,#self.items do
 			local v = self.items[i]
@@ -110,15 +116,15 @@ function AttributeCollection:d_draw(x,y)
 			y = y - self.h
 		end
 			love.graphics.setFont(smallfont)
-			love.graphics.drawq(attritubebackground,quads.topleft,x-10,y-10)
-			love.graphics.drawq(attritubebackground,quads.topright,x+self.w,y-10)
-			love.graphics.drawq(attritubebackground,quads.botleft,x-10,y+self.h)
-			love.graphics.drawq(attritubebackground,quads.botright,x+self.w,y+self.h)
-			love.graphics.drawq(attritubebackground,quads.top,x,y-10,0,self.w,1)
-			love.graphics.drawq(attritubebackground,quads.bot,x,y+self.h,0,self.w,1)
-			love.graphics.drawq(attritubebackground,quads.left,x-10,y,0,1,self.h)
-			love.graphics.drawq(attritubebackground,quads.right,x+self.w,y,0,1,self.h)
-			love.graphics.drawq(attritubebackground,quads.mid,x,y,0,self.w,self.h)
+			love.graphics.drawq(img.attritubebackground,quads.topleft,x-10,y-10)
+			love.graphics.drawq(img.attritubebackground,quads.topright,x+self.w,y-10)
+			love.graphics.drawq(img.attritubebackground,quads.botleft,x-10,y+self.h)
+			love.graphics.drawq(img.attritubebackground,quads.botright,x+self.w,y+self.h)
+			love.graphics.drawq(img.attritubebackground,quads.top,x,y-10,0,self.w,1)
+			love.graphics.drawq(img.attritubebackground,quads.bot,x,y+self.h,0,self.w,1)
+			love.graphics.drawq(img.attritubebackground,quads.left,x-10,y,0,1,self.h)
+			love.graphics.drawq(img.attritubebackground,quads.right,x+self.w,y,0,1,self.h)
+			love.graphics.drawq(img.attritubebackground,quads.mid,x,y,0,self.w,self.h)
 			local h = 0
 			for i=1,#self.items do
 				local v = self.items[i]

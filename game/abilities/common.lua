@@ -1,7 +1,7 @@
 BloodTrail = Object:subclass('FlamingSpearTrail')
 function BloodTrail:initialize(b)
 	self.bullet = b
-	local p = love.graphics.newParticleSystem(part1, 1000)
+	local p = love.graphics.newParticleSystem(img.part1, 1000)
 	p:setEmissionRate(30)
 	p:setSpeed(100, 100)
 	p:setGravity(0)
@@ -82,7 +82,7 @@ end
 MachineGunMissile = Missile:subclass('MachineGunMissile')
 function MachineGunMissile:draw()
 	love.graphics.setColor(255,169,142,255)
-	love.graphics.draw(bullet,self.x,self.y,self.body:getAngle(),1,1,16,16)
+	love.graphics.draw(img.bullet,self.x,self.y,self.body:getAngle(),1,1,16,16)
 	love.graphics.setColor(255,255,255,255)
 end
 function MachineGunMissile:add(unit,coll)
@@ -128,7 +128,7 @@ end
 ShotgunMissile = Missile:subclass('ShotgunMissile')
 function ShotgunMissile:draw()
 	love.graphics.setColor(124,169,255,255)
-	love.graphics.draw(bullet,self.x,self.y,self.body:getAngle(),2,2,16,16)
+	love.graphics.draw(img.bullet,self.x,self.y,self.body:getAngle(),2,2,16,16)
 	love.graphics.setColor(255,255,255,255)
 end
 function ShotgunMissile:add(unit,coll)

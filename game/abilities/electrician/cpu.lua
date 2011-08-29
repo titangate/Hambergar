@@ -51,7 +51,7 @@ end
 BoltTrail = Object:subclass('BoltTrail')
 function BoltTrail:initialize(b)
 	self.bullet = b
-	local p = love.graphics.newParticleSystem(pulse, 1000)
+	local p = love.graphics.newParticleSystem(img.pulse, 1000)
 	p:setEmissionRate(200)
 	p:setSpeed(50, 100)
 	p:setGravity(0)
@@ -89,7 +89,7 @@ function BoltMissile:initialize(...)
 end
 function BoltMissile:draw()
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.draw(pulse,self.x,self.y,0,1,1,16,16)
+	love.graphics.draw(img.pulse,self.x,self.y,0,1,1,16,16)
 	love.graphics.setColor(255,255,255,255)
 end
 function BoltMissile:add(unit,coll)

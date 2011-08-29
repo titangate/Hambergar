@@ -1,6 +1,6 @@
 
 FiveSlash = Item:subclass('FiveSlash')
-fiveslash = love.graphics.newImage('assets/item/fiveslash.png')
+requireImage( 'assets/item/fiveslash.png','fiveslash' )
 
 function FiveSlash:initialize(x,y)
 	super.initialize(self,'amplifier',x,y)
@@ -85,5 +85,5 @@ end
 
 function FiveSlash:draw(x,y)
 	if not x then x,y = self.body:getPosition() end
-	love.graphics.draw(fiveslash,x,y,0,1,1,24,24)
+	love.graphics.draw(img.fiveslash,x,y,0,1,1,24,24)
 end

@@ -16,7 +16,7 @@ function Station:initialize(x,y)
 end
 
 function Station:draw()
-	love.graphics.draw(station,self.x,self.y,self.body:getAngle(),1,1,48,48)
+	love.graphics.draw(img.station,self.x,self.y,self.body:getAngle(),1,1,48,48)
 	if self.drainablemana then
 		drawDrainLevel(self.x,self.y,3,3)
 	end
@@ -31,7 +31,7 @@ function Computer:initialize(x,y)
 end
 
 function Computer:draw()
-	love.graphics.draw(computer,self.x,self.y,self.body:getAngle(),1,1,16,11)
+	love.graphics.draw(img.computer,self.x,self.y,self.body:getAngle(),1,1,16,11)
 	if self.drainablemana then
 		drawDrainLevel(self.x,self.y,math.ceil(self.drainablemana/34),3)
 	end
@@ -47,7 +47,7 @@ function TV:initialize(x,y)
 end
 
 function TV:draw()
-	love.graphics.draw(tv,self.x,self.y,self.body:getAngle(),1,1,16,11)
+	love.graphics.draw(img.tv,self.x,self.y,self.body:getAngle(),1,1,16,11)
 	if self.drainablemana then
 		drawDrainLevel(self.x,self.y,math.ceil(self.drainablemana/34),3)
 	end

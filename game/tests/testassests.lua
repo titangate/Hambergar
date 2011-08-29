@@ -139,7 +139,7 @@ function demosystem:draw()
 	buttongroup:draw()
 	local x,y = unpack(GetOrderDirection())
 	local px,py = love.mouse.getPosition()
-	love.graphics.draw(cursor,px,py,math.atan2(y,x),1,1,16,16)
+	love.graphics.draw(img.cursor,px,py,math.atan2(y,x),1,1,16,16)
 end
 map:addUnit(HealthPotion:new(200,300))
 map:addUnit(BigHealthPotion:new(100,300))

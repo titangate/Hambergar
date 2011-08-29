@@ -1,8 +1,8 @@
-mainmenubg = love.graphics.newImage('assets/mainmenu.png')
+requireImage( 'assets/mainmenu.png','mainmenubg' )
 
-local grid = love.graphics.newImage("assets/mainmenu/grid.png")
-local gradient = love.graphics.newImage("assets/mainmenu/gradient.png")
-grid:setWrap("repeat","repeat")
+requireImage( "assets/mainmenu/grid.png",'grid' )
+requireImage( "assets/mainmenu/gradient.png",'gradient' )
+img.grid:setWrap("repeat","repeat")
 local gridquad = love.graphics.newQuad(0,0,love.graphics.getWidth(),love.graphics.getHeight(),40,40)
 MainMenu = {
 	refreshdt = 1,
@@ -28,11 +28,11 @@ function MainMenu:draw()
 		local progresspc = 1 - self.refreshdt / self.refreshtime
 		local starty = progresspc*1.5*love.graphics.getHeight()
 		love.graphics.setScissor(0,0,love.graphics.getWidth(),starty+40)
-		love.graphics.drawq(grid,gridquad,0,0)
-		love.graphics.draw(gradient,0,starty,0,love.graphics.getWidth(),1)
+		love.graphics.drawq(img.grid,gridquad,0,0)
+		love.graphics.draw(img.gradient,0,starty,0,love.graphics.getWidth(),1)
 		love.graphics.setColor(0,0,0,255)
 		love.graphics.rectangle('fill',0,0,3000,starty-400)
-		love.graphics.draw(gradient,0,starty,math.pi,3000,10,0.5,0)
+		love.graphics.draw(img.gradient,0,starty,math.pi,3000,10,0.5,0)
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.draw(self.image,80,150,0,0.5,0.5)
 		love.graphics.setScissor()
@@ -42,6 +42,6 @@ function MainMenu:draw()
 		end
 		love.graphics.draw(self.oldimage,80,150,0,0.5,0.5)
 	end
-	love.graphics.draw(mainmenubg,love.graphics.getWidth()/2,love.graphics.getHeight()/2,0,self.imagescale,self.imagescale,mainmenubg:getWidth()/2,mainmenubg:getHeight()/2)
+	love.graphics.draw(img.mainmenubg,love.graphics.getWidth()/2,love.graphics.getHeight()/2,0,self.imagescale,self.imagescale,img.mainmenubg:getWidth()/2,img.mainmenubg:getHeight()/2)
 	goo:draw()
 end

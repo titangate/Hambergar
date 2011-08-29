@@ -1,4 +1,4 @@
-menubuttonbackground = love.graphics.newImage('assets/UI/menubuttonbackground.png')
+requireImage( 'assets/UI/menubuttonbackground.png','menubuttonbackground' )
 MenuButtonActor = Actor:subclass('MenuButtonActor')
 function MenuButtonActor:setState(state)
 	self.state = state
@@ -30,7 +30,7 @@ end
 function MenuButtonActor:draw(x,y)
 	if self.color then love.graphics.setColor(unpack(self.color)) end
 	if self.anim then self.anim:apply() end
-	love.graphics.draw(menubuttonbackground,x,y)
+	love.graphics.draw(img.menubuttonbackground,x,y)
 	if self.anim then self.anim:revert() end
 	love.graphics.setColor(unpack(color.defaultcolor))
 end

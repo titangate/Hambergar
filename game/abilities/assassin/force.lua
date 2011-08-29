@@ -1,7 +1,7 @@
 SniperRoundTrail = Object:subclass('SniperRoundTrail')
 function SniperRoundTrail:initialize(b)
 	self.bullet = b
-	local p = love.graphics.newParticleSystem(part1, 1000)
+	local p = love.graphics.newParticleSystem(img.part1, 1000)
 	p:setEmissionRate(500)
 	p:setSpeed(0, 0)
 	p:setSize(0.25, 1)
@@ -48,7 +48,7 @@ function SniperRound:initialize(...)
 end
 
 function SniperRound:draw()
-	love.graphics.draw(bullet,self.x,self.y,self.body:getAngle(),1,1,16,16)
+	love.graphics.draw(img.bullet,self.x,self.y,self.body:getAngle(),1,1,16,16)
 end
 
 SnipeBulletEffect = UnitEffect:new()

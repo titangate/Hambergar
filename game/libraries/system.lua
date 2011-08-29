@@ -1,3 +1,24 @@
+ImageLoader = Object:subclass('ImageLoader')
+function ImageLoader:initialize()
+	self.images={}
+	self.loadingthread = love.thread.newThread('loadingthread','libraries/loadingthread.lua')
+end
+
+function ImageLoader:loaddata(name)
+	if type(name)~='string' then return name end
+	if not name then return end
+	if not self.images[name] then
+		self.images[name] = love.image.newImageData(name)
+	end
+	return self.images[name]
+end
+local il = ImageLoader:new()
+local lgn = love.graphics.newImage
+function love.graphics.newImage(name)
+	return lgn(il:loaddata(name))
+end
+
+
 Listener = Object:subclass('Listener')
 function Listener:initialize()
 	self.handlers = {}

@@ -80,7 +80,6 @@ function AssassinAbiTree:initialize(unit)
 		if responds[k] then
 			local x,y = controller:GetWalkDirection()
 			for k,v in pairs(self.highlighted) do
-			print (k,v)
 		end
 			local newlockon = self:direct(self.highlighted,{x,y},function(obj)
 				return obj:isKindOf(goo.learnbutton)

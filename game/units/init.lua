@@ -7,3 +7,6 @@ require ('units.class.assassin.lua')
 require 'units.class.electrician'
 require 'units.enemies.ial'
 require 'units.enemies.bosshans'
+
+
+require 'units.other.drainable'

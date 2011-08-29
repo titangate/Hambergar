@@ -2,6 +2,7 @@
 --Object = objectlua.Object
 require 'goo.MiddleClass'
 require 'goo.MindState'
+--[[
 require ('libraries/camera.lua')
 require ('libraries/scene.lua')
 require ('libraries/unit.lua')
@@ -12,29 +13,28 @@ require ('libraries/missile.lua')
 require ('libraries/button.lua')
 require ('libraries/particles.lua')
 require ('libraries/buff.lua')
-require ('libraries/system.lua')
-require ('libraries/timer.lua')
-require ('libraries/hud.lua')
 require ('libraries/ai.lua')
-require "libraries.mainmenu"
-require 'libraries.pathfinding.main'
+require ('libraries/hud.lua')
 require ('abilities/init.lua')
 require ('units/init.lua')
-require "libraries/uiitem"
-require "libraries/item"
+require ('libraries/timer.lua')
+require ('libraries/system.lua')
+require "libraries.uiitem"
+require "libraries.item"
 require "libraries.tilemap"
 require "libraries.sound"
-require 'libraries.controller'
 require 'scenes.init'
 require "items.init"
 require "libraries.tutorial"
 require "libraries.conversation"
-require 'libraries.TEsound'
+require "editor.init"
+require 'libraries.TEsound']]
 goo=require "goo.goo"
 anim = require "anim.anim"
 
-require "editor.init"
-
+require "libraries.mainmenu"
+require 'libraries.controller'
+require 'libraries.TEsound'
 screen = {
 	width = love.graphics.getWidth(),
 	height = love.graphics.getHeight(),
@@ -143,7 +143,6 @@ function love.mousepressed(x,y,k)
 end
 
 function love.mousereleased(x,y,k)
-print (x,y)
 	if currentsystem.mousereleased then currentsystem:mousereleased(x,y,k) end
 	goo:mousereleased(x,y,k)
 	goo:keyreleased(k..'b',-1)

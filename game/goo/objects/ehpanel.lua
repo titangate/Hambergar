@@ -1,5 +1,4 @@
 
-attritubebackground = love.graphics.newImage('assets/UI/attritubebackground2.png')
 quads = {
 	topleft = love.graphics.newQuad(0,0,10,10,40,40),
 	topright = love.graphics.newQuad(30,0,10,10,40,40),

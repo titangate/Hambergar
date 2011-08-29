@@ -20,6 +20,14 @@ fonts.oldsans32 = love.graphics.newFont(GOO_SKINPATH .. 'oldsansblack.ttf', 32)
 fonts.bigfont = love.graphics.newFont("awesome.ttf",25)
 fonts.midfont = love.graphics.newFont("awesome.ttf",19)
 fonts.smallfont = love.graphics.newFont("awesome.ttf",13)
+attritubebackground = love.graphics.newImage(GOO_SKINPATH .. 'attritubebackground.png')
+
+function drawSkillLevel(x,y,level,maxlevel)
+	love.graphics.setFont(fonts.midfont)
+	love.graphics.setColor(0,0,0,255)
+	love.graphics.printf('LEVEL'..level,0,48,64,'center')
+	love.graphics.setColor(255,255,255,255)
+end
 
 style['goo panel'] = {
 	backgroundColor = {255,255,255},
@@ -31,6 +39,7 @@ style['goo panel'] = {
 
 style['goo skillbutton'] = {
 	textColor = {0,0,0},
+	yMargin = -20,
 	textFont = fonts.midfont,
 }
 style['goo learnbutton'] = {

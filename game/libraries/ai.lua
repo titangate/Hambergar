@@ -1,3 +1,5 @@
+require 'libraries.scene'
+require 'libraries.unit'
 STATE_FAIL = 0
 STATE_SUCCESS = 1
 STATE_ACTIVE = 2

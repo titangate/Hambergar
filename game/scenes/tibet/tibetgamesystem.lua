@@ -41,6 +41,7 @@ end
 
 function SetCharacter(c)
 	chr = c
+	assassinkilllistener:gotoState()
 end
 
 hpbar = AssassinHPBar:new(function()return GetCharacter():getHPPercent() end,30,30,200)

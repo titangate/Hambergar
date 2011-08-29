@@ -6,7 +6,7 @@ end
 function goo.learnbutton:setSkill(skill,face)
 	self.skill = skill
 	self.face = face
-	self.drawscale = 64/face:getHeight()
+	self.drawscale = self.h/face:getHeight()
 end
 
 
@@ -27,18 +27,15 @@ end
 
 function goo.learnbutton:onClick()
 	if self.parent.learn then
-		self.parent.learn(self.skill)
+		self.parent.learn(self.skill,self)
 	end
 end
 
 function goo.learnbutton:draw()
 	super.draw(self)
 	self:setColor({255,255,255})
---	if not self.skill or self.skill.level<= 0 then return end
 	if self.face then love.graphics.draw(self.face,0,0,0,self.drawscale) end
-	love.graphics.setFont(self.style.textFont)
-	self:setColor(self.style.textColor)
-	love.graphics.printf('LEVEL'..self.skill.level,0,48,64,'center')
+	drawSkillLevel(0,0,self.skill.level,self.skill.maxlevel)
 end
 
 return goo.learnbutton

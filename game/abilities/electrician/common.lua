@@ -1,0 +1,120 @@
+
+ElectricianPanelManager = Object:subclass('PanelManager')
+function ElectricianPanelManager:initialize(unit)
+	self.tree = ElectricianAbiTree:new(unit)
+--	self.character = AssassinCharacterPanel:new(unit)
+	self.currentsystem = self.tree
+	self.dt = 0
+end
+
+function ElectricianPanelManager:start(system)
+	if system == PANEL_ASSASSIN_ABI then
+		self.currentsystem = self.tree
+	elseif system == PANEL_ASSASSIN_CHAR then
+		self.currentsystem = self.character
+	end
+	self:show()
+end
+
+function ElectricianPanelManager:shift(system)
+	if system == self.currentsystem then
+		return
+	end
+	if self.currentsystem.container then
+		self.currentsystem.container:setVisible(false)
+	end
+	self.shiftsystem = system
+	self.shifttime = 1
+	if self.shiftsystem.container then
+		self.shiftsystem.container:setVisible(true)
+	end
+		if self.shiftsystem.show then
+			self.shiftsystem:show()
+		end
+end
+
+function ElectricianPanelManager:keypressed(k)
+	if self.shifttime or self.folddt < 1 or self.dt < 1.1 then
+		return
+	end
+	if k=='t' then
+		self:fold()
+	end
+	if k=='LB' or k=='c' then
+		self:shift(self.character)
+			gamelistener:notify({type = 'shiftpanel',panel = 'character'})
+	end
+	if k=='RB' or k=='a' then
+		self:shift(self.tree)
+			gamelistener:notify({type = 'shiftpanel',panel = 'ability'})
+	end
+	if self.currentsystem.keypressed then self.currentsystem:keypressed(k) end
+end
+
+function ElectricianPanelManager:keyreleased(k)
+	if self.currentsystem.keyreleased then self.currentsystem:keyreleased(k) end
+end
+
+function ElectricianPanelManager:mousepressed(x,y,k)
+	if self.currentsystem.mousepressed then self.currentsystem:mousepressed(x,y,k) end
+end
+
+function ElectricianPanelManager:mousereleased(x,y,k)
+	if self.currentsystem.mousereleased then self.currentsystem:mousereleased(x,y,k) end
+end
+
+function ElectricianPanelManager:show()
+	self.time = 100
+	self.dt = 0
+	self.folddt = 100
+	if self.currentsystem.container then
+		self.currentsystem.container:setVisible(true)
+	end
+		if self.currentsystem.show then
+			self.currentsystem:show()
+		end
+	gamelistener:notify({type = 'openpanel'})
+end
+function ElectricianPanelManager:fold()
+	self.folddt = 0
+end
+function ElectricianPanelManager:update(dt)
+	self.currentsystem:update(dt)
+	self.dt = self.dt + dt
+	self.folddt = self.folddt+dt
+end
+
+function ElectricianPanelManager:draw()
+	if self.dt < 1 then
+		map:draw()
+		love.graphics.translate(screen.halfwidth,screen.halfheight)
+		local scale = 2-self.dt
+		love.graphics.scale(scale)
+		love.graphics.translate(-screen.halfwidth,-screen.halfheight)
+		self.currentsystem:draw()
+	elseif self.folddt < 1 then
+		map:draw()
+		love.graphics.translate(screen.halfwidth,screen.halfheight)
+		local scale = self.folddt+1
+		love.graphics.scale(scale)
+		love.graphics.translate(-screen.halfwidth,-screen.halfheight)
+		self.currentsystem:draw()
+		if self.folddt>=0.95 then
+			if self.currentsystem.container then
+				self.currentsystem.container:setVisible(false)
+			end
+			popsystem()
+		end
+	elseif self.shifttime then
+--		love.graphics.draw(background,-self.dt/self.time*background:getWidth(),0,0,1.1,1.1)
+			map:draw()
+		love.graphics.translate((1-self.shifttime)*love.graphics.getWidth(),0)
+		self.currentsystem:draw()
+		love.graphics.translate(-love.graphics.getWidth(),0)
+		self.shiftsystem:draw()
+	else
+--		love.graphics.draw(background,-self.dt/self.time*background:getWidth(),0,0,1.1,1.1)
+			map:draw()
+		self.currentsystem:draw()
+	end
+end

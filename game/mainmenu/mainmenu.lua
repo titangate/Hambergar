@@ -56,7 +56,6 @@ b_grid:sizeToText()
 b_grid.onClick = function( self, button )
 	require 'scenes.grid.grid'
 	local gs = require 'scenes.grid.gridgamesystem'
---	require 'scenes.tibet.intro'
 	mainmenu:onClose()
 	SetGameSystem(gs)
 	GetGameSystem():load()

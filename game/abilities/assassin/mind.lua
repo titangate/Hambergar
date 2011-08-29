@@ -150,8 +150,11 @@ function MindListenerDWS:handle(event)
 		a.system:setColor(255, 168, 83,255,255,255,255,255)
 	end
 end
+local nothing = MindListener:addState('nothing')
+function nothing:handle() end
 
 assassinkilllistener = MindListener:new()
+assassinkilllistener:gotoState('nothing')
 gamelistener:register(assassinkilllistener)
 
 Mind = Skill:subclass('Mind')

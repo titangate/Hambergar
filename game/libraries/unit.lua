@@ -48,6 +48,7 @@ function Unit:initialize(x,y,rad,mass)
 	self.allowmovement = true
 	self.allowskill = true
 	self.allowmelee = true
+	self.allowactive = true
 	self.movementspeedbuff = 0
 	self.movementspeedbuffpercent = 1
 	self.spellspeedbuffpercent = 1
@@ -97,6 +98,11 @@ function Unit:damage(type,amount,source)
 	if self.hp <= 0 then self:kill(source) end
 	self:notifyListeners({type='damage',damagetype=type,damage=amount,unit=self,source=source})
 
+end
+
+function Unit:isEnemyOf(another)
+	return (self.controller == 'player' and another.controller == 'enemy') or
+	(self.controller == 'enemy' and another.controller == 'player')
 end
 
 function Unit:setAngle(angle)
@@ -201,16 +207,17 @@ function Unit:update(dt)
 	self.allowskill = true
 	self.allowmelee = true
 	self.controllable = true
+	self.allowactive = true
 	for k,v in pairs(self.buffs) do
+	if type(v)=='number' and v>=0 then
+		self.buffs[k] = v-dt
+		if self.buffs[k]<=0 then
+			self.buffs[k]=nil
+			if k.stop then k:stop(self) end
+		end
+	end
 		if k.buff then
 			k:buff(self,dt)
-		end
-		if type(v)=='number' and v>=0 then
-			self.buffs[k] = v-dt
-			if self.buffs[k]<=0 then
-				self.buffs[k]=nil
-				if k.stop then k:stop(self) end
-			end
 		end
 	end
 	-- all the buff/debuffs
@@ -327,6 +334,7 @@ function Character:initialize(x,y,rad,mass)
 	super.initialize(self,x,y,rad,mass)
 	self.probedt = 0
 	self.probetime = 0.02
+	self.animation = {}
 end
 
 function Character:pickUp(item)
@@ -382,7 +390,6 @@ function Character:save()
 end
 
 function Character:getManager()
-	
 	return self.manager
 end
 
@@ -444,8 +451,6 @@ function Character:update(dt)
 end
 
 function Character:load(save)
-	--self:setBuffActive(false)
-	--self.inventory:setEquipmentActive(false)
 	self.buffs = {}
 	self.inventory:clear()
 	for k,v in pairs(save) do

@@ -175,7 +175,6 @@ end
 CDActor = Object:subclass('CDActor')
 local cd = love.graphics.newImage('assets/UI/cd.png')
 function CDActor:draw(x,y,percent)
---	print ('cddraw')
 	if x then
 		self.x,self.y = x,y
 	end

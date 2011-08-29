@@ -1,0 +1,297 @@
+require 'MiddleClass'
+require 'PCB'
+backgroundcolor = {0,0,0,255}
+foregroundcolor = {255,255,255,255}
+wire = {}
+Chip = Object:subclass('Chip')
+function getVertex(x,y,t)
+	t = t or wire
+	return t[x*1024+y]
+end
+function setVertex(x,y,v,t)
+	t = t or wire
+	t[x*1024+y]=v
+end
+
+chipcount = 1
+
+function Chip:initialize(x,y,w,h)
+	self.x,self.y,self.w,self.h = x,y,w,h
+	for i=self.x,self.x+self.w do
+		setVertex(i,self.y,1)
+	end
+	
+	for i=self.x,self.x+self.w do
+		setVertex(i,self.y+self.h,1)
+	end
+	
+	for j=self.y,self.y+self.h do
+		setVertex(self.x,j,1)
+	end
+	
+	
+	for j=self.y,self.y+self.h do
+		setVertex(self.x+self.w,j,1)
+	end
+	self.name = 'chip'..chipcount
+	chipcount = chipcount + 1
+	table.insert(chips,self)
+end
+
+function Chip:draw()
+	love.graphics.setColor(backgroundcolor)
+	love.graphics.rectangle('fill',self.x,self.y,self.w+1,self.h+1)
+	love.graphics.setColor(foregroundcolor)
+	love.graphics.rectangle('line',self.x,self.y,self.w+1,self.h+1)
+end
+
+function heuristicValue(x1,y1,x2,y2)
+	return math.abs(x2-x1)+math.abs(y2-y1)
+end
+
+function Chip:getOrigin(x,y)
+	local targetx,targety=-1,-1
+	local hv = 99999999
+	for i=self.x,self.x+self.w do
+		if getVertex(i,self.y)==1 then
+			if heuristicValue(i,self.y,x,y) < hv then
+				hv = heuristicValue(i,self.y,x,y)
+				targetx,targety = i,self.y
+			end
+		end
+	end
+	
+	for i=self.x,self.x+self.w do
+		if getVertex(i,self.y+self.h)==1 then
+			if heuristicValue(i,self.y+self.h,x,y) < hv then
+				hv = heuristicValue(i,self.y+self.h,x,y)
+				targetx,targety = i,self.y+self.h
+			end
+		end
+	end
+	
+	for j=self.y,self.y+self.h do
+		if getVertex(self.x,j)==1 then
+			if heuristicValue(self.x,j,x,y) < hv then
+				hv = heuristicValue(self.x,j,x,y)
+				targetx,targety = self.x,j
+			end
+		end
+	end
+	
+	
+	for j=self.y,self.y+self.h do
+		if getVertex(self.x+self.w,j)==1 then
+			if heuristicValue(self.x+self.w,j,x,y) < hv then
+				hv = heuristicValue(self.x+self.w,j,x,y)
+				targetx,targety = self.x+self.w,j
+			end
+		end
+	end
+	for i=self.x+1,self.x+self.w-1 do
+		for j=self.y+1,self.y+self.h-1 do
+			setVertex(i,j,true)
+		end
+	end
+	return targetx,targety
+end
+
+local shifts = {
+	{-1,-1,1.4},
+	{0,-1,1},
+	{1,-1,1.4},
+	{-1,0,1},
+	{1,0,1},
+	{-1,1,1.4},
+	{0,1,1},
+	{1,1,1.4}
+}
+
+function getNeighborNodes(x,y)
+	return coroutine.wrap(function(nx,ny)
+		for k,v in pairs(shifts) do
+			local x,y = v[1]+nx,v[2]+ny
+			if not getVertex(x,y) then
+				coroutine.yield(x,y,v[3])
+			end
+		end
+	end),x,y
+end
+
+function aStar(x1,y1,x2,y2,v)
+	local closedset = {}
+	local openset = {}
+	setVertex(x1,y1,true,openset)
+	setVertex(x2,y2,nil)
+	setVertex(x1,y1,nil)
+	local camefrom = {}
+	local gscore = {}
+	local hscore = {}
+	local fscore = {}
+	setVertex(x1,y1,0,gscore)
+	setVertex(x1,y1,heuristicValue(x1,y1,x2,y2),hscore)
+	setVertex(x1,y1,getVertex(x1,y1,hscore),fscore)
+	while next(openset) do
+		local cx,cy=-1,-1
+		local fv = 99999999
+		for k,v in pairs(openset) do
+			local x,y=math.floor(k/1024),k%1024
+			if fv>getVertex(x,y,fscore) then
+				cx,cy = x,y
+				fv = getVertex(x,y,fscore)
+			end
+		end
+		if (cx==x2 and cy==y2 ) --[[or(cx>v.x and cx< v.x+v.w and cy>v.y and cy<v.y+v.h)]] then
+			print (cx,cy)
+			return reconstructPath(camefrom,cx*1024+cy)
+		end
+		setVertex(cx,cy,nil,openset)
+		setVertex(cx,cy,true,closedset)
+		for x,y,dis in getNeighborNodes(cx,cy) do
+			if not getVertex(x,y,closedset) then
+				tentative_g_score = getVertex(cx,cy,gscore)+dis
+				if not getVertex(x,y,openset) then
+					setVertex(x,y,true,openset)
+					tentative_is_better = true
+				elseif tentative_g_score < getVertex(x,y,gscore) then
+					tentative_is_better = true
+				else
+					tentative_is_better = false
+				end
+				if tentative_is_better then
+					setVertex(x,y,cx*1024+cy,camefrom)
+					setVertex(x,y,tentative_g_score,gscore)
+					setVertex(x,y,heuristicValue(x2,y2,x,y),hscore)
+					setVertex(x,y,getVertex(x,y,gscore)+getVertex(x,y,hscore),fscore)
+				end
+			end
+		end
+	end
+	return {}
+end
+
+function reconstructPath(camefrom,currentnode)
+	local path = {}
+	local x,y = math.floor(currentnode/1024),currentnode%1024
+	setVertex(x,y,true,wire)
+	table.insert(path,{x,y})
+	while getVertex(x,y,camefrom) do
+		currentnode = getVertex(x,y,camefrom)
+		x,y = math.floor(currentnode/1024),currentnode%1024
+		setVertex(x,y,true,wire)
+		table.insert(path,{x,y})
+	end
+	return path
+end
+
+cx1,cy1,cx2,cy2=0,0,0,0
+scale = 15
+wires = {}
+chips = {}
+chip1=Chip:new(20,1,32,5)
+chip2=Chip:new(10,1,7,5)
+chip3=Chip:new(31,8,11,6)
+chip4=Chip:new(30,28,12,7)
+chip5=Chip:new(16,9,9,9)
+chip6=Chip:new(48,8,9,9)
+chip7=Chip:new(8,28,5,5)
+chip8=Chip:new(48,22,9,6)
+chip9=Chip:new(8,8,3,3)
+chip10=Chip:new(8,12,3,3)
+chip11=Chip:new(8,16,3,3)
+chip12=Chip:new(60,22,3,3)
+chip13=Chip:new(60,26,3,3)
+chip14=Chip:new(60,30,3,3)
+chip15=Chip:new(24,34,3,3)
+chip16=Chip:new(45,34,3,3)
+
+function findChip(x,y)
+	x,y = math.floor(x/scale+0.5),math.floor(y/scale+0.5)
+	for k,v in ipairs(chips) do
+		if x>=v.x and x<= v.x+v.w and y>=v.y and y<=v.y+v.h then
+			return v
+		end
+	end
+end
+function love.draw()
+love.graphics.setColor(255,255,255,255)
+	love.graphics.scale(scale,scale)
+	for i,v in pairs(chips) do
+		v:draw()
+	end
+	for _,path in ipairs(wires) do
+		for i=2,#path do
+			love.graphics.line(path[i-1][1],path[i-1][2],path[i][1],path[i][2])
+		end
+	end
+	if love.mouse.isDown('l') then
+		love.graphics.rectangle('line',sx,sy,math.floor(love.mouse.getX()/scale)-sx,math.floor(love.mouse.getY()/scale)-sy)
+	end
+	love.graphics.setColor(255,255,255,100)
+	for i = 1,100 do
+		love.graphics.line(i,0,i,1024)
+		love.graphics.line(0,i,1024,i)
+	end
+		for i = 1,25 do
+			love.graphics.line(i*4,0,i*4,1024)
+			love.graphics.line(0,i*4,1024,i*4)
+		end
+end
+
+function love.mousepressed(x,y,b)
+--	x1,y1 = c:getOrigin(math.floor(x/scale),math.floor(y/scale))
+--	x2,y2 = math.floor(x/scale),math.floor(y/scale)
+--	table.insert(wires,aStar(x1,y1,x2,y2))
+	if b=='r' then
+		start = findChip(x,y)
+	end
+	if b=='l' then
+		sx,sy = math.floor(x/scale),math.floor(y/scale)
+	end
+end
+
+directedwire = {}
+function connect(chip1,chip2,wire)
+	table.insert(directedwire,{chip1,chip2,wire})
+end
+
+function love.mousereleased(x,y,b)
+	if b=='r' then
+		if start then
+			finish = findChip(x,y)
+			if finish then
+				x1,y1 = start:getOrigin(finish.x+finish.w/2,finish.y+finish.h/2)
+				x2,y2 = finish:getOrigin(x1,y1)
+				print (x1,y1,x2,y2)
+				local wire = aStar(x1,y1,x2,y2,finish)
+				table.insert(wires,wire)
+				connect(start,finish,wire)
+			end
+		end
+	end
+	if b=='l' then
+		if sx then
+			Chip:new(sx,sy,math.floor(x/scale)-sx,math.floor(y/scale)-sy)
+			sx = nil
+		end
+	end
+end
+
+function love.keypressed(k)
+	save()
+end
+
+function save()
+	for i,v in ipairs(chips) do
+		print ('chip'..i..'=Chip:new('..v.x..','..v.y..','..v.w..','..v.h..')')
+	end
+	for i,v in ipairs(directedwire) do
+		local chip1,chip2,wire = unpack(v)
+		local w = ''
+		for i,v in ipairs(wire) do
+			w = w..'{'..v[1]..','..v[2]..'},'
+		end
+		print (chip1.name..':connect('..chip2.name..',{'..w..'})')
+	end
+	print ()
+end

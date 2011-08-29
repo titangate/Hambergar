@@ -129,6 +129,15 @@ function GridGameSystem:keyreleased(k)
 	if k=='escape' then
 		self:pushState('pause')
 	end
+		if k=='i' then
+			map:addUnit(IALSwordsman:new(math.random(200),math.random(200),'enemy'))
+				map:addUnit(Station:new(math.random(200),math.random(200)))
+
+		end
+				if k=='j' then
+					map:addUnit(TV:new(math.random(200),math.random(200)))
+					map:addUnit(Computer:new(math.random(200),math.random(200)))
+				end
 --	buttongroup:keyreleased(k)
 end
 

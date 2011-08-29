@@ -185,7 +185,12 @@ function Map:findUnitsInArea(area)
 		return self:findUnitsWithCondition(
 			function(unit) 
 				return withincirclearea(unit,area.x,area.y,area.range)
-			end)
+		end)
+	elseif area.type == 'fan' then
+		return self:findUnitsWithCondition(
+			function(unit) 
+				return withinfanarea(unit,area.x,area.y,area.r,area.angle,area.range)
+		end)
 	end
 end
 
@@ -215,12 +220,13 @@ end
 
 function withinfanarea(unit,x,y,r,angle,range)
 	local angle2 = math.atan2(unit.y-y,unit.x-x)
-	if angle*angle2<0 then
-		angle = math.abs(angle+angle2)
-	else
-		angle = math.abs(angle2-angle)
+	if angle<0 then
+		angle = angle + math.pi*2
 	end
-	return getdistance(unit,{x=x,y=y})<r and angle<range
+	if angle2<0 then
+		angle2 = angle2 + math.pi*2
+	end
+	return getdistance(unit,{x=x,y=y})<r and math.abs(angle2-angle)<range
 end
 
 function getdistance(a,b)

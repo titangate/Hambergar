@@ -1,12 +1,14 @@
 Animation = Object:subclass('Animation')
-function Animation:initialize(image,w,h,interval,sx,sy,ox,oy)
+function Animation:initialize(image,w,h,interval,sx,sy,ox,oy,spacex,spacey)
+	spacex=spacex or 0
+	spacey=spacey or 0
 	self.quad = {}
 	if image then
 		local rw = math.floor(image:getWidth()/w)
 		local rh = math.floor(image:getHeight()/h)
 		for j=0,rh-1 do
 			for i = 0,rw-1 do
-				table.insert(self.quad,love.graphics.newQuad(i*w,j*h,w-2,h-2,image:getWidth(),image:getHeight()))
+				table.insert(self.quad,love.graphics.newQuad(i*w-spacex,j*h-spacey,w-2,h-2,image:getWidth(),image:getHeight()))
 			end
 		end
 		self.sx,self.sy = sx,sy

@@ -9,3 +9,10 @@ require ('abilities.assassin.tree.lua')
 require ('abilities.assassin.character')
 require "abilities.lizard"
 require 'abilities.assassin.ultimate'
+
+require 'abilities.electrician.battery'
+require 'abilities.electrician.cpu'
+require 'abilities.electrician.common'
+require 'abilities.electrician.transmitter'
+require 'abilities.electrician.lightning'
+require 'abilities.electrician.tree'

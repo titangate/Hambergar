@@ -27,7 +27,7 @@ end
 
 function ActiveSkill:isCD()
 	local groupname = self.groupname or self:className()
-	return self.unit:getCD(groupname)
+	return self.unit:getCD(groupname) or not(self.unit.allowactive)
 end
 
 StimEffect = UnitEffect:new()

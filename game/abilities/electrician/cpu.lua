@@ -210,10 +210,11 @@ end
 function LightningChain:getPanelData()
 	return{
 		title = 'Lightning Chain',
-		type = 'PRIMARY WEAPON',
+		type = 'ACTIVE',
 		attributes = {
-			{text = "Purely awesome weapon."},
-			{text = 'Firerate (per second)',data = function()return  string.format('%.1f',1/self.casttime) end},
+			{text = "Fire a lightning chain that jumps between enemies. Each jump decreases the damage of lightning chain by 30%"},
+			{text = "Upgrade to increase the maximum jump count and damage"},
+			{text = 'Jump count',data = function()return  self.jumpcount end},
 			{text = 'Damage',data = function()return  self.damage end},
 		}
 	}
@@ -324,40 +325,15 @@ function LightningBall:initialize(unit,level)
 	self.impact = 100
 end
 
+
 function LightningBall:getPanelData()
 	return{
-		title = 'LIGHTNING BOLT',
+		title = 'Orb Lightning',
 		type = 'ACTIVE',
 		attributes = {
-			{text = "Fire lightning bolt towards enemy. Consumes energy."},
-			{text = 'Firerate (per second)',data = function()return  string.format('%.1f',1/self.casttime) end},
-			{text = 'Damage',data = function()return  self.damage end},
-		}
-	}
-end
-
-
-function LightningBall:geteffectinfo()
-	return GetOrderPoint(),self.unit,self
-end
-
-function LightningBall:stop()
-	self.time = 0
-end
-
-function LightningBall:setLevel(lvl)
-	self.casttime = 0.7/(1+lvl*0.2) -- inversely proportional
-	self.level = lvl
-end
-
-
-function LightningBall:getPanelData()
-	return{
-		title = 'Lightning Chain',
-		type = 'PRIMARY WEAPON',
-		attributes = {
-			{text = "Purely awesome weapon."},
-			{text = 'Firerate (per second)',data = function()return  string.format('%.1f',1/self.casttime) end},
+			{text = "Throw a sphere of highly concentrated electronic energy. When explode, deal damage to nearby units(friend or foe), and push them back."},
+			{text = "Upgrade to increase the damage and impact"},
+			{text = 'Impact',data = function()return  self.impact end},
 			{text = 'Damage',data = function()return  self.damage end},
 		}
 	}

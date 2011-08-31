@@ -13,8 +13,12 @@ function Battery:initialize(unit,level)
 	self.isHub = true
 end
 
-function Battery:getSublevel(skill,n)
-	return math.floor(n/3.4+1)
+function Battery:getSublevel(skill)
+	if skill:isKindOf(CPU) then
+		print (self.level,self.level*0.66)
+		return math.ceil(self.level*0.66)
+	end
+	return math.floor(self.level/3.4+1)
 end
 
 function Battery:getPanelData()

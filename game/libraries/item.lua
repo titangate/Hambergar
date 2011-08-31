@@ -54,7 +54,7 @@ end
 
 function ItemSlot:draw()
 	love.graphics.setColor(255,255,255,163)
-	love.graphics.draw(slotimg,self.x+self.w/2,self.y+self.h/2,0,1,1,32,32)
+	love.graphics.draw(img.slotimg,self.x+self.w/2,self.y+self.h/2,0,1,1,32,32)
 	love.graphics.setColor(255,255,255,255)
 end
 --[[

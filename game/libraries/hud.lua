@@ -179,7 +179,7 @@ function CDActor:draw(x,y,percent)
 		self.x,self.y = x,y
 	end
 	for i=1,math.floor(percent*33) do
-		love.graphics.draw(cd,self.x,self.y,0.19*i,1,1,24,24)
+		love.graphics.draw(img.cd,self.x,self.y,0.19*i,1,1,24,24)
 	end
 end
 cdactor = CDActor:new()

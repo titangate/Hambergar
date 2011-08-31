@@ -12,27 +12,28 @@ function CPU:initialize(unit,level)
 	self.isHub = true
 end
 
-function CPU:getSublevel(skill,n)
+function CPU:getSublevel(skill)
 	if skill:isKindOf(Prism) then
-		return math.floor(self.level/10)+n
+		return math.floor(self.level/10)
 	elseif skill:isKindOf(LightningBolt) then
-		return math.floor(math.clamp(math.floor((self.level+1)/3)+1,1,4))
-	elseif skill:isKindOf(ChainLightning) then
-		return math.floor(math.clamp(math.floor((self.level+2)/3)+2,1,4))
-	elseif skill:isKindOf(OrbLightning) then
-		return math.floor(math.clamp(math.floor((self.level+3)/3)+3,1,4))
+		return math.floor(math.clamp(math.floor((self.level+2)/3),1,3))
+	elseif skill:isKindOf(LightningChain) then
+		return math.floor(math.clamp(math.floor((self.level+1)/3),0,3))
+	elseif skill:isKindOf(LightningBall) then
+		return math.floor(math.clamp(math.floor((self.level)/3),0,3))
 	end
 end
 
 function CPU:getPanelData()
 	return{
-		title = 'HOLLY',
+		title = 'GP 8044',
 		type = 'Centrual Processing Unit',
 		attributes = {
-			{text = "The energy source which maintains the functionalities of HOLLY and the life of the electrician himself."},
-			{text = "Provide 1 unit of energy supply per level. Energy supply restrict the electrician's other chips."},
-			{text = "Upgrades increase the effeciency of draining."},
-			{text = "Ultimate upgrade",data='Automatic Drain'},
+			{text = "A extremely powerful quantum processer that can solve any NP-hard problems in constant time."},
+			{text = "Upgrades increase the damage of Lightning Bolt."},
+			{text = "Upgrades increase the effect of Chain Lightning."},
+			{text = "Upgrades increase the effect of Ball Lightning."},
+			{text = "Ultimate upgrade",data='Powerup Prism'},
 		}
 	}
 end
@@ -42,6 +43,9 @@ function CPU:setLevel(lvl)
 	self.level = lvl
 	if lvl>1 then
 		return {
+			self.unit.skills.lightningbolt,
+			self.unit.skills.lightningchain,
+			self.unit.skills.lightningball,
 		}
 		else
 		return {}
@@ -100,8 +104,7 @@ function BoltMissile:add(unit,coll)
 			self.trail.dt = 99
 			self.draw = function() end
 			self.persist = function() end
-			local ip = LightningImpact:new(10,0.1,0.05,1,{255,255,255},0.3)
-			ip.x,ip.y = unit.x,unit.y
+			local ip = LightningImpact:new(unit,10,0.1,0.05,1,{255,255,255},0.3)
 			map:addUpdatable(ip)
 		end
 	end
@@ -167,107 +170,6 @@ function LightningBolt:setLevel(lvl)
 	self.level = lvl
 end
 
-b_Ionicform = Buff:subclass('b_Ionicform')
-function b_Ionicform:initialize(point,caster,skill)
-	self.point = point
-	self.skill = skill
-end
-
-function b_Ionicform:start(unit)
-	self.trail = BoltTrail:new(unit)
-	unit.movementspeedbuffpercent = unit.movementspeedbuffpercent + self.skill.movementspeedbuffpercent
-	self.beam = Beam:new({x=unit.x,y=unit.y},unit,1,100,{255,255,255})
-	map:addUpdatable(self.trail)
-	map:addUpdatable(self.beam)
-	unit.shape:setSensor(true)
-end
-
-function b_Ionicform:stop(unit)
-	unit.state = 'slide'
-	unit.movementspeedbuffpercent = unit.movementspeedbuffpercent - self.skill.movementspeedbuffpercent
-	unit.body:setLinearVelocity(0,0)
-	unit.shape:setSensor(false)
-	self.trail.dt = 99
-	self.beam.life = 0.5
-end
-
-function b_Ionicform:buff(unit,dt)
-	unit.direction = self.point;
-	unit.state = 'move';
-	self.beam.x2,self.beam.y2 = unit.x,unit.y
-	unit.mp = unit.mp-dt*self.skill.manacost
-	if unit.mp<200 then
-		unit:stop()
-	end
-end
-
-IonicformEffect = ShootMissileEffect:new()
-IonicformEffect:addAction(function(point,caster,skill)
-	local buff = b_Ionicform:new(point,caster,skill)
-	caster:addBuff(buff,99)
-	skill.buff = buff
-end)
-
-Ionicform = Skill:subclass('Ionicform')
-function Ionicform:initialize(unit,level)
-	level = level or 0
-	super.initialize(self)
-	self.unit = unit
-	self.name = 'Ionicform'
-	self.effecttime = 9999
-	self.effect = IonicformEffect
-	self:setLevel(level)
-	self.movementspeedbuffpercent = 10
-	self.maxlevel = 3
-	self.manacost = 30
-end
-
-function Ionicform:getPanelData()
-	return{
-		title = 'Ionicform',
-		type = 'PRIMARY WEAPON',
-		attributes = {
-			{text = "Purely awesome weapon."},
-			{text = 'Firerate (per second)',data = function()return  string.format('%.1f',1/self.casttime) end},
-			{text = 'Damage',data = function()return  self.damage end},
-		}
-	}
-end
-
-function Ionicform:startChannel()
-	if self.unit.mp<200 then return end
-	self.effect:effect(self:getorderinfo())
-	self.unit:playAnimation('ionicform',1,true)
-end
-
-function Ionicform:endChannel()
-	print 'end'
-	if self.buff then
-		for k,v in pairs(self.unit.buffs) do
-			print (k,v,'before')
-		end
-		self.unit:removeBuff(self.buff)
-		for k,v in pairs(self.unit.buffs) do
-			print (k,v,'after')
-		end
-	end
-	self.unit:resetAnimation()
-	self.buff = nil
-end
-
-function Ionicform:geteffectinfo()
-	return GetOrderDirection(),self.unit,self
-end
-
-function Ionicform:stop()
-	self.time = 0
-end
-
-function Ionicform:setLevel(lvl)
-	self.casttime = 0.7/(1+lvl*0.2) -- inversely proportional
-	self.level = lvl
-end
-
 LightningChain = ActiveSkill:subclass('LightningChain')
 
 LightningChainEffect = ShootMissileEffect:new()
@@ -286,8 +188,7 @@ LightningChainEffect:addAction(function(point,caster,skill)
 			local l = Beam:new(units[i-1],units[i],1,1,{255,255,255})
 			map:addUpdatable(l)
 			units[i]:damage('Electric',skill.damage*math.pow(skill.damagedecay,i),caster)
-			local ip = LightningImpact:new(10,0.1,0.05,1,{255,255,255},0.3)
-			ip.x,ip.y = units[i].x,units[i].y
+			local ip = LightningImpact:new(units[i],10,0.1,0.05,1,{255,255,255},0.3)
 			map:addUpdatable(ip)
 			TEsound.play('sound/chainlightning.wav')
 		end,true,true)
@@ -306,7 +207,6 @@ function LightningChain:initialize(unit,level)
 	self.cdtime = 0
 	self.manacost = 50
 end
-
 function LightningChain:getPanelData()
 	return{
 		title = 'Lightning Chain',
@@ -346,4 +246,146 @@ function LightningChain:setLevel(lvl)
 	self.jumpcount = lvl+2
 	self.damage = lvl * 100+200
 	self.damagedecay = 0.7
+end
+
+requireImage('assets/electrician/lightningball.png','lightningball')
+LightningBallUnit = Missile:subclass('LightningBallUnit')
+
+function LightningBallUnit:preremove()
+	super.preremove(self)
+	self.skill.bulleteffect:effect({self.x,self.y},self.unit,self.skill)
+	local ip = LightningImpact:new(self,30,0.25,0.05,1,{255,255,255},1)
+	map:addUpdatable(ip)
+end
+
+function LightningBallUnit:update(dt)
+	super.update(self,dt)
+	if self.dt>1 then
+		self.body:setLinearVelocity(0,0)
+	end
+end
+
+function LightningBallUnit:draw()
+	love.graphics.draw(img.lightningball,self.x,self.y,math.random(),1,1,32,32)
+end
+
+BallEffect = ShootMissileEffect:new()
+BallEffect:addAction(function(point,caster,skill)
+	local sx,sy = point[1]-caster.x,point[2]-caster.y
+	local v = math.sqrt(sx*sx+sy*sy)
+	sx,sy=normalize(sx,sy)
+	local Missile = LightningBallUnit:new(4,1,v,caster.x,caster.y,sx,sy)
+	local ip = LightningImpact:new(Missile,30,0.1,0.05,4,{255,255,255},0.3)
+	map:addUpdatable(ip)
+	Missile.controller = caster.controller..'Missile'
+	Missile.effect = BallDamageEffect
+	Missile.skill = skill
+	Missile.unit = caster
+	map:addUnit(Missile)
+	caster:playAnimation('attack',1,false)
+end)
+
+BallDamageEffect = CircleAoEEffect:new(200)
+BallDamageEffect:addAction(function (area,caster,skill)
+	local units = map:findUnitsInArea(area)
+	for k,v in pairs(units) do
+		if v:isKindOf(Unit) then
+			local impact = skill.impact
+			local x,y=normalize(v.x-area.x,v.y-area.y)
+			x,y=x*impact,y*impact
+			if v.body and not v.immuneimpact then
+				v.body:applyImpulse(x,y)
+			end
+			print (v.hp,'before')
+			print (skill.damage)
+			v:damage('Electric',skill.damage,caster)
+			print (v.hp,'after')
+		end
+	end
+	TEsound.play('sound/thunderclap.wav')
+end)
+
+
+LightningBall = ActiveSkill:subclass('LightningBall')
+function LightningBall:initialize(unit,level)
+	level = level or 0
+	super.initialize(self)
+	self.unit = unit
+	self.bullettype = BoltMissile
+	self.name = 'LightningBall'
+	self.effecttime = 0.1
+	self.damage = 50
+	self.effect = BallEffect
+	self.bulleteffect = BallDamageEffect
+	self:setLevel(level)
+	self.manacost = 20
+	self.cd=1
+	self.cdtime = 0
+	self.impact = 100
+end
+
+function LightningBall:getPanelData()
+	return{
+		title = 'LIGHTNING BOLT',
+		type = 'ACTIVE',
+		attributes = {
+			{text = "Fire lightning bolt towards enemy. Consumes energy."},
+			{text = 'Firerate (per second)',data = function()return  string.format('%.1f',1/self.casttime) end},
+			{text = 'Damage',data = function()return  self.damage end},
+		}
+	}
+end
+
+
+function LightningBall:geteffectinfo()
+	return GetOrderPoint(),self.unit,self
+end
+
+function LightningBall:stop()
+	self.time = 0
+end
+
+function LightningBall:setLevel(lvl)
+	self.casttime = 0.7/(1+lvl*0.2) -- inversely proportional
+	self.level = lvl
+end
+
+
+function LightningBall:getPanelData()
+	return{
+		title = 'Lightning Chain',
+		type = 'PRIMARY WEAPON',
+		attributes = {
+			{text = "Purely awesome weapon."},
+			{text = 'Firerate (per second)',data = function()return  string.format('%.1f',1/self.casttime) end},
+			{text = 'Damage',data = function()return  self.damage end},
+		}
+	}
+end
+
+function LightningBall:active()
+	if self:isCD() then
+		return false,'Ability Cooldown'
+	end
+	if self.unit:getMP()<self.manacost then
+		return false,'Not enough MP'
+	end
+	self.unit.mp = self.unit.mp - self.manacost
+	super.active(self)
+	self.effect:effect(self:getorderinfo())
+	return true
+end
+
+function LightningBall:geteffectinfo()
+	return GetOrderPoint(),self.unit,self
+end
+
+function LightningBall:stop()
+	self.time = 0
+end
+
+function LightningBall:setLevel(lvl)
+	self.casttime = 0.7/(1+lvl*0.2) -- inversely proportional
+	self.level = lvl
+	self.damage = lvl * 75+100
 end

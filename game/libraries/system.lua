@@ -38,8 +38,9 @@ function love.graphics.newImage(name)
 end
 
 img={}
-function requireImage(path,label)
-	img[label]=love.graphics.newImage(path)
+function requireImage(path,label,t)
+	t = t or img
+	t[label]=love.graphics.newImage(path)
 end
 
 Listener = Object:subclass('Listener')

@@ -13,7 +13,7 @@ for i,v in ipairs(files) do
 	end
 end
 
-spirit = love.graphics.newImage('assets/spirit.png')
+requireImage('assets/spirit.png','spirit')
 
 function AssassinAbiTree:initialize(unit)
 	self.unit = unit

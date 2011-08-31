@@ -7,7 +7,7 @@ function drain(unit,source,amount)
 	end
 end
 
-station = love.graphics.newImage('assets/drainable/station.png')
+requireImage('assets/drainable/station.png','station')
 Station = Unit:subclass('Station')
 function Station:initialize(x,y)
 	super.initialize(self,x,y,48,10)
@@ -22,7 +22,7 @@ function Station:draw()
 	end
 end
 
-computer = love.graphics.newImage('assets/drainable/computer.png')
+requireImage('assets/drainable/computer.png','computer')
 Computer = Unit:subclass('Computer')
 function Computer:initialize(x,y)
 	super.initialize(self,x,y,12,10)
@@ -38,7 +38,7 @@ function Computer:draw()
 end
 
 
-tv = love.graphics.newImage('assets/drainable/tv.png')
+requireImage('assets/drainable/tv.png','tv')
 TV = Unit:subclass('TV')
 function TV:initialize(x,y)
 	super.initialize(self,x,y,12,10)

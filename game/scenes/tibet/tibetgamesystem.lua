@@ -121,7 +121,7 @@ function TibetGameSystem:update(dt)
 	TutorialSystem:update(dt)
 end
 
-cursor = love.graphics.newImage('assets/UI/pointer.png')
+requireImage('assets/UI/pointer.png','cursor')
 function TibetGameSystem:draw()
 	map:draw()
 	hpbar:draw()

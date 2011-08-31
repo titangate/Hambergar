@@ -166,7 +166,7 @@ end
 function FlamingSpearTrail:draw()
 	love.graphics.draw(self.p)
 end
-flamingspear = love.graphics.newImage('assets/missile/flamingspear.png')
+requireImage('assets/missile/flamingspear.png','flamingspear')
 FlamingSpearMissile = Missile:subclass('FlamingSpearMissile')
 function FlamingSpearMissile:initialize(...)
 	super.initialize(self,...)
@@ -219,7 +219,7 @@ function FlamingSpear:stop()
 	self.time = 0
 end
 
-volcano = love.graphics.newImage('assets/ial/volcano.png')
+requireImage('assets/ial/volcano.png','volcano')
 VolcanoActor = Object:subclass('FlamingSpearTrail')
 function VolcanoActor:initialize(x,y)
 	self.x,self.y = x,y

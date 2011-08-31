@@ -1,8 +1,8 @@
 
-background = love.graphics.newImage('assets/qmsht.jpg')
-scroll = love.graphics.newImage('assets/scroll.png')
+requireImage('assets/qmsht.jpg','background')
+requireImage('assets/scroll.png','scroll')
 requireImage('assets/scrollbackground.jpg','scrollbackground')
-scroll:setWrap('repeat','repeat')
+img.scroll:setWrap('repeat','repeat')
 scrollq = love.graphics.newQuad(0,0,50,640,50,320)
 function getExplosionAction(impact,buff,filter)
 	return function (area,caster,skill)
@@ -120,7 +120,7 @@ function AssassinPanelManager:draw()
 	if self.dt < 1.1 then
 		map:draw()
 		love.graphics.setScissor(0,0,love.graphics.getWidth()*self.dt,love.graphics.getHeight())
-		love.graphics.draw(img.background,-self.dt/self.time*background:getWidth(),0,0,1.1,1.1)
+		love.graphics.draw(img.background,-self.dt/self.time*img.background:getWidth(),0,0,1.1,1.1)
 		self.currentsystem:draw()
 		love.graphics.drawq(img.scroll,scrollq,love.graphics.getWidth()*self.dt-50,0,0,1,1)
 		love.graphics.setScissor()
@@ -128,7 +128,7 @@ function AssassinPanelManager:draw()
 		map:draw()
 		
 		love.graphics.setScissor(0,0,love.graphics.getWidth()*(1-self.folddt),love.graphics.getHeight())
-		love.graphics.draw(img.background,-self.dt/self.time*background:getWidth(),0,0,1.1,1.1)
+		love.graphics.draw(img.background,-self.dt/self.time*img.background:getWidth(),0,0,1.1,1.1)
 		
 		self.currentsystem:draw()
 		love.graphics.setScissor()
@@ -140,13 +140,13 @@ function AssassinPanelManager:draw()
 			popsystem()
 		end
 	elseif self.shifttime then
-		love.graphics.draw(img.background,-self.dt/self.time*background:getWidth(),0,0,1.1,1.1)
+		love.graphics.draw(img.background,-self.dt/self.time*img.background:getWidth(),0,0,1.1,1.1)
 		love.graphics.translate((1-self.shifttime)*love.graphics.getWidth(),0)
 		self.currentsystem:draw()
 		love.graphics.translate(-love.graphics.getWidth(),0)
 		self.shiftsystem:draw()
 	else
-		love.graphics.draw(img.background,-self.dt/self.time*background:getWidth(),0,0,1.1,1.1)
+		love.graphics.draw(img.background,-self.dt/self.time*img.background:getWidth(),0,0,1.1,1.1)
 		self.currentsystem:draw()
 	end
 end

@@ -16,7 +16,7 @@ fonts.default24 = love.graphics.newFont(24)
 fonts.oldsans12 = love.graphics.newFont( GOO_SKINPATH .. 'oldsansblack.ttf', 12)
 fonts.oldsans24 = love.graphics.newFont(GOO_SKINPATH .. 'oldsansblack.ttf', 24)
 fonts.oldsans32 = love.graphics.newFont(GOO_SKINPATH .. 'oldsansblack.ttf', 32)
-attritubebackground = love.graphics.newImage(GOO_SKINPATH .. 'attritubebackground.png')
+requireImage(GOO_SKINPATH..'attritubebackground.png','attritubebackground')
 
 style['goo panel'] = {
 	backgroundColor = {255,255,255},

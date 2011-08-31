@@ -45,8 +45,8 @@ function MindRipfield:geteffectinfo()
 	return self.point,self.unit,self
 end
 
-rip = love.graphics.newImage('assets/rip.png')
-ripcircle = love.graphics.newImage('assets/ripcircle.png')
+requireImage('assets/rip.png','rip')
+requireImage('assets/ripcircle.png','ripcircle')
 MindRipFieldActor = Object:subclass('MindRipFieldActor')
 function MindRipFieldActor:initialize(x,y)
 	self.x,self.y=x,y

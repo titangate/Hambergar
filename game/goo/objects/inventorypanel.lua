@@ -1,5 +1,5 @@
 
-slotimg = love.graphics.newImage('assets/UI/slot.png')
+requireImage('assets/UI/slot.png','slotimg')
 goo.itembuttonslot = class('goo itembuttonslot', goo.object)
 function goo.itembuttonslot:initialize( parent )
 	super.initialize(self,parent)

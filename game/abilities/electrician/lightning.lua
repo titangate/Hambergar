@@ -12,7 +12,8 @@ for i,v in ipairs(filesTable) do
 	end
 end
 LightningImpact=Object:subclass('LightningImpact')
-function LightningImpact:initialize(branch,scale,cycle,life,color,freq)
+function LightningImpact:initialize(pos,branch,scale,cycle,life,color,freq)
+	self.pos=pos
 	self.branch = {}
 	self.freq = freq or 1
 	self.scale = scale or 1
@@ -30,6 +31,9 @@ end
 
 function LightningImpact:update(dt)
 	self.dt = self.dt + dt
+	if self.pos then
+		self.x,self.y=self.pos.x,self.pos.y
+	end
 	if self.dt > self.cycle then
 		self.dt = self.dt - self.cycle
 		for i=1,3 do
@@ -98,7 +102,7 @@ local beamimage = {
 	love.graphics.newImage('beam/l2.png'),
 	love.graphics.newImage('beam/l3.png'),
 }
-beamimage.drain = love.graphics.newImage('beam/drain.png')
+beamimage.drain=love.graphics.newImage('beam/drain.png')
 for k,v in pairs(beamimage) do
 	v:setWrap('repeat','clamp')
 end

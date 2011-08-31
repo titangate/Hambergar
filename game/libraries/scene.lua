@@ -176,7 +176,7 @@ function Map:draw()
 	end
 	local x,y = unpack(GetOrderDirection())
 	local px,py = unpack(GetOrderPoint())
-	love.graphics.draw(cursor,px,py,math.atan2(y,x),1,1,16,16)
+	love.graphics.draw(img.cursor,px,py,math.atan2(y,x),1,1,16,16)
 	if self.camera then map.camera:revert() end
 end
 

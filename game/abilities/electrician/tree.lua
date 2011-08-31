@@ -1,3 +1,14 @@
+
+files = love.filesystem.enumerate('assets/electrician/icon')
+for i,v in ipairs(files) do
+	if love.filesystem.isFile('assets/electrician/icon/'..v) then
+		local f = v:gmatch("(%w+).(%w+)")
+		local file,ext=f()
+		if ext=='png' then
+			requireImage('assets/electrician/icon/'..v,file,icontable)
+		end
+	end
+end
 ElectricianAbiTree = Object:subclass('ElectricianAbiTree')
 local pcb=require 'abilities.electrician.pcb'
 local scale = 15
@@ -9,7 +20,7 @@ function ElectricianAbiTree:initialize(unit)
 	self.battery:setPos(pcb.battery.x*scale,pcb.battery.y*scale)
 	self.battery:setSize(pcb.battery.w*scale,pcb.battery.h*scale)
 	-- TODO: FOR REAL
-	self.battery:setSkill(unit.skills.battery,batteryimg)
+	self.battery:setSkill(unit.skills.battery,img.batteryimg)
 	self.battery.chip = pcb.battery
 	
 	-- Drain
@@ -17,15 +28,41 @@ function ElectricianAbiTree:initialize(unit)
 	self.drain:setPos(pcb.drain.x*scale,pcb.drain.y*scale)
 	self.drain:setSize(pcb.drain.w*scale,pcb.drain.h*scale)
 	
-	self.drain:setSkill(unit.skills.drain,pulse)
+	self.drain:setSkill(unit.skills.drain,img.pulse)
 	self.drain.chip = pcb.drain
 	-- CPU
 	self.cpu = goo.learnbutton:new(self.container)
 	self.cpu:setPos(pcb.cpu.x*scale,pcb.cpu.y*scale)
 	self.cpu:setSize(pcb.cpu.w*scale,pcb.cpu.h*scale)
 	
-	self.cpu:setSkill(unit.skills.cpu,pulse)
+	self.cpu:setSkill(unit.skills.cpu,img.cpu)
 	self.cpu.chip = pcb.cpu
+	-- Lightning bolt
+	
+	self.lightningbolt = goo.learnbutton:new(self.container)
+	self.lightningbolt:setPos(pcb.cpu1.x*scale,pcb.cpu1.y*scale)
+	self.lightningbolt:setSize(pcb.cpu1.w*scale,pcb.cpu1.h*scale)
+	
+	self.lightningbolt:setSkill(unit.skills.lightningbolt,icontable.bolt)
+	self.lightningbolt.chip = pcb.cpu1
+	
+	-- Lightning Chain
+	
+	self.lightningchain = goo.learnbutton:new(self.container)
+	self.lightningchain:setPos(pcb.cpu2.x*scale,pcb.cpu2.y*scale)
+	self.lightningchain:setSize(pcb.cpu2.w*scale,pcb.cpu2.h*scale)
+	
+	self.lightningchain:setSkill(unit.skills.lightningchain,icontable.lightningchain)
+	self.lightningchain.chip = pcb.cpu2
+	
+	-- Lightning Ball
+	
+	self.lightningball = goo.learnbutton:new(self.container)
+	self.lightningball:setPos(pcb.cpu3.x*scale,pcb.cpu3.y*scale)
+	self.lightningball:setSize(pcb.cpu3.w*scale,pcb.cpu3.h*scale)
+	
+	self.lightningball:setSkill(unit.skills.lightningball,icontable.lightningball)
+	self.lightningball.chip = pcb.cpu3
 	
 	local p = love.graphics.newParticleSystem(img.pulse,1024)
 	print ((pcb.battery.x+pcb.battery.w/2)*scale,(pcb.battery.y+pcb.battery.h/2)*scale,'battery')
@@ -95,9 +132,9 @@ function ElectricianAbiTree:learn(skill,button)
 			for k,v in ipairs(skill:setLevel(skill.level+1))do
 				if v then
 					if v.isHub then
-						v.maxlevel = v.maxlevel+1
+						v.maxlevel = skill:getSublevel(v)
 					else
-						v:setLevel(skill:getSublevel(skill,skill.level+1))
+						v:setLevel(skill:getSublevel(v))
 					end
 				end
 			end

@@ -1,13 +1,8 @@
 
-requireImage( 'assets/assassin/life.png','icontable.life' )
-requireImage( 'assets/assassin/mind.png','icontable.mind' )
-requireImage( 'assets/assassin/weapon.png','icontable.weapon' )
-icontable=
-{
-	life = img['icontable.life'],
-	mind = img['icontable.mind'],
-	weapon = img['icontable.weapon'],
-}
+icontable={}
+requireImage( 'assets/assassin/life.png','life',icontable )
+requireImage( 'assets/assassin/mind.png','mind',icontable )
+requireImage( 'assets/assassin/weapon.png','weapon',icontable )
 
 
 AttributeItem = Object:subclass('AttributeItem')

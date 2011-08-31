@@ -1,4 +1,4 @@
-foreguard = love.graphics.newImage('assets/lizardguard/foreguard.png')
+requireImage('assets/lizardguard/foreguard.png','foreguard')
 LizardForeguard = Unit:subclass('LizardForeguard')
 function LizardForeguard:initialize(x,y,controller)
 --	print (x,y)

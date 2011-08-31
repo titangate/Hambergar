@@ -158,7 +158,7 @@ function AssassinCharacterPanel:keypressed(k)
 	end
 end
 
-local pioneer = love.graphics.newImage('assets/UI/river.png')
+requireImage( 'assets/UI/river.png','pioneer' )
 function AssassinCharacterPanel:draw()
 	love.graphics.draw(img.pioneer,love.graphics.getWidth()-350,love.graphics.getHeight()-420)
 	goo:draw()

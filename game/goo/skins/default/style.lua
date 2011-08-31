@@ -20,7 +20,7 @@ fonts.oldsans32 = love.graphics.newFont(GOO_SKINPATH .. 'oldsansblack.ttf', 32)
 fonts.bigfont = love.graphics.newFont("awesome.ttf",25)
 fonts.midfont = love.graphics.newFont("awesome.ttf",19)
 fonts.smallfont = love.graphics.newFont("awesome.ttf",13)
-attritubebackground = love.graphics.newImage(GOO_SKINPATH .. 'attritubebackground.png')
+requireImage(GOO_SKINPATH..'attritubebackground.png','attritubebackground')
 
 function drawSkillLevel(x,y,level,maxlevel)
 	love.graphics.setFont(fonts.midfont)

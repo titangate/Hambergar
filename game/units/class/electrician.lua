@@ -5,17 +5,6 @@ animation.weaponsword = Animation:new(love.graphics.newImage('assets/electrician
 
 Electrician = Character:subclass('Electrician')
 
-files = love.filesystem.enumerate('assets/electrician/icon')
-electricianicon = {}
-for i,v in ipairs(files) do
-	if love.filesystem.isFile('assets/electrician/icon/'..v) then
-		local f = v:gmatch("(%w+).(%w+)")
-		local file,ext=f()
-		if ext=='png' then
-			electricianicon[file] = love.graphics.newImage('assets/electrician/icon/'..v)
-		end
-	end
-end
 
 function Electrician:initialize(x,y)
 	super.initialize(self,x,y,16,10)
@@ -27,15 +16,16 @@ function Electrician:initialize(x,y)
 		battery = Battery:new(self,1),
 		lightningbolt = LightningBolt:new(self,1),
 		ionicform = Ionicform:new(self,3),
-		lightningchain = LightningChain:new(self,1),
+		lightningchain = LightningChain:new(self,0),
 		drain = Drain:new(self,1),
+		lightningball = LightningBall:new(self,0),
 		cpu = CPU:new(self,1)
 	}
 	self.animation = {
 		stand = animation.electrician:subSequence(1,4),
 		attack = animation.electrician:subSequence(5,10),
 		active = animation.electrician:subSequence(18,21),
-		ionicform = {reset=function()end,update=function()end,draw=function(self,x,y,r) love.graphics.draw(pulse,x,y,0,2,2,16,16) end},
+		ionicform = {reset=function()end,update=function()end,draw=function(self,x,y,r) love.graphics.draw(img.pulse,x,y,0,2,2,16,16) end},
 	}
 	self.weapons = {
 		stand = animation.weaponsword:subSequence(1,4),
@@ -57,10 +47,11 @@ end
 function Electrician:getSkillpanelData()
 	return {
 		buttons = {
-			{skill = self.skills.lightningbolt,hotkey='lb',face=electricianicon.bolt},
-			{skill = self.skills.ionicform,hotkey='rb',face=electricianicon.ionicform},
-			{skill = self.skills.lightningchain,hotkey='g',face=electricianicon.lightningchain},
-			{skill = self.skills.drain,hotkey='q',face=electricianicon.drain},
+			{skill = self.skills.lightningbolt,hotkey='lb',face=icontable.bolt},
+			{skill = self.skills.ionicform,hotkey='rb',face=icontable.ionicform},
+			{skill = self.skills.lightningchain,hotkey='g',face=icontable.lightningchain},
+			{skill = self.skills.drain,hotkey='q',face=icontable.drain},
+			{skill = self.skills.lightningball,hotkey='e',face=icontable.lightningball},
 		}
 	}
 end

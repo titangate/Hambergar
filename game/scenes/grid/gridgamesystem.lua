@@ -83,7 +83,7 @@ function GridGameSystem:update(dt)
 	TutorialSystem:update(dt)
 end
 
-cursor = love.graphics.newImage('assets/UI/pointer.png')
+requireImage('assets/UI/pointer.png','cursor')
 function GridGameSystem:draw()
 	map:draw()
 	hpbar:draw()
@@ -136,7 +136,7 @@ function GridGameSystem:keyreleased(k)
 	end
 		if k=='i' then
 			map:addUnit(IALSwordsman:new(math.random(200),math.random(200),'enemy'))
-				map:addUnit(Station:new(math.random(200),math.random(200)))
+--				map:addUnit(Station:new(math.random(200),math.random(200)))
 
 		end
 				if k=='j' then

@@ -25,9 +25,9 @@ love.graphics.draw(img.ore2,GetCharacter().x/7+400,GetCharacter().y/7+188)
 	love.graphics.line(0,n,2000,n)
 end]]
 end
-ore1 = love.graphics.newImage('assets/ore1.png')
-ore2 = love.graphics.newImage('assets/ore2.png')
-greenearth = love.graphics.newImage('assets/greenearth.png')
+requireImage('assets/ore1.png','ore1')
+requireImage('assets/ore2.png','ore2')
+requireImage('assets/greenearth.png','greenearth')
 earth = {}
 function earth:draw()
 end
@@ -80,7 +80,7 @@ function Grid:update(dt)
 	super.update(self,dt)
 end
 
-gridfilter = love.graphics.newImage("assets/gridfilter.png")
+requireImage("assets/gridfilter.png",'gridfilter')
 function Grid:draw()
 	super.draw(self)
 	for i,v in ipairs(self.flows) do

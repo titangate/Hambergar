@@ -1,4 +1,4 @@
-bullet = love.graphics.newImage('assets/assassin/bullet.png')
+requireImage('assets/assassin/bullet.png','bullet')
 
 Bullet = Missile:subclass('Bullet')
 function Bullet:initialize(...)

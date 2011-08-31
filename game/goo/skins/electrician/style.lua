@@ -25,8 +25,9 @@ requireImage( GOO_SKINPATH .. 'attritubebackground.png','attritubebackground')
 
 
 requireImage(GOO_SKINPATH .. 'battery.png','batteryimg')
+requireImage(GOO_SKINPATH .. 'cpu.png','cpu')
 
-local levelimg = love.graphics.newImage(GOO_SKINPATH .. 'electricianlevel.png')
+requireImage(GOO_SKINPATH..'electricianlevel.png','levelimg')
 local levelquad = love.graphics.newQuad(0,0,24,24,48,24)
 function drawSkillLevel(x,y,current,max)
 	levelquad:setViewport(0,0,24,24)

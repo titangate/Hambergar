@@ -361,7 +361,7 @@ function goo.itempanel:fillPanel(data,pedal)
 	end
 	self.elements = {}
 	self.attributes={}
-	self.title = string.upper(data.title)
+	self:setTitle(string.upper(data.title))
 	local h = 0
 	self.elements.type = goo.imagelabel:new(self)
 	self.elements.type:setAlignMode('center')
@@ -388,6 +388,6 @@ function goo.itempanel:fillPanel(data,pedal)
 		end
 		h = h+a.h+pedal
 	end	
-	self:setSize(self.w,h+self.style.titleHeight)
+	self:setSize(self.w,h+self.titleHeight)
 end
 return goo.inventory

@@ -19,7 +19,9 @@ function Electrician:initialize(x,y)
 		lightningchain = LightningChain:new(self,0),
 		drain = Drain:new(self,1),
 		lightningball = LightningBall:new(self,0),
-		cpu = CPU:new(self,1)
+		cpu = CPU:new(self,1),
+		transmitter = Transmitter:new(self,1),
+		icarus = Icarus:new(self,1),
 	}
 	self.animation = {
 		stand = animation.electrician:subSequence(1,4),
@@ -52,6 +54,7 @@ function Electrician:getSkillpanelData()
 			{skill = self.skills.lightningchain,hotkey='g',face=icontable.lightningchain},
 			{skill = self.skills.drain,hotkey='q',face=icontable.drain},
 			{skill = self.skills.lightningball,hotkey='e',face=icontable.lightningball},
+			{skill = self.skills.icarus,hotkey='r',face=icontable.icarus},
 		}
 	}
 end

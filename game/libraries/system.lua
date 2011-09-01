@@ -278,6 +278,24 @@ end
 -- close do
 end
 
+local loads = {}
+loadingscreen = {}
+function loadingscreen:update(dt)
+	if #loads>0 then
+		self.loadingfile = table.remove(loads)
+		require (self.loadingfile)
+	else
+		popsystem()
+		if self.finished then
+			self.finished()
+		end
+	end
+end
+
+function loadingscreen:draw()
+	love.graphics.print(self.loadingfile,screen.halfwidth,screen.halfheight)
+end
+
 local preloadlists = {}
 function preloadlist(list)
 	for k,v in pairs(list) do
@@ -289,15 +307,12 @@ function preloadlist(list)
 end
 
 function preload(...)
-	for k,v in ipairs(preloadlists) do
-		print (k,v)
-	end
 	for k,name in ipairs(arg) do
 		if preloadlists[name] then
 			for i,v in ipairs(preloadlists[name]) do
-				print (v,'preloaded')
-				require (v)
+				table.insert(loads,v)
 			end
 		end
 	end
+	pushsystem(loadingscreen)
 end

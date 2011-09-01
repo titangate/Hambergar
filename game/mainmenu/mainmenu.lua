@@ -24,11 +24,13 @@ if love.filesystem.exists('lastsave.sav') then
 	b_continue.onClick = function(self,button)
 	local save = table.load(love.filesystem.read('lastsave.sav'))
 	local gs = loadstring(save.gamesystem)()
-	SetGameSystem(gs)
-	gs:load()
-	gs:continueFromSave(save)
-	pushsystem(gs)
-	mainmenu:onClose()
+	loadingscreen.finished = 	function ()
+		SetGameSystem(gs)
+		gs:load()
+		gs:continueFromSave(save)
+		pushsystem(gs)
+		mainmenu:onClose()
+	end
 	end
 end
 
@@ -42,10 +44,12 @@ b_startgame.onClick = function( self, button )
 	local gs = require 'scenes.tibet.tibetgamesystem'
 	require 'scenes.tibet.intro'
 	mainmenu:onClose()
-	SetGameSystem(gs)
-	GetGameSystem():load()
-	GetGameSystem():runMap(Tibet1,'opening')
-	pushsystem(GetGameSystem())
+	loadingscreen.finished = function ()
+		SetGameSystem(gs)
+		GetGameSystem():load()
+		GetGameSystem():runMap(Tibet1,'opening')
+		pushsystem(GetGameSystem())
+	end
 end
 height = height + 50
 
@@ -58,9 +62,11 @@ b_grid.onClick = function( self, button )
 	local gs = require 'scenes.grid.gridgamesystem'
 	mainmenu:onClose()
 	SetGameSystem(gs)
-	GetGameSystem():load()
-	GetGameSystem():runMap(Grid,'opening')
-	pushsystem(GetGameSystem())
+	loadingscreen.finished = function ()
+		GetGameSystem():load()
+		GetGameSystem():runMap(Grid,'opening')
+		pushsystem(GetGameSystem())
+	end
 end
 height = height + 50
 

@@ -64,6 +64,33 @@ function ElectricianAbiTree:initialize(unit)
 	self.lightningball:setSkill(unit.skills.lightningball,icontable.lightningball)
 	self.lightningball.chip = pcb.cpu3
 	
+	-- Transmitter
+	self.transmitterbot = goo.learnbutton:new(self.container)
+	self.transmitterbot:setPos(pcb.transmitterbot.x*scale,pcb.transmitterbot.y*scale)
+	self.transmitterbot:setSize(pcb.transmitterbot.w*scale,pcb.transmitterbot.h*scale)
+	
+	self.transmitterbot:setSkill(unit.skills.transmitter,img.cpu)
+	self.transmitterbot.chip = pcb.transmitterbot
+	
+	-- Ionic form
+	
+	self.ionicform = goo.learnbutton:new(self.container)
+	self.ionicform:setPos(pcb.transmitter1.x*scale,pcb.transmitter1.y*scale)
+	self.ionicform:setSize(pcb.transmitter1.w*scale,pcb.transmitter1.h*scale)
+	
+	self.ionicform:setSkill(unit.skills.ionicform,icontable.ionicform)
+	self.ionicform.chip = pcb.transmitter1
+	
+	
+	-- Icarus
+	
+	self.icarus = goo.learnbutton:new(self.container)
+	self.icarus:setPos(pcb.transmitter2.x*scale,pcb.transmitter2.y*scale)
+	self.icarus:setSize(pcb.transmitter2.w*scale,pcb.transmitter2.h*scale)
+	
+	self.icarus:setSkill(unit.skills.icarus,icontable.icarus)
+	self.icarus.chip = pcb.transmitter2
+	
 	local p = love.graphics.newParticleSystem(img.pulse,1024)
 	print ((pcb.battery.x+pcb.battery.w/2)*scale,(pcb.battery.y+pcb.battery.h/2)*scale,'battery')
 	p:setEmissionRate(100)

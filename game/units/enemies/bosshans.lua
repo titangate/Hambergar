@@ -493,7 +493,7 @@ StompEffect:addAction(function (area,caster,skill)
 	end
 end)
 
-Stomp = ActiveSkill:subclass('Invis')
+Stomp = ActiveSkill:subclass('Stomp')
 function Stomp:initialize(unit,level)	
 	level = level or 0
 	super.initialize(self)

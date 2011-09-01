@@ -17,6 +17,8 @@ function Battery:getSublevel(skill)
 	if skill:isKindOf(CPU) then
 		print (self.level,self.level*0.66)
 		return math.ceil(self.level*0.66)
+	elseif skill:isKindOf(Transmitter) then
+		return math.floor((self.level)/2)
 	end
 	return math.floor(self.level/3.4+1)
 end

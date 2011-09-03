@@ -249,7 +249,7 @@ end
 
 --love.keyboard.setKeyRepeat( 200, 20 )
 
-TileEditor:loadTile('assets/tile/tile1.png')
+TileEditor:loadTile('assets/tile/waterloodom.png')
 TileEditor:loadTile('assets/tile/tile2.png')
 TileEditor:loadTile('assets/tile/tile3.png')
 TileEditor:loadTile('assets/tile/special.png')

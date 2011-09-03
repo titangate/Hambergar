@@ -314,5 +314,4 @@ function preload(...)
 			end
 		end
 	end
-	pushsystem(loadingscreen)
 end

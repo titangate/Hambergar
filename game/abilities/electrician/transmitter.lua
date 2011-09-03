@@ -203,7 +203,7 @@ end
 IcarusEffect = CircleAoEEffect:new(150)
 IcarusEffect:addAction(function (area,caster,skill)
 	local impact = skill.impact
-	caster:playAnimation('active')
+	caster:playAnimation('active',1,false)
 	if caster:getMP()<skill.manacost then return end
 	caster.mp = caster.mp-20
 	local actor = IcarusActor:new(area.x,area.y)
@@ -222,6 +222,7 @@ IcarusEffect:addAction(function (area,caster,skill)
 			end
 		end
 	end
+	TEsound.play('sound/thunderclap.wav')
 end)
 
 Icarus = ActiveSkill:subclass('Icarus')

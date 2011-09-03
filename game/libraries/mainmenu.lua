@@ -1,4 +1,5 @@
-requireImage( 'assets/mainmenu.png','mainmenubg' )
+requireImage( 'assets/mainmenu/credits.png','credits' )
+requireImage( 'assets/mainmenu/menutop.png','menutop' )
 
 requireImage( "assets/mainmenu/grid.png",'grid' )
 requireImage( "assets/mainmenu/gradient.png",'gradient' )
@@ -42,6 +43,7 @@ function MainMenu:draw()
 		end
 		love.graphics.draw(self.oldimage,80,150,0,0.5,0.5)
 	end
-	love.graphics.draw(img.mainmenubg,love.graphics.getWidth()/2,love.graphics.getHeight()/2,0,self.imagescale,self.imagescale,img.mainmenubg:getWidth()/2,img.mainmenubg:getHeight()/2)
+	love.graphics.draw(img.credits,screen.width-img.credits:getWidth()-10,screen.height-img.credits:getHeight()-10)
+	love.graphics.draw(img.menutop,screen.width-img.menutop:getWidth()-10,80)
 	goo:draw()
 end

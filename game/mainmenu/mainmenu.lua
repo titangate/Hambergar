@@ -60,14 +60,14 @@ b_grid:setPos( 10, height )
 b_grid:setText( 'GRID' )
 b_grid:sizeToText()
 b_grid.onClick = function( self, button )
-	require 'scenes.grid.grid'
+	require 'scenes.grid.waterloo'
 	local gs = require 'scenes.grid.gridgamesystem'
 	mainmenu:onClose()
 	SetGameSystem(gs)
 	pushsystem(loadingscreen)
 	loadingscreen.finished = function ()
 		GetGameSystem():load()
-		GetGameSystem():runMap(Grid,'opening')
+		GetGameSystem():runMap(WaterlooSite,'opening')
 		pushsystem(GetGameSystem())
 	end
 end

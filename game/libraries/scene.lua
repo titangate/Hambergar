@@ -78,6 +78,20 @@ function Map:setBlock(x,y,b)
 	end	
 end
 
+function Map:placeObstacle(x,y,w,h,b)
+	local body = love.physics.newBody(self.world,x+w/2,y+h/2)
+	local shape = love.physics.newRectangleShape(body,0,0,w,h)
+	shape:setCategory(8)
+	shape:setMask(5,6)
+	if b>0 then
+		shape:setSensor(true)
+		self.waypoints[b] = {x,y}
+	end
+	local mb = MapBlock:new(body,shape,b)
+	shape:setData(mb)
+	mb:registerListener(gamelistener)
+end
+
 function Map:getBlock(x,y)
 --	return self.aimap:getBlock(x,y)
 end

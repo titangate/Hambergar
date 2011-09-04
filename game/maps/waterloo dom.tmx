@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="waterloo" tilewidth="40" tileheight="40">
+  <image source="Untitled-1.png" width="360" height="40"/>
+ </tileset>
+ <tileset firstgid="10" name="VILFLR" tilewidth="40" tileheight="40">
+  <image source="VILFLR.png" width="360" height="280"/>
+ </tileset>
+ <layer name="Tile Layer 2" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1sEKhCAUBVBDQvr/H56NA86jIIjmUZ7FAcsWF2+WSyllAXiY9aLs/Pz2mJ1jBm2wN5edbybfHmq/3gbZ2WYzfn/iHtFJvhbU4X52tjc78+63gzH3q13cH85U/7HtrH18Jv5bsjO/WTxDxW6OOgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA46wNkSyiD
+  </data>
+ </layer>
+ <layer name="Tile Layer 1" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1rsKwkAQQNH9B0ttFREflZrKBxb6/1/kiKQJIQQyhCjnwG0CGRYWdrcUgN+yjFbRutGmUdu3T9toN/qq/9c+Ogz4/xidktZCKYuEGfOEGXzNEmacoyphDjn7Ud9BbfdLHf1k7Ad5Mu4P8mTsxy26R4+O6CfjvPK+ymM/pmXoW/USXZPWQr+zv6tn9Bp70QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABP2BljjDo8=
+  </data>
+ </layer>
+</map>

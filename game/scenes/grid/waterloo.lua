@@ -2,8 +2,9 @@
 --require 'libraries.unit'
 local loader = require("AdvTiledLoader/Loader")
 loader.path = "maps/"
-local m = loader.load("waterloooutside.tmx")
+local m = loader.load("waterloo dom.tmx")
 m.useSpriteBatch=true
+m.drawObjects=false
 local oj = m.objectLayers
 function GetCharacter()
 	return chr
@@ -19,7 +20,7 @@ end
 
 function WaterlooSiteBackground:draw()
 	love.graphics.push()
-	love.graphics.translate(-1000,-1000)
+	love.graphics.translate(-3000,-3000)
 	m:draw()
 	love.graphics.pop()
 end
@@ -27,7 +28,7 @@ end
 WaterlooSite = Map:subclass('WaterlooSite')
 
 function WaterlooSite:initialize()
-	local w = 2000
+	local w = 6000
 	local h = w
 	super.initialize(self,w,h)
 	self.flows = {}
@@ -41,7 +42,7 @@ function WaterlooSite:initialize()
 				print (k2,v2)
 			end
 			for _,obj in pairs(v.objects) do
-				self:placeObstacle(obj.x-1000,obj.y-1000,obj.width,obj.height,0)
+				self:placeObstacle(obj.x-3000,obj.y-3000,obj.width,obj.height,0)
 			end
 		end
 	end
@@ -64,7 +65,7 @@ function WaterlooSite:load()
 end
 
 function WaterlooSite:opening_load()
-	local lawrence = Electrician:new(10,10,32,10)
+	local lawrence = Electrician:new(-1000,-1000,32,10)
 	lawrence.direction = {0,-1}
 	lawrence.controller = 'player'
 	SetCharacter(lawrence)

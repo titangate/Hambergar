@@ -70,7 +70,6 @@ local at, drawX, drawY, flipX, flipY, r, g, b, a, halfW, halfH
 
 -- Draws the TileLayer.
 function TileLayer:draw()
-
 	-- We access these a lot so we'll shorted them a bit. 
 	map, tiles, tileData = self.map, self.map.tiles, self.tileData
 	-- Same with post draw
@@ -88,7 +87,6 @@ function TileLayer:draw()
 	love.graphics.setColor(r,g,b, a*self.opacity)
 	
 	self._previousUseSpriteBatch = self.useSpriteBatch
-	
 	
 	-- Clear sprite batches if the screen has changed.
 	if map._specialRedraw and useSpriteBatch then

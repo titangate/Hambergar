@@ -1,5 +1,3 @@
-
-
 local DrawMainmenu = AnimationGoal:subclass('DrawMainmenu')
 function DrawMainmenu:update(dt)
 	MainMenu:update(dt,true)
@@ -44,7 +42,7 @@ function drawintroflow:update(dt)
 end
 
 function drawintroflow:draw()
-		love.graphics.setColor(255,255,255,100)
+	love.graphics.setColor(255,255,255,100)
 	love.graphics.drawq(img.cloud,cloudquad,self.cloudtime*0.9,0,120,4,4,2000,2000)
 	love.graphics.drawq(img.cloud,cloudquad,self.cloudtime*0.6,-792,0,3,3,2000,2000)
 	love.graphics.drawq(img.cloud,cloudquad,self.cloudtime*0.4,552,0,2,2,2000,2000)
@@ -145,8 +143,7 @@ tibetintro:push(ExecFunction:new(playWindsound),4)
 tibetintro:push(DrawIntroText:new(7,"THE YEAR IS 2022. THE WORLD IS ON THE EDGE OF COLLAPSE."),7)
 tibetintro:push(ExecFunction:new(playyansile),11)
 tibetintro:push(DrawIntroText:new(7,"SHOTLY AFTER THE ASSASSINATION OF THE US PRESIDENT, THE NOTORIOUS IAL - INTERNATIONAL ASSASSINS' LEAGUE, CLAIMED THEIR RESPONSIBILITY OF HIS DEATH."),13)
---tibetintro:push(DrawIntroText:new(4,"HACKED BY TOM KIM"),19)
-tibetintro:push(DrawIntroText:new(14,"wtf. anyways. THE US SOON LEARNED THAT THE IAL HQ IS LOCATED IN TIBET. THE CHINESE GOVERNMENT REFUSED TO LET THE US ARMY ENTER ITS TERRITORY. BOTH COUNTRIES HAVE THREATED TO USE NUCLEAR WEAPONS."),19)
+tibetintro:push(DrawIntroText:new(14,"THE US SOON LEARNED THAT THE IAL HQ IS LOCATED IN TIBET. THE CHINESE GOVERNMENT REFUSED TO LET THE US ARMY ENTER ITS TERRITORY. BOTH COUNTRIES HAVE THREATED TO USE NUCLEAR WEAPONS."),19)
 tibetintro:push(DrawIntroText:new(12,"YET, THERE'S SOMEONE WHO DOESN'T NEED THE PERMISSION OF NEITHER GOVERNMENT TO DEAL WITH THE IAL HIMSELF. RIVER, ONE OF THE MOST DILIGENT FORMER MEMBER OF THE LEAGUE, CAME TO THE HOLY STAIRS TO SEEK VENGENCE FROM HIS MASTER."),32)
 tibetintro:push(FadeOut:new('fadeout',nil,{255,255,255},2),46)
 tibetintro:push(initializescene,48)

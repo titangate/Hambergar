@@ -57,14 +57,17 @@ function b_Ionicform:start(unit)
 	self.beam = Beam:new({x=unit.x,y=unit.y},unit,1,100,{255,255,255})
 	map:addUpdatable(self.trail)
 	map:addUpdatable(self.beam)
-	unit.shape:setSensor(true)
+	self.mask = {unit.shape:getMask()}
+	unit.shape:setMask(3,4)
+	--unit.shape:setSensor(true)
 end
 
 function b_Ionicform:stop(unit)
 	unit.state = 'slide'
 	unit.movementspeedbuffpercent = unit.movementspeedbuffpercent - self.skill.movementspeedbuffpercent
 	unit.body:setLinearVelocity(0,0)
-	unit.shape:setSensor(false)
+--	unit.shape:setSensor(false)
+	unit.shape:setMask(unpack(self.mask))
 	self.trail.dt = 99
 	self.beam.life = 0.5
 end

@@ -46,7 +46,7 @@ end
 -- if the object has an associated tile. It tries to draw the objects as closely to the way
 -- Tiled does it as possible.
 function ObjectLayer:draw()
-
+	if not self.map.drawObjects then return end
 	local obj, d, offset							-- Some temporary variables
 	local r,g,b,a = love.graphics.getColor()		-- Store the color so we can set it back
 	local line = love.graphics.getLineWidth()		-- Store the line width so we can set it back 

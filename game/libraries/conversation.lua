@@ -1,7 +1,4 @@
-Conversation = Object:subclass('Conversation')
-function Conversation:initialize(image,talker,message,time)
-	
-end
+local conversationpanel
 function PlayConversation(image,talker,message,time)
 	if not conversationpanel then
 		conversationpanel = goo.conversation:new()

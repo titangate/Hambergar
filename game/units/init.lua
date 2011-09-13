@@ -13,6 +13,10 @@ preloadlist(
 	tibet = {
 		'units.enemies.ial',
 		'units.enemies.bosshans'
+	},
+	waterloo = {
+		'units.enemies.insectoid',
+		'units.enemies.mech'
 	}
 }
 )

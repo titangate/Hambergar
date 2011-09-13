@@ -39,10 +39,6 @@ function MomentumBullet:draw()
 	love.graphics.setColor(255,255,255,255)
 end
 
-BulletEffect = UnitEffect:new()
-BulletEffect:addAction(function (unit,caster,skill)
-	unit:damage('Bullet',caster.unit:getDamageDealing(skill.damage,'Bullet'),caster)
-end)
 explosiveBulletEffect = CircleAoEEffect:new(50)
 StunBulletEffect = UnitEffect:new()
 StunBulletEffect:addAction(function (unit,caster,skill,Missile)

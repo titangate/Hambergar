@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------------
 -- MiddleClass.lua
--- Enrique GarcÃ­a ( enrique.garcia.cota [AT] gmail [DOT] com ) - 19 Oct 2009
--- Based on YaciCode, from Julien Patte and LuaObject, from SÃ©bastien Rocca-Serra
+-- Enrique García ( enrique.garcia.cota [AT] gmail [DOT] com ) - 19 Oct 2009
+-- Based on YaciCode, from Julien Patte and LuaObject, from Sébastien Rocca-Serra
 -----------------------------------------------------------------------------------
 
 local classes = setmetatable({}, {__mode = "k"})   -- weak table storing references to all declared classes

@@ -1,3 +1,8 @@
+local p=print
+function print(...)
+	p(...)
+end
+
 ImageLoader = Object:subclass('ImageLoader')
 function ImageLoader:initialize()
 	self.images={}
@@ -47,6 +52,7 @@ Listener = Object:subclass('Listener')
 function Listener:initialize()
 	self.handlers = {}
 	setmetatable(self.handlers,{__mode = 'v'})
+	self.classifiedhandlers = {}
 end
 
 function Object:registerListener(listener)
@@ -56,6 +62,7 @@ end
 
 function Object:unregisterListener(listener)
 	if not self.listeners then self.listeners = {} end
+	
 	self.listeners[listener]=nil
 end
 
@@ -66,26 +73,37 @@ function Object:notifyListeners(event)
 	end
 end
 
-
-
 function Listener:register(handler)
-	table.insert(self.handlers,handler)
+	if handler.eventtype then
+		self.classifiedhandlers[handler.eventtype] = self.classifiedhandlers[handler.eventtype] or {}
+		self.classifiedhandlers[handler.eventtype][handler]=true
+	else
+		self.handlers[handler]=true
+	end
 end
+
 function Listener:unregister(handler)
-	local i = nil
-	for k,v in ipairs(self.handlers) do
-		if v== handler then
-			i = k
-			break
-		end
-	end
-	if i then
-		table.remove(self.handlers,i)
+	print ('marked',handler,'for destory')
+	if handler.eventtype then
+		self.classifiedhandlers[handler.eventtype][handler]=false
+	else
+		self.handlers[handler]=false
 	end
 end
+
 function Listener:notify(event)
-	for k,handler in ipairs(self.handlers) do
-		handler:handle(event)
+	for k,v in pairs(self.handlers) do
+		if v==false then
+			self.handlers[k]=nil
+		else k:handle(event) end
+	end
+	if event.type and self.classifiedhandlers[event.type] then
+		for k,v in pairs(self.classifiedhandlers[event.type]) do
+			if v==false then
+				print ('destorying')
+				self.classifiedhandlers[event.type][k]=nil
+			else k:handle(event) end
+		end
 	end
 end
 
@@ -314,4 +332,37 @@ function preload(...)
 			end
 		end
 	end
+end
+
+Trigger = Object:subclass('Trigger')
+-- Each Trigger run on its on coroutine
+function Trigger:initialize(action)
+	self.action=action
+end
+function Trigger:registerEventType(type)
+	self.handlers = self.handlers or {}
+	local handler = {
+		eventtype=type,
+		handle = function(handler,event) self:run(self,event) end
+	}
+	table.insert(self.handlers,handler)
+	gamelistener:register(handler)
+end
+function Trigger:destroy()
+	print ('prepare to destory',self)
+	self.co=nil
+	for k,handler in ipairs(self.handlers) do
+		gamelistener:unregister(handler)
+	end
+end
+function Trigger:run(...)
+	assert(self.action)
+	self.co = coroutine.create(self.action)
+end
+function wait(time)
+	local co=coroutine.running ()
+	Timer:new(time,1,function()
+		coroutine.resume(co)
+	end,true,true)
+	coroutine.yield()
 end

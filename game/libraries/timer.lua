@@ -20,6 +20,10 @@ function Timer:update(dt)
 		self.time = self.time + dt
 		if self.time > self.interval then
 			self:func() -- fire the event
+			gamelistener:notify{
+				type='timer',
+				timer=self
+			}
 			self.time = self.time - self.interval -- minus it rather than set it to 0 to increase precision
 			if self.count ~= -1 then
 				self.count = self.count - 1

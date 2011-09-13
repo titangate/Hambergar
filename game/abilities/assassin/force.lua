@@ -54,6 +54,7 @@ end
 SnipeBulletEffect = UnitEffect:new()
 SnipeBulletEffect:addAction(function (unit,caster,skill)
 	unit:damage('Bullet',caster.unit:getDamageDealing(skill.damage,'Bullet'),caster.unit)
+	
 end)
 SnipeEffect = ShootMissileEffect:new()
 SnipeEffect:addAction(function(point,caster,skill)

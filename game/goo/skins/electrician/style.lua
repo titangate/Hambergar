@@ -11,17 +11,9 @@
 -- use goo.skin to point to the current skin directory.
 
 local style = {}
-fonts = {}
-fonts.default24 = love.graphics.newFont(24)
-fonts.oldsans12 = love.graphics.newFont( GOO_SKINPATH .. 'oldsansblack.ttf', 12)
-fonts.oldsans20 = love.graphics.newFont(GOO_SKINPATH .. 'oldsansblack.ttf', 20)
-fonts.oldsans24 = love.graphics.newFont(GOO_SKINPATH .. 'oldsansblack.ttf', 24)
-fonts.oldsans32 = love.graphics.newFont(GOO_SKINPATH .. 'oldsansblack.ttf', 32)
-fonts.bigfont = love.graphics.newFont("awesome.ttf",25)
-fonts.midfont = love.graphics.newFont("awesome.ttf",19)
-fonts.smallfont = love.graphics.newFont("awesome.ttf",13)
 requireImage( GOO_SKINPATH .. 'attritubebackground.png','attritubebackground')
 
+requireImage(GOO_SKINPATH..'conversationbg.png','conversationbg')
 
 
 requireImage(GOO_SKINPATH .. 'battery.png','batteryimg')
@@ -160,6 +152,11 @@ style['goo DWSText'] = {
 }
 
 style['goo DWSPanel'] = {
+}
+
+style['goo conversation panel'] = {
+	textFont = fonts.oldsans12,
+	speakerFont = fonts.oldsans24
 }
 
 return style, fonts

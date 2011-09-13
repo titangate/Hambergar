@@ -275,6 +275,7 @@ function Unit:face(x,y)
 	self:setAngle(math.atan2(y-self.y,x-self.x))
 end
 
+
 function Unit:drawBuff()
 	if not self.buffs then return end
 	for k,v in pairs(self.buffs) do
@@ -315,7 +316,9 @@ end
 
 function AnimatedUnit:update(dt)
 	super.update(self,dt)
-	if self.anim then
+	if self.animation.move and self.state == 'move' and self.anim == self.animation.stand then
+		self.animation.move:update(dt)
+	elseif self.anim then
 		if self.anim:update(dt*self.animspeed) and not self.animloop then
 			self:resetAnimation()
 		end
@@ -323,7 +326,9 @@ function AnimatedUnit:update(dt)
 end
 
 function AnimatedUnit:draw()
-	if self.anim then
+	if self.animation.move and self.state == 'move' and self.anim == self.animation.stand then
+		self.animation.move:draw(self.x,self.y,self.body:getAngle())
+	elseif self.anim then
 		self.anim:draw(self.x,self.y,self.body:getAngle())
 	end
 	self:drawBuff()

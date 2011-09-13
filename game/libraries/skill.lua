@@ -38,3 +38,36 @@ end
 function Skill:endChannel()
 	self.endtime = love.timer.getTime()
 end
+
+
+ActiveSkill = Skill:subclass('ActiveSkill')
+
+function ActiveSkill:cdupdate(dt)
+	if self.available then return end
+	self.cdtime = self.cdtime - dt
+	if self.cdtime <= 0  then
+		self.available = true
+	end
+end
+
+function ActiveSkill:active()
+	local groupname = self.groupname or self:className()
+	self.unit:startCD(groupname,self.cd)
+	self.unit:notifyListeners({type='active',skill = self})
+end
+
+function ActiveSkill:getRemainingCD()
+	local groupname = self.groupname or self:className()
+	return self.unit:getCD(groupname)
+end
+
+function ActiveSkill:getCDPercent()
+	local groupname = self.groupname or self:className()
+	local cddt = self.unit:getCD(groupname) or 0
+	return cddt/self.cd
+end
+
+function ActiveSkill:isCD()
+	local groupname = self.groupname or self:className()
+	return self.unit:getCD(groupname) or not(self.unit.allowactive)
+end

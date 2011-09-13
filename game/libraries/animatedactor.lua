@@ -55,6 +55,20 @@ function Animation:subSequence(start,finish)
 	return anim
 end
 
+function Animation:subSequenceIndex(...)
+	local anim = Animation:new()
+	for _,i in ipairs(arg) do
+		table.insert(anim.quad,self.quad[i])
+	end
+	anim.sx,anim.sy = self.sx,self.sy
+	anim.ox,anim.oy = self.ox,self.oy
+	anim.interval = self.interval
+	anim.dt = 0
+	anim.image = self.image
+	anim.index = 1
+	return anim
+end
+
 animation = {}
 animation.explosion = Animation:new(love.graphics.newImage('assets/explosion.png'),96,96,0.03,1.5,1.5,48,48)
 

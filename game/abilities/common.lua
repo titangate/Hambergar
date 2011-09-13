@@ -1,3 +1,9 @@
+
+BulletEffect = UnitEffect:new()
+BulletEffect:addAction(function (unit,caster,skill)
+	unit:damage('Bullet',caster.unit:getDamageDealing(skill.damage,'Bullet'),caster)
+--	print ('ttb dmg')
+end)
 BloodTrail = Object:subclass('FlamingSpearTrail')
 function BloodTrail:initialize(b)
 	self.bullet = b
@@ -9,7 +15,7 @@ function BloodTrail:initialize(b)
 	p:setColor(255, 58, 58, 255, 140, 26, 26, 0)
 	p:setPosition(400, 300)
 	p:setLifetime(0.5)
-	p:setParticleLife(0.5)
+	p:setParticleLife(0.25)
 	p:setDirection(0)
 	p:setSpread(360)
 	p:setRadialAcceleration(0)
@@ -36,7 +42,7 @@ end
 
 MeleeEffect = ShootMissileEffect:new()
 MeleeEffect:addAction(function(point,caster,skill)
-	local Missile = MeleeMissile:new(0.5,1,2000,caster.x,caster.y,unpack(point))
+	local Missile = MeleeMissile:new(0.5,skill.bulletmass,skill.range/0.5,caster.x,caster.y,unpack(point))
 	Missile.controller = caster.controller..'Missile'
 	Missile.effect = BulletEffect
 	Missile.skill = skill
@@ -68,6 +74,8 @@ function Melee:initialize(unit)
 	self.effecttime = 0.02
 	self.casttime = 1
 	self.damage = 50
+	self.bulletmass = 1
+	self.range = 0.5*2000
 	self.effect = MeleeEffect
 end
 
@@ -79,6 +87,7 @@ function Melee:stop()
 	self.time = 0
 end
 
+requireImage('assets/assassin/bullet.png','bullet')
 MachineGunMissile = Missile:subclass('MachineGunMissile')
 function MachineGunMissile:draw()
 	love.graphics.setColor(255,169,142,255)
@@ -184,34 +193,3 @@ function ThreewayShotgun:stop()
 	self.time = 0
 end
 
-ActiveSkill = Skill:subclass('ActiveSkill')
-
-function ActiveSkill:cdupdate(dt)
-	if self.available then return end
-	self.cdtime = self.cdtime - dt
-	if self.cdtime <= 0  then
-		self.available = true
-	end
-end
-
-function ActiveSkill:active()
-	local groupname = self.groupname or self:className()
-	self.unit:startCD(groupname,self.cd)
-	self.unit:notifyListeners({type='active',skill = self})
-end
-
-function ActiveSkill:getRemainingCD()
-	local groupname = self.groupname or self:className()
-	return self.unit:getCD(groupname)
-end
-
-function ActiveSkill:getCDPercent()
-	local groupname = self.groupname or self:className()
-	local cddt = self.unit:getCD(groupname) or 0
-	return cddt/self.cd
-end
-
-function ActiveSkill:isCD()
-	local groupname = self.groupname or self:className()
-	return self.unit:getCD(groupname) or not(self.unit.allowactive)
-end

@@ -44,3 +44,26 @@ end
 function b_Summon:draw(unit)
 	love.graphics.draw(img.stunimg,unit.x,unit.y,self.r,1,1,32,32)
 end
+
+
+b_Dash = Buff:subclass('b_Dash')
+function b_Dash:initialize(point,caster,skill)
+	self.point = point
+	self.skill = skill
+end
+
+function b_Dash:start(unit)
+	unit.movementspeedbuffpercent = unit.movementspeedbuffpercent + self.skill.movementspeedbuffpercent
+--	unit.movingforce = unit.movingforce + unit.mass*200
+end
+
+function b_Dash:stop(unit)
+	unit.state = 'slide'
+	unit.movementspeedbuffpercent = unit.movementspeedbuffpercent - self.skill.movementspeedbuffpercent
+--	unit.movingforce = unit.movingforce - unit.mass*200
+end
+
+function b_Dash:buff(unit,dt)
+	unit.direction = self.point;
+	unit.state = 'move';
+end

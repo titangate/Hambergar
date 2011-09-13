@@ -19,11 +19,6 @@ function gridbackground:draw()
 love.graphics.draw(img.greenearth,GetCharacter().x/10,GetCharacter().y/10)
 love.graphics.draw(img.ore1,GetCharacter().x/3+190,GetCharacter().y/3-200)
 love.graphics.draw(img.ore2,GetCharacter().x/7+400,GetCharacter().y/7+188)
---[[for i = 1,50 do
-	local n = i*40
-	love.graphics.line(n,0,n,2000)
-	love.graphics.line(0,n,2000,n)
-end]]
 end
 requireImage('assets/ore1.png','ore1')
 requireImage('assets/ore2.png','ore2')

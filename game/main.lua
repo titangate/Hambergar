@@ -3,6 +3,16 @@
 require 'MiddleClass'
 require 'MindState'
 
+
+fonts = {}
+fonts.default24 = love.graphics.newFont(24)
+fonts.oldsans12 = love.graphics.newFont(  'oldsansblack.ttf', 12)
+fonts.oldsans20 = love.graphics.newFont('oldsansblack.ttf', 20)
+fonts.oldsans24 = love.graphics.newFont('oldsansblack.ttf', 24)
+fonts.oldsans32 = love.graphics.newFont('oldsansblack.ttf', 32)
+fonts.bigfont = love.graphics.newFont("awesome.ttf",25)
+fonts.midfont = love.graphics.newFont("awesome.ttf",19)
+fonts.smallfont = love.graphics.newFont("awesome.ttf",13)
 require 'libraries.system'
 require "libraries.mainmenu"
 require 'libraries.controller'
@@ -35,6 +45,8 @@ require 'libraries.TEsound'
 goo=require "goo.goo"
 anim = require "anim.anim"--[[]]
 require 'units.init'
+
+
 screen = {
 	width = love.graphics.getWidth(),
 	height = love.graphics.getHeight(),
@@ -161,5 +173,8 @@ function love.draw()
 	revertFont()
 	love.graphics.setColor(255,255,255,255)
 	currentsystem:draw()
+	love.graphics.setColor(255,255,255,255)
+	love.graphics.setFont(fonts.oldsans24)
+	love.graphics.print(love.timer.getFPS(),30,30)
 end
 

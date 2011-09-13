@@ -56,10 +56,7 @@ function MapBlock:destroy()
 end
 
 function Map:setBlock(x,y,b)
---	print (x,y,b)
 	if b then
---		x,y=self.aimap:scaleUp(self.aimap:scaleDown(x,y))
---		print (x,y)
 		local body = love.physics.newBody(self.world,x,y)
 		local shape = love.physics.newRectangleShape(body,0,0,40,40)
 		shape:setCategory(8)
@@ -73,8 +70,6 @@ function Map:setBlock(x,y,b)
 		shape:setData(mb)
 		mb:registerListener(gamelistener)
 	else
---		map:removeUnit(self.aimap:getBlock(x,y))
---		self.aimap:setBlock(x,y,nil)
 	end	
 end
 
@@ -83,7 +78,7 @@ function Map:placeObstacle(x,y,w,h,b)
 	local shape = love.physics.newRectangleShape(body,0,0,w,h)
 	shape:setCategory(8)
 	shape:setMask(5,6)
-	if b>0 then
+	if b then
 		shape:setSensor(true)
 		self.waypoints[b] = {x,y}
 	end
@@ -246,4 +241,9 @@ end
 function getdistance(a,b)
 	x,y=a.x-b.x,a.y-b.y
 	return math.sqrt(x*x+y*y)
+end
+
+function displacement(x,y,angle,dis)
+	local cos,sin = math.cos(angle),math.sin(angle)
+	return x+dis*cos,y+dis*sin
 end

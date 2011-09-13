@@ -152,3 +152,19 @@ function DrainBeam:update(dt)
 	end
 	self.color[4] = math.clamp(self.life*511,0,255)
 end
+
+
+beamimage.ray=love.graphics.newImage('beam/ray.png')
+RayBeam = Beam:subclass('RayBeam')
+function RayBeam:initialize(p1,p2,life,color)
+	super.initialize(self,p1,p2,nil,life,color)
+	self.beam = beamimage.ray
+end
+function RayBeam:update(dt)
+	self.dt = self.dt+dt
+	self.life = self.life-dt
+	if self.life <= 0 then
+		map:removeUpdatable(self)
+	end
+	self.color[4] = math.clamp(self.life*511,0,255)
+end

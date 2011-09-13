@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------------------
 -- MindState.lua
--- Enrique GarcÃ­a ( enrique.garcia.cota [AT] gmail [DOT] com ) - 19 Oct 2009
+-- Enrique García ( enrique.garcia.cota [AT] gmail [DOT] com ) - 19 Oct 2009
 -- Based on Unrealscript's stateful objects
 -----------------------------------------------------------------------------------
 
@@ -75,7 +75,7 @@ function StatefulObject:gotoState(newStateName, keepStack)
 end
 
 function StatefulObject:pushState(newStateName)
-  assert(type(newStateName)=='string', "newStateName must be a string.")
+  assert(type(newState)=='string', "newStateName must be a string.")
   assert(self.states~=nil, "Attribute 'states' not detected. check that you called instance:pushState and not instance.pushState, and that you invoked super.initialize(self) in the constructor.")
 
   local nextState = self.states[newStateName]
@@ -196,6 +196,7 @@ function StatefulObject:subclass(name)
   classDict.__index = function(instance, methodName)
     -- If the method isn't on the 'ignoredMethods' list, look through the stack to see if it is defined
     if(ignoredMethods[methodName]~=1) then
+	  
       local stack = private[instance].stateStack
       local method
       for i = #stack,1,-1 do -- reversal loop

@@ -261,6 +261,7 @@ function Sequence:process(dt,owner)
 				self.active = nil
 				return STATE_SUCCESS, used
 			else
+				self:revert()
 				self.active = 1
 			end
 		end

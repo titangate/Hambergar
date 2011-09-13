@@ -39,7 +39,6 @@ function CPU:getPanelData()
 end
 
 function CPU:setLevel(lvl)
-	print (lvl)
 	self.level = lvl
 	if lvl>1 then
 		return {

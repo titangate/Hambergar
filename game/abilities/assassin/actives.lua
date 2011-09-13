@@ -44,42 +44,6 @@ function Stim:getPanelData()
 	}
 end
 
-function Stim:getdescription()
-	a='Stim\nUse vitality power to strength assassin for a short period of time. Lose 20% of Maximum HP to initiate. Cannot initiate if your HP if below 20%.\nMovement Buff:\nFirerate Buff:\nCurrent Level:'
-	return a
-end
-
-function Stim:getdescriptiondata()
-	return '\n\n\n'..string.format('%.1f',self.movementspeedbuffpercent*100)..'%\n'..string.format('%.1f',self.spellspeedbuffpercent*100)..'%\n'..self.level
-end
-
-function Stim:fillAttPanel(panel)
-	panel:addItem(DescriptionAttributeItem:new(function()
-		return "STIM" end,
-		panel.w,30))
-	panel:addItem(DescriptionAttributeItem:new(function()
-		return "Use vitality power to strength assassin for a short period of time. Lose 20% of Maximum HP to initiate. Cannot initiate if your HP if below 20%." end,
-		panel.w,45))
-	panel:addItem(SimpleAttributeItem:new(
-		function()
-		return string.format('%.1f%%',self.movementspeedbuffpercent*100) end,
-		function()
-		return "Movement Speed increase" end,
-		nil,panel.w))
-	panel:addItem(SimpleAttributeItem:new(
-		function()
-		return string.format('%.1f%%',self.spellspeedbuffpercent*100) end,
-		function()
-		return "Firerate Speed increase" end,
-		nil,panel.w))
-	panel:addItem(SimpleAttributeItem:new(
-		function()
-		return self.level end,
-		function()
-		return "Current Level" end,
-		nil,panel.w))
-end
-
 function Stim:geteffectinfo()
 	return self.unit,self.unit,self
 end
@@ -181,27 +145,6 @@ function RoundaboutShotDWS:exitState()
 	self.effect = self.originaleffect
 end
 
-b_Dash = Buff:subclass('b_Dash')
-function b_Dash:initialize(point,caster,skill)
-	self.point = point
-	self.skill = skill
-end
-
-function b_Dash:start(unit)
-	unit.movementspeedbuffpercent = unit.movementspeedbuffpercent + self.skill.movementspeedbuffpercent
---	unit.movingforce = unit.movingforce + unit.mass*200
-end
-
-function b_Dash:stop(unit)
-	unit.state = 'slide'
-	unit.movementspeedbuffpercent = unit.movementspeedbuffpercent - self.skill.movementspeedbuffpercent
---	unit.movingforce = unit.movingforce - unit.mass*200
-end
-
-function b_Dash:buff(unit,dt)
-	unit.direction = self.point;
-	unit.state = 'move';
-end
 
 DashEffect = ShootMissileEffect:new()
 DashEffect:addAction(function(point,caster,skill)

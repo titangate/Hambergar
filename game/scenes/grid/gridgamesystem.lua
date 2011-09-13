@@ -18,6 +18,8 @@ local manager = nil
 GridGameSystem = StatefulObject:subclass('GridGameSystem')
 function GridGameSystem:load()
 	self.bottompanel = goo.bottompanel:new()
+	self.conversationpanel=goo.conversationpanel:new()
+	self.conversationpanel:setPos(screen.width-450,20)
 --	self.bottompanel:setPos(-500,-500)
 	self:gotoState()
 	goo:setSkinAllObjects('electrician')
@@ -135,7 +137,15 @@ function GridGameSystem:keyreleased(k)
 		self:pushState('pause')
 	end
 		if k=='i' then
-			map:addUnit(IALSwordsman:new(math.random(200),math.random(200),'enemy'))
+			local d = BlueMech:new(GetCharacter().x+math.random(200),GetCharacter().y+math.random(200),'enemy')
+			map:addUnit(d)
+			d:enableAI()
+	--		d = Bee:new(GetCharacter().x+math.random(200),GetCharacter().y+math.random(200),'enemy')
+	--		map:addUnit(d)
+	--		d:enableAI()
+	--		d = Ladybug:new(GetCharacter().x+math.random(200),GetCharacter().y+math.random(200),'enemy')
+	--		map:addUnit(d)
+	--		d:enableAI()
 --				map:addUnit(Station:new(math.random(200),math.random(200)))
 
 		end
@@ -143,6 +153,38 @@ function GridGameSystem:keyreleased(k)
 					map:addUnit(TV:new(math.random(200),math.random(200)))
 					map:addUnit(Computer:new(math.random(200),math.random(200)))
 				end
+		if k=='u' then
+			self.conversationpanel:birth()
+			self.conversationpanel:play('HOLLY','REBOOTING.............',nil,5)
+			Timer:new(5,1,function()
+				self.conversationpanel:play('LAWRENCE','ARRRR... What the hell happened',nil,5)
+			end,true,true)
+			
+			Timer:new(10,1,function()
+				self.conversationpanel:play('HOLLY','INITIATING LIFE SEQUENCING PROTOCAL',nil,5)
+			end,true,true)
+			
+			Timer:new(15,1,function()
+				self.conversationpanel:play('LAWRENCE','What is this... I remember i was trying to.. ARRR MY HEAD HURTS!',nil,5)
+--				anim:easy(self.conversationpanel,'opacity',255,0,1)
+			end,true,true)
+			
+			Timer:new(20,1,function()
+--				self.conversationpanel:play('LAWRENCE','What is this... I remember i was trying to.. ARRR MY HEAD HURTS!',nil,5)
+				anim:easy(self.conversationpanel,'opacity',255,0,1)
+			end,true,true)
+		end
+		if k=='l' then
+			local t=Trigger:new()
+			t.action=function()
+				print ('hmm')
+				wait(2)
+				print ('oh yes')
+				wait(2)
+				print ('oh no')
+			end
+			t:run()
+		end
 --	buttongroup:keyreleased(k)
 end
 

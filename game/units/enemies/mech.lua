@@ -1,6 +1,6 @@
 animation.bluemech = Animation:new(love.graphics.newImage('assets/mech/bluemech.png'),77,76,0.08,1,1,38,38)
 BlueMechShotgun = ThreewayShotgun:subclass('BlueMechShotgun')
-function IALThreewayShotgun:initialize(unit)
+function BlueMechShotgun:initialize(unit)
 	super.initialize(self,unit)
 	self.damage = 50
 end

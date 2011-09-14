@@ -358,7 +358,10 @@ function table.copy(t)
 end
 
 function Character:save()
+	
+	if self.inventory then
 	self.inventory:setEquipmentActive(false)
+end
 	--self.inventory:setEquipmentActive(false)
 	self:setBuffActive(false)
 	local save = {
@@ -384,12 +387,16 @@ function Character:save()
 		spirit = self.spirit,
 		skills = {},
 	}
+		if self.inventory then
 	save.inventory = self.inventory:save()
+end
 	for k,v in pairs(self.skills) do
 		save.skills[k] = v.level
 	end
 	local save = table.copy(save)
+	if self.inventory then
 	self.inventory:setEquipmentActive(true)
+end
 	self:setBuffActive(true)
 	return save
 end
@@ -457,7 +464,9 @@ end
 
 function Character:load(save)
 	self.buffs = {}
+	if self.inventory then
 	self.inventory:clear()
+end
 	for k,v in pairs(save) do
 		if k == 'skills' then
 			for k2,v2 in pairs(v) do
@@ -467,5 +476,7 @@ function Character:load(save)
 			self[k] = v
 		end
 	end
+	if self.inventory then
 	self.inventory:load(save.inventory)
+end
 end

@@ -22,13 +22,14 @@
    eJztnWlvEzEQhjcUKNf//w9QQFwFBEg0SCDRInF9AQpfgHKX+4YCY0WjGMv2znjXrmfqR3qlNnHi2Tjrdz2zu+m6RqPRaDSGcRh0BLQEOgo6Bjqe+Jjv+VOBvmJtfTH52of6oWwzvhenD0qbJet5TkzIadAZ0DLoLOgc6HziY77nL4FegF46fYXahmLytfe9lrrN+F6cPihtlq3nOTEht0EnQCdBK6Ap6EpEl4ntroKugZ6CPoI+gdYDfWHbB56Ypj19ua/lbvN0gCjbzsXEdgF0EbQKWgPdiOg6sd1N0C3QW9Bv0BZoI9AXtrXHA9ut9fSFr+Vsu+/9U9QX03dGTHZsd0B3E14b4x7ofjeLae+k6xZB7+Dv96APTtvHoCfdfOzWGTHZr6WSa5sRjImzzyKcbc/FG9BmNx+7DUZMNY9HynzF2fZcfAV9cx7TMB6cmBAzhzwEPRo1ov/3WTweDH0OOLfZaBiPVP94Bno+akTzOciMBx4PmrnRN/bu2HE+L7sfKrnHIyUmxHxGPo8dCs5BJqaVbnZ82Ld/4NiFxi3WD/f4Kud4pMSEGP/4CfrVzdZtFJm13SvQa8//qA58eTKZxYTHtn37B8bPiQn74c5XOeZoBL9fqf6xG7Znz2S2bqPIrO0+g754/kcdgPc76HxO5nP2zY24f2NbTkzYD2euzjVHI0P840c3X6/9Af21ZD8WahOTabtrMu8rtP7A/Rvjx5j6ZMdj99NHrjkasddeXBYm8/XaPtB+S/ZjoTYxmbaHrM+J4h92TH2y47H76SNljg7Olx6GrAdLEvIPdzxykzJHh+QD598UPy9JyD9cP8d8OzfnHsv9x17L7cf+2wfOvyl+XpKQf7h+jvl2bs49lvuPvZbbj/23jyH+UZKQf7h+nqsGsEIQty8fpeffVKj+kasGsEoQty8fQ/KJJQn5h288tjvHOYQh+ZKS9NU/8PtUQw1gCEPyJSUJfe9dP6+hBjCEIfmSkoT8w/Vzsx9pGI/aj684/pEz35ebIfmrklDmK6yf58z35UaKn1PmK6yf58z35UaKn9t5PF+txGasfN/Y4tR+avdzO4/nq5XYjJXvG1uc2k/t/mHqGrEail0/3yKKUrOJtXMZswbEqclsBws9NRS7fr44oYlSs4m1cxmzBsSpyex0Qvk+PAZslCWU78NjwEZZ7PyMDa5ZG3NK1gdduPXB2HMp1+PUSMn6oAu3Phh7LuV6nBoxcwblepxpQLHnqG0p/fVdj1P7epCKWTdSrseJXSfDuaaGeq1NietxakR6fVDK+VdUpNcHpZx/RUV6fVDK+VdUWn2wLpp/1IV0/8D9o/lHHQy5nrNGpPuHff22BqT7h3v+knS0+IcWP5fuH9r8XLp/aPNz6f6hzc+l+4d9LwQNNP+oC+n+IeV6AyrS/UPK+e1UpPuHlPPbqRj/kHz9h5Tz26lI94+2/qiLtv6oi7b+qIu2/qiL5h91oe18Bun+oe18Bun+oe18OOnzlbbz4aTPV9r8Q/p8pa1+ruV4t/lHHWhbf0j3D235K+n+oS1/Jd0/tOWvmn/UhfTx0Lb+kO7n2vJX0vcPbfkr6fuHtvyV9ONdbf6h5Xi3+UcdaPNz6f6hzc+l+4c2P9fiH1r8XLp/aPNz6f6hrR4l3T/c3zORTq7fAC+FtvsBGP/QcD99Tf6h4X76WvwjdN997r3tue8x9m8q134/fSqh++5z723PfY+xf1O53U+/0Wg0Go2dwz/OVcGs
   </data>
  </layer>
- <objectgroup name="areas" width="100" height="100" visible="0">
+ <objectgroup name="areas" width="100" height="100">
   <object name="computergrid" x="1608" y="1472" width="2048" height="2384"/>
   <object name="room1" x="1592" y="172" width="568" height="544"/>
-  <object name="engineeringroom" x="1592" y="832" width="2040" height="520"/>
+  <object name="engineeringroom" x="1590" y="830" width="2040" height="520"/>
   <object name="dom" x="128" y="176" width="992" height="552"/>
   <object name="Hallway1" x="1200" y="160" width="336" height="1176"/>
   <object name="SpawingPoint" x="216" y="463" width="100" height="68"/>
+  <object name="computergridenter" x="2704" y="1368" width="110" height="84"/>
  </objectgroup>
  <objectgroup name="obstacles" width="100" height="100">
   <object x="3600" y="1456" width="164" height="2392"/>
@@ -53,7 +54,6 @@
   <object x="1540" y="333" width="77" height="65"/>
   <object x="1548" y="483" width="69" height="52"/>
   <object x="2842" y="1282" width="778" height="268"/>
-  <object name="BlueMech" x="2814" y="3180" width="210" height="172"/>
  </objectgroup>
  <objectgroup name="objects" width="100" height="100">
   <object name="TV" x="549" y="255" width="115" height="48">
@@ -107,5 +107,15 @@
    </properties>
   </object>
   <object name="Ladybug" x="2019" y="909" width="54" height="59"/>
+  <object name="BlueMech" x="2538" y="1802" width="288" height="228">
+   <properties>
+    <property name="id" value="mech1"/>
+   </properties>
+  </object>
+  <object name="BlueMech" x="2842" y="1700" width="288" height="228">
+   <properties>
+    <property name="id" value="mech2"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

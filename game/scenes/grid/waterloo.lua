@@ -1,6 +1,6 @@
 --require 'libraries.scene'
 --require 'libraries.unit'
-preload('waterloo')
+
 local loader = require("AdvTiledLoader/Loader")
 loader.path = "maps/"
 local m = loader.load("waterloo dom.tmx")
@@ -64,11 +64,6 @@ function WaterlooSite:initialize()
 			--map:addUnit(IALSwordsman:new(math.random(200),math.random(200),'enemy'))
 		end
 	end
-	local testTrigger = Trigger:new(function(self,event)
-		print (event.index,'entered')
-		self:destroy()
-	end)
-	testTrigger:registerEventType('add')
 	
 end
 
@@ -155,7 +150,46 @@ function WaterlooSite:opening_load()
 	Timer:new(5,1,function()
 		t:run()
 	end,true,true)
+	
+	local bossTrigger = Trigger:new(function(self,event)
+		
+		if event.index == 'computergridenter' and event.unit==GetCharacter() then
+			print ('ready for boss')
+			
+			GetGameSystem():setCheckpoint(WaterlooSite,"boss",[[
+			require 'scenes.grid.waterloo'
+			]])
+			map:boss_enter()
+			self:destroy()
+		end
+	end)
+	bossTrigger:registerEventType('add')
 end
+
+
+function WaterlooSite:boss_enter()
+	self:boss_loaded()
+end
+
+function WaterlooSite:boss_load()
+	local x,y=unpack(self.waypoints.computergridenter)
+	local lawrence = Electrician:new(x,y,32,10)
+	lawrence.direction = {0,-1}
+	lawrence.controller = 'player'
+	SetCharacter(lawrence)
+	map:addUnit(lawrence)
+	map.camera = FollowerCamera:new(lawrence)
+	GetGameSystem():loadCharacter(lawrence)
+	GetGameSystem().bottompanel:fillPanel(GetCharacter():getSkillpanelData())
+	GetGameSystem().bottompanel:setPos(screen.halfwidth-512,screen.height - 140)
+	self:boss_loaded()
+end
+
+
+function WaterlooSite:boss_loaded()
+end
+
+
 
 function WaterlooSite:loadCheckpoint(checkpoint)
 	if checkpoint == 'opening' then

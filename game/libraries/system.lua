@@ -100,7 +100,6 @@ function Listener:notify(event)
 	if event.type and self.classifiedhandlers[event.type] then
 		for k,v in pairs(self.classifiedhandlers[event.type]) do
 			if v==false then
-				print ('destorying')
 				self.classifiedhandlers[event.type][k]=nil
 			else k:handle(event) end
 		end
@@ -343,14 +342,16 @@ function Trigger:registerEventType(type)
 	self.handlers = self.handlers or {}
 	local handler = {
 		eventtype=type,
-		handle = function(handler,event) self:run(self,event) end
+		handle = function(handler,event)
+			self:run(self,event)
+		end
 	}
 	table.insert(self.handlers,handler)
 	gamelistener:register(handler)
 end
 function Trigger:destroy()
-	print ('prepare to destory',self)
 	self.co=nil
+	print ('trigger destroying')
 	for k,handler in ipairs(self.handlers) do
 		gamelistener:unregister(handler)
 	end
@@ -358,6 +359,7 @@ end
 function Trigger:run(...)
 	assert(self.action)
 	self.co = coroutine.create(self.action)
+	print (coroutine.resume(self.co,...))
 end
 function wait(time)
 	local co=coroutine.running ()

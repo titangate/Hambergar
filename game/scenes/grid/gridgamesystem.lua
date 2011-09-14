@@ -2,7 +2,7 @@
 require 'libraries.unit'
 require 'libraries.hud'
 require 'libraries.conversation']]
-preload('electrician','commonenemies','tibet')
+preload('electrician','commonenemies','waterloo')
 function GetCharacter()
 	return chr
 end
@@ -34,6 +34,7 @@ function GridGameSystem:save()
 		depends = self.checkpoint_depends,
 	}
 	love.filesystem.write('lastsave.sav',table.save(self.savedata))
+	print ('attempt to save')
 end
 
 function GridGameSystem:runMap(m,checkpoint)
@@ -55,7 +56,7 @@ function GridGameSystem:loadCharacter(c)
 	if not self.savedata then
 		self.savedata = table.load([[return {{["map"]="Tibet1",["character"]={2},["checkpoint"]="opening",["depends"]="	require 'scenes.tibet.tibet1'\n	",["gamesystem"]="return require 'scenes.tibet.GridGameSystem'",},{["movementspeedbuffpercent"]=1,["HPRegen"]=0,["timescale"]=1,["damagebuff"]={3},["hp"]=500,["speedlimit"]=20000,["damageamplify"]={4},["cd"]={5},["mp"]=500,["armor"]={6},["damagereduction"]={7},["spirit"]=1,["evade"]={8},["movingforce"]=500,["maxhp"]=500,["maxmp"]=500,["MPRegen"]=0,["critical"]={9},["movementspeedbuff"]=0,["skills"]={10},["spellspeedbuffpercent"]=1,["inventory"]={11},},{["Bullet"]=0,},{},{},{["Bullet"]=0,},{},{},{},{["stunbullet"]=0,["momentumbullet"]=0,["stim"]=2,["explosivebullet"]=0,["pistol"]=3,["invis"]=1,["dws"]=0,["snipe"]=2,["pistoldwsalt"]=6,["dash"]=1,["roundaboutshot"]=1,["mindripfield"]=1,["mind"]=1,},{[21]="FiveSlash",[23]="PeacockFeather",},}--|]])
 	end
---	c:load(self.savedata.character)
+	c:load(self.savedata.character)
 end
 
 function GridGameSystem:continueFromSave(save)
@@ -140,14 +141,6 @@ function GridGameSystem:keyreleased(k)
 			local d = BlueMech:new(GetCharacter().x+math.random(200),GetCharacter().y+math.random(200),'enemy')
 			map:addUnit(d)
 			d:enableAI()
-	--		d = Bee:new(GetCharacter().x+math.random(200),GetCharacter().y+math.random(200),'enemy')
-	--		map:addUnit(d)
-	--		d:enableAI()
-	--		d = Ladybug:new(GetCharacter().x+math.random(200),GetCharacter().y+math.random(200),'enemy')
-	--		map:addUnit(d)
-	--		d:enableAI()
---				map:addUnit(Station:new(math.random(200),math.random(200)))
-
 		end
 				if k=='j' then
 					map:addUnit(TV:new(math.random(200),math.random(200)))
@@ -173,17 +166,6 @@ function GridGameSystem:keyreleased(k)
 --				self.conversationpanel:play('LAWRENCE','What is this... I remember i was trying to.. ARRR MY HEAD HURTS!',nil,5)
 				anim:easy(self.conversationpanel,'opacity',255,0,1)
 			end,true,true)
-		end
-		if k=='l' then
-			local t=Trigger:new()
-			t.action=function()
-				print ('hmm')
-				wait(2)
-				print ('oh yes')
-				wait(2)
-				print ('oh no')
-			end
-			t:run()
 		end
 --	buttongroup:keyreleased(k)
 end

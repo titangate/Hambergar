@@ -2,16 +2,6 @@
 animation.mansword = Animation:new(love.graphics.newImage('assets/ial/mansword.png'),49.5,43,0.08,1.8,1.8,6,23)
 
 
-function AI.ApproachAndAttack(t2,t,attackskill,range,firerange)
-	AIDemo = Sequence:new()
-	AIDemo:push(OrderMoveTowardsRange:new(t,range))
-	AIDemo:push(OrderStop:new())
-	AIDemo:push(OrderChannelSkill:new(attackskill,function()return {normalize(t.x-t2.x,t.y-t2.y)},t2,attackskill end))
-	AIDemo:push(OrderWaitUntil:new(function()t2:setAngle(math.atan2(t.y-t2.y,t.x-t2.x))return getdistance(t,t2)>firerange or t.invisible end))
-	AIDemo:push(OrderStop:new())
-	AIDemo.loop = true
-	return AIDemo
-end
 
 IALSwordsmanMelee = Melee:subclass('IALSwordsmanMelee')
 function IALSwordsmanMelee:initialize(unit)

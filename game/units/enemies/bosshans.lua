@@ -19,14 +19,14 @@ function AI.Hans1(hans,target)
 	
 	local spearend = false
 	local spearseq = Sequence:new()
-	meleeseq:push(OrderWait:new(1))
+	spearseq:push(OrderWait:new(1))
 	spearseq:push(OrderMoveTowardsRange:new(target,500))
 	spearseq:push(OrderStop:new())
 	spearseq:push(OrderChannelSkill:new(hans.skills.flamingspear,function()return {normalize(target.x-hans.x,target.y-hans.y)},hans,hans.skills.flamingspear end))
 	spearseq:push(OrderWaitUntil:new(function(dt,owner) hans:setAngle(math.atan2(target.y-hans.y,target.x-hans.x))return getdistance(target,hans)>600 or target.invisible end))
 	spearseq:push(OrderWait:new(1))
 	spearseq:push(OrderStop:new())
-	meleeseq.timelimit = 6
+	spearseq.timelimit = 6
 	
 	local demoselector = Selector:new()
 	demoselector:push(function ()

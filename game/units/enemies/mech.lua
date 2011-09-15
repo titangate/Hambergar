@@ -28,14 +28,44 @@ function BlueMech:initialize(x,y,controller)
 end
 
 function BlueMech:enableAI(ai)
-	local seq = Sequence:new()
-	seq:push(OrderWait:new(1))
-	seq:push(OrderMoveTowardsRange:new(GetCharacter(),500))
-	seq:push(OrderActiveSkill:new(self.skills.charge,function() return {normalize(GetCharacter().x-self.x,GetCharacter().y-self.y)},self,self.skills.charge end))
-	seq:push(OrderStop:new())
-	seq:push(OrderWait:new(1))
-	seq.loop = true
-	self.ai = ai or seq
+	local target = self:getOffenceTarget()
+	local chargeseq = Sequence:new()
+	chargeseq:push(OrderWait:new(1))
+	chargeseq:push(OrderMoveTowardsRange:new(target,500))
+	chargeseq:push(OrderActiveSkill:new(self.skills.charge,function() return {normalize(GetCharacter().x-self.x,GetCharacter().y-self.y)},self,self.skills.charge end))
+	chargeseq:push(OrderStop:new())
+	chargeseq:push(OrderWait:new(1))
+	local gunseq = Sequence:new()
+	gunseq:push(OrderWait:new(1))
+	gunseq:push(OrderMoveTowardsRange:new(target,300))
+	gunseq:push(OrderStop:new())
+	gunseq:push(OrderChannelSkill:new(self.skills.gun,function()return {normalize(target.x-self.x,target.y-self.y)},self,self.skills.gun end))
+	gunseq:push(OrderWaitUntil:new(function() self:setAngle(math.atan2(target.y-self.y,target.x-self.x))return getdistance(target,self)>400 or target.invisible end))
+	gunseq:push(OrderWait:new(1))
+	gunseq:push(OrderStop:new())
+	
+	local missileseq = Sequence:new()
+	missileseq:push(OrderWait:new(1))
+	missileseq:push(OrderMoveTowardsRange:new(target,300))
+	missileseq:push(OrderStop:new())
+	missileseq:push(OrderActiveSkill:new(self.skills.missile,function()return target,self,self.skills.missile end))
+	missileseq:push(OrderWaitUntil:new(function() self:setAngle(math.atan2(target.y-self.y,target.x-self.x))return getdistance(target,self)>400 or target.invisible end))
+	missileseq:push(OrderWait:new(1))
+	missileseq:push(OrderStop:new())
+	local demoselector = Selector:new()
+	demoselector:push(function ()
+		if math.random()<0.33 then
+			return chargeseq
+		elseif math.random()>0.5 then
+			return missileseq
+		else
+			return gunseq
+		end
+	end)
+	local AIDemo = Sequence:new()
+	AIDemo:push(demoselector)
+	AIDemo.loop = true
+	self.ai = ai or AIDemo
 end
 
 function BlueMech:skilleffect(skill)
@@ -46,10 +76,6 @@ end
 
 seekermissilesuicideeffect = CircleAoEEffect:new(200)
 seekermissilesuicideeffect:addAction(function (area,caster,skill)
-	print ('wtf is going on')
-	for k,v in pairs(area) do
-		print (k,v)
-	end
 	local units = map:findUnitsInArea(area)
 	for k,v in pairs(units) do
 		if v:isKindOf(Unit) then
@@ -146,10 +172,8 @@ SeekerMissileLaunch = ActiveSkill:subclass('SeekerMissileLaunch')
 function SeekerMissileLaunch:initialize(unit)
 	super.initialize(self)
 	self.unit = unit
-	for k,v in pairs(self) do
-		print (k,v)
-	end
 	self.effect = seekermissilelauncheffect
+	self.casttime = 3
 end
 
 function SeekerMissileLaunch:active()

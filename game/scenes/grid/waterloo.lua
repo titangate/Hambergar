@@ -27,10 +27,25 @@ function WaterlooSiteBackground:draw()
 end
 
 WaterlooSite = Map:subclass('WaterlooSite')
-
+unitdict={}
+function WaterlooSite:loadUnitFromTileObject(obj)
+	local w,h=self.w,self.h
+	if loadstring('return '..obj.name)() then
+		local object = loadstring('return '..obj.name..':new()')()
+		object.x,object.y=obj.x-w/2,obj.y-h/2
+		if obj.properties.controller then
+			object.controller = obj.properties.controller
+		end
+		self:addUnit(object)
+		if object.setAngle then
+			object:setAngle(obj.properties.angle or math.random(3.14))
+		end
+	end
+end
 function WaterlooSite:initialize()
 	local w = 6000
 	local h = w
+	self.w,self.h=w,h
 	super.initialize(self,w,h)
 	self.flows = {}
 	self.background = WaterlooSiteBackground
@@ -48,17 +63,13 @@ function WaterlooSite:initialize()
 			end
 		elseif v.name == 'objects' then
 			for _,obj in pairs(v.objects) do
-				if loadstring('return '..obj.name)() then
-					local object = loadstring('return '..obj.name..':new()')()
-					print (obj.name)
-					object.x,object.y=obj.x-w/2,obj.y-h/2
-					if obj.properties.controller then
-						object.controller = obj.properties.controller
-					end
-					self:addUnit(object)
-					if object.setAngle then
-						object:setAngle(obj.properties.angle or math.random(3.14))
-					end
+				if obj.properties.phrase then
+					local p = obj.properties.phrase
+					unitdict[p] = unitdict[p] or {}
+					table.insert(unitdict[p],obj)
+					self:loadUnitFromTileObject(obj,w,h)
+				else
+					self:loadUnitFromTileObject(obj,w,h)
 				end
 			end
 			--map:addUnit(IALSwordsman:new(math.random(200),math.random(200),'enemy'))
@@ -101,7 +112,7 @@ function WaterlooSite:opening_load()
 	SetCharacter(lawrence)
 	map:addUnit(lawrence)
 	map.camera = FollowerCamera:new(lawrence)
-	GetGameSystem():loadCharacter(lawrence)
+--	GetGameSystem():loadCharacter(lawrence)
 	GetGameSystem().bottompanel:fillPanel(GetCharacter():getSkillpanelData())
 	GetGameSystem().bottompanel:setPos(screen.halfwidth-512,screen.height - 150)
 	local intro = CutSceneSequence:new()
@@ -125,7 +136,6 @@ function WaterlooSite:opening_load()
 		end,true,true)
 		local t = Trigger:new(function(self,event)
 			if event.timer == timer and GetCharacter():getMPPercent()>=0.7 then
-				print ('oh yeah')
 				timer.count = 1
 				self:destroy()
 				GetGameSystem().conversationpanel:birth()
@@ -151,7 +161,7 @@ function WaterlooSite:opening_load()
 		t:run()
 	end,true,true)
 	
-	local bossTrigger = Trigger:new(function(self,event)
+	local areaTrigger = Trigger:new(function(self,event)
 		
 		if event.index == 'computergridenter' and event.unit==GetCharacter() then
 			print ('ready for boss')
@@ -162,8 +172,22 @@ function WaterlooSite:opening_load()
 			map:boss_enter()
 			self:destroy()
 		end
+			
 	end)
-	bossTrigger:registerEventType('add')
+	local hallwayTrigger = Trigger:new(function(self,event)
+		
+		
+		if event.index == 'Hallway1' and event.unit==GetCharacter() then
+			wait(5)
+			for _,obj in ipairs(unitdict.hallway) do
+				map:loadUnitFromTileObject(obj)
+			end
+			self:destroy()
+		end
+			
+	end)
+	areaTrigger:registerEventType('add')
+	hallwayTrigger:registerEventType('add')
 end
 
 

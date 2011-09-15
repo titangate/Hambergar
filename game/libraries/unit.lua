@@ -480,3 +480,9 @@ end
 	self.inventory:load(save.inventory)
 end
 end
+
+function Unit:getOffenceTarget()
+	if self.controller=='enemy' or self.controller=='enemyMissile' then
+		return GetCharacter()
+	end
+end

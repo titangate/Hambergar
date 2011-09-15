@@ -50,7 +50,7 @@ function Ladybug:enableAI(ai)
 end
 
 
-animation.dragonfly = Animation:new(love.graphics.newImage('assets/insectoid/dragonfly.png'),64,64,0.04,1,1,8,32)
+animation.dragonfly = Animation:new(love.graphics.newImage('assets/insectoid/dragonfly.png'),64,64,0.04,1,1,32,32)
 Dragonfly = AnimatedUnit:subclass('Dragonfly')
 function Dragonfly:initialize(x,y,controller)
 	super.initialize(self,x,y,16,10)
@@ -60,7 +60,7 @@ function Dragonfly:initialize(x,y,controller)
 	self.mp = 500
 	self.maxmp = 500
 	self.skills = {
-		melee = IALSwordsmanMelee:new(self),
+		melee = LadybugMelee:new(self),
 		gun = SmallRocketGun:new(self)
 	}
 	self.animation = {
@@ -177,8 +177,19 @@ function BeeMelee:initialize(unit)
 	super.initialize(self,unit)
 	self.damage = 30
 	self.bulletmass = 0.5
+	self.effect = BeeMeleeEffect
 end
 
+BeeMeleeEffect = ShootMissileEffect:new()
+BeeMeleeEffect:addAction(function(point,caster,skill)
+	local Missile = MeleeMissile:new(0.05,1,2000,caster.x,caster.y,unpack(point))
+	Missile.controller = caster.controller..'Missile'
+	Missile.effect = BulletEffect
+	Missile.skill = skill
+	Missile.unit = caster
+	map:addUnit(Missile)
+	caster:kill(caster)
+end)
 animation.bee = Animation:new(love.graphics.newImage('assets/insectoid/bee.png'),42,48,0.08,1,1,32,24)
 Bee = AnimatedUnit:subclass('Bee')
 function Bee:initialize(x,y,controller)
@@ -192,7 +203,7 @@ function Bee:initialize(x,y,controller)
 		melee = BeeMelee:new(self)
 	}
 	self.animation = {
-		stand = animation.bee:subSequenceIndex(1,2,3,4),
+		stand = animation.bee:subSequenceIndex(1,2,3,4,3,2),
 		attack = animation.bee:subSequence(3,4)
 	}
 	self:resetAnimation()

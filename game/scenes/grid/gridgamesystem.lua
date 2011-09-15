@@ -138,7 +138,7 @@ function GridGameSystem:keyreleased(k)
 		self:pushState('pause')
 	end
 		if k=='i' then
-			local d = BlueMech:new(GetCharacter().x+math.random(200),GetCharacter().y+math.random(200),'enemy')
+			local d = Bee:new(GetCharacter().x+math.random(200),GetCharacter().y+math.random(200),'enemy')
 			map:addUnit(d)
 			d:enableAI()
 		end

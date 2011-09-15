@@ -106,15 +106,91 @@
     <property name="controller" value="enemy"/>
    </properties>
   </object>
-  <object name="Ladybug" x="2019" y="909" width="54" height="59"/>
-  <object name="BlueMech" x="2538" y="1802" width="288" height="228">
+  <object name="Ladybug" x="1387" y="1008" width="54" height="59">
    <properties>
-    <property name="id" value="mech1"/>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="hallway"/>
    </properties>
   </object>
-  <object name="BlueMech" x="2842" y="1700" width="288" height="228">
+  <object name="BlueMech" x="2875" y="1814" width="160" height="118">
    <properties>
-    <property name="id" value="mech2"/>
+    <property name="controller" value="enemy"/>
+    <property name="drop" value="Transmitter"/>
+    <property name="id" value="mech1"/>
+    <property name="phrase" value="boss"/>
+   </properties>
+  </object>
+  <object name="BlueMech" x="2537" y="1841" width="160" height="118">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="id" value="mech1"/>
+    <property name="phrase" value="boss"/>
+   </properties>
+  </object>
+  <object name="Ladybug" x="1290" y="1018" width="54" height="59">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="hallway"/>
+   </properties>
+  </object>
+  <object name="Bee" x="1407" y="1137" width="35" height="31">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="hallway"/>
+   </properties>
+  </object>
+  <object name="Bee" x="1335" y="1121" width="35" height="31">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="hallway"/>
+   </properties>
+  </object>
+  <object name="Bee" x="1451" y="1101" width="35" height="31">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="hallway"/>
+   </properties>
+  </object>
+  <object name="Bee" x="1388" y="1086" width="35" height="31">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="hallway"/>
+   </properties>
+  </object>
+  <object name="Dragonfly" x="2705" y="904" width="80" height="79">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="room"/>
+   </properties>
+  </object>
+  <object name="Dragonfly" x="2804" y="1140" width="80" height="79">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="room"/>
+   </properties>
+  </object>
+  <object name="Dragonfly" x="2825" y="1011" width="80" height="79">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="room"/>
+   </properties>
+  </object>
+  <object name="Ladybug" x="2386" y="1117" width="54" height="59">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="room"/>
+   </properties>
+  </object>
+  <object name="Ladybug" x="2295" y="968" width="54" height="59">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="room"/>
+   </properties>
+  </object>
+  <object name="Ladybug" x="2475" y="1004" width="54" height="59">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="room"/>
    </properties>
   </object>
  </objectgroup>

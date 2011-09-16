@@ -172,11 +172,9 @@ function TibetGameSystem:keyreleased(k)
 	if k=='escape' then
 		self:pushState('pause')
 	end
---	buttongroup:keyreleased(k)
 end
 
 function TibetGameSystem:mousepressed(x,y,k)
---	buttongroup:mousepressed(x,y,k)
 end
 
 function TibetGameSystem:mousereleased(x,y,k)

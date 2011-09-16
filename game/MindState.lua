@@ -75,7 +75,7 @@ function StatefulObject:gotoState(newStateName, keepStack)
 end
 
 function StatefulObject:pushState(newStateName)
-  assert(type(newState)=='string', "newStateName must be a string.")
+  assert(type(newStateName)=='string', "newStateName must be a string.")
   assert(self.states~=nil, "Attribute 'states' not detected. check that you called instance:pushState and not instance.pushState, and that you invoked super.initialize(self) in the constructor.")
 
   local nextState = self.states[newStateName]

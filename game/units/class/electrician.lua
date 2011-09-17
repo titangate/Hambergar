@@ -5,7 +5,6 @@ animation.weaponsword = Animation:new(love.graphics.newImage('assets/electrician
 
 Electrician = Character:subclass('Electrician')
 
-
 function Electrician:initialize(x,y)
 	super.initialize(self,x,y,16,10)
 	self.hp = 500

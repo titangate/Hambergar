@@ -110,6 +110,7 @@ end
 function GridGameSystem:keypressed(k)
 	if k=='t' then
 		GetCharacter().manager:start()
+		self.bottompanel.count=0
 		pushsystem(GetCharacter().manager)
 		return
 	end

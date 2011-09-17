@@ -185,7 +185,7 @@ function IcarusActor:update(dt)
 		self.system:update(dt)
 		if self.dt>self.time+1 then
 			self.visible = false
-			map:removeUnit(self)
+			map:removeUpdatable(self)
 		end
 	else
 		self.system:setPosition(self.x,self.y)
@@ -210,7 +210,7 @@ IcarusEffect:addAction(function (area,caster,skill)
 	if caster:getMP()<skill.manacost then return end
 	caster.mp = caster.mp-20
 	local actor = IcarusActor:new(area.x,area.y)
-	map:addUnit(actor)
+	map:addUpdatable(actor)
 	actor.x,actor.y=area.x,area.y
 	local units = map:findUnitsInArea(area)
 	for k,v in pairs(units) do

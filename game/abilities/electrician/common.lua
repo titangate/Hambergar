@@ -1,10 +1,12 @@
 
 ElectricianPanelManager = Object:subclass('PanelManager')
+
 function ElectricianPanelManager:initialize(unit)
 	self.tree = ElectricianAbiTree:new(unit)
---	self.character = AssassinCharacterPanel:new(unit)
+	self.character = ElectricianCharacterPanel:new(unit)
 	self.currentsystem = self.tree
 	self.dt = 0
+	self.unit=unit
 end
 
 function ElectricianPanelManager:start(system)
@@ -28,9 +30,9 @@ function ElectricianPanelManager:shift(system)
 	if self.shiftsystem.container then
 		self.shiftsystem.container:setVisible(true)
 	end
-		if self.shiftsystem.show then
-			self.shiftsystem:show()
-		end
+	if self.shiftsystem.show then
+		self.shiftsystem:show()
+	end
 end
 
 function ElectricianPanelManager:keypressed(k)
@@ -42,11 +44,11 @@ function ElectricianPanelManager:keypressed(k)
 	end
 	if k=='LB' or k=='c' then
 		self:shift(self.character)
-			gamelistener:notify({type = 'shiftpanel',panel = 'character'})
+		gamelistener:notify({type = 'shiftpanel',panel = 'character'})
 	end
 	if k=='RB' or k=='a' then
 		self:shift(self.tree)
-			gamelistener:notify({type = 'shiftpanel',panel = 'ability'})
+		gamelistener:notify({type = 'shiftpanel',panel = 'ability'})
 	end
 	if self.currentsystem.keypressed then self.currentsystem:keypressed(k) end
 end
@@ -82,6 +84,14 @@ function ElectricianPanelManager:update(dt)
 	self.currentsystem:update(dt)
 	self.dt = self.dt + dt
 	self.folddt = self.folddt+dt
+	if not self.shifttime then
+	else
+		self.shifttime = self.shifttime - dt
+		if self.shifttime < 0 then
+			self.shifttime = nil
+			self.currentsystem = self.shiftsystem
+		end
+	end
 end
 
 function ElectricianPanelManager:draw()
@@ -106,15 +116,13 @@ function ElectricianPanelManager:draw()
 			popsystem()
 		end
 	elseif self.shifttime then
---		love.graphics.draw(background,-self.dt/self.time*background:getWidth(),0,0,1.1,1.1)
-			map:draw()
+		map:draw()
 		love.graphics.translate((1-self.shifttime)*love.graphics.getWidth(),0)
 		self.currentsystem:draw()
 		love.graphics.translate(-love.graphics.getWidth(),0)
 		self.shiftsystem:draw()
 	else
---		love.graphics.draw(background,-self.dt/self.time*background:getWidth(),0,0,1.1,1.1)
-			map:draw()
+		map:draw()
 		self.currentsystem:draw()
 	end
 end

@@ -28,6 +28,7 @@ end
 
 WaterlooSite = Map:subclass('WaterlooSite')
 unitdict={}
+adding = {}
 function WaterlooSite:loadUnitFromTileObject(obj)
 	local w,h=self.w,self.h
 	if loadstring('return '..obj.name)() then
@@ -36,9 +37,10 @@ function WaterlooSite:loadUnitFromTileObject(obj)
 		if obj.properties.controller then
 			object.controller = obj.properties.controller
 		end
-		self:addUnit(object)
-		if object.setAngle then
-			object:setAngle(obj.properties.angle or math.random(3.14))
+		object.r = obj.properties.angle or math.random(3.14)
+		table.insert(adding,object)
+		if object.controller=='enemy' and object.enableAI then
+			object:enableAI()
 		end
 	end
 end
@@ -67,7 +69,7 @@ function WaterlooSite:initialize()
 					local p = obj.properties.phrase
 					unitdict[p] = unitdict[p] or {}
 					table.insert(unitdict[p],obj)
-					self:loadUnitFromTileObject(obj,w,h)
+--					self:loadUnitFromTileObject(obj,w,h)
 				else
 					self:loadUnitFromTileObject(obj,w,h)
 				end
@@ -86,6 +88,10 @@ function WaterlooSite:update(dt)
 		self.cutscene:update(dt)
 	end
 	super.update(self,dt)
+	if next(adding) then
+		for k,v in ipairs(adding) do self:addUnit(v) end
+		adding = {}
+	end
 end
 
 requireImage("assets/gridfilter.png",'gridfilter')
@@ -163,9 +169,8 @@ function WaterlooSite:opening_load()
 	
 	local areaTrigger = Trigger:new(function(self,event)
 		
-		if event.index == 'computergridenter' and event.unit==GetCharacter() then
-			print ('ready for boss')
-			
+		if event.index == 'computergridenter' and event.unit==GetCharacter() then	
+			self:close()	
 			GetGameSystem():setCheckpoint(WaterlooSite,"boss",[[
 			require 'scenes.grid.waterloo'
 			]])
@@ -174,11 +179,11 @@ function WaterlooSite:opening_load()
 		end
 			
 	end)
+	areaTrigger:registerEventType('add')
 	local hallwayTrigger = Trigger:new(function(self,event)
-		
-		
 		if event.index == 'Hallway1' and event.unit==GetCharacter() then
-			wait(5)
+			self:close()
+			wait(2)
 			for _,obj in ipairs(unitdict.hallway) do
 				map:loadUnitFromTileObject(obj)
 			end
@@ -186,8 +191,19 @@ function WaterlooSite:opening_load()
 		end
 			
 	end)
-	areaTrigger:registerEventType('add')
 	hallwayTrigger:registerEventType('add')
+	
+	local roomTrigger = Trigger:new(function(self,event)
+		if event.index == 'engineeringroom' and event.unit==GetCharacter() then
+			self:close()
+			wait(2)
+			for _,obj in ipairs(unitdict.room) do
+				map:loadUnitFromTileObject(obj)
+			end
+			self:destroy()
+		end
+	end)
+	roomTrigger:registerEventType('add')
 end
 
 
@@ -211,9 +227,10 @@ end
 
 
 function WaterlooSite:boss_loaded()
+	for _,obj in ipairs(unitdict.boss) do
+		map:loadUnitFromTileObject(obj)
+	end
 end
-
-
 
 function WaterlooSite:loadCheckpoint(checkpoint)
 	if checkpoint == 'opening' then

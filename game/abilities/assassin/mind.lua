@@ -3,7 +3,7 @@ MindRipfieldEffect:addAction(function (area,caster,skill)
 	if caster:getMP()<skill.manacost then return end
 	caster.mp = caster.mp-20
 	local actor = MindRipFieldActor:new(area.x,area.y)
-	map:addUnit(actor)
+	map:addUpdatable(actor)
 	actor.x,actor.y=area.x,area.y
 	local units = map:findUnitsInArea(area)
 	for k,v in pairs(units) do
@@ -82,7 +82,7 @@ function MindRipFieldActor:update(dt)
 		self.system:update(dt)
 		if self.dt>self.time+1 then
 			self.visible = false
-			map:removeUnit(self)
+			map:removeUpdatable(self)
 		end
 	else
 		self.system:setPosition(self.x,self.y)
@@ -115,7 +115,7 @@ function MindDrainActor:initialize(unit,x,y)
 	p:setParticleLife(1)
 	p:stop()
 	self.system=p
-	map:addUnit(self)
+	map:addUpdatable(self)
 end
 
 
@@ -124,7 +124,7 @@ function MindDrainActor:update(dt)
 	x,y=normalize(x,y)
 	self.x,self.y=self.x+x*dt*100,self.y+y*dt*100
 	if math.abs((self.x-self.unit.x)*(self.y-self.unit.y))<100 then
-		map:removeUnit(self)
+		map:removeUpdatable(self)
 	end
 	self.system:setPosition(self.x,self.y)
 	self.system:start()

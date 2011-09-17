@@ -160,6 +160,9 @@ function Unit:createBody(world)
 		self.shape:setMask(unpack(masks))
 	end
 	self.shape:setData(self)
+	if self.r then
+		self.body:setAngle(self.r)
+	end
 end
 
 function Unit:preremove()

@@ -99,6 +99,13 @@ function goo.itembutton:mousepressed(x,y,button)
 	end
 end
 
+function goo.itembutton:mousereleased(x,y,button)
+	super.mousereleased(self,x,y,button)
+	if button == 'r' then
+		
+	end
+end
+
 function goo.itembutton:enterHover()
 	if self.item then
 		self.parent.panel1:fillPanel(self.item:getPanelData())

@@ -17,6 +17,7 @@ preloadlist(
 		'abilities.electrician.transmitter',
 		'abilities.electrician.lightning',
 		'abilities.electrician.tree',
+		'abilities.electrician.character',
 	},
 })	
 require ('abilities.common.lua')

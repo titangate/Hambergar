@@ -356,8 +356,12 @@ function Trigger:destroy()
 		gamelistener:unregister(handler)
 	end
 end
+function Trigger:close()
+	self.closed = true
+end
 function Trigger:run(...)
 	assert(self.action)
+	if self.closed then return end
 	self.co = coroutine.create(self.action)
 	print (coroutine.resume(self.co,...))
 end

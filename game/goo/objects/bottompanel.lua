@@ -28,7 +28,7 @@ function goo.skillbutton:keyreleased(k)
 	if not self.skill or self.skill.level<=0 then return end
 	if k==self.hotkey then
 		if not self.skill:isKindOf(ActiveSkill) then
-			self.parent.count = self.parent.count - 1
+			self.parent.count = math.max(0,self.parent.count - 1)
 --			print (self.visible)
 			if self.parent.count <= 0 then
 				GetCharacter():switchChannelSkill(nil)

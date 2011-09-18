@@ -33,10 +33,6 @@ function HealthPotion:use(unit)
 	if unit:getCD(self.groupname) then return end
 	unit:startCD(self.groupname,self.cd)
 	unit:addBuff(b_HealthPotion:new(self.hpregen),self.time)
-	self.stack = self.stack - 1
-	if self.stack == 0 then
-		unit.inventory:removeItem(self)
-	end
 end
 
 function HealthPotion:fillPanel(panel)

@@ -58,7 +58,7 @@ function b_Ionicform:start(unit)
 	map:addUpdatable(self.trail)
 	map:addUpdatable(self.beam)
 	self.mask = {unit.shape:getMask()}
-	unit.shape:setMask(3,4)
+	unit.shape:setMask(3,4,5)
 	--unit.shape:setSensor(true)
 end
 

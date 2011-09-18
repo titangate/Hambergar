@@ -76,6 +76,7 @@ function TibetGameSystem:runMap(m,checkpoint)
 	if map and map.destroy then
 		 map:destroy()
 	end
+	gamelistener = Listener:new()
 	map = m:new()
 	map:load()
 	map:loadCheckpoint(checkpoint)

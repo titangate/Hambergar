@@ -102,7 +102,16 @@ end
 function goo.itembutton:mousereleased(x,y,button)
 	super.mousereleased(self,x,y,button)
 	if button == 'r' then
-		
+		local groupname = self.item.groupname or self.item:className()
+		if not self.parent.unit:getCD(groupname) then
+			self.item:use(self.parent.unit)
+		end
+		if self.item.stack then
+			self.item.stack=self.item.stack-1
+			if self.item.stack<=0 then
+				self.parent:removeItem(self.item)
+			end
+		end
 	end
 end
 
@@ -139,6 +148,14 @@ function goo.inventory:update(dt)
 		if v:inBounds(love.mouse.getPosition()) then
 			self.hoverslot = v
 			break
+		end
+	end
+end
+
+function goo.inventory:removeItem(item)
+	for k,v in pairs(self.slots) do
+		if v.item == item then
+			v:clearItem()			
 		end
 	end
 end

@@ -54,6 +54,7 @@ function WaterlooSite:initialize()
 	self.emitrate = 1
 	self.emittime = 1
 	self.birthtime = 0
+	unitdict={}
 	for k,v in pairs(oj) do
 		if v.name == 'obstacles' then
 			for _,obj in pairs(v.objects) do
@@ -69,12 +70,10 @@ function WaterlooSite:initialize()
 					local p = obj.properties.phrase
 					unitdict[p] = unitdict[p] or {}
 					table.insert(unitdict[p],obj)
---					self:loadUnitFromTileObject(obj,w,h)
 				else
 					self:loadUnitFromTileObject(obj,w,h)
 				end
 			end
-			--map:addUnit(IALSwordsman:new(math.random(200),math.random(200),'enemy'))
 		end
 	end
 	
@@ -192,7 +191,6 @@ function WaterlooSite:opening_load()
 			
 	end)
 	hallwayTrigger:registerEventType('add')
-	
 	local roomTrigger = Trigger:new(function(self,event)
 		if event.index == 'engineeringroom' and event.unit==GetCharacter() then
 			self:close()

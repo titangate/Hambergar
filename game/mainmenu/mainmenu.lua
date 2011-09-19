@@ -86,6 +86,7 @@ b_option.onClick = function(self,button)
 	option:birth()
 end
 	height = height + 50
+	--[[
 local b_editor = goo.menuitem:new ( mainmenu)
 b_editor:setPos(10,height)
 b_editor:setText('Editor')
@@ -94,13 +95,23 @@ b_editor.onClick = function(self,button)
 	mainmenu.closetime = 0.1
 	pushsystem(TileEditor)
 end
-	height = height + 50
+	height = height + 50]]
 local b_quit = goo.menuitem:new( mainmenu )
 b_quit:setPos( 10, height )
 b_quit:setText( "Quit Game" )
 b_quit:sizeToText()
 b_quit.onClick = function (self,button)
 	love.event.push('q')
+end
+height = height + 50
+
+local b_test = goo.menuitem:new( mainmenu )
+b_test:setPos( 10, height )
+b_test:setText( "Test" )
+b_test:sizeToText()
+b_test.onClick = function (self,button)
+	require 'tests.test'
+	test()
 end
 height = height + 50
 if love.filesystem.exists('lastsave.sav') then

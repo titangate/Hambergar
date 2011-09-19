@@ -40,7 +40,7 @@ require "libraries.sound"
 require 'scenes.init'
 require "items.init"
 require "libraries.conversation"
-require "editor.init"
+--require "editor.init"
 require 'libraries.TEsound'
 goo=require "goo.goo"
 anim = require "anim.anim"--[[]]

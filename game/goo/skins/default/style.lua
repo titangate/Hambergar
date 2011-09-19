@@ -21,6 +21,13 @@ function drawSkillLevel(x,y,level,maxlevel)
 	love.graphics.setColor(255,255,255,255)
 end
 
+style['goo list'] = {
+	
+}
+style['goo list container'] = {
+	
+}
+
 style['goo panel'] = {
 	backgroundColor = {255,255,255},
 	borderColor = {255,255,255},

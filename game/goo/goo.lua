@@ -339,10 +339,13 @@ function goo:draw( x, y, object )
 	love.graphics.push()
 	love.graphics.translate( x, y )
 	love.graphics.scale( object.xscale, object.yscale )
-		object:draw()
+	object:draw()
 	
 	for i,child in ipairs(object.children) do
-		if child.visible then self:draw(child.x,child.y,child) end
+		if child.visible then 
+			-- TODO: Set Scissor
+			self:draw(child.x,child.y,child) 
+		end
 	end
 	
 	love.graphics.pop()
@@ -451,6 +454,19 @@ function goo.object:direct(highlight,direction,filter)
 		return nil
 	end
 	return objdict[math.min(unpack(distarray))]
+end
+
+
+function goo.drawBox(x,y,w,h)
+	love.graphics.drawq(img.attritubebackground,quads.topleft,x-10,y-10)
+	love.graphics.drawq(img.attritubebackground,quads.topright,x+w,y-10)
+	love.graphics.drawq(img.attritubebackground,quads.botleft,x-10,y+h)
+	love.graphics.drawq(img.attritubebackground,quads.botright,x+w,y+h)
+	love.graphics.drawq(img.attritubebackground,quads.top,x,y-10,0,w,1)
+	love.graphics.drawq(img.attritubebackground,quads.bot,x,y+h,0,w,1)
+	love.graphics.drawq(img.attritubebackground,quads.left,x-10,y,0,1,h)
+	love.graphics.drawq(img.attritubebackground,quads.right,x+w,y,0,1,h)
+	love.graphics.drawq(img.attritubebackground,quads.mid,x,y,0,w,h)
 end
 
 return goo

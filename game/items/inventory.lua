@@ -3,6 +3,7 @@ Inventory=Object:subclass('Inventory')
 function Inventory:initialize(unit)
 	self.items={}
 	self.unit=unit
+	self.equipments={}
 	-- item is stored as a 2-d array, indexed (itemtype,itemname)
 end
 
@@ -26,7 +27,7 @@ function Inventory:hasItem(itemtype)
 	return false
 end
 
-function Inventory:removeItem(item,count)
+function Inventory:removeItem(itemtype,count)
 	count = count or 1
 	for k,v in pairs(self.items) do
 		if v[itemtype] then
@@ -56,20 +57,35 @@ function Inventory:getItemByType(itemtype)
 	end
 end
 
-function Inventory:interateItems(itemtype)
+function Inventory:iterateItems(itemtype)
 	if itemtype then
-		return function()
-			return next,self.items[itemtype],nil
-		end
+		self.items[itemtype]=self.items[itemtype] or {}
+		return pairs(self.items[itemtype])
 	else
 		local it=function()
 			for _,itemtype in pairs(self.items) do
 				for name,item in pairs(itemtype) do
-					coroutine.yield(item)
+					coroutine.yield(name,item)
 				end
 			end
 		end
 		return coroutine.wrap(it)
 	end
 
+end
+
+function Inventory:equip(item)
+	local item = self:getItemByType(item)
+	item:equip(self.unit)
+	self.equipments[item.type]=item
+end
+
+function Inventory:unequip(item)
+	local item = self:getItemByType(item)
+	item:unequip(self.unit)
+	self.equipments[item.type]=item
+end
+
+function Inventory:getEquip(itemtype)
+	return self.equipments[itemtype]
 end

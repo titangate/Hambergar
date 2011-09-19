@@ -37,6 +37,8 @@ function Electrician:initialize(x,y)
 	self.spirit = 10
 	self.manager = ElectricianPanelManager:new(self)
 	self:resetAnimation()
+	self.inventory = Inventory:new(self)
+	-- TODO: do what?
 end
 
 function Electrician:damage(...)

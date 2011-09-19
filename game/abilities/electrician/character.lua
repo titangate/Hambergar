@@ -23,7 +23,7 @@ function ElectricianCharacterPanel:initInventory()
 	dp:setVisible(false)
 	dp:setFollowerPanel(true)
 	self.inventory = i
-	self.unit.inventory = i
+--	self.unit.inventory = i
 end
 function ElectricianCharacterPanel:initialize(unit)
 	self.dt = 0

@@ -28,6 +28,11 @@ style['goo list container'] = {
 	
 }
 
+style['goo itembutton'] = {
+	descriptionFont = fonts.oldsans12,
+	titleFont = fonts.oldsans24
+}
+
 style['goo panel'] = {
 	backgroundColor = {255,255,255},
 	borderColor = {255,255,255},

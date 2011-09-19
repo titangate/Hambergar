@@ -344,7 +344,16 @@ function goo:draw( x, y, object )
 	for i,child in ipairs(object.children) do
 		if child.visible then 
 			-- TODO: Set Scissor
-			self:draw(child.x,child.y,child) 
+			local p = child.parent
+			if p.childScissor then
+				p=p.childScissor
+				local x,y = p:getAbsolutePos()
+				love.graphics.setScissor(x,y,p.w,p.h)
+				self:draw(child.x,child.y,child) 
+				love.graphics.setScissor()
+			else
+				self:draw(child.x,child.y,child) 
+			end
 		end
 	end
 	

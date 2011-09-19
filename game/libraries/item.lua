@@ -2,6 +2,7 @@ Item = Object:subclass('Item')
 function Item:initialize(type,x,y)
 	self.type = type
 	self.x,self.y = x,y
+	self.stack = 1
 end
 
 function Item:createBody(world)
@@ -17,6 +18,14 @@ function Item:persist(b,coll)
 		if b:pickUp(self) then
 			map:removeUnit(self)
 		end
+	end
+end
+
+function Item:getQuickInfo()
+	if self.stack<=1 then
+		return string.upper(self.type)
+	else
+		return string.upper(self.type)..' // AMOUNT'..self.stack
 	end
 end
 	

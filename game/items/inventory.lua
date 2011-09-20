@@ -89,3 +89,20 @@ end
 function Inventory:getEquip(itemtype)
 	return self.equipments[itemtype]
 end
+
+function Inventory:updateInfoPanel(item)
+end
+
+function Inventory:interactItem(item)
+end
+
+function Inventory:populateList(list,type)
+	list:clear()
+	for k,v in self:iterateItems(type) do
+		local b = goo.itembutton:new(list)
+		b:setItem(v)
+		b:setSize(list.w,50)
+		b:setInventory(self)
+		list:addItem(b,k)
+	end
+end

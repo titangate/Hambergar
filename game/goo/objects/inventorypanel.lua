@@ -31,7 +31,7 @@ function goo.itembuttonslot:clearItem()
 	end
 	self.item = nil
 end
-
+--[[
 
 goo.inventory = class('goo inventory', goo.object)
 function goo.inventory:initialize(parent)
@@ -220,7 +220,7 @@ function goo.inventory:load(save)
 		self.hoverslot = self.slots[k]
 		self:handleDrag(self:pickUp(item))
 	end
-end
+end]]
 
 goo.itempanel = class('goo itempanel', goo.ehpanel)
 function goo.itempanel:initialize(parent)

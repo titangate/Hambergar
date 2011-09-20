@@ -372,3 +372,8 @@ function wait(time)
 	end,true,true)
 	coroutine.yield()
 end
+
+
+function math.clamp(x,lower,upper)
+	return math.min(math.max(x,lower),upper)
+end

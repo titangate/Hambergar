@@ -1,8 +1,4 @@
 
-function math.clamp(x,lower,upper)
-	return math.min(math.max(x,lower),upper)
-end
-
 local filesTable = love.filesystem.enumerate('lightning')
 local lightningimage = {}
 for i,v in ipairs(filesTable) do

@@ -22,9 +22,12 @@ function drawSkillLevel(x,y,level,maxlevel)
 end
 
 style['goo list'] = {
-	
+	vertSpacing = 5,
 }
 style['goo list container'] = {
+	
+}
+style['goo inventory'] = {
 	
 }
 

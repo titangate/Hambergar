@@ -16,7 +16,7 @@ end
 
 function goo.itembutton:setItem(item)
 	self.item = item
-	if item.fixed then
+	if item and item.fixed then
 		self:setDraggable(false)
 	else
 		self:setDraggable(true)
@@ -45,14 +45,13 @@ end
 function goo.itembutton:mousereleased(x,y,button)
 	super.mousereleased(self,x,y,button)
 	if button == 'r' and self.item then
-		self.inv:interactItem(self.item)
+		self.inv:interactItem(self.item,self.buttontype)
 	end
 end
 
 function goo.itembutton:enterHover()
-	print ('enterhover')
 	if self.item then
-		self.inv:updateInfoPanel(self.item)
+		self.inv.updateInfoPanel(self.item)
 		self.inv.hoverbutton = self
 	end
 end

@@ -7,6 +7,7 @@ function goo.inventory:initialize(parent)
 	self.invlist:setSize(300,400)
 	-- tab button
 	self.tabs = {}
+	self.currenttab = 'all'
 end
 
 function goo.inventory:setItemtype(itemtype)
@@ -32,11 +33,14 @@ function goo.inventory:addTab(tab,image)
 end
 
 function goo.inventory:switchTab(tab)
+	tab = tab or 'all'
 	if tab=='all' then
 		self.inv:populateList(self.invlist.list)
 	else
 		self.inv:populateList(self.invlist.list,tab)
 	end
+	self.invlist.list:setPos(0,0)
+	self.currenttab = tab
 end
 
 return goo.inventory

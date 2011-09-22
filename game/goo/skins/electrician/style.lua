@@ -48,6 +48,23 @@ function drawDrainLevel(x,y,current,max)
 	end
 end
 
+
+style['goo list'] = {
+	vertSpacing = 5,
+}
+style['goo list container'] = {
+	
+}
+style['goo inventory'] = {
+	
+}
+
+style['goo itembutton'] = {
+	descriptionFont = fonts.oldsans12,
+	titleFont = fonts.oldsans24
+}
+
+
 style['goo panel'] = {
 	backgroundColor = {255,255,255},
 	borderColor = {255,255,255},

@@ -14,12 +14,14 @@ function PeacockFeather:initialize(x,y)
 end
 
 function PeacockFeather:equip(unit)
+super.equip(self,unit)
 	unit.movementspeedbuffpercent = self.movementspeedbuffpercent + unit.movementspeedbuffpercent
 	unit.maxhp = self.maxhp + unit.maxhp
 	unit.maxmp = self.maxmp + unit.maxmp
 end
 
 function PeacockFeather:unequip(unit)
+super.unequip(self,unit)
 	unit.movementspeedbuffpercent = unit.movementspeedbuffpercent -self.movementspeedbuffpercent 
 	unit.maxhp =  unit.maxhp - self.maxhp
 	unit.maxmp =  unit.maxmp - self.maxmp

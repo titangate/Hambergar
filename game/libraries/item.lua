@@ -1,3 +1,15 @@
+function join(di,t)
+	w = ''
+	for i,v in ipairs(t) do
+		if i==1 then
+			w = v
+		else
+			w = w..di..v
+		end
+	end
+	return w
+end
+
 Item = Object:subclass('Item')
 function Item:initialize(type,x,y)
 	self.type = type
@@ -13,20 +25,22 @@ function Item:createBody(world)
 	self.shape:setData(self)
 end
 
-function Item:persist(b,coll)
+function Item:add(b,coll)
 	if b:isKindOf(Character) then
-		if b:pickUp(self) then
-			map:removeUnit(self)
-		end
+		b.inventory:addItem(self)
+		map:removeUnit(self)
 	end
 end
 
 function Item:getQuickInfo()
-	if self.stack<=1 then
-		return string.upper(self.type)
-	else
-		return string.upper(self.type)..' // AMOUNT'..self.stack
+	local t = {string.upper(self.type)}
+	if self.stack > 1 then
+		table.insert(t,'STACK '..tostring(self.stack))
 	end
+	if self.equipped then
+		table.insert(t,'EQUIPPED')
+	end
+	return join(' // ',t)
 end
 	
 function Item:preremove()

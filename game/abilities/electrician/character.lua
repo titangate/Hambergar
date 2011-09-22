@@ -2,28 +2,33 @@ ElectricianCharacterPanel = Object:subclass('ElectricianCharacterPanel')
 
 function ElectricianCharacterPanel:initInventory()
 	local i = goo.inventory:new(self.container)
-	i:setPos(20,screen.height-160)
-	i:setSize(640,128)
-	for n=0,9 do
-		i:addSlot(n*64,0)
+	i:setPos(20,0)
+	i:setItemtype{'all','consumable','amplifier','trophy','artifact'}
+	i:setInventory(self.unit.inventory)
+	local eq = goo.equipment:new(self.container)
+	eq:setPos(350,50)
+	eq:setInventory(self.unit.inventory)
+	eq:setItemtype{'consumable','amplifier','trophy','artifact'}
+	function self.unit.inventory.updateInvUI()
+		print ('switch')
+		i:switchTab(i.currenttab)
+		eq:updateEquipment()
 	end
-	for n=0,9 do
-		i:addSlot(n*64,64)
-	end
-	i:addSlot(screen.width-170-i.x,screen.height-200-i.y,'amplifier',true)
-	i:addSlot(screen.width-104-i.x,screen.height-314-i.y,'artifact',true)
-	i:addSlot(screen.width-50-i.x,screen.height-220-i.y,'trophy',true)
-	i:addSlot(screen.width-335-i.x,screen.height-260-i.y,'secondary',true)
-	i:setUnit(self.unit)
 	dp = goo.itempanel:new()
 	dp:setSize(230,200)
 	dp:setPos(screen.width-250,50)
-	i:setItemPanels(dp)
 	dp:setTitle('NO ITEM')
 	dp:setVisible(false)
 	dp:setFollowerPanel(true)
+	function self.unit.inventory.updateInfoPanel(item)
+		if item then
+			dp:fillPanel(item:getPanelData())
+			dp:setVisible(true)
+		else
+			dp:setVisible(false)
+		end
+	end
 	self.inventory = i
---	self.unit.inventory = i
 end
 function ElectricianCharacterPanel:initialize(unit)
 	self.dt = 0
@@ -31,7 +36,7 @@ function ElectricianCharacterPanel:initialize(unit)
 	self.container = goo.object:new()
 	
 	self.attpanel = goo.itempanel:new(self.container)
-	self.attpanel:setPos(450,50)
+	self.attpanel:setPos(680,75)
 	self.attpanel:setSize(300)
 	self.attpanel:fillPanel({
 		title = 'LAWRENCE FU',

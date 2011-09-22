@@ -343,6 +343,7 @@ function Character:initialize(x,y,rad,mass)
 	self.probedt = 0
 	self.probetime = 0.02
 	self.animation = {}
+	self.inventory = Inventory:new(self)
 end
 
 function Character:pickUp(item)
@@ -363,8 +364,9 @@ end
 function Character:save()
 	
 	if self.inventory then
-	self.inventory:setEquipmentActive(false)
-end
+		self.inventory:setEquipmentActive(false)
+		print ('disabled')
+	end
 	--self.inventory:setEquipmentActive(false)
 	self:setBuffActive(false)
 	local save = {
@@ -390,16 +392,16 @@ end
 		spirit = self.spirit,
 		skills = {},
 	}
-		if self.inventory then
-	save.inventory = self.inventory:save()
-end
+	if self.inventory then
+		save.inventory = self.inventory:save()
+	end
 	for k,v in pairs(self.skills) do
 		save.skills[k] = v.level
 	end
 	local save = table.copy(save)
 	if self.inventory then
-	self.inventory:setEquipmentActive(true)
-end
+		self.inventory:setEquipmentActive(true)
+	end
 	self:setBuffActive(true)
 	return save
 end

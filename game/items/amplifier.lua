@@ -15,6 +15,7 @@ end
 
 
 function FiveSlash:equip(unit)
+	super.equip(self,unit)
 	unit.HPRegen = self.HPRegen + unit.HPRegen
 	unit.MPRegen = self.MPRegen + unit.MPRegen
 	unit.armor.Bullet = unit.armor.Bullet or 0
@@ -24,6 +25,7 @@ function FiveSlash:equip(unit)
 end
 
 function FiveSlash:unequip(unit)
+	super.unequip(self,unit)
 	unit.HPRegen = unit.HPRegen -self.HPRegen 
 	unit.MPRegen =  unit.MPRegen - self.MPRegen
 	unit.armor.Bullet =  unit.armor.Bullet - self.armor

@@ -14,12 +14,12 @@
  </tileset>
  <layer name="Tile Layer 3" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJztmblOK0EUBUci4vP4F1IDKUvKkrJ8KE2A5GMJeRrTXde4SrqBoxlXCY54b1lERET+houBt/YZh75Phe/623ea+W5rn3Xoe/V85027q3bX7W4Gfu6lao/zzuvtcdvurt19u4eBn3uZ+bNbqcdju6d2z+1eBn7uhW5A9Xht99buvd3HwM+90A2oHqe8H2vvbOvcD/5m9nA/av2+qrof3+83w3OlHqe8H2uftY37cVo9Tnk/1j5rFl/Pqrwfs6jUo+p+zKRSj6r7MRO6x/azqu7HTHp6jN4096NWD/ejv8dIZ+5Hf4+RztyP/h4/fcfNcrgz96O/x0hn7of7UQ33oxZre7ws4/9mcz/W9/hY3I8Z7Oux/f+17sd4enu4H2Op9O8l7ketHrNO+rjcOWGxRy3sUQt77GfX0THff4B2aI+EdmiPhHZoj4R2aI+EdmiPhHZoj4R2aI+EdmiPhHZoj4R2aI+EdmiPhHZoj4R2aI+EdmiPhHZoj4R2aI+EdmiPhHZoj4R2aI+EdmiPhHZoj4R2aI+EdmiPhHZoj4R2aI+EdmiPhHZoj4R2aI+EdmiPhHZoj4R2aI+EdmiPhHZoj4R2aI+EdmiPhHZoj4R2aI+EdmiPhHZoj4R2aI+EdmiPhHZoj4R2aI+EdmiPhHZoj4R2aI+EdmiPhHZoj4R2aI+EdmiPhHZoj4R2aI+EdmiPhHZoj4R2aA8RERGR4+YTtbQuWQ==
+   eJztmbtOA0EQBE8i4vP4F6cGpzxSwCnGH8oQIF1bQt7xsdtjrkpqoYt2r0vQspkmAACAv+GuY1rPWHqfCu966Z1G3q31rKX3yrzzNnIfeYjsOj5nqerjNpmsj8fIU+Q58tLxOcvI391KPl4jb5H3yL7jcxa3A5ePj8gh8hk5dnzO4nbg8rHm/WjNzSzshz8jfbAftf5eVd2Pn/uN6LmSjzXvR+tZc9iPdflY8360njWK77Mq78coKvmouh8jqeSj6n6MxO1jflbV/RhJxkfvTWM/avlgP/I+enbGfuR99OyM/cj7+O0dt9PyztiPvI+enbEf7Ec12I9atPrYT/0/s7Ef7T6OE/sxgnM+5v+vZT/6k/XBfvSl0vcl7EctH6MCOTYnAS/4qAU+aoGP85x2dM35D7g7xIfi7hAfirtDfCjuDvGhuDvEh+LuEB+Ku0N8KO4O8aG4O8SH4u4QH4q7Q3wo7g7xobg7xIfi7hAfirtDfCjuDvGhuDvEh+LuEB+Ku0N8KO4O8aG4O8SH4u4QH4q7Q3wo7g7xobg7xIfi7hAfirtDfCjuDvGhuDvEh+LuEB+Ku0N8KO4O8aG4O8SH4u4QH4q7Q3wom9nPaw8AAAAAAAAAAAAAAAAAAAAAAADAWvgCKZt2sw==
   </data>
  </layer>
  <layer name="Tile Layer 1" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <objectgroup name="areas" width="100" height="100">
@@ -30,11 +30,12 @@
   <object name="Hallway1" x="1200" y="160" width="336" height="1176"/>
   <object name="SpawingPoint" x="216" y="463" width="100" height="68"/>
   <object name="computergridenter" x="2704" y="1368" width="110" height="84"/>
+  <object name="Outside" x="2388" y="3004" width="568" height="592"/>
  </objectgroup>
  <objectgroup name="obstacles" width="100" height="100">
   <object x="3600" y="1456" width="164" height="2392"/>
   <object x="1504" y="1356" width="136" height="2500"/>
-  <object x="1392" y="3728" width="2296" height="104"/>
+  <object x="1508" y="2860" width="1048" height="124"/>
   <object x="60" y="124" width="1088" height="116"/>
   <object x="124" y="168" width="32" height="560"/>
   <object x="1228" y="1280" width="1448" height="276"/>
@@ -54,6 +55,7 @@
   <object x="1540" y="333" width="77" height="65"/>
   <object x="1548" y="483" width="69" height="52"/>
   <object x="2842" y="1282" width="778" height="268"/>
+  <object x="2696" y="2860" width="1048" height="124"/>
  </objectgroup>
  <objectgroup name="objects" width="100" height="100">
   <object name="TV" x="549" y="255" width="115" height="48">
@@ -193,5 +195,6 @@
     <property name="phrase" value="room"/>
    </properties>
   </object>
+  <object name="EpicDoor" x="2532" y="2828" width="208" height="172"/>
  </objectgroup>
 </map>

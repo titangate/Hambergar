@@ -11,7 +11,7 @@ end
 
 function goo.listcontainer:setSize(w,h)
 	super.setSize(self,w,h)
-	self.list:setSize(w,h)
+	self.list:setSize(w,0)
 end
 
 function goo.listcontainer:update(dt)
@@ -21,12 +21,6 @@ end
 function goo.listcontainer:mousepressed(...)
 	super.mousepressed(self,...)
 end
-
-function goo.listcontainer:setOffset(offset)
-	self.yoffset = offset
-	self.list:setPos(0,self.yoffset)
-end
-
 
 function goo.listcontainer:draw()
 	goo.drawBox(0,0,self.w,self.h)

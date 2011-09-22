@@ -20,14 +20,14 @@ function test()
 	for k,item in inv:iterateItems() do
 		print ('Inventory has',item.type,k,item)
 	end
-	local listc = goo.listcontainer()
-	listc:setPos(200,200)
-	listc:setSize(300,200)
-	listc:setOffset(100)
-	inv:populateList(listc.list)
 	local i = goo.inventory:new()
 	i:setPos(400,0)
-	i:setSize(600,400)
-	i:setItemtype{'all','consumable','amplifier','trophy','artifact'}
+	i:setSize(600,200)
 	i:setInventory(inv)
+	i:setItemtype{'all','consumable','amplifier','trophy','artifact'}
+	
+	local eq = goo.equipment:new()
+	eq:setSize(400,200)
+	eq:setInventory(inv)
+	eq:setItemtype{'consumable','amplifier','trophy','artifact'}
 end

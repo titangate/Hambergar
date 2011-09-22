@@ -3,6 +3,8 @@ require 'libraries.unit'
 require 'libraries.hud'
 require 'libraries.conversation']]
 preload('electrician','commonenemies','waterloo')
+
+requireImage("assets/gridfilter.png",'gridfilter')
 function GetCharacter()
 	return chr
 end

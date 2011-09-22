@@ -30,7 +30,7 @@
   <object name="Hallway1" x="1200" y="160" width="336" height="1176"/>
   <object name="SpawingPoint" x="216" y="463" width="100" height="68"/>
   <object name="computergridenter" x="2704" y="1368" width="110" height="84"/>
-  <object name="Outside" x="2388" y="3004" width="568" height="592"/>
+  <object name="outside" x="2388" y="3004" width="568" height="592"/>
  </objectgroup>
  <objectgroup name="obstacles" width="100" height="100">
   <object x="3600" y="1456" width="164" height="2392"/>
@@ -195,6 +195,11 @@
     <property name="phrase" value="room"/>
    </properties>
   </object>
-  <object name="EpicDoor" x="2532" y="2828" width="208" height="172"/>
+  <object name="Gate" x="2632" y="2964" width="208" height="172">
+   <properties>
+    <property name="angle" value="0"/>
+    <property name="controller" value="enemy"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

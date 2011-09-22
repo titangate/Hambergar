@@ -93,7 +93,6 @@ function WaterlooSite:update(dt)
 	end
 end
 
-requireImage("assets/gridfilter.png",'gridfilter')
 function WaterlooSite:draw()
 	super.draw(self)
 	for i,v in ipairs(self.flows) do
@@ -202,6 +201,7 @@ function WaterlooSite:opening_load()
 		end
 	end)
 	roomTrigger:registerEventType('add')
+	
 end
 
 
@@ -228,6 +228,34 @@ function WaterlooSite:boss_loaded()
 	for _,obj in ipairs(unitdict.boss) do
 		map:loadUnitFromTileObject(obj)
 	end
+	
+	local finishTrigger = Trigger:new(function(self,event)
+		if event.index == 'outside' and event.unit==GetCharacter() then
+			self:close()
+			print ('ABOUT TO CLOSE')
+			local finishscene = CutSceneSequence:new()
+			finishscene:push(FadeOut:new('fadeout',nil,{0,0,0},2),0)
+			finishscene:wait(2)
+			finishscene:push(ExecFunction:new(function()
+				if map and map.destroy then
+					 map:destroy()
+				end
+				require 'scenes.grid.waterloo2'
+				map.update = function() 
+					map = Waterloo2:new(2000,2000)
+					map:load()
+					map:opening_enter()
+					GetGameSystem():setCheckpoint(Waterloo2,"opening",[[
+					require 'scenes.grid.waterloo2'
+					]])
+				end
+			end),0)
+			map:playCutscene(finishscene)
+			self:destroy()
+		end
+	end)
+	
+	finishTrigger:registerEventType('add')
 end
 
 function WaterlooSite:loadCheckpoint(checkpoint)

@@ -151,6 +151,7 @@ function Map:removeUnit(...)
 		table.insert(self.destroys,unit)
 		if unit.preremove then unit:preremove() end
 		local controller = unit.controller or 'default'
+		assert(self.count[controller])
 		self.count[controller] = self.count[controller] - 1
 	end
 end

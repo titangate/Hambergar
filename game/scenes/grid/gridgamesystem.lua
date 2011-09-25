@@ -47,7 +47,6 @@ function GridGameSystem:runMap(m,checkpoint)
 	map = m:new()
 	map:load()
 	map:loadCheckpoint(checkpoint)
-	
 end
 
 function GridGameSystem:setCheckpoint(m,c,depends)

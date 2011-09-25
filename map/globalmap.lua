@@ -181,7 +181,6 @@ function GlobalMap:draw()
 		love.graphics.draw(globalmap,512,300,0,2,2,256,150)
 	end
 	for k,v in ipairs(self.anim) do
-		print (k,v.alpha)
 		love.graphics.setColor(255,255,255,v.alpha)
 		love.graphics.draw(v.img,v.x,v.y,v.r,v.sx,v.sy,v.ox,v.oy)
 	end

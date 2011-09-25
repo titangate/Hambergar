@@ -82,6 +82,7 @@ end
 function WaterlooSite:playCutscene(scene)
 	self.cutscene = scene
 end
+
 function WaterlooSite:update(dt)
 	if self.cutscene then
 		self.cutscene:update(dt)
@@ -237,11 +238,11 @@ function WaterlooSite:boss_loaded()
 			finishscene:push(FadeOut:new('fadeout',nil,{0,0,0},2),0)
 			finishscene:wait(2)
 			finishscene:push(ExecFunction:new(function()
-				if map and map.destroy then
-					 map:destroy()
-				end
-				require 'scenes.grid.waterloo2'
-				map.update = function() 
+				map.update = function()
+					if map and map.destroy then
+						 map:destroy()
+					end
+					require 'scenes.grid.waterloo2'
 					map = Waterloo2:new(2000,2000)
 					map:load()
 					map:opening_enter()

@@ -37,6 +37,7 @@ require "libraries.uiitem"
 require "libraries.item"
 require "libraries.tilemap"
 require "libraries.sound"
+require 'libraries.blur'
 require 'scenes.init'
 require "items.init"
 require "libraries.conversation"
@@ -169,9 +170,10 @@ function love.update(dt)
 	TEsound.cleanup()
 end
 
+--local blurbuffer = love.graphics.newFramebuffer()
 function love.draw()
+	love.graphics.setColor(255,255,255)
 	revertFont()
-	love.graphics.setColor(255,255,255,255)
 	currentsystem:draw()
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.setFont(fonts.oldsans24)

@@ -247,6 +247,7 @@ end
 
 function k:GetRawOrderDirection()
 	local x,y = love.mouse.getPosition()
+	assert(map.camera)
 	x,y = map.camera:untransform(x,y)
 	if x==0 and y==0 then
 		return {1,0}

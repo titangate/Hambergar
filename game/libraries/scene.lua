@@ -176,9 +176,7 @@ function Map:update(dt)
 end
 
 function Map:draw()
-	if self.blurstyle then
-		Blureffect.begin(self.blurstyle)
-	end
+		Blureffect.begin()
 	if self.camera then self.camera:apply() end
 	if self.background then self.background:draw() end
 	for unit,v in pairs(self.units) do
@@ -191,10 +189,7 @@ function Map:draw()
 	local px,py = unpack(GetOrderPoint())
 	love.graphics.draw(img.cursor,px,py,math.atan2(y,x),1,1,16,16)
 	if self.camera then map.camera:revert() end
-	
-	if self.blurstyle then
 		Blureffect.finish()
-	end
 end
 
 function Map:findUnitsInArea(area)

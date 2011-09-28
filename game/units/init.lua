@@ -17,7 +17,8 @@ preloadlist(
 	waterloo = {
 		'units.enemies.insectoid',
 		'units.enemies.mech',
-		'units.other.waterloo'
+		'units.enemies.spiderjason',
+		'units.other.waterloo',
 	}
 }
 )

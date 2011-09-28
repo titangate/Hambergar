@@ -146,10 +146,11 @@ function GridGameSystem:keyreleased(k)
 			map:addUnit(d)
 			d:enableAI()
 		end
-				if k=='j' then
-					map:addUnit(TV:new(math.random(200),math.random(200)))
-					map:addUnit(Computer:new(math.random(200),math.random(200)))
-				end
+		if k=='k' then
+			boss:swipe(3)
+		elseif k== 'm' then
+			boss:revertLeg(3)
+		end
 		if k=='u' then
 			self.conversationpanel:birth()
 			self.conversationpanel:play('HOLLY','REBOOTING.............',nil,5)

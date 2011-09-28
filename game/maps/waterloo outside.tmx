@@ -9,10 +9,21 @@
   </data>
  </layer>
  <objectgroup name="obstacles" width="16" height="16">
-  <object type="obs" x="9" y="221" width="799" height="663"/>
-  <object x="1055" y="236" width="1057" height="540"/>
+  <object type="obs" x="37" y="185" width="799" height="663"/>
+  <object x="987" y="252" width="1057" height="540"/>
+  <object x="2768" y="3232" width="176" height="864"/>
  </objectgroup>
  <objectgroup name="areas" width="16" height="16">
-  <object name="spawningpoint" x="23" y="907" width="153" height="100"/>
+  <object name="spawningpoint" x="95" y="1031" width="153" height="100"/>
+  <object name="BossSpawnPoint" x="2000" y="3376" width="136" height="128"/>
+ </objectgroup>
+ <objectgroup name="objects" width="16" height="16">
+  <object name="SpiderBoss" x="1402" y="3322" width="232" height="206">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="id" value="boss"/>
+    <property name="phrase" value="boss"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

@@ -12,6 +12,16 @@ enemy Missiles		6			12467
 dead				7			13456
 ]]--
 
+cc = {
+	item = 1,
+	doodad = 2,
+	player = 3,
+	enemy = 4,
+	playermissile = 5,
+	enemymissile = 6,
+	dead = 7,
+} -- collide category
+
 
 typeinfo = {
 	doodad = {2,{5,6}},

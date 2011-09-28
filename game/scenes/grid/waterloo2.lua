@@ -42,6 +42,9 @@ function Waterloo2:loadUnitFromTileObject(obj)
 		if object.controller=='enemy' and object.enableAI then
 			object:enableAI()
 		end
+		if obj.properties.id then
+			_G[obj.properties.id]=object
+		end
 	end
 end
 function Waterloo2:initialize()
@@ -160,7 +163,7 @@ function Waterloo2:boss_enter()
 end
 
 function Waterloo2:boss_load()
-	local x,y=unpack(self.waypoints.computergridenter)
+	local x,y=unpack(self.waypoints.BossSpawnPoint)
 	local lawrence = Electrician:new(x,y,32,10)
 	lawrence.direction = {0,-1}
 	lawrence.controller = 'player'
@@ -173,11 +176,26 @@ function Waterloo2:boss_load()
 	self:boss_loaded()
 end
 
-
 function Waterloo2:boss_loaded()
 	for _,obj in ipairs(unitdict.boss) do
 		map:loadUnitFromTileObject(obj)
 	end
+	map.camera = ContainerCamera:new(100,{
+		x1 = -2000,
+		y1 = -2000,
+		x2 = 2000,
+		y2 = 2000
+	},setmetatable({},{__index = function(_,key)
+		if key == 'x' then
+			return boss.x-200
+		end
+		if key == 'y' then
+			return boss.y
+		end
+	end}),GetCharacter())
+	PlayMusic('music/boss1.mp3')
+--	hans:enableAI()
+	bossbar = AssassinHPBar:new(function()return boss:getHPPercent() end,screen.halfwidth-400,screen.height-100,800)
 end
 
 function Waterloo2:loadCheckpoint(checkpoint)

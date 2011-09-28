@@ -42,6 +42,9 @@ function WaterlooSite:loadUnitFromTileObject(obj)
 		if object.controller=='enemy' and object.enableAI then
 			object:enableAI()
 		end
+		if obj.properties.id then
+			_G[obj.properties.id]=object
+		end
 	end
 end
 function WaterlooSite:initialize()

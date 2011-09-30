@@ -56,8 +56,8 @@ end
 
 function Camera:untransform(x,y)
 	x,y = x-playable.halfwidth,y-playable.halfheight
-	x,y = x-self.x,y-self.y
 	x,y = x/self.sx,y/self.sy
+	x,y = x-self.x,y-self.y
 	local cosr,sinr = math.cos(-self.r),math.sin(-self.r)
 	x,y = x*cosr-y*sinr,x*sinr+y*cosr
 	return x,y

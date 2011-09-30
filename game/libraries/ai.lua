@@ -363,6 +363,20 @@ function Parallel:push(goal)
 	table.insert(self.subgoals,goal)
 end
 
+function Parallel:process(dt,owner)
+	for i =1,#self.subgoals do
+		local status,dt = self.subgoals[i]:process(dt,owner)
+		if status == STATE_SUCCESS then
+			table.remove(self.subgoals[i])
+			i = i-1
+		end
+	end
+	if #self.subgoals>0 then
+		return STATE_ACTIVE,dt
+	else
+		return STATE_SUCCESS,dt
+	end
+end
 
 function AI.ApproachAndAttack(t2,t,attackskill,range,firerange)
 	AIDemo = Sequence:new()

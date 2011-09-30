@@ -57,6 +57,7 @@ function b_Ionicform:start(unit)
 	self.beam = Beam:new({x=unit.x,y=unit.y},unit,1,100,{255,255,255})
 	map:addUpdatable(self.trail)
 	map:addUpdatable(self.beam)
+	assert(unit.shape)
 	self.mask = {unit.shape:getMask()}
 	unit.shape:setMask(3,4,5)
 	--unit.shape:setSensor(true)

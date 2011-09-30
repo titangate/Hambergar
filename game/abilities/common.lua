@@ -193,3 +193,33 @@ function ThreewayShotgun:stop()
 	self.time = 0
 end
 
+PistolEffect = ShootMissileEffect:new()
+PistolEffect:addAction(function(point,caster,skill)
+	local Missile = skill.bullettype:new(1,1,1000,caster.x,caster.y,unpack(point))
+	Missile.controller = caster.controller..'Missile'
+	Missile.effect = skill.bulleteffect
+	Missile.skill = skill
+	Missile.unit = caster
+	map:addUnit(Missile)
+	TEsound.play('sound/shoot4.wav')
+end)
+
+
+Bullet = Missile:subclass('Bullet')
+function Bullet:initialize(...)
+	super.initialize(self,...)
+end
+function Bullet:persist(unit,coll)
+	if (self.controller=='playerMissile' and unit.controller=='enemy') or (self.controller == 'enemyMissile' and unit.controller=='player') then
+		if not unit.bht[self] then
+			if self.effect then self.effect:effect(unit,self,self.skill) end
+			unit.bht[self] = true
+			self.draw = function() end
+			self.persist = function() end
+		end
+	end
+end
+
+function Bullet:draw()
+	love.graphics.draw(img.bullet,self.x,self.y,self.body:getAngle(),1,1,16,16)
+end

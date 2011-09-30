@@ -180,20 +180,20 @@ function Waterloo2:boss_loaded()
 	for _,obj in ipairs(unitdict.boss) do
 		map:loadUnitFromTileObject(obj)
 	end
-	map.camera = ContainerCamera:new(100,{
+	map.camera = ContainerCamera:new(400,{
 		x1 = -2000,
 		y1 = -2000,
 		x2 = 2000,
 		y2 = 2000
 	},setmetatable({},{__index = function(_,key)
 		if key == 'x' then
-			return boss.x-200
+			return boss.x
 		end
 		if key == 'y' then
 			return boss.y
 		end
 	end}),GetCharacter())
-	PlayMusic('music/boss1.mp3')
+	PlayMusic('music/jasonboss.mp3')
 --	hans:enableAI()
 	bossbar = AssassinHPBar:new(function()return boss:getHPPercent() end,screen.halfwidth-400,screen.height-100,800)
 end

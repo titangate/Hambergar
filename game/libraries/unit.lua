@@ -237,7 +237,9 @@ function Unit:update(dt)
 		if self.skill and self.allowskill then
 			self.skill:update(dt*self.spellspeedbuffpercent)
 		end
-		if self.state == 'stop' then
+		if self.state == 'auto' then
+			
+		elseif self.state == 'stop' then
 			self.body:setLinearVelocity(0,0)
 			self.body:setAngularVelocity(0)
 		elseif self.state == 'slide' then
@@ -292,7 +294,7 @@ function Unit:skilleffect(skill)
 end
 
 function Unit:draw()
-	love.graphics.circle('fill',self.x,self.y,self.rad,32)
+--	love.graphics.circle('fill',self.x,self.y,self.rad,32)
 	self:drawBuff()
 end
 

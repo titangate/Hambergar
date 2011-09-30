@@ -131,7 +131,7 @@ function love.load()
 	smallfont = fonts.smallfont--love.graphics.newFont("awesome.ttf",12)
 	bigfont = fonts.bigfont--love.graphics.newFont("awesome.ttf",25)
 	if love.joystick.isOpen(0) then
-		controller = XBOX360Controller:new(0)
+--		controller = XBOX360Controller:new(0)
 	end
 end
 

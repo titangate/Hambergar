@@ -20,6 +20,7 @@ cc = {
 	playermissile = 5,
 	enemymissile = 6,
 	dead = 7,
+	terrain = 8,
 } -- collide category
 
 
@@ -27,8 +28,8 @@ typeinfo = {
 	doodad = {2,{5,6}},
 	player = {3,{3,5,7}},
 	enemy = {4,{6,7}},
-	playerMissile = {5,{5,6}},
-	enemyMissile = {6,{6}},
+	playerMissile = {5,{3,5,6}},
+	enemyMissile = {6,{6,4}},
 	dead = {7,{5,6}},
 	terrain = {8}
 }

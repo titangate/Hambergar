@@ -232,13 +232,13 @@ function Unit:update(dt)
 		else
 			self.cd[k] = nil
 		end
+	end	
+	if self.skill and self.allowskill then
+		self.skill:update(dt*self.spellspeedbuffpercent)
 	end
 	if self.body then
-		if self.skill and self.allowskill then
-			self.skill:update(dt*self.spellspeedbuffpercent)
-		end
+		
 		if self.state == 'auto' then
-			
 		elseif self.state == 'stop' then
 			self.body:setLinearVelocity(0,0)
 			self.body:setAngularVelocity(0)

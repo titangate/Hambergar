@@ -11,7 +11,7 @@
  <objectgroup name="obstacles" width="16" height="16">
   <object type="obs" x="37" y="185" width="799" height="663"/>
   <object x="987" y="252" width="1057" height="540"/>
-  <object x="1552" y="2796" width="948" height="1316"/>
+  <object x="1640" y="2796" width="948" height="1316"/>
   <object x="3436" y="2860" width="536" height="1256"/>
   <object x="2566" y="3924" width="1292" height="60"/>
   <object x="2488" y="2488" width="1432" height="368"/>
@@ -27,6 +27,26 @@
     <property name="controller" value="enemy"/>
     <property name="id" value="boss"/>
     <property name="phrase" value="boss"/>
+   </properties>
+  </object>
+  <object name="SpiderStation" x="2736" y="3116" width="96" height="64">
+   <properties>
+    <property name="id" value="station1"/>
+   </properties>
+  </object>
+  <object name="SpiderStation" x="3214" y="3122" width="96" height="64">
+   <properties>
+    <property name="id" value="station2"/>
+   </properties>
+  </object>
+  <object name="SpiderStation" x="2743" y="3697" width="96" height="64">
+   <properties>
+    <property name="id" value="station3"/>
+   </properties>
+  </object>
+  <object name="SpiderStation" x="3221" y="3703" width="96" height="64">
+   <properties>
+    <property name="id" value="station4"/>
    </properties>
   </object>
  </objectgroup>

@@ -1,4 +1,27 @@
 
+	require 'units.enemies.spiderjasonphase2'
+
+
+requireImage('assets/drainable/station.png','station')
+SpiderStation = Unit:subclass('SpiderStation')
+function SpiderStation:initialize(x,y)
+	super.initialize(self,x,y,48,0)
+	self.drainablemana = 100
+	self.drain = function()end
+end
+
+function SpiderStation:createBody(world)
+	super.createBody(self,world)
+	self.shape:setMask(cc.enemy,cc.playermissile,cc.enemymissile)
+end
+
+function SpiderStation:draw()
+	love.graphics.draw(img.station,self.x,self.y,self.body:getAngle(),1,1,48,48)
+	if self.drainablemana then
+		drawDrainLevel(self.x,self.y,3,3)
+	end
+end
+
 function AI.Spider(unit,target)
 	local missileseq = Sequence:new()
 	missileseq:push(OrderWait:new(1))
@@ -135,7 +158,7 @@ function AI.SpiderLostLeg(unit,target)
 			elseif #unit.frontlegs > 0 then
 				unit.ai = AI.Spider2(unit,target)
 			else
-				jasonPhase2()
+				jasonPhase2(unit)
 			end
 		else
 			for i = 1,#unit.frontlegs do
@@ -205,7 +228,7 @@ function SpiderLeg:initialize(x,y,r)
 	self.state = 'swipe'
 	self.controller = 'enemy'
 	self.maxhp = 2500
-	self.hp = 2500
+	self.hp = 100
 end
 
 function SpiderLeg:add(b,c)
@@ -217,6 +240,7 @@ function SpiderLeg:add(b,c)
 			self.shapes[1]:setMask(cc.player,cc.enemy,cc.terrain)
 			self.shapes[2]:setMask(cc.player,cc.enemy,cc.terrain)
 			Timer:new(2,1,function()
+				if not self.shapes[1] then return end
 				self.shapes[1]:setMask(cc.enemy,cc.terrain)
 				self.shapes[2]:setMask(cc.enemy,cc.terrain)
 			end,true,true
@@ -262,6 +286,7 @@ function SpiderLeg:createBody(world)
 	local blshape = love.physics.newRectangleShape(blbody,0,0,600,30,0)
 	blbody:setAngle(self.r)
 	local legjoint = love.physics.newRevoluteJoint(ulbody,blbody,self.x,self.y)
+	print (map.world:getJointCount(),'joints!')
 	ulshape:setData(self)
 	blshape:setData(self)
 	legjoint:setLimitsEnabled(true)
@@ -283,6 +308,7 @@ end
 
 function SpiderLeg:destroy()
 	self.joint:destroy()
+	print (map.world:getJointCount(),'joints!')
 	for _,v in ipairs(self.shapes) do
 		v:destroy()
 	end
@@ -373,6 +399,7 @@ function SpiderBlade:createBody(world)
 		shape:setCategory(cc.enemy)
 		shape:setMask(cc.enemy,cc.terrain)
 		table.insert(self.shapes,shape)
+		shape:setSensor(true)
 	end
 end
 
@@ -429,32 +456,31 @@ end
 
 SpiderBoss = Unit:subclass('SpiderBoss')
 
-function SpiderBoss:damage()
-end
 function SpiderBoss:initialize(x,y)
 	super.initialize(self,x,y,40,100)
-	
+	self.hp = 5000
+	self.maxhp = 5000
 	self.skills = {
 		missile = SeekerMissileLaunch_alt:new(self),
 		pistol = SpiderPistol(self),
 		spiral = SpiderSpiral(self),
 		gun = SpiderShotgun(self),
+		charge = SpiderCharge(self)
 	}
-	local lostlegtrig = Trigger:new(function(trig,event)
-		print ('LOST LEG TRIGGER ACTIVATED')
+	self.lostlegtrig = Trigger:new(function(trig,event)
 		if event.unit:isKindOf(SpiderLeg) then
 			self.ai = AI.SpiderLostLeg(self,GetCharacter())
 			for i=1,#self.frontlegs do
 				if self.frontlegs[i][1] == event.unit then
 					local leg,joint,_ = unpack(self.frontlegs[i])
---					joint:destroy()
+					joint:destroy()
 					table.remove(self.frontlegs,i)
 					i = i-1
 				end
 			end
 		end
 	end)
-	lostlegtrig:registerEventType('death')
+	self.lostlegtrig:registerEventType('death')
 	self.frontlegs = {} 
 end
 
@@ -464,6 +490,7 @@ function SpiderBoss:createBody(world)
 	map:addUnit(self.spiderbody)
 --	self.spiderbody.shape:setMask(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16) -- to prevent the collision when blade is added to the map
 	map:addUnit(self.spiderblade)
+	print (map.world:getJointCount(),'joints!')
 	self.headbladejoint = love.physics.newRevoluteJoint(self.spiderbody.body,self.spiderblade.body,self.x,self.y)
 	self.headbladejoint:setMotorEnabled(true)
 	self.headbladejoint:setMotorSpeed(5)
@@ -479,6 +506,7 @@ function SpiderBoss:createBody(world)
 		leg.direction = d
 		leg:bend(1.5,2)
 		local joint = love.physics.newRevoluteJoint(self.spiderbody.body,leg.bodies[1],self.x,self.y)
+		print (map.world:getJointCount(),'joints!')
 		joint:setLimitsEnabled(true)
 		print (angle,'is the limit angle')
 		joint:setLimits(angle-0.05,angle+0.05)
@@ -494,6 +522,7 @@ function SpiderBoss:createBody(world)
 		leg.direction = d
 		leg:bend(1.5,2)
 		local joint = love.physics.newRevoluteJoint(self.spiderbody.body,leg.bodies[1],self.x,self.y)
+		print (map.world:getJointCount(),'joints!')
 		joint:setLimitsEnabled(true)
 		print (angle,'is the limit angle')
 		joint:setLimits(angle-0.05,angle+0.05)
@@ -507,6 +536,7 @@ function SpiderBoss:createBody(world)
 --		v[1].shapes[1]:setMask(1)
 	end
 	self.body = self.spiderbody.body
+	self.shape = self.spiderbody.shape
 	if self.r then 
 		self.body:setAngle(self.r)
 	end
@@ -603,7 +633,7 @@ function SpiderBoss:enableAI(ai)
 end
 
 function SpiderBoss:getHP()
-	local hp = 5000
+	local hp = self.hp
 	for i,v in ipairs(self.frontlegs) do
 		hp = hp + v[1].hp
 	end
@@ -660,7 +690,6 @@ SpiderSpiralEffect:addAction(function(unit,caster,skill)
 	local t = Timer:new(0.05,shots*3,fire,true)
 	t.selfdestruct = true
 end)
-
 
 SpiderSpiral = ActiveSkill:subclass('SpiderSpiral')
 function SpiderSpiral:initialize(unit,level)

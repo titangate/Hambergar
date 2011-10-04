@@ -98,6 +98,7 @@ end
 function BoltMissile:add(unit,coll)
 	if (self.controller=='playerMissile' and unit.controller=='enemy') or (self.controller == 'enemyMissile' and unit.controller=='player') then
 		if not unit.bht[self] then
+			self.add = nil
 			if self.effect then self.effect:effect(unit,self,self.skill) end
 			unit.bht[self] = true
 			self.trail.dt = 99

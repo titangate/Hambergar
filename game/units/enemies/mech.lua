@@ -208,7 +208,7 @@ ChargeEffect:addAction(function(point,caster,skill)
 	end
 end)
 
-Charge = ActiveSkill:subclass('NineSwordDance')
+Charge = ActiveSkill:subclass('Charge')
 function Charge:initialize(unit)
 	super.initialize(self)
 	self.unit = unit

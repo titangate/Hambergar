@@ -61,7 +61,7 @@ b_grid:setText( 'GRID' )
 b_grid:sizeToText()
 b_grid.onClick = function( self, button )
 	local save = table.load(
-	[[return {{["map"]="Waterloo2",["character"]={2},["checkpoint"]="boss",["depends"]="					require 'scenes.grid.waterloo2'\n					",["gamesystem"]="return require 'scenes.grid.gridgamesystem'",},{["movementspeedbuffpercent"]=1,["HPRegen"]=10,["timescale"]=1,["damagebuff"]={3},["hp"]=180,["speedlimit"]=20000,["damageamplify"]={4},["cd"]={5},["mp"]=1000,["armor"]={6},["damagereduction"]={7},["spirit"]=10,["evade"]={8},["movingforce"]=500,["maxhp"]=500,["maxmp"]=1000,["MPRegen"]=0,["critical"]={9},["movementspeedbuff"]=0,["skills"]={10},["spellspeedbuffpercent"]=1,["inventory"]={11},},{},{},{},{},{},{},{},{["icarus"]=1,["lightningball"]=0,["battery"]=15,["drain"]=5,["lightningchain"]=0,["lightningbolt"]=1,["cpu"]=1,["transmitter"]=1,["ionicform"]=3,},{},}--|]]
+	[[return {{["map"]="Waterloo2",["character"]={2},["checkpoint"]="boss",["depends"]="					require 'scenes.grid.waterloo2'\n					",["gamesystem"]="return require 'scenes.grid.gridgamesystem'",},{["movementspeedbuffpercent"]=1,["HPRegen"]=10,["timescale"]=1,["damagebuff"]={3},["hp"]=500,["speedlimit"]=20000,["damageamplify"]={4},["cd"]={5},["mp"]=1000,["armor"]={6},["damagereduction"]={7},["spirit"]=10,["evade"]={8},["movingforce"]=500,["maxhp"]=500,["maxmp"]=1000,["MPRegen"]=0,["critical"]={9},["movementspeedbuff"]=0,["skills"]={10},["spellspeedbuffpercent"]=1,["inventory"]={11},},{},{},{},{},{},{},{},{["icarus"]=1,["lightningball"]=0,["battery"]=15,["drain"]=5,["lightningchain"]=0,["lightningbolt"]=1,["cpu"]=1,["transmitter"]=1,["ionicform"]=3,},{},}--|]]
 	)
 	local gs = loadstring(save.gamesystem)()
 	pushsystem(loadingscreen)

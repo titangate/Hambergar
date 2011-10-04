@@ -21,7 +21,7 @@ end
 
 OrderStop = AtomicGoal:subclass('OrderStop')
 function OrderStop:process(dt,owner)
-	owner.state = 'stop'
+	owner.state = 'slide'
 	owner:switchChannelSkill(nil)
 	return STATE_SUCCESS
 end

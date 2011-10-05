@@ -229,7 +229,7 @@ function b_DashDWS:stop(unit)
 	local units = map:findUnitsInArea(area)
 	for k,v in pairs(units) do
 		if v:isKindOf(Unit) and v~=unit then
-			v:damage('mind',unit:getDamageDealing(50,'mind'),unit)
+			v:damage('Mind',unit:getDamageDealing(50,'Mind'),unit)
 		end
 	end
 end

@@ -7,7 +7,7 @@ SpiderChargeEffect:addAction(function(point,caster,skill)
 	function caster:add(b,coll)
 		if b:isKindOf(Unit) then
 			local vx,vy = coll:getVelocity()
-			if (vx*vx+vy*vy)>1000000 then
+			if (vx*vx+vy*vy)>100000 then
 				b:damage('Bullet',80,caster)
 				TEsound.play('sound/thunderclap.wav')
 				print ('damage dealt')
@@ -144,18 +144,26 @@ function jasonPhase2(unit)
 	station2.shape:setMask(cc.playermissile,cc.enemymissile)
 	station3.shape:setMask(cc.playermissile,cc.enemymissile)
 	station4.shape:setMask(cc.playermissile,cc.enemymissile)
-	local stationcount = 4
+	local stationcount = 1
 	local stationtrig = Trigger:new(function(trig,event)
 		if event.unit:isKindOf(SpiderStation) then
 			unit:damage('Bullet',1000,trig.unit)
 			stationcount = stationcount - 1
 			if stationcount == 0 then
-				jasonPhaseEnd()
+				trig:destroy()
+				unit.ai = nil
+				local lawrence = GetCharacter()
+				lawrence:switchChannelSkill(lawrence.skills.solarstorm)
+				lawrence.skills.solarstorm.getorderinfo = function()
+					return {unit.x,unit.y},unit,lawrence.skills.solarstorm
+				end
+				--jasonPhaseEnd(unit)
 			end
 		end
 	end)
-	stationtrig:registerEventType('kill')
+	stationtrig:registerEventType('death')
 end
 
-function jasonPhaseEnd()
+function jasonPhaseEnd(unit)
+	unit.ai = nil
 end

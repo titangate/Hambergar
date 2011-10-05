@@ -217,7 +217,7 @@ IcarusEffect:addAction(function (area,caster,skill)
 	for k,v in pairs(units) do
 		if v:isKindOf(Unit) and v:isEnemyOf(caster) then
 			v:addBuff(b_Stun:new(100,nil),1)
-			v:damage('electric',caster:getDamageDealing(100,'electric'),caster)
+			v:damage('Electric',caster:getDamageDealing(100,'Electric'),caster)
 			local x,y=normalize(v.x-area.x,v.y-area.y)
 			x,y=x*impact,y*impact
 			if buff then v.buffs[buff:new()] = true end

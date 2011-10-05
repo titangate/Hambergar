@@ -50,11 +50,11 @@ function Blureffect.finish()
 	if Blureffect.style == 'zoom' then
 		local scalefactor = 2
 		for i = index+1,count do
-			love.graphics.draw(blurbuffer[i],screen.halfwidth,screen.halfheight,0,scalefactor,scalefactor,screen.halfwidth,screen.halfheight)
+			love.graphics.draw(blurbuffer[i],screen.halfwidth,screen.halfheight,0,scalefactor,scalefactor,Blureffect.arg.cx,Blureffect.arg.cy)
 			scalefactor = scalefactor - 0.2
 		end
 		for i = 1,index-1 do
-			love.graphics.draw(blurbuffer[i],screen.halfwidth,screen.halfheight,0,scalefactor,scalefactor,screen.halfwidth,screen.halfheight)
+			love.graphics.draw(blurbuffer[i],screen.halfwidth,screen.halfheight,0,scalefactor,scalefactor,Blureffect.arg.cx,Blureffect.arg.cy)
 			scalefactor = scalefactor - 0.2
 		end
 	elseif Blureffect.style == 'motion' then

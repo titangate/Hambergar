@@ -21,6 +21,7 @@ function Electrician:initialize(x,y)
 		cpu = CPU:new(self,1),
 		transmitter = Transmitter:new(self,1),
 		icarus = Icarus:new(self,1),
+		solarstorm = SolarStorm:new(self,1),
 	}
 	self.animation = {
 		stand = animation.electrician:subSequence(1,4),
@@ -55,6 +56,7 @@ function Electrician:getSkillpanelData()
 			{skill = self.skills.drain,hotkey='q',face=icontable.drain},
 			{skill = self.skills.lightningball,hotkey='e',face=icontable.lightningball},
 			{skill = self.skills.icarus,hotkey='r',face=icontable.icarus},
+			{skill = self.skills.solarstorm,hotkey='z',face=icontable.solarstorm},
 		}
 	}
 end

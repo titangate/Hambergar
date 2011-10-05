@@ -33,8 +33,8 @@ function LightningImpact:update(dt)
 	if self.dt > self.cycle then
 		self.dt = self.dt - self.cycle
 		for i=1,3 do
-		self.branch[math.random(#self.branch)]={lightningimage[math.random(#lightningimage)], math.random() < self.freq}
-	end
+			self.branch[math.random(#self.branch)]={lightningimage[math.random(#lightningimage)], math.random() < self.freq}
+		end
 	end
 	self.life = self.life - dt
 	self.color[4] = math.clamp(self.life*511,0,255)

@@ -143,7 +143,8 @@ function GridGameSystem:keyreleased(k)
 	end
 		if k=='i' then
 			local d = Bee:new(GetCharacter().x+math.random(200),GetCharacter().y+math.random(200),'enemy')
-			map:addUnit(d)
+
+			Trigger:new(function () map:addUnit(d) end):run()
 			d:enableAI()
 		end
 		if k=='k' then

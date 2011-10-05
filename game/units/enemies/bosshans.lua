@@ -276,7 +276,7 @@ VolcanoEffect:addAction(function (area,caster,skill)
 	for k,v in pairs(units) do
 		if v:isKindOf(Unit) then
 			v:addBuff(b_Stun:new(100,nil),1.5)
-			v:damage('fire',caster:getDamageDealing(50,'fire'),caster)
+			v:damage('Fire',caster:getDamageDealing(50,'Fire'),caster)
 			local x,y=normalize(v.x-area.x,v.y-area.y)
 			x,y=x*impact,y*impact
 			if buff then v.buffs[buff:new()] = true end
@@ -482,7 +482,7 @@ StompEffect:addAction(function (area,caster,skill)
 	for k,v in pairs(units) do
 		if v:isKindOf(Unit) then
 			v:addBuff(b_Stun:new(100,nil),1)
-			v:damage('fire',caster:getDamageDealing(100,'fire'),caster)
+			v:damage('Fire',caster:getDamageDealing(100,'Fire'),caster)
 			local x,y=normalize(v.x-area.x,v.y-area.y)
 			x,y=x*impact,y*impact
 			if buff then v.buffs[buff:new()] = true end

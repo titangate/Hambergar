@@ -9,7 +9,7 @@ MindRipfieldEffect:addAction(function (area,caster,skill)
 	for k,v in pairs(units) do
 		if v:isKindOf(Unit) then
 			v:addBuff(b_Stun:new(100,nil),1)
-			v:damage('mind',caster:getDamageDealing(50,'mind'),caster)
+			v:damage('Mind',caster:getDamageDealing(50,'Mind'),caster)
 		end
 	end
 end)

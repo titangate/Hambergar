@@ -159,7 +159,8 @@ function Unit:createBody(world)
 		self.shape:setCategory(category)
 		self.shape:setMask(unpack(masks))
 	end
-	self.shape:setData(self)
+--	self.shape:setData(self)
+	self.updateShapeData = true -- a hack to fix the crash when set data in a coroutine
 	if self.r then
 		self.body:setAngle(self.r)
 	end
@@ -200,6 +201,10 @@ function Unit:setBuffActive(state)
 end
 
 function Unit:update(dt)
+	if self.updateShapeData then
+		self.shape:setData(self)
+		self.updateShapeData = nil
+	end
 	if self.ai then
 		local status = self.ai:process(dt,self)
 		if status == STATE_FINISH then

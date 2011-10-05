@@ -173,6 +173,8 @@ function Map:update(dt)
 	end
 	collides = {}
 	self.world:update(dt)
+	--
+	--
 	for k,v in pairs(self.destroys) do
 		if v.destroy then v:destroy() end
 		self.units[v] = nil
@@ -184,10 +186,11 @@ function Map:update(dt)
 	for unit,v in pairs(self.updatable) do
 		if unit.update then unit:update(dt) end
 	end
+	Blureffect.update(dt)
 end
 
 function Map:draw()
-		Blureffect.begin()
+	Blureffect.begin()
 	if self.camera then self.camera:apply() end
 	if self.background then self.background:draw() end
 	for unit,v in pairs(self.units) do
@@ -200,7 +203,7 @@ function Map:draw()
 	local px,py = unpack(GetOrderPoint())
 	love.graphics.draw(img.cursor,px,py,math.atan2(y,x),1,1,16,16)
 	if self.camera then map.camera:revert() end
-		Blureffect.finish()
+	Blureffect.finish()
 end
 
 function Map:findUnitsInArea(area)

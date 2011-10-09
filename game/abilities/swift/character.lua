@@ -1,6 +1,6 @@
-ElectricianCharacterPanel = Object:subclass('ElectricianCharacterPanel')
+SwiftCharacterPanel = Object:subclass('SwiftCharacterPanel')
 
-function ElectricianCharacterPanel:initInventory()
+function SwiftCharacterPanel:initInventory()
 	local i = goo.inventory:new(self.container)
 	i:setPos(20,0)
 	i:setItemtype{'all','consumable','amplifier','trophy','artifact'}
@@ -31,7 +31,7 @@ function ElectricianCharacterPanel:initInventory()
 	self.inventory = i
 end
 
-function ElectricianCharacterPanel:initialize(unit)
+function SwiftCharacterPanel:initialize(unit)
 	self.dt = 0
 	self.unit = unit
 	self.container = goo.object:new()
@@ -41,7 +41,7 @@ function ElectricianCharacterPanel:initialize(unit)
 	self.attpanel:setSize(300)
 	self.attpanel:fillPanel({
 		title = 'LAWRENCE FU',
-		type = 'Electrician',
+		type = 'Swift',
 		attributes = {
 			{image = icontable.life,text='Hit Point',data=function()return self.unit:getHP()..'/'..self.unit:getMaxHP() end},
 			{image = icontable.life,text='HP Regeneration',data=function()return self.unit.HPRegen end},
@@ -123,25 +123,25 @@ function ElectricianCharacterPanel:initialize(unit)
 	self:initInventory()
 	self.container:setVisible(false)
 end
-function ElectricianCharacterPanel:show()
+function SwiftCharacterPanel:show()
 --	self.container:setVisible(true)
 end
-function ElectricianCharacterPanel:fold()
+function SwiftCharacterPanel:fold()
 --	self.container:setVisible(false)
 end
 
-function ElectricianCharacterPanel:update(dt)
+function SwiftCharacterPanel:update(dt)
 	self.attpanel:updateData()
 end
 
-function ElectricianCharacterPanel:keypressed(k)
+function SwiftCharacterPanel:keypressed(k)
 	if k=='t' then
 		self:fold()
 	end
 end
 
 --requireImage( 'assets/UI/river.png','pioneer' )
-function ElectricianCharacterPanel:draw()
+function SwiftCharacterPanel:draw()
 --	love.graphics.draw(img.pioneer,love.graphics.getWidth()-350,love.graphics.getHeight()-420)
 	goo:draw()
 --	drawcollections()

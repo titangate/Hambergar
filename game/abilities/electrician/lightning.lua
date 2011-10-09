@@ -93,7 +93,7 @@ function Bolt:update(dt)
 end
 
 local filesTable = love.filesystem.enumerate('beam')
-local beamimage = {
+beamimage = {
 	love.graphics.newImage('beam/l1.png'),
 	love.graphics.newImage('beam/l2.png'),
 	love.graphics.newImage('beam/l3.png'),

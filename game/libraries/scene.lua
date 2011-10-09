@@ -21,6 +21,7 @@ cc = {
 	enemymissile = 6,
 	dead = 7,
 	terrain = 8,
+	all = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16},
 } -- collide category
 
 
@@ -45,6 +46,7 @@ function Map:initialize(w,h)
 	self:registerListener(gamelistener)
 	self.count = {}
 	self.blood = {}
+	self.obstacles = {}
 end
 
 MapBlock = Object:subclass('MapBlock')
@@ -84,7 +86,7 @@ function Map:setBlock(x,y,b)
 	end	
 end
 
-function Map:placeObstacle(x,y,w,h,b)
+function Map:placeObstacle(x,y,w,h,b,name)
 	local body = love.physics.newBody(self.world,x+w/2,y+h/2)
 	local shape = love.physics.newRectangleShape(body,0,0,w,h)
 	shape:setCategory(8)
@@ -94,8 +96,17 @@ function Map:placeObstacle(x,y,w,h,b)
 		self.waypoints[b] = {x,y}
 	end
 	local mb = MapBlock:new(body,shape,b)
+	if name then
+		self.obstacles[name]=mb
+	end
 	shape:setData(mb)
 	mb:registerListener(gamelistener)
+end
+
+function Map:setObstacleState(b,state)
+	local obs = self.obstacles[b]
+	assert(obs)
+	mb.shape:setSensor(not state)
 end
 
 function Map:getBlock(x,y)

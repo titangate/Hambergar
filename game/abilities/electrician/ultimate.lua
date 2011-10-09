@@ -1,13 +1,12 @@
 SolarStormEffect = CircleAoEEffect:new(100)
 
 SolarStormEffect:addAction(function (area,caster,skill)
+print (caster:getMP(),skill.manacost)
 	if caster:getMP()<skill.manacost then return end
-	caster.mp = caster.mp - 30
 	local units = map:findUnitsInArea(area)
 	for k,v in pairs(units) do
 		if v:isKindOf(Unit) and not v:isKindOf(SolarStormUnit) then
-			v:damage('Electric',caster:getDamageDealing(80,'Electric'),caster)
-			print ('damaging',v)
+			v:damage('Electric',caster:getDamageDealing(skill.damage,'Electric'),caster)
 		end
 	end
 end)
@@ -21,9 +20,12 @@ function SolarStorm:initialize(unit,level)
 	self.name = 'SolarStorm'
 	self.effecttime = 0.05
 	self.casttime = 1
+	self.cd = 120
+	self.cdtime = 0
 	self.effect = SolarStormEffect
 	self:setLevel(level)
 	self.manacost = 30
+	self.damage = 150
 end
 
 function SolarStorm:stop()
@@ -34,18 +36,123 @@ function SolarStorm:setLevel(lvl)
 	self.level = lvl
 end
 
+
+function SolarStorm:cdupdate(dt)
+	if self.available then return end
+	self.cdtime = self.cdtime - dt
+	if self.cdtime <= 0  then
+		self.available = true
+	end
+end
+
+function SolarStorm:getRemainingCD()
+	local groupname = self.groupname or self:className()
+	return self.unit:getCD(groupname)
+end
+
+function SolarStorm:getCDPercent()
+	local groupname = self.groupname or self:className()
+	local cddt = self.unit:getCD(groupname) or 0
+	return cddt/self.cd
+end
+
+function SolarStorm:isCD()
+	local groupname = self.groupname or self:className()
+	return self.unit:getCD(groupname) or not(self.unit.allowactive)
+end
+
 function SolarStorm:startChannel()
-	Blureffect.blur('motion',{},0,20)
+	if self:isCD() then
+		return false,'Ability Cooldown'
+	end
+	if self.unit.mp < self.manacost then return end
+	self.unit:startCD(self:className(),self.cd)
+	local x,y = unpack(GetOrderPoint())
 --	Blureffect.blur('zoom',{},0,2.3)
 	super.startChannel(self)
-	self.sunit = SolarStormUnit:new(unpack(GetOrderPoint()))
+	self.sunit = SolarStormUnit:new(x,y)
 	map:addUnit(self.sunit)
 	
+	Blureffect.blur('zoom',self.sunit,0,10)
+	local dws = CutSceneSequence:new()
+	map.timescale = 0.25
+	local panel2 = goo.object:new()
+	local divide = goo.image:new(panel2)
+	divide:setPos(screen.width-200,screen.halfheight)
+	divide:setImage(icontable.solarstorm)
+	local panel1 = goo.object:new()
+	anim:easy(panel1,'x',-300,0,1,'quadInOut')
+	anim:easy(panel2,'x',300,0,1,'quadInOut')
+	local text = 'SOLAR STORM'
+	local x,y = 100,screen.halfheight-50
+	for c in text:gmatch"." do
+		dws:push(ExecFunction:new(function()
+			local ib = goo.DWSText:new(panel1)
+			ib:setText(c)
+			ib:setPos(x,y)
+			local textscale = 2
+			x = x+ib.w*textscale
+			local animsx = anim:new({
+				table = ib,
+				key = 'xscale',
+				start = 5*textscale,
+				finish = 2*textscale,
+				time = 0.3,
+				style = anim.style.linear}
+			)
+			local animsy = anim:new({
+				table = ib,
+				key = 'yscale',
+				start = 5*textscale,
+				finish = 2*textscale,
+				time = 0.3,
+				style = anim.style.linear}
+			)
+			local animg = anim.group:new(animsx,animsy)
+			animg:play()
+			local animwx = anim:new({
+				table = ib,
+				key = 'xscale',
+				start = 2*textscale,
+				finish = 1*textscale,
+				time = 0.5,
+				style = 'elastic'
+			})
+			local animwy = anim:new({
+				table = ib,
+				key = 'yscale',
+				start = 2*textscale,
+				finish = 1*textscale,
+				time = 0.5,
+				style = 'elastic'
+			})
+			local animw = anim.group:new(animwx,animwy)
+			local animc = anim.chain:new(animg,animw)
+			animc:play()
+			TEsound.play('sound/thunderclap.wav')
+		end),0)
+		
+		dws:wait(0.2)
+	end	
+		dws:wait(0.5)
+	dws:push(ExecFunction:new(function()
+	anim:easy(panel1,'x',0,screen.width,2,'quadInOut')
+	anim:easy(panel2,'x',0,-screen.width,2,'quadInOut')
+	map.timescale = 1
+	end),0)
+	dws:push(ExecFunction:new(function()
+	panel1:destroy()
+	panel2:destroy()
+	end),2)
+	map:playCutscene(dws)
 	map:addUpdatable(impact)
 end
 
 function SolarStorm:endChannel()
-	self.sunit.hp = 1
+	if self.sunit then
+		self.sunit.hp = 1
+	end
+	Blureffect.stop()
 end
 
 function SolarStorm:geteffectinfo()
@@ -61,7 +168,7 @@ function AI.SolarStorm(target)
 end
 
 requireImage('assets/electrician/solarstorm.png','solarstorm')
-requireImage('assets/electrician/solarstormbolt.png','solarstormbolt')
+--requireImage('assets/electrician/solarstormbolt.png','solarstormbolt')
 SolarStormUnit = Unit:subclass('SolarStormUnit')
 function SolarStormUnit:initialize(x,y)
 	super.initialize(self,x,y,16,10)
@@ -111,7 +218,7 @@ function SolarStormUnit:draw()
 		for j=1,4 do
 			love.graphics.draw(img.solarstorm,x,y,r+j*math.pi*0.5+i*math.pi*0.33,i*0.3+0.4) -- forming a span
 		end
-		love.graphics.draw(img.solarstormbolt,x,y,r2*math.pi*2+i*math.pi*2/3,2)
+		love.graphics.draw(beamimage[i],x,y,r2*math.pi*2+i*math.pi*2/3,2)
 	end
 	love.graphics.setColor(255,255,255)
 end

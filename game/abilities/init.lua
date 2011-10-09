@@ -20,6 +20,14 @@ preloadlist(
 		'abilities.electrician.character',
 		'abilities.electrician.ultimate',
 	},
+	swift = {
+		'abilities.swift.common',
+		'abilities.swift.tree',
+		'abilities.swift.character',
+		'abilities.swift.chain.swipe',
+		'abilities.swift.chain.hook',
+		'abilities.swift.chain.tornado'
+	},
 })	
 require ('abilities.common.lua')
 --[[

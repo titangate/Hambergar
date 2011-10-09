@@ -19,6 +19,10 @@ preloadlist(
 		'units.enemies.mech',
 		'units.enemies.spiderjason',
 		'units.other.waterloo',
+	},
+	swift = {
+		'units.class.swift',
+		'units.class.chain'
 	}
 }
 )

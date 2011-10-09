@@ -47,7 +47,7 @@ function goo.skillbutton:draw()
 		self:setColor(self.style.textColor)
 		love.graphics.printf(string.upper(self.hotkey),0,self.style.yMargin,48,'center')
 	end
-	if self.skill:isKindOf(ActiveSkill) then
+	if self.skill.getCDPercent then
 		DrawCD(24,24,self.skill:getCDPercent())
 	end
 end

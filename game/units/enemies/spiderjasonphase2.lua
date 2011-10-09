@@ -144,7 +144,7 @@ function jasonPhase2(unit)
 	station2.shape:setMask(cc.playermissile,cc.enemymissile)
 	station3.shape:setMask(cc.playermissile,cc.enemymissile)
 	station4.shape:setMask(cc.playermissile,cc.enemymissile)
-	local stationcount = 1
+	local stationcount = 4
 	local stationtrig = Trigger:new(function(trig,event)
 		if event.unit:isKindOf(SpiderStation) then
 			unit:damage('Bullet',1000,trig.unit)
@@ -155,15 +155,11 @@ function jasonPhase2(unit)
 				local lawrence = GetCharacter()
 				lawrence:switchChannelSkill(lawrence.skills.solarstorm)
 				lawrence.skills.solarstorm.getorderinfo = function()
-					return {unit.x,unit.y},unit,lawrence.skills.solarstorm
+					return {unit.x,unit.y},lawrence,lawrence.skills.solarstorm
 				end
-				--jasonPhaseEnd(unit)
+				map:setObstacleState('bossbarrier',false)
 			end
 		end
 	end)
 	stationtrig:registerEventType('death')
-end
-
-function jasonPhaseEnd(unit)
-	unit.ai = nil
 end

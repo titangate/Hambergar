@@ -1,6 +1,4 @@
-
-
-Blureffect = {dt=0,time=0,on=false}
+local Blureffect = {dt=0,time=0,on=false}
 local blurbuffer = {}
 for i=1,5 do
 	table.insert(blurbuffer,love.graphics.newFramebuffer())
@@ -18,10 +16,14 @@ function Blureffect.blur(style,arg,interval,time)
 	count = 5
 end
 
+function Blureffect.stop()
+	Blureffect.dt = Blureffect.time - 1
+end
+
 function Blureffect.begin()
 	if not Blureffect.on then return end
 	love.graphics.setRenderTarget(blurbuffer[index])
-	love.graphics.setBackgroundColor(0,0,0,255)
+	love.graphics.setBackgroundColor(0,0,0,0)
 	love.graphics.clear()
 end
 
@@ -48,14 +50,18 @@ function Blureffect.finish()
 	love.graphics.setRenderTarget()
 	love.graphics.setColor(255,255,255,280-35*count)
 	if Blureffect.style == 'zoom' then
-		local scalefactor = 2
+		local x,y = Blureffect.arg.x,Blureffect.arg.y
+		x,y = map.camera:transform(x,y)
+		x,y = x+screen.halfwidth,y+screen.halfheight
+		print (x,y)
+		local scalefactor = 1.5
 		for i = index+1,count do
-			love.graphics.draw(blurbuffer[i],screen.halfwidth,screen.halfheight,0,scalefactor,scalefactor,Blureffect.arg.cx,Blureffect.arg.cy)
-			scalefactor = scalefactor - 0.2
+			love.graphics.draw(blurbuffer[i],x,y,0,scalefactor,scalefactor,x,y)
+			scalefactor = scalefactor - 0.1
 		end
 		for i = 1,index-1 do
-			love.graphics.draw(blurbuffer[i],screen.halfwidth,screen.halfheight,0,scalefactor,scalefactor,Blureffect.arg.cx,Blureffect.arg.cy)
-			scalefactor = scalefactor - 0.2
+			love.graphics.draw(blurbuffer[i],x,y,0,scalefactor,scalefactor,x,y)
+			scalefactor = scalefactor - 0.1
 		end
 	elseif Blureffect.style == 'motion' then
 		for i = index+1,count do
@@ -66,6 +72,5 @@ function Blureffect.finish()
 		end
 	end
 	love.graphics.draw(blurbuffer[index])
-	
-
 end
+return Blureffect

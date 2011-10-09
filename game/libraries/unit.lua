@@ -190,6 +190,15 @@ function Unit:removeBuff(buff)
 	if buff.stop then buff:stop(self) end
 end
 
+function Unit:hasBuff(c)
+	for v,_ in pairs(self.buffs) do
+		if v.class == c then
+			return true
+		end
+	end
+	return false
+end
+
 function Unit:setBuffActive(state)
 	for k,v in pairs(self.buffs) do
 		if state and k.start then
@@ -217,15 +226,15 @@ function Unit:update(dt)
 	self.controllable = true
 	self.allowactive = true
 	for k,v in pairs(self.buffs) do
-	if type(v)=='number' and v>=0 then
-		self.buffs[k] = v-dt
-		if self.buffs[k]<=0 then
-			self.buffs[k]=nil
-			if k.stop then k:stop(self) end
-		end
-	end
 		if k.buff then
 			k:buff(self,dt)
+		end
+		if type(v)=='number' and v>=0 then
+			self.buffs[k] = v-dt
+			if self.buffs[k]<=0 then
+				self.buffs[k]=nil
+				if k.stop then k:stop(self) end
+			end
 		end
 	end
 	-- all the buff/debuffs

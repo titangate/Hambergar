@@ -11,17 +11,22 @@
  <objectgroup name="obstacles" width="16" height="16">
   <object type="obs" x="37" y="185" width="799" height="663"/>
   <object x="987" y="252" width="1057" height="540"/>
-  <object x="1640" y="2796" width="948" height="1316"/>
-  <object x="3436" y="2860" width="536" height="1256"/>
-  <object x="2566" y="3924" width="1292" height="60"/>
-  <object x="2488" y="2488" width="1432" height="368"/>
+  <object x="656" y="1404" width="948" height="1316"/>
+  <object x="2452" y="1468" width="536" height="1256"/>
+  <object name="bossbarrier" x="1582" y="2532" width="1292" height="60">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object x="1504" y="1096" width="1432" height="368"/>
  </objectgroup>
  <objectgroup name="areas" width="16" height="16">
   <object name="spawningpoint" x="95" y="1031" width="153" height="100"/>
-  <object name="BossSpawnPoint" x="2648" y="3396" width="136" height="128"/>
+  <object name="BossSpawnPoint" x="1664" y="2004" width="136" height="128"/>
+  <object name="chapterend" x="2512" y="2992" width="1208" height="968"/>
  </objectgroup>
  <objectgroup name="objects" width="16" height="16">
-  <object name="SpiderBoss" x="3270" y="3386" width="232" height="206">
+  <object name="SpiderBoss" x="2286" y="1994" width="232" height="206">
    <properties>
     <property name="angle" value="-3.1415"/>
     <property name="controller" value="enemy"/>
@@ -29,25 +34,26 @@
     <property name="phrase" value="boss"/>
    </properties>
   </object>
-  <object name="SpiderStation" x="2736" y="3116" width="96" height="64">
+  <object name="SpiderStation" x="1752" y="1724" width="96" height="64">
    <properties>
     <property name="id" value="station1"/>
    </properties>
   </object>
-  <object name="SpiderStation" x="3214" y="3122" width="96" height="64">
+  <object name="SpiderStation" x="2230" y="1730" width="96" height="64">
    <properties>
     <property name="id" value="station2"/>
    </properties>
   </object>
-  <object name="SpiderStation" x="2743" y="3697" width="96" height="64">
+  <object name="SpiderStation" x="1759" y="2305" width="96" height="64">
    <properties>
     <property name="id" value="station3"/>
    </properties>
   </object>
-  <object name="SpiderStation" x="3221" y="3703" width="96" height="64">
+  <object name="SpiderStation" x="2237" y="2311" width="96" height="64">
    <properties>
     <property name="id" value="station4"/>
    </properties>
   </object>
+  <object name="Rocket" x="2752" y="3224" width="520" height="400"/>
  </objectgroup>
 </map>

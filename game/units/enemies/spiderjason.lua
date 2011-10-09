@@ -1,5 +1,5 @@
 
-	require 'units.enemies.spiderjasonphase2'
+require 'units.enemies.spiderjasonphase2'
 
 
 requireImage('assets/drainable/station.png','station')
@@ -228,13 +228,12 @@ function SpiderLeg:initialize(x,y,r)
 	self.state = 'swipe'
 	self.controller = 'enemy'
 	self.maxhp = 2500
-	self.hp = 100
+	self.hp = 2500
 end
 
 function SpiderLeg:add(b,c)
 	if b==GetCharacter() then
 		if self.grabbing then return end
-		print (self.state)
 		if self.state == 'swipe' then
 			
 			self.shapes[1]:setMask(cc.player,cc.enemy,cc.terrain)
@@ -245,7 +244,7 @@ function SpiderLeg:add(b,c)
 				self.shapes[2]:setMask(cc.enemy,cc.terrain)
 			end,true,true
 			)
-			b:damage('Bullet',30,self)
+			b:damage('Bullet',80,self)
 		else
 			self.state = 'swipe'
 			self.grabbing = b
@@ -286,7 +285,6 @@ function SpiderLeg:createBody(world)
 	local blshape = love.physics.newRectangleShape(blbody,0,0,600,30,0)
 	blbody:setAngle(self.r)
 	local legjoint = love.physics.newRevoluteJoint(ulbody,blbody,self.x,self.y)
-	print (map.world:getJointCount(),'joints!')
 	ulshape:setData(self)
 	blshape:setData(self)
 	legjoint:setLimitsEnabled(true)
@@ -308,7 +306,6 @@ end
 
 function SpiderLeg:destroy()
 	self.joint:destroy()
-	print (map.world:getJointCount(),'joints!')
 	for _,v in ipairs(self.shapes) do
 		v:destroy()
 	end
@@ -326,7 +323,6 @@ function SpiderLeg:bend(angle,speed)
 	local lower,upper
 	if self.direction>0 then lower,upper = 0,angle*self.direction
 	else lower,upper=angle*self.direction,0 end
-	print (speed,lower,upper)
 	legjoint:setLimits(lower-0.05,upper+0.05)
 	legjoint:setMotorEnabled(true)
 	legjoint:setMotorSpeed(speed)
@@ -490,7 +486,6 @@ function SpiderBoss:createBody(world)
 	map:addUnit(self.spiderbody)
 --	self.spiderbody.shape:setMask(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16) -- to prevent the collision when blade is added to the map
 	map:addUnit(self.spiderblade)
-	print (map.world:getJointCount(),'joints!')
 	self.headbladejoint = love.physics.newRevoluteJoint(self.spiderbody.body,self.spiderblade.body,self.x,self.y)
 	self.headbladejoint:setMotorEnabled(true)
 	self.headbladejoint:setMotorSpeed(5)
@@ -506,9 +501,7 @@ function SpiderBoss:createBody(world)
 		leg.direction = d
 		leg:bend(1.5,2)
 		local joint = love.physics.newRevoluteJoint(self.spiderbody.body,leg.bodies[1],self.x,self.y)
-		print (map.world:getJointCount(),'joints!')
 		joint:setLimitsEnabled(true)
-		print (angle,'is the limit angle')
 		joint:setLimits(angle-0.05,angle+0.05)
 		table.insert(self.backlegs,{leg,joint})
 		leg.damage = function()end
@@ -522,9 +515,7 @@ function SpiderBoss:createBody(world)
 		leg.direction = d
 		leg:bend(1.5,2)
 		local joint = love.physics.newRevoluteJoint(self.spiderbody.body,leg.bodies[1],self.x,self.y)
-		print (map.world:getJointCount(),'joints!')
 		joint:setLimitsEnabled(true)
-		print (angle,'is the limit angle')
 		joint:setLimits(angle-0.05,angle+0.05)
 		table.insert(self.frontlegs,{leg,joint,angle})
 	end
@@ -560,7 +551,6 @@ if not self.frontlegs[leg] then return end
 		direction = -1
 		angle2,angle = angle,angle2
 	end
-	print (angle,angle2)
 	joint:setMaxMotorTorque(5000)
 	joint:setMotorSpeed(4*direction)
 	joint:setMotorEnabled(true)

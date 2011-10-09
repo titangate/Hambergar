@@ -75,6 +75,27 @@ b_grid.onClick = function( self, button )
 end
 height = height + 50
 
+local b_test = goo.menuitem:new( mainmenu )
+b_test:setPos( 10, height )
+b_test:setText( 'swift test' )
+b_test:sizeToText()
+b_test.onClick = function( self, button )
+--	local gs = loadstring(save.gamesystem)()
+require 'scenes.test.test'
+require 'scenes.test.testgamesystem'
+	local gs = TestGameSystem()
+	pushsystem(loadingscreen)
+	loadingscreen.finished = 	function ()
+		SetGameSystem(gs)
+		gs:load()
+		pushsystem(gs)
+		mainmenu:onClose()
+		map = TestMap()
+		map:opening_load()
+	end
+end
+height = height + 50
+
 local b_option = goo.menuitem:new( mainmenu )
 b_option:setPos( 10, height )
 b_option:setText( 'Options' )

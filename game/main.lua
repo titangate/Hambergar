@@ -37,14 +37,14 @@ require "libraries.uiitem"
 require "libraries.item"
 require "libraries.tilemap"
 require "libraries.sound"
-require 'libraries.blur'
 require 'scenes.init'
 require "items.init"
 require "libraries.conversation"
 --require "editor.init"
 require 'libraries.TEsound'
 goo=require "goo.goo"
-anim = require "anim.anim"--[[]]
+anim = require "anim.anim"
+Blureffect = require 'libraries.blur'
 require 'units.init'
 
 

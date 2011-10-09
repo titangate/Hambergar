@@ -61,7 +61,7 @@ function Waterloo2:initialize()
 	for k,v in pairs(oj) do
 		if v.name == 'obstacles' then
 			for _,obj in pairs(v.objects) do
-				self:placeObstacle(obj.x-w/2,obj.y-h/2,obj.width,obj.height)
+				self:placeObstacle(obj.x-w/2,obj.y-h/2,obj.width,obj.height,nil,obj.name)
 			end
 		elseif v.name == 'areas' then
 			for _,obj in pairs(v.objects) do
@@ -142,7 +142,6 @@ function Waterloo2:opening_loaded()
 	t:run()
 	
 	local areaTrigger = Trigger:new(function(self,event)
-		
 		if event.index == 'computergridenter' and event.unit==GetCharacter() then	
 			self:close()	
 			GetGameSystem():setCheckpoint(Waterloo2,"boss",[[
@@ -151,11 +150,27 @@ function Waterloo2:opening_loaded()
 			map:boss_enter()
 			self:destroy()
 		end
-			
+	end)
+	
+	local victoryTrigger = Trigger:new(function(self,event)
+		if event.index == 'chapterend' and event.unit == GetCharacter() then
+			self:close()
+			GetGameSystem():setCheckpoint(Waterloo2,"victory",[[
+			require 'scenes.grid.waterloo2'
+			]])
+			map:victory()
+			self:destroy()
+		end
 	end)
 end
 
+function Waterloo2:victory()
+end
+
 function Waterloo2:load()
+end
+
+function Waterloo2:victory_load()
 end
 
 function Waterloo2:boss_enter()
@@ -194,7 +209,6 @@ function Waterloo2:boss_loaded()
 		end
 	end}),GetCharacter())
 	PlayMusic('music/jasonboss.mp3')
---	hans:enableAI()
 	bossbar = AssassinHPBar:new(function()return boss:getHPPercent() end,screen.halfwidth-400,screen.height-100,800)
 end
 
@@ -203,5 +217,7 @@ function Waterloo2:loadCheckpoint(checkpoint)
 		self:opening_load()
 	elseif checkpoint == 'boss' then
 		self:boss_load()
+	elseif checkpoint == 'victory' then
+		self:victory_load()
 	end
 end

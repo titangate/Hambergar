@@ -53,12 +53,14 @@ function b_Hooked:stop(unit)
 	if unit.shape then
 		assert(self.mask)
 		unit.shape:setMask(unpack(self.mask))
+		--[[
 		if self.add ~= false then
 			unit.add = self.add
-		end
+		end]]
 	end
 	unit.state = 'slide'
 	self.caster.chain:unattach()
+	self.caster.chain:setCollisionCallback()
 end
 
 function b_Hooked:buff(unit,dt)
@@ -76,13 +78,14 @@ function b_Hooked:start(unit)
 			self.add = false
 		end
 		assert(self.caster)
+		--[[
 		local c = self.caster
 		function unit.add(unit,b,coll)
 			if b:isKindOf(Unit) and b:isEnemyOf(c) then
 				b:damage('Bullet',self.skill.smashdamage,self.caster)
 				TEsound.play({'sound/thunderclap.wav'})
 			end
-		end
+		end]]
 	end
 end
 
@@ -93,11 +96,16 @@ hookhiteffect:addAction(function(unit,caster,skill)
 	-- keep the unit at the end of the chain
 	-- drag close w/ stab
 	-- (disarm)
-	local buff = b_Hooked()
-	buff.caster = caster
-	buff.skill = skill
-	unit:addBuff(buff,10)
-	caster.chain:attach(unit)
+	if not unit.massive then
+		local buff = b_Hooked()
+		buff.caster = caster
+		buff.skill = skill
+		unit:addBuff(buff,10)
+		caster.chain:attach(unit)
+	else
+		caster.chain:attach_massive(unit)
+		
+	end
 	
 end)
 

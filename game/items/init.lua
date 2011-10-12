@@ -2,3 +2,5 @@ require 'items.inventory'
 require 'items.amplifier'
 require 'items.consumable'
 require 'items.trophy'
+
+require 'items.assassinweapon'

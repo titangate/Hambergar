@@ -4,11 +4,17 @@ self.probetime = 0.02
 self.probedt = 0
 end
 
+function ControllerBase:setLockAvailability(state)
+	self.lockstate = state
+end
+
 function ControllerBase:lock(u)
-	if not self.lockunit or getdistance(GetCharacter(),u) <= self.lockdistance then
-		self.lockunit = u
-		self.lockdistance = getdistance(GetCharacter(),u)
-		self.locktime = 0.3
+	if self.lockstate then
+		if not self.lockunit or getdistance(GetCharacter(),u) <= self.lockdistance then
+			self.lockunit = u
+			self.lockdistance = getdistance(GetCharacter(),u)
+			self.locktime = 0.3
+		end
 	end
 end
 
@@ -273,6 +279,7 @@ function k:GetWalkDirection()
 controller = k
 
 function GetOrderUnit()
+	return controller.lockunit
 end
 
 function GetOrderPoint()

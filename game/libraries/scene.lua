@@ -47,6 +47,7 @@ function Map:initialize(w,h)
 	self.count = {}
 	self.blood = {}
 	self.obstacles = {}
+	controller:setLockAvailability(options.aimassist)
 end
 
 MapBlock = Object:subclass('MapBlock')
@@ -215,6 +216,13 @@ function Map:draw()
 	love.graphics.draw(img.cursor,px,py,math.atan2(y,x),1,1,16,16)
 	if self.camera then map.camera:revert() end
 	Blureffect.finish()
+	local u = GetOrderUnit()
+	if u then
+		local x,y = u.x,u.y
+		x,y = map.camera:transform(x,y)
+		x,y = x+screen.halfwidth,y+screen.halfheight
+		love.graphics.circle('line',x,y,16,30) -- TODO: make a better lock on Image
+	end
 end
 
 function Map:findUnitsInArea(area)
@@ -240,6 +248,56 @@ function Map:findUnitsWithCondition(func)
 	end
 	return result
 end
+
+function Map:loadUnitFromTileObject(obj)
+	local w,h=self.w,self.h
+	if loadstring('return '..obj.name)() then
+		local object = loadstring('return '..obj.name..':new()')()
+		object.x,object.y=obj.x-w/2,obj.y-h/2
+		if obj.properties.controller then
+			object.controller = obj.properties.controller
+		end
+		object.r = obj.properties.angle or math.random(3.14)
+		map:addObject(object)
+		if object.controller=='enemy' and object.enableAI then
+			object:enableAI()
+		end
+		if obj.properties.id then
+			_G[obj.properties.id]=object
+		end
+	end
+end
+function Map:loadTiled(tmx)
+	local loader = require("AdvTiledLoader/Loader")
+	loader.path = "maps/"
+	local m = loader.load(tmx)
+	m.useSpriteBatch=true
+	m.drawObjects=false
+	local oj = m.objectLayers
+	for k,v in pairs(oj) do
+		if v.name == 'obstacles' then
+			for _,obj in pairs(v.objects) do
+				self:placeObstacle(obj.x-w/2,obj.y-h/2,obj.width,obj.height)
+			end
+		elseif v.name == 'areas' then
+			for _,obj in pairs(v.objects) do
+				self:placeObstacle(obj.x-w/2,obj.y-h/2,obj.width,obj.height,obj.name)
+			end
+		elseif v.name == 'objects' then
+			for _,obj in pairs(v.objects) do
+				if obj.properties.phrase then
+					local p = obj.properties.phrase
+					unitdict[p] = unitdict[p] or {}
+					table.insert(unitdict[p],obj)
+				else
+					self:loadUnitFromTileObject(obj,w,h)
+				end
+			end
+		end
+	end
+	return m
+end
+
 
 function normalize(x,y)
 	local n = math.sqrt(x*x+y*y)

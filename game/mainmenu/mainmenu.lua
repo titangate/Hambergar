@@ -81,7 +81,7 @@ b_test:setText( 'swift test' )
 b_test:sizeToText()
 b_test.onClick = function( self, button )
 --	local gs = loadstring(save.gamesystem)()
-require 'scenes.test.test'
+require 'scenes.vancouver.waterfall'
 require 'scenes.test.testgamesystem'
 	local gs = TestGameSystem()
 	pushsystem(loadingscreen)
@@ -90,7 +90,7 @@ require 'scenes.test.testgamesystem'
 		gs:load()
 		pushsystem(gs)
 		mainmenu:onClose()
-		map = TestMap()
+		map = Waterfall()
 		map:opening_load()
 	end
 end

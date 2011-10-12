@@ -2,7 +2,6 @@ local conversationpanel
 function PlayConversation(image,talker,message,time)
 	if not conversationpanel then
 		conversationpanel = goo.conversation:new()
-		
 	end
 end
 

@@ -65,10 +65,6 @@ function Pistol:geteffectinfo()
 	return GetOrderDirection(),self.unit,self
 end
 
-function Pistol:stop()
-	self.time = 0
-end
-
 function Pistol:setLevel(lvl)
 	self.casttime = 0.7/(1+lvl*0.2) -- inversely proportional
 	self.level = lvl

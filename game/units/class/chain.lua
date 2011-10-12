@@ -194,6 +194,7 @@ function Chain:revert()
 	local joint = self.segs[1].joint
 	joint:setLimitsEnabled(false)
 	joint:setMotorEnabled(false)
+	self:setCollisionCallback()
 end
 
 function Chain:tornado(speed)
@@ -223,7 +224,7 @@ function Chain:stab(angle)
 end
 
 function Chain:setCollisionCallback(add)
-	self.segmentCollide = add
+	self.segmentCollide = add or function()end
 end
 
 function Chain:setLength(length)

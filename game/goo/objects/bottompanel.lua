@@ -3,6 +3,9 @@ function goo.skillbutton:initialize(parent)
 	super.initialize(self,parent)
 end
 function goo.skillbutton:setSkill(skill,face)
+	assert(skill)
+	assert(face)
+	assert(skill.level)
 	self.skill = skill
 	self.face = face
 	self.drawscale = 48/face:getHeight()

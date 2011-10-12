@@ -10,12 +10,13 @@ end
 
 TestMap = Map:subclass('TestMap')
 local TestMapbackground = {}
-love.graphics.setBackgroundColor(255,255,255,255)
+--love.graphics.setBackgroundColor(255,255,255,255)
 love.graphics.setColor(40,238,75,255)
 love.graphics.setLineWidth(1.5)
 
 love.graphics.setColor(255,255,255,255)
 function TestMapbackground:draw()
+	love.graphics.rectangle('fill',-4000,-4000,8000,8000)
 love.graphics.draw(img.greenearth,GetCharacter().x/10,GetCharacter().y/10)
 love.graphics.draw(img.ore1,GetCharacter().x/3+190,GetCharacter().y/3-200)
 love.graphics.draw(img.ore2,GetCharacter().x/7+400,GetCharacter().y/7+188)

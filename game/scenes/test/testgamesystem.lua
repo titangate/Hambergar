@@ -2,7 +2,7 @@
 require 'libraries.unit'
 require 'libraries.hud'
 require 'libraries.conversation']]
-preload('swift','commonenemies','tibet')
+preload('swift','assassin','commonenemies','tibet')
 
 requireImage("assets/gridfilter.png",'gridfilter')
 function GetCharacter()
@@ -145,6 +145,9 @@ function TestGameSystem:keyreleased(k)
 			local u = IALSwordsman:new(0,0,'enemy')
 --			u:enableAI()
 			map:addUnit(u)
+			u.interact = function()
+				print 'interacting'
+			end
 		end
 		if k=='k' then
 			GetCharacter().chain:tornado(10)

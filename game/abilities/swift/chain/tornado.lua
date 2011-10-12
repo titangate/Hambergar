@@ -9,11 +9,12 @@ TornadoEffect:addAction(function(point,caster,skill)
 	chain:tornado(12)
 	chain1:tornado(12)
 	chain2:tornado(12)
-	Timer(0.05,40,function(timer)
-		if timer.count > 35 then
-			chain:setLength(55-timer.count)
-			chain1:setLength(55-timer.count)
-			chain2:setLength(55-timer.count)
+	local length = skill.length
+	Timer(0.05,length+20,function(timer)
+		if timer.count > length+15 then
+			chain:setLength(length+25-timer.count)
+			chain1:setLength(length+25-timer.count)
+			chain2:setLength(length+25-timer.count)
 		elseif timer.count <=5 then
 			chain:setLength(timer.count+3)
 			chain1:setLength(timer.count+3)
@@ -43,6 +44,7 @@ function Tornado:initialize(unit,level)
 	self.available = true
 	self:setLevel(level)
 	self.damage = 200
+	self.length = 10
 	self.hiteffect = Tornadohiteffect
 end
 

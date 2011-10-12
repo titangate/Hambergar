@@ -12,6 +12,12 @@ function Skill:getorderinfo()
 	return self:geteffectinfo()
 end
 
+
+function Skill:stop()
+	self.time = 0
+end
+
+
 function Skill:getLevel()
 	if self.level then return self.level end
 end
@@ -21,7 +27,7 @@ function Skill:update(dt)
 	self.time = dt + self.time
 	if self.time >= self.effecttime and not self.effected then
 		if self.effect then self.effect:effect(self:getorderinfo()) end
-		self.unit:skilleffect(self)
+		if self.unit then self.unit:skilleffect(self) end
 		self.effected = true
 	end
 	if self.time >= self.casttime then

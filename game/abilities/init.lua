@@ -26,7 +26,9 @@ preloadlist(
 		'abilities.swift.character',
 		'abilities.swift.chain.swipe',
 		'abilities.swift.chain.hook',
-		'abilities.swift.chain.tornado'
+		'abilities.swift.chain.drag',
+		'abilities.swift.chain.tornado',
+		'abilities.swift.chain.ultimate1'
 	},
 })	
 require ('abilities.common.lua')

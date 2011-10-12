@@ -40,6 +40,30 @@ function BloodTrail:draw()
 	love.graphics.draw(self.p)
 end
 
+requireImage('assets/bloodstain.png','bloodstain')
+local bloodstainquad = love.graphics.newQuad(0,0,64,64,128,128)
+BloodStain = Object:subclass('BloodStain')
+function BloodStain:initialize(x,y)
+	self.x,self.y = x,y
+	self.r = math.random(math.pi*2)
+	self.hp = 5
+	self.ox,self.oy = math.random(0,1)*64,math.random(0,1)*64
+end
+
+function BloodStain:update(dt)
+	self.hp = self.hp - dt
+	if self.hp<= 0 then
+		map:removeUpdatable(self)
+	end
+end
+
+function BloodStain:draw()
+	bloodstainquad:setViewport(self.ox,self.oy,64,64,128,128)
+	love.graphics.setColor(255,255,255,math.min(255,self.hp*255))
+	love.graphics.drawq(img.bloodstain,bloodstainquad,self.x,self.y,self.r,1,1,32,32)
+	love.graphics.setColor(255,255,255,255)
+end
+
 MeleeEffect = ShootMissileEffect:new()
 MeleeEffect:addAction(function(point,caster,skill)
 	local Missile = MeleeMissile:new(0.5,skill.bulletmass,skill.range/0.5,caster.x,caster.y,unpack(point))

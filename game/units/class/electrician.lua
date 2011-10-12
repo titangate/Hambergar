@@ -47,6 +47,11 @@ function Electrician:damage(...)
 	map:addUpdatable(b)
 end
 
+
+function Electrician:getSkin()
+	return 'electrician'
+end
+
 function Electrician:getSkillpanelData()
 	return {
 		buttons = {

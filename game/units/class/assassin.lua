@@ -21,8 +21,13 @@ function Assassin:initialize(x,y)
 		snipe = Snipe:new(self,1),
 		dws = DWS:new(self,0),
 	}
+	self:setWeaponSkill()
 	self.spirit = 10
 	self.manager = AssassinPanelManager:new(self)
+end
+
+function Assassin:getSkin()
+	return 'default'
 end
 
 function Assassin:damage(...)
@@ -38,7 +43,7 @@ function Assassin:getSkillpanelData()
 			{skill = self.skills.roundaboutshot,hotkey='r',face=character[self.skills.roundaboutshot.name]},
 			{skill = self.skills.stim,hotkey='e',face=character[self.skills.stim.name]},
 			{skill = self.skills.mindripfield,hotkey='f',face=character[self.skills.mindripfield.name]},
-			{skill = self.skills.pistol,hotkey='lb',face=character[self.skills.pistol.name]},
+			{skill = self.skills.weaponskill,hotkey='lb',face=character[self.skills.pistol.name]},
 			{skill = self.skills.invis,hotkey='v',face=character[self.skills.invis.name]},
 			{skill = self.skills.snipe,hotkey='g',face=character[self.skills.pistol.name]},
 			{skill = self.skills.dws,hotkey='z',face=character.divide},
@@ -47,7 +52,6 @@ function Assassin:getSkillpanelData()
 end
 
 requireImage('assets/assassin/assassinpose copy.png','assassinpose')
-requireImage('assets/assassin/assassinpistol copy.png','assassinpistol')
 function Assassin:draw()
 	if self.invisible then
 		love.graphics.setColor(255,255,255,100)
@@ -55,7 +59,10 @@ function Assassin:draw()
 	local facing = GetOrderDirection()
 	facing = math.atan2(facing[2],facing[1])
 	love.graphics.draw(img.assassinpose,self.x,self.y,facing,1,1,20,32)
-	love.graphics.draw(img.assassinpistol,self.x,self.y,facing,1,1,20,32)
+	local weapon = self.inventory:getEquip('weapon')
+	if weapon then
+		weapon:drawBody(self.x,self.y,facing)
+	end
 	self:drawBuff()
 	love.graphics.setColor(255,255,255,255)
 end

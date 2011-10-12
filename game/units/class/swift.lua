@@ -11,6 +11,8 @@ function Swift:initialize(x,y)
 		swipe = Swipe(self,1),
 		hook = Hook(self,1),
 		tornado = Tornado(self,1),
+		drag = Drag(self,1),
+		hellofspikes = HellOfSpikes(self,1),
 	}
 	self.animation = {
 		stand = animation.swift:subSequence(1,4),
@@ -28,6 +30,11 @@ function Swift:initialize(x,y)
 	self.blureffect = Blureffect
 end
 
+
+function Swift:getSkin()
+	return 'swift'
+end
+
 function Swift:damage(...)
 	super.damage(self,...)
 	local b = BloodTrail:new(self)
@@ -39,7 +46,9 @@ function Swift:getSkillpanelData()
 		buttons = {
 			{skill = self.skills.swipe,hotkey='lb',face=icontable.swipe},
 			{skill = self.skills.hook,hotkey='r',face=icontable.swipe},
-			{skill = self.skills.tornado,hotkey='q',face=icontable.swipe}
+			{skill = self.skills.tornado,hotkey='q',face=icontable.swipe},
+			{skill = self.skills.drag,hotkey='b',face=icontable.swipe},
+			{skill = self.skills.hellofspikes,hotkey='x',face=icontable.swipe},
 		}
 	}
 end
@@ -118,6 +127,6 @@ function Swift:draw()
 		self.anim:draw(self.x,self.y,self.r)
 	end
 	self:drawBuff()
-	love.graphics.setColor(255,255,255,255)
+	
 --	Blureffect.finish()
 end

@@ -35,6 +35,7 @@ require ('units/init.lua')
 require ('libraries/timer.lua')
 require "libraries.uiitem"
 require "libraries.item"
+require 'libraries.weapon'
 require "libraries.tilemap"
 require "libraries.sound"
 require 'scenes.init'
@@ -60,6 +61,12 @@ playable = {
 	height = screen.height - 100,
 	halfwidth = screen.width/2,
 	halfheight = screen.height/2 - 50,
+}
+
+options = {
+	aimassist = true,
+	usecontroller = false, -- unimplemented
+	blureffect = true, -- unimplemented
 }
 
 gamesystems = {}

@@ -20,6 +20,11 @@ end
 function b_Stun:draw(unit)
 	love.graphics.draw(img.stunimg,unit.x,unit.y,self.r,1,1,32,32)
 end
+
+b_Pause = b_Stun:subclass('b_Pause')
+function b_Pause:draw()
+end
+
 b_Stim = Buff:subclass('b_Stim')
 function b_Stim:initialize(movementspeedbuffpercent,spellspeedbuffpercent)
 	self.spellspeedbuffpercent = spellspeedbuffpercent

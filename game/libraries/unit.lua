@@ -186,6 +186,12 @@ function Unit:addBuff(buff,duration)
 end
 
 function Unit:removeBuff(buff)
+	for v,_ in pairs(self.buffs) do
+		if v.class == buff then
+			self:removeBuff(v)
+			return
+		end
+	end
 	self.buffs[buff] = nil
 	if buff.stop then buff:stop(self) end
 end
@@ -362,6 +368,12 @@ function Character:initialize(x,y,rad,mass)
 	self.inventory = Inventory:new(self)
 end
 
+function Character:setWeaponSkill(skill)
+	print (skill)
+	self.skills.weaponskill = self.skills.weaponskill or FireWeapon(self)
+	self.skills.weaponskill:setSkill(skill)
+end
+
 function Character:pickUp(item)
 	return self.inventory:handleDrag(self.inventory:pickUp(item))
 end
@@ -412,7 +424,9 @@ function Character:save()
 		save.inventory = self.inventory:save()
 	end
 	for k,v in pairs(self.skills) do
-		save.skills[k] = v.level
+		if k~='weaponskill' then
+			save.skills[k] = v.level
+		end
 	end
 	local save = table.copy(save)
 	if self.inventory then

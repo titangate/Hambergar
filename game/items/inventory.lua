@@ -89,8 +89,8 @@ function Inventory:iterateItems(itemtype)
 end
 
 function Inventory:equipItem(item)
-	for k,v in pairs(item) do
-		print (k,v)
+	if item.type == 'weapon' and item.char ~= self.unit:className() then
+		return 
 	end
 	local i = self.equipments[item.type]
 	if i then

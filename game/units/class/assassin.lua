@@ -30,6 +30,17 @@ function Assassin:getSkin()
 	return 'default'
 end
 
+-- please refer to abilities.assassin.mind
+function Assassin:registerListener()
+	gamelistener:register(assassinkilllistener)
+	assassinkilllistener:gotoState()
+end
+
+function Assassin:unregisterListener()
+	
+	gamelistener:unregister(assassinkilllistener)
+end
+
 function Assassin:damage(...)
 	super.damage(self,...)
 	local b = BloodTrail:new(self)

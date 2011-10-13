@@ -455,11 +455,14 @@ function Probe:createBody(world)
 	self.shape = love.physics.newCircleShape(self.body,0,0,64)
 	self.body:setBullet(true)
 	self.shape:setSensor(true)
+	self.shape:setCategory(cc.terrain)
+	self.shape:setMask(cc.terrain,cc.playermissile,cc.enemymissile)
+	--[[
 	if self.controller then
 		local category,masks = unpack(typeinfo[self.controller])
 		self.shape:setCategory(category)
 		self.shape:setMask(unpack(masks))
-	end
+	end]]
 	x,y = unpack(self.direction)
 	x,y = normalize(x,y)
 	self.body:setLinearVelocity(x*2000,y*2000)
@@ -475,15 +478,19 @@ function Probe:update(dt)
 	end
 end
 
+--[[
+function Probe:draw()
+	love.graphics.circle('fill',self.body:getX(),self.body:getY(),16,10)
+end
+]]
 
 function Probe:add(b)
-	if self.offline then return end
-	if b.controller == 'enemy' then
-		self.add = nil
-		self.unit:lock(b)
-		self.offline = true
-		map:removeUnit(self)
-	end
+	if not b:isKindOf(Unit) or b==GetCharacter() or self.offline then return end
+	self.add = nil
+	self.unit:lock(b)
+	self.offline = true
+	map:removeUnit(self)
+--	end
 end
 
 
@@ -500,8 +507,8 @@ end
 function Character:load(save)
 	self.buffs = {}
 	if self.inventory then
-	self.inventory:clear()
-end
+		self.inventory:clear()
+	end
 	for k,v in pairs(save) do
 		if k == 'skills' then
 			for k2,v2 in pairs(v) do
@@ -514,6 +521,11 @@ end
 	if self.inventory then
 	self.inventory:load(save.inventory)
 end
+end
+
+local npc = Character:addState'npc'
+function npc:update(dt)
+	Unit.update(self,dt)
 end
 
 function Unit:getOffenceTarget()

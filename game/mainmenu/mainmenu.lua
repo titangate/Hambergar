@@ -16,22 +16,21 @@ mainmenu.onClose = function(self)
 	anim:easy( mainmenu, 'yscale', 1, 3, 1, 'quadInOut')
 end
 local b_continue = nil
-if love.filesystem.exists('lastsave.sav') then
+if love.filesystem.exists('checkpoint') then
 	b_continue = goo.menuitem:new( mainmenu )
 	b_continue:setPos( 10, height )
 	b_continue:setText( 'Continue' )
 	b_continue:sizeToText()
 	b_continue.onClick = function(self,button)
-	local save = table.load(love.filesystem.read('lastsave.sav'))
-	local gs = loadstring(save.gamesystem)()
-	pushsystem(loadingscreen)
-	loadingscreen.finished = 	function ()
-		SetGameSystem(gs)
-		gs:load()
-		gs:continueFromSave(save)
-		pushsystem(gs)
 		mainmenu:onClose()
-	end
+		local gs = require 'scenes.gamesystem'
+		SetGameSystem(gs)
+		GetGameSystem():prepareToContinue('checkpoint')
+		pushsystem(loadingscreen)
+		loadingscreen.finished = function ()
+			GetGameSystem():continue()
+			pushsystem(gs)
+		end
 	end
 end
 
@@ -42,7 +41,7 @@ b_startgame:setText( 'Start Game' )
 b_startgame:sizeToText()
 b_startgame.onClick = function( self, button )
 	require 'scenes.tibet.tibet1'
-	local gs = require 'scenes.tibet.tibetgamesystem'
+	local gs = require 'scenes.gamesystem'
 	require 'scenes.tibet.intro'
 	mainmenu:onClose()
 	pushsystem(loadingscreen)
@@ -81,9 +80,9 @@ b_test:setText( 'swift test' )
 b_test:sizeToText()
 b_test.onClick = function( self, button )
 --	local gs = loadstring(save.gamesystem)()
+
 require 'scenes.vancouver.waterfall'
-require 'scenes.test.testgamesystem'
-	local gs = TestGameSystem()
+	local gs = require 'scenes.gamesystem'
 	pushsystem(loadingscreen)
 	loadingscreen.finished = 	function ()
 		SetGameSystem(gs)

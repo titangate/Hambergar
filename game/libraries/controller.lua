@@ -9,6 +9,7 @@ function ControllerBase:setLockAvailability(state)
 end
 
 function ControllerBase:lock(u)
+	if u == GetCharacter() then return end
 	if self.lockstate then
 		if not self.lockunit or getdistance(GetCharacter(),u) <= self.lockdistance then
 			self.lockunit = u

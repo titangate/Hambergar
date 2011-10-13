@@ -1,16 +1,19 @@
 --require 'libraries.scene'
 --require 'libraries.unit'
+require 'scenes.tibet.tibetgamesystem'
+
+preload('assassin','commonenemies','tibet')
 Tibet2 = Map:subclass('Tibet2')
 
-function Tibet2:initialize(w,h)
-	super.initialize(self,w,h)
-end
 function Tibet2:playCutscene(scene)
 	self.cutscene = scene
 end
 function Tibet2:initialize()
 	super.initialize(self,2000,2000)
 	self.background = tibetbackground
+	self.savedata = {
+		map = 'scenes.tibet.tibet2',
+	}
 end
 function Tibet2:update(dt)
 	super.update(self,dt)
@@ -40,13 +43,14 @@ function Tibet2:loadCheckpoint(checkpoint)
 end
 
 function Tibet2:boss_load()
-	local leon = Assassin:new(10,10,32,10)
+	local leon = GetGameSystem():loadobj 'Assassin'
 	leon.direction = {0,-1}
 	leon.controller = 'player'
+	leon.x,leon.y = 0,0
 	SetCharacter(leon)
 	map:addUnit(leon)
 	map.camera = FollowerCamera:new(leon)
-	GetGameSystem():loadCharacter(leon)
+--	GetGameSystem():loadCharacter(leon)
 	GetGameSystem().bottompanel:fillPanel(GetCharacter():getSkillpanelData())
 	GetGameSystem().bottompanel:setPos(screen.halfwidth-512,screen.height - 140)
 	self:boss_loaded()
@@ -88,7 +92,7 @@ function Tibet2:boss_loaded()
 		GetGameSystem().bottompanel:conversation()
 		PlayMusic('music/boss1.mp3')
 		hans:enableAI()
-		bossbar = AssassinHPBar:new(function()return hans:getHPPercent() end,screen.halfwidth-400,screen.height-100,800)
+		GetGameSystem().bossbar = AssassinHPBar:new(function()return hans:getHPPercent() end,screen.halfwidth-400,screen.height-100,800)
 		PlayTutorial(tutorialtable.bosshans)
 	end),0)
 	self.tibet2listener = {}
@@ -214,9 +218,8 @@ function Tibet2:boss_loaded()
 	gamelistener:register(self.tibet2listener)
 	self:playCutscene(meethans)
 	
-	GetGameSystem():setCheckpoint(Tibet2,"boss",[[
-	require 'scenes.tibet.tibet2'
-	]])
+	self.savedata.checkpoint = 'boss'
+	GetGameSystem():saveAll()
 	GetGameSystem():gotoState()
 end
 
@@ -226,13 +229,13 @@ function Tibet2:boss_enter()
 end
 
 function Tibet2:opening_load()
-	local leon = Assassin:new(10,10,32,10)
+	local leon = GetGameSystem():loadobj 'Assassin'
 	leon.direction = {0,-1}
 	leon.controller = 'player'
+	leon.x,leon.y = 0,0
 	SetCharacter(leon)
 	map:addUnit(leon)
 	map.camera = FollowerCamera:new(leon)
-	GetGameSystem():loadCharacter(leon)
 	GetGameSystem().bottompanel:fillPanel(GetCharacter():getSkillpanelData())
 	GetGameSystem().bottompanel:setPos(screen.halfwidth-512,screen.height - 140)
 	self:opening_loaded()
@@ -340,9 +343,9 @@ function Tibet2:opening_loaded()
 	gamelistener:register(self.tibet2listener)
 	self:playCutscene(intro)
 	PlayTutorial(tutorialtable.openpanel)
-	GetGameSystem():setCheckpoint(Tibet2,"opening",[[
-	require 'scenes.tibet.tibet2'
-	]])
+	print (self.savedata)
+	self.savedata.checkpoint = 'opening'
+	GetGameSystem():saveAll()
 	GetGameSystem():gotoState()
 	PlayMusic('music/fight1.ogg')
 	self.wave = 0
@@ -353,3 +356,5 @@ end
 function Tibet2:destroy()
 	gamelistener:unregister(self.tibet2listener)
 end
+
+return Tibet2

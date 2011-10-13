@@ -7,14 +7,6 @@ local m = loader.load("waterloo dom.tmx")
 m.useSpriteBatch=true
 m.drawObjects=false
 local oj = m.objectLayers
-function GetCharacter()
-	return chr
-end
-
-function SetCharacter(c)
-	chr = c
-end
-
 WaterlooSiteBackground={}
 function WaterlooSiteBackground:update(dt)
 end

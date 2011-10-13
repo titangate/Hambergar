@@ -5,14 +5,6 @@ require 'libraries.conversation']]
 preload('swift','assassin','commonenemies','tibet')
 
 requireImage("assets/gridfilter.png",'gridfilter')
-function GetCharacter()
-	return chr
-end
-
-function SetCharacter(c)
-	chr = c
-end
-
 hpbar = AssassinHPBar:new(function()return GetCharacter():getHPPercent() end,30,30,200)
 mpbar = AssassinMPBar:new(function()return GetCharacter():getMPPercent() end,30,60,200)
 local manager = nil

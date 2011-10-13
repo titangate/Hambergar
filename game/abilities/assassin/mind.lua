@@ -155,7 +155,6 @@ function nothing:handle() end
 
 assassinkilllistener = MindListener:new()
 assassinkilllistener:gotoState('nothing')
-gamelistener:register(assassinkilllistener)
 
 Mind = Skill:subclass('Mind')
 function Mind:initialize(unit,level)

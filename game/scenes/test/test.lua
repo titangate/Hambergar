@@ -1,12 +1,5 @@
 --require 'libraries.scene'
 --require 'libraries.unit'
-function GetCharacter()
-	return chr
-end
-
-function SetCharacter(c)
-	chr = c
-end
 
 TestMap = Map:subclass('TestMap')
 local TestMapbackground = {}

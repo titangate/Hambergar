@@ -99,6 +99,7 @@ end
 FollowerCamera = Camera:subclass('FollowerCamera')
 
 function FollowerCamera:initialize(t,aabb)
+	assert(t)
 	super.initialize(self)
 	self.t = t
 	self.aabb = aabb or

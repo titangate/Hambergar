@@ -7,13 +7,6 @@ local m = loader.load("waterloo outside.tmx")
 m.useSpriteBatch=true
 m.drawObjects=false
 local oj = m.objectLayers
-function GetCharacter()
-	return chr
-end
-
-function SetCharacter(c)
-	chr = c
-end
 
 Waterloo2Background={}
 function Waterloo2Background:update(dt)
@@ -209,7 +202,7 @@ function Waterloo2:boss_loaded()
 		end
 	end}),GetCharacter())
 	PlayMusic('music/jasonboss.mp3')
-	bossbar = AssassinHPBar:new(function()return boss:getHPPercent() end,screen.halfwidth-400,screen.height-100,800)
+	GetGameSystem().bossbar = AssassinHPBar:new(function()return boss:getHPPercent() end,screen.halfwidth-400,screen.height-100,800)
 end
 
 function Waterloo2:loadCheckpoint(checkpoint)

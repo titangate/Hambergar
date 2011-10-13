@@ -1,5 +1,7 @@
 --require 'libraries.scene'
 --require 'libraries.unit'
+require 'scenes.tibet.tibetgamesystem'
+preload('assassin','commonenemies','tibet')
 Tibet1 = Map:subclass('Tibet1')
 function Tibet1:initialize(w,h)
 	super.initialize(self,w,h)
@@ -11,6 +13,9 @@ end
 function Tibet1:initialize()
 	super.initialize(self,2000,2000)
 	self.background = tibetbackground
+	self.savedata = {
+		map = 'scenes.tibet.tibet1',
+	}
 end
 function Tibet1:update(dt)
 	super.update(self,dt)
@@ -48,9 +53,11 @@ function Tibet1:checkpoint1_load()
 	leon.direction = {0,-1}
 	leon.controller = 'player'
 	SetCharacter(leon)
+	local save = [[return {{["map"]="Tibet1",["character"]={2},["checkpoint"]="opening",["depends"]="	require 'scenes.tibet.tibet1'\n	",["gamesystem"]="return require 'scenes.tibet.tibetgamesystem'",},{["movementspeedbuffpercent"]=1,["HPRegen"]=0,["timescale"]=1,["damagebuff"]={3},["hp"]=500,["speedlimit"]=20000,["damageamplify"]={4},["cd"]={5},["mp"]=500,["armor"]={6},["damagereduction"]={7},["spirit"]=1,["evade"]={8},["movingforce"]=500,["maxhp"]=500,["maxmp"]=500,["MPRegen"]=0,["critical"]={9},["movementspeedbuff"]=0,["skills"]={10},["spellspeedbuffpercent"]=1,["inventory"]={11},},{["Bullet"]=0,},{},{},{["Bullet"]=0,},{},{},{},{["stunbullet"]=0,["momentumbullet"]=0,["stim"]=2,["explosivebullet"]=0,["pistol"]=3,["invis"]=1,["dws"]=0,["snipe"]=2,["pistoldwsalt"]=6,["dash"]=1,["roundaboutshot"]=1,["mindripfield"]=1,["mind"]=1,},{["FiveSlash"]='equip',["Theravada"]="equip",},}--|]]
+	save = table.load(save)
+	leon:load(save.character)
 	map:addUnit(leon)
 	map.camera = FollowerCamera:new(leon)
-	GetGameSystem():loadCharacter(leon)
 	GetGameSystem().bottompanel:fillPanel(GetCharacter():getSkillpanelData())
 	GetGameSystem().bottompanel:setPos(screen.halfwidth-512,screen.height - 140)
 	self:checkpoint1_loaded()
@@ -141,12 +148,13 @@ function Tibet1:checkpoint1_loaded()
 		end
 	end}
 	gamelistener:register(self.tibet1listener)
-	GetGameSystem():setCheckpoint(Tibet1,"opening",[[
-	require 'scenes.tibet.tibet1'
-	]])
+	self.savedata.checkpoint = 'opening'
+	GetGameSystem():saveAll()
 	GetGameSystem():gotoState()
 end
 
 function Tibet1:destroy()
 	gamelistener:unregister(self.tibet1listener)
 end
+
+return Tibet1()

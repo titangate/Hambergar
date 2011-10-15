@@ -31,12 +31,12 @@ function Assassin:getSkin()
 end
 
 -- please refer to abilities.assassin.mind
-function Assassin:registerListener()
+function Assassin:register()
 	gamelistener:register(assassinkilllistener)
 	assassinkilllistener:gotoState()
 end
 
-function Assassin:unregisterListener()
+function Assassin:unregister()
 	
 	gamelistener:unregister(assassinkilllistener)
 end

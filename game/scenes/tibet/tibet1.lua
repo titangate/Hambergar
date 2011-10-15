@@ -64,7 +64,6 @@ function Tibet1:checkpoint1_load()
 end
 
 function Tibet1:checkpoint1_loaded()
-	
 	PlayTutorial(tutorialtable.movement)
 	local meethans = CutSceneSequence:new()
 	meethans:push(ExecFunction:new(function()

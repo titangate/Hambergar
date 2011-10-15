@@ -519,8 +519,15 @@ function Character:load(save)
 		end
 	end
 	if self.inventory then
-	self.inventory:load(save.inventory)
+		self.inventory:load(save.inventory)
+	end
 end
+
+
+function Character:register()
+end
+
+function Character:unregister()
 end
 
 local npc = Character:addState'npc'

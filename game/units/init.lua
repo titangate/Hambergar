@@ -23,6 +23,9 @@ preloadlist(
 	swift = {
 		'units.class.swift',
 		'units.class.chain'
+	},
+	vancouver = {
+		'units.other.vancouver'
 	}
 }
 )

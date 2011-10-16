@@ -38,6 +38,7 @@ function Electrician:initialize(x,y)
 	self.spirit = 10
 	self.manager = ElectricianPanelManager:new(self)
 	self:resetAnimation()
+	self:setWeaponSkill()
 	-- TODO: do what?
 end
 

@@ -1,5 +1,18 @@
 require 'scenes.vancouver.vancouver'
+require 'cutscene.cutscene'
 preload('assassin','swift','commonenemies','tibet','vancouver')
+
+local conv = {
+	greet = {
+		[3] = {'What do you seek?',5},
+		[12] = {"So, I was told you were the infamous Compass Assassin River.",8}
+	},
+	story = {
+		[0] = {'Why did you end up joining us?',5},
+		[6] = {"Because they took the sole reason i lived for, and Now I'm making them pay.",8},
+	},
+}
+
 local Waterfallbg={}
 function Waterfallbg:update(dt)
 end
@@ -48,6 +61,24 @@ function Waterfall:opening_load()
 		GetCharacter().skills.weaponskill:gotoState'interact'
 		leon2:gotoState()
 		map.camera = FollowerCamera(leon2)
+		local c = require 'cutscene.swift-assassin-visit1.cutscene'
+		local c_talk = require 'cutscene.swift-assassin-visit1.rivertalking'
+		local cp = CutscenePlayer(c)
+		cp:playConversation(conv.greet)
+		local choices = {
+			'STORY',
+			'MEDITATION',
+			'SWITCH'
+		}
+		cp.onFinish = function(self)
+			cp:setChoice(choices)
+			n = cp:getChoice()
+			if n == 1 then
+				cp:play(c_talk)
+				cp:playConversation(conv.story)
+			end
+		end
+		pushsystem(cp)
 	end
 end
 

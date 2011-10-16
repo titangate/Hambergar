@@ -28,6 +28,7 @@ function Swift:initialize(x,y)
 		Chain(self),
 	}
 	self.blureffect = Blureffect
+	self:setWeaponSkill()
 end
 
 

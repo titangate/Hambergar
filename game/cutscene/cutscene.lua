@@ -10,34 +10,42 @@ function CutscenePlayer:initialize(c)
 		DialogOption(50,screen.height-150,{0,0,0},'X'),
 		DialogOption(100,screen.height-200,{255,255,0},'Y'),
 	}
+	self.convdt = 0
 end
 
-function CutscenePlayer:play(c)
+function CutscenePlayer:play(c,forcereplay)
 	if #c>0 then
-		self.c = c[math.random(#c)]
-	else
-		self.c = c
-		
+		c = c[math.random(#c)]
 	end
-	self.dt = 0
+	print (c,self.c)
+	if forcereplay or c~=self.c then
+		self.c = c
+		self.dt = 0
+	end
+end
+
+function CutscenePlayer:setChoiceTime(t)
+	self.choicetime = self.dt + t
 end
 
 function CutscenePlayer:update(dt)
 	self.dt = self.dt + dt
+	self.convdt = self.convdt + dt
 	if self.c then
 		self.c:jumpToFrame(self.dt)
 	end
-	if self.dt > self.c.life then
+	if self.dt > self.choicetime then
 		if self.onFinish then
 			self:onFinish()
 		else
 			popsystem()
 		end
 	end
+	self.choice = nil
 	for i,v in ipairs(self.options) do
 		v:update(dt)
 		if v.isOn then
-			self.choice = i
+			self.choice = v.text
 			for i,v in ipairs(self.options) do
 				v:fadeOut()
 			end
@@ -48,6 +56,7 @@ end
 
 function CutscenePlayer:playConversation(conv)
 	self.conv = conv
+	self.convdt = 0
 end
 
 function CutscenePlayer:draw()
@@ -55,11 +64,11 @@ function CutscenePlayer:draw()
 	self.c:draw()
 	love.graphics.pop()
 	for i,v in pairs(self.conv) do
-		if self.dt>=i and self.dt<=v[2]+i then
+		if self.convdt>=i and self.convdt<=v[2]+i then
 			local font = love.graphics.getFont()
 			love.graphics.setColor(0,0,0,220)
-			local w,h = font:getWidth(v[1])+10,font:getLineHeight(v[1])*font:getHeight()+10
-			love.graphics.rectangle('fill',screen.halfwidth - w/2,screen.height - 100 ,w,h)
+			local w,h = font:getWidth(v[1])+10,select(2,font:getWrap(v[1],624))*font:getHeight()+10
+			love.graphics.rectangle('fill',screen.halfwidth - w/2,screen.height - 105 ,w,h)
 			love.graphics.setColor(255,255,255,225)
 			love.graphics.printf(v[1],200,screen.height - 100,624,'center')
 		end
@@ -71,12 +80,17 @@ function CutscenePlayer:draw()
 end
 
 function CutscenePlayer:setChoice(t)
-	if t == self.t then return end
+	if self.options[1].state == 'hidden' then
 	self.t = t
-	for i,v in ipairs(t) do
-		self.options[i].text = v
-		self.options[i]:fadeIn()
+		for i,v in ipairs(self.t) do
+			self.options[i].text = v
+			self.options[i]:fadeIn()
+		end
 	end
+end
+
+function CutscenePlayer:revealChoice()
+	
 end
 
 function CutscenePlayer:getChoice()

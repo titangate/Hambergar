@@ -98,19 +98,13 @@ function AssassinAbiTree:initialize(unit)
 	local sp = goo.itempanel:new(self.container)
 	sp:setSize(500,100)
 	sp:setPos(screen.halfwidth-sp.w/2,screen.height - 150)
-	sp:fillPanel({
-		title = 'HAMBER SPIRIT',
-		type = 'YOU NEED TO ACQUIRE HAMBER SPIRIT TO UPGRADE YOUR ABILITIES',
-		attributes = {
-	--		{image = spirit,text ='BLAH'}
-		}
-	})
+	
 	local lb = goo.imagelabel:new(sp)
 	lb:setSize(500,50)
 	lb:setFont(fonts.oldsans32)
 	lb:setAlignMode('center')
 	lb:setPos(0,35)
-	sp:setSize(500,130)
+	self.sp = sp
 	self.spiritlabel = lb
 	self.container.learn = function(skill) self:learn(skill) end
 end
@@ -147,12 +141,27 @@ function AssassinAbiTree:show()
 	for k,v in pairs(self.buttongroup) do
 		if v.skill.level<0 then v:setVisible(false) end
 	end
+	local t
+	if self.learning then
+		t = 'ACQUIRE HAMBER SPIRIT TO UPGRADE YOUR ABILITIES'
+	else
+		t = 'MEDITATE TO DISTRIBUTE HAMBER SPIRIT'
+	end
+	self.sp:fillPanel({
+		title = 'HAMBER SPIRIT',
+		type = t,
+		attributes = {
+	--		{image = spirit,text ='BLAH'}
+		}
+	})
+	self.sp:setSize(500,130)
 end
 
 function AssassinAbiTree:keypressed(k)
 end
 
 function AssassinAbiTree:learn(skill)
+	if not self.learning then return end
 	if self.enabletime >0 then
 		return 
 	end

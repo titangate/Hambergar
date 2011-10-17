@@ -149,6 +149,7 @@ end
 
 function ElectricianAbiTree:learn(skill,button)
 	-- TODO
+	if not self.learning then return end
 	local x,y=math.floor(button.x/scale),button.y%scale
 	local c = button.chip
 	if c then

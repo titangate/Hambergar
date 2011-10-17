@@ -69,6 +69,14 @@ options = {
 	blureffect = true, -- unimplemented
 }
 
+-- This stores conversation data.
+storydata = {
+	daysbeforeinvasion = 1,
+	swift = {
+		
+	},
+}
+
 gamesystems = {}
 function pushsystem(system)
 	if gamesystems[#gamesystems] and gamesystems[#gamesystems].poped then gamesystems[#gamesystems]:poped() end

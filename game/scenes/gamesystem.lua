@@ -65,7 +65,7 @@ function GameSystem:loadobj(label)
 end
 
 function GameSystem:runMap(m,checkpoint)
-	if map and map.destroy() then
+	if map and map.destroy then
 		map:destroy()
 	end
 	gamelistener = Listener:new()
@@ -118,6 +118,7 @@ end
 
 function GameSystem:keypressed(k)
 	if k=='t' then
+		GetCharacter().manager.tree.learning = nil
 		GetCharacter().manager:start()
 		self.bottompanel.count=0
 		pushsystem(GetCharacter().manager)
@@ -125,6 +126,9 @@ function GameSystem:keypressed(k)
 	end
 	if k==' ' then
 		
+	end
+	if k=='escape' then
+		self:pushState('pause')
 	end
 end
 
@@ -181,10 +185,16 @@ end
 function paused:enterState()
 	local pausemenu = love.filesystem.load('mainmenu/pausemenu.lua')()
 	pausemenu:birth()
+	love.mouse.setVisible(true)
 end
 function paused:pushedState()
 	local pausemenu = love.filesystem.load('mainmenu/pausemenu.lua')()
 	pausemenu:birth()
+	love.mouse.setVisible(true)
+end
+
+function paused:popedState()
+	love.mouse.setVisible(false)
 end
 
 function paused:draw()
@@ -194,8 +204,8 @@ function paused:draw()
 	if bossbar then bossbar:draw() end
 	local x,y = unpack(GetOrderDirection())
 	local px,py = love.mouse.getPosition()
-	love.graphics.setColor(255,255,255)
-	love.graphics.draw(img.cursor,px,py,math.atan2(y,x),1,1,16,16)
+--	love.graphics.setColor(255,255,255)
+--	love.graphics.draw(img.cursor,px,py,math.atan2(y,x),1,1,16,16)
 	love.graphics.setColor(0,0,0,180)
 	love.graphics.rectangle('fill',-1000000,-100000,10000000,1000000)
 	goo:draw()

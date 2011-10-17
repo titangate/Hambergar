@@ -41,7 +41,7 @@ function ElectricianCharacterPanel:initialize(unit)
 	self.attpanel:setSize(300)
 	self.attpanel:fillPanel({
 		title = 'LAWRENCE FU',
-		type = 'Electrician',
+		type = 'Heir to Telsa',
 		attributes = {
 			{image = icontable.life,text='Hit Point',data=function()return self.unit:getHP()..'/'..self.unit:getMaxHP() end},
 			{image = icontable.life,text='HP Regeneration',data=function()return self.unit.HPRegen end},

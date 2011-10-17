@@ -113,10 +113,10 @@ end
 
 function FollowerCamera:apply(z)
 	self.x,self.y=-self.t.x,-self.t.y
---	if self.aabb then
---		self.x = math.min(math.max(self.aabb.x1,self.x),self.aabb.x2)
---		self.y = math.min(math.max(self.aabb.y1,self.y),self.aabb.y2)
---	end
+	if self.aabb then
+		self.x = math.min(math.max(self.aabb.x1,self.x),self.aabb.x2)
+		self.y = math.min(math.max(self.aabb.y1,self.y),self.aabb.y2)
+	end
 	super.apply(self,z)
 end
 

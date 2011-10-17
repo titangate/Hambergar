@@ -8,7 +8,22 @@
  </tileset>
  <layer name="Tile Layer 1" width="30" height="30">
   <data encoding="base64" compression="zlib">
-   eJzt0jcOAjEQBdC5wXIGQkNoCEchNISGnENDaAgH5yNhMYxsjFcrIaT50pPWzf6dWRP9JimllFJ/JRLPUsi70kwGspZzDuqOjtC+KcwgzxSgaDmXoA2dZ3/jQ7fvO7awgzJTgarlXIM+DFh/JHp8uzZzHuFE32cOC9Y/hgn5/3ETWmzOK9wCemX/Gjaezocu9GLM6coeDvQ+t22vQxhR/DllznCh19zy/pu9LmGVQJ+MmVve/6T26oqZW97/pPaq0WjCcgeJ9z5j
+   eJzt0jcOwkAQBdC5gX0GQkNoCEchNISGjMkNoSEcnI/EimG0Zllry/nSk7yNv2e8MRHFSimllEMkniWfd+WYPBQs5yK0Ujp8+xawhBJThorlXIUe9N/97R/dru/YwwFqTB0alnMTRjBm/ZHoce3azHmGC/2fBFasfwZzcv/jDnTZnHd4ePTK/i3sHJ0vAxhmmDMtRzjR99y2vU5gStnnlLnCjT5zy/tv9rqGTYA+GTO3vP+h9poWM7e8/6H2qtFo/PIEfL1AQw==
   </data>
  </layer>
+ <objectgroup name="areas" width="30" height="30">
+  <object name="exit" x="0" y="44" width="1202" height="38"/>
+ </objectgroup>
+ <objectgroup name="obstacles" width="30" height="30">
+  <object x="-14" y="592" width="212" height="166"/>
+  <object x="172" y="620" width="114" height="174"/>
+  <object x="258" y="678" width="116" height="176"/>
+  <object x="352" y="760" width="108" height="148"/>
+  <object x="446" y="808" width="300" height="124"/>
+  <object x="738" y="770" width="248" height="112"/>
+  <object x="792" y="726" width="258" height="62"/>
+  <object x="852" y="672" width="276" height="90"/>
+  <object x="984" y="558" width="236" height="172"/>
+  <object x="920" y="612" width="88" height="74"/>
+ </objectgroup>
 </map>

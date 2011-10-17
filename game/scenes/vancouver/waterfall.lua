@@ -1,28 +1,8 @@
-require 'scenes.vancouver.vancouver'
+ require 'scenes.vancouver.vancouver'
+local vancouver = VancouverMap()
 require 'cutscene.cutscene'
 preload('assassin','swift','commonenemies','tibet','vancouver')
 
-local conv = {
-	greet = {
-		[3] = {'What do you seek?',5},
-		[12] = {"So, I was told you were the infamous Compass Assassin River.",8}
-	},
-	story = {
-		[0] = {'Why did you end up joining us?',5},
-		[6] = {"Because they took the sole reason i lived for, and Now I'm making them pay.",8},
-		[16] = {'Your sole reason to live for?',5},
-	},
-	insist = {
-		[0] = {"Tell me about it.",4},
-		[5] = {"I am not ready to tell anyone about it yet.",5}
-	},
-	meditation = {
-		[0] = {"Why are you always meditating?",4},
-		[5] = {"I used to meditate for a better understanding for this universe, but now I just want to recover sooner. We have a war ahead of us.",8},
-		[15] = {"Perhaps I should leave you be then.",5},
-		[21] = {"Amitabha.",3}
-	}
-}
 
 local Waterfallbg={}
 function Waterfallbg:update(dt)
@@ -48,7 +28,19 @@ function Waterfall:initialize()
 	Waterfallbg.m = m
 	self.background = Waterfallbg
 	self:addUnit(Mat(0,150,60,5))
+	self.exitTrigger = Trigger(function(self,event)
+		if event.index == 'exit' then
+			pushsystem(vancouver)
+			vancouver:zoomOutCity('vancouver')
+		end
+	end)
+	self.exitTrigger:registerEventType('add')
 end
+
+function Waterfall:destroy()
+	self.exitTrigger:destroy()
+end
+
 
 function Waterfall:opening_load()
 	local leon = Assassin:new(10,10,32,10)
@@ -56,7 +48,12 @@ function Waterfall:opening_load()
 	leon.controller = 'player'
 	map:addUnit(leon)
 	SetCharacter(leon)
-	map.camera = FollowerCamera:new(leon)
+	map.camera = FollowerCamera:new(leon,{
+		x1 = -600+screen.halfwidth,
+		y1 = -600+screen.halfheight,
+		x2 = 600-screen.halfwidth,
+		y2 = 600-screen.halfheight
+	})
 	controller:setLockAvailability(true)
 	GetCharacter().skills.weaponskill:gotoState'interact'
 	
@@ -65,74 +62,18 @@ function Waterfall:opening_load()
 	leon2:gotoState'npc'
 	leon2.controller = 'player'
 	map:addUnit(leon2)
-	leon2.interact = function(self)
-		
-		local c = require 'cutscene.swift-assassin-visit1.cutscene'
-		local c_talk = require 'cutscene.swift-assassin-visit1.rivertalking'
-		local cp = CutscenePlayer(c)
-		cp:playConversation(conv.greet)
-		local choices1 = {
-			'STORY',
-			'MEDITATION',
-			'SWITCH',
-			'LEAVE'
-		}
-		local choices2 = {
-			'INSIST',
-			'MEDITATION',
-			'SWITCH',
-			'LEAVE'
-		}
-		local choices3 = {
-			'MEDITATION',
-			'SWITCH',
-			'LEAVE'
-		}
-		local c = choices1
-		
-		cp:setChoiceTime(20)
-		cp.onFinish = function(self)
-			cp:setChoice(c)
-			n = cp:getChoice()
-			if n == 'STORY' then
-				cp:play(c_talk)
-				c = choices2
-				cp:playConversation(conv.story)
-				
-				cp:setChoiceTime(20)
-			elseif n == 'INSIST' then
-				cp:play(c_talk)
-				c = choices3
-				cp:playConversation(conv.insist)
-				
-				cp:setChoiceTime(10)
-				
-			elseif n == 'MEDITATION' then
-				cp:play(c_talk)
-				cp:playConversation(conv.meditation)
-				cp:setChoiceTime(25)
-			elseif n == 'LEAVE' then
-				popsystem()
-			elseif n == 'SWITCH' then
-				GetCharacter():gotoState'npc'
-				SetCharacter(leon2)
-				GetGameSystem().bottompanel:fillPanel(GetCharacter():getSkillpanelData())
-				GetGameSystem().bottompanel:setPos(screen.halfwidth-512,screen.height - 150)
-				GetCharacter().skills.weaponskill:gotoState'interact'
-				leon2:gotoState()
-				map.camera = FollowerCamera(leon2)
-				popsystem()
-			end
-		end
-		pushsystem(cp)
-	end
 end
 
 function Waterfall:enter_load(character)
 	assert(character)
 	character.x,character.y = 0,-200
 	map:addUnit(character)
-	map.camera = FollowerCamera:new(character)
+	map.camera = FollowerCamera:new(character,{
+		x1 = -600+screen.halfwidth,
+		y1 = -600+screen.halfheight,
+		x2 = 600-screen.halfwidth,
+		y2 = 600-screen.halfheight
+	})
 	sefl:enter_loaded()
 end
 
@@ -146,12 +87,10 @@ function Waterfall:enter_loaded()
 		leon2.controller = 'player'
 		leon2:gotoState'npc'
 		map:addUnit(leon2)
-		leon2.interact = function(self)
-			GetCharacter():gotoState'npc'
-			SetCharacter(leon2)
-			GetCharacter().skills.weaponskill:gotoState'interact'
-			leon2:gotoState()
-			map.camera = FollowerCamera(leon2)
+		if GetCharacter().class == Swift then
+			if story.daysbeforeinvasion == 1 then
+				leon2.interact = require 'scenes.vancouver.swift-visit-1'
+			end
 		end
 	end
 end

@@ -3,5 +3,5 @@ function love.conf(t)
 	t.author = "Leon Jiang"
 	t.console = true
 	t.screen.width = 1024
-	t.screen.height = 640
+	t.screen.height = 600
 end

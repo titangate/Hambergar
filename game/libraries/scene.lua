@@ -198,11 +198,15 @@ function Map:update(dt)
 	for unit,v in pairs(self.updatable) do
 		if unit.update then unit:update(dt) end
 	end
-	Blureffect.update(dt)
+	if not self.disableBlur then
+		Blureffect.update(dt)
+	end
 end
 
 function Map:draw()
-	Blureffect.begin()
+	if not self.disableBlur then
+		Blureffect.begin()
+	end
 	if self.camera then self.camera:apply() end
 	if self.background then self.background:draw() end
 	for unit,v in pairs(self.units) do
@@ -215,7 +219,9 @@ function Map:draw()
 	local px,py = unpack(GetOrderPoint())
 	love.graphics.draw(img.cursor,px,py,math.atan2(y,x),1,1,16,16)
 	if self.camera then map.camera:revert() end
-	Blureffect.finish()
+	if not self.disableBlur then
+		Blureffect.finish()
+	end
 	local u = GetOrderUnit()
 	if u then
 		local x,y = u.x,u.y
@@ -268,6 +274,7 @@ function Map:loadUnitFromTileObject(obj)
 	end
 end
 function Map:loadTiled(tmx)
+	local w,h=self.w,self.h
 	local loader = require("AdvTiledLoader/Loader")
 	loader.path = "maps/"
 	local m = loader.load(tmx)

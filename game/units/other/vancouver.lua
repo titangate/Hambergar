@@ -5,11 +5,10 @@ function Mat:initialize(...)
 	self.controller = 'player'
 end
 
+local meditation1 = require 'scenes.vancouver.meditation'
 function Mat:interact(unit)
 	if unit:isKindOf(Assassin) then
-		GetCharacter().manager:start()
-		GetGameSystem().bottompanel.count=0
-		pushsystem(GetCharacter().manager)
+		meditation1()
 	end
 end
 

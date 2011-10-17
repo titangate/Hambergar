@@ -1,24 +1,23 @@
-
 CutscenePlayer = Object:subclass'CutscenePlayer'
 function CutscenePlayer:initialize(c)
-	self.c = c
 	self.dt = 0
 	self.options = 
 	{
-		DialogOption(100,screen.height-100,{0,255,0},'A'),
-		DialogOption(150,screen.height-150,{255,0,0},'B'),
-		DialogOption(50,screen.height-150,{0,0,0},'X'),
-		DialogOption(100,screen.height-200,{255,255,0},'Y'),
+		DialogOption(100,screen.height-100,{58,119,16},'A'),
+		DialogOption(150,screen.height-150,{221,75,47},'B'),
+		DialogOption(50,screen.height-150,{69,96,148},'X'),
+		DialogOption(100,screen.height-200,{240,207,76},'Y'),
 	}
 	self.convdt = 0
+	self:play(c)
 end
 
 function CutscenePlayer:play(c,forcereplay)
 	if #c>0 then
 		c = c[math.random(#c)]
 	end
-	print (c,self.c)
 	if forcereplay or c~=self.c then
+		c.camera = CutsceneCamera()
 		self.c = c
 		self.dt = 0
 	end

@@ -51,9 +51,9 @@ function Blureffect.finish()
 	love.graphics.setColor(255,255,255,280-35*count)
 	if Blureffect.style == 'zoom' then
 		local x,y = Blureffect.arg.x,Blureffect.arg.y
+		assert(x and y)
 		x,y = map.camera:transform(x,y)
 		x,y = x+screen.halfwidth,y+screen.halfheight
-		print (x,y)
 		local scalefactor = 1.5
 		for i = index+1,count do
 			love.graphics.draw(blurbuffer[i],x,y,0,scalefactor,scalefactor,x,y)

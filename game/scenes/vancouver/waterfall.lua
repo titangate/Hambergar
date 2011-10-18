@@ -28,6 +28,7 @@ function Waterfall:initialize()
 	Waterfallbg.m = m
 	self.background = Waterfallbg
 	self:addUnit(Mat(0,150,60,5))
+	self:addUnit(PotionMaster(0,-150,60,5))
 	self.exitTrigger = Trigger(function(self,event)
 		if event.index == 'exit' then
 			pushsystem(vancouver)
@@ -62,6 +63,7 @@ function Waterfall:opening_load()
 	leon2:gotoState'npc'
 	leon2.controller = 'player'
 	map:addUnit(leon2)
+	leon2.interact = require 'scenes.vancouver.swift-visit-1'
 end
 
 function Waterfall:enter_load(character)
@@ -87,11 +89,11 @@ function Waterfall:enter_loaded()
 		leon2.controller = 'player'
 		leon2:gotoState'npc'
 		map:addUnit(leon2)
-		if GetCharacter().class == Swift then
-			if story.daysbeforeinvasion == 1 then
+--		if GetCharacter().class == Swift then
+--			if story.daysbeforeinvasion == 1 then
 				leon2.interact = require 'scenes.vancouver.swift-visit-1'
-			end
-		end
+--			end
+--		end
 	end
 end
 

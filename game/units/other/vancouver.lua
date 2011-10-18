@@ -21,3 +21,20 @@ requireImage('assets/vancouver/mat.png','mat')
 function Mat:draw()
 	love.graphics.draw(img.mat,self.x,self.y,0,1,1,64,64)
 end
+
+-- Potion Master
+
+PotionMaster = Unit:subclass'PotionMaster'
+function PotionMaster:initialize(...)
+	super.initialize(self,...)
+	self.controller = 'player'
+end
+
+local potion = require 'scenes.vancouver.potion'
+function PotionMaster:interact(unit)
+	potion()
+end
+
+function PotionMaster:draw()
+	love.graphics.draw(img.mat,self.x,self.y,0,1,1,64,64)
+end

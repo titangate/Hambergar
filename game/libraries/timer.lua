@@ -9,10 +9,11 @@ function Timer:initialize(interval,count,func,start,selfdestruct)
 	self.interval = interval
 	self.count = count
 	self.func = func
-	self.start = start
+	self.start = start or true
 	self.time = 0
-	self.selfdestruct = selfdestruct
-	map:addUpdatable(self)
+	self.selfdestruct = selfdestruct or true
+	GetGameSystem():addGameTimer(self)
+	print (GetGameSystem().class)
 end
 
 function Timer:update(dt)
@@ -29,7 +30,7 @@ function Timer:update(dt)
 				self.count = self.count - 1
 			end
 			if self.count == 0 and self.selfdestruct then
-				map:removeUpdatable(self)
+				GetGameSystem():removeGameTimer(self)
 			end
 		end
 	end

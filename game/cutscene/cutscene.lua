@@ -10,6 +10,7 @@ function CutscenePlayer:initialize(c)
 	}
 	self.convdt = 0
 	self:play(c)
+	self.timers = {}
 end
 
 function CutscenePlayer:play(c,forcereplay)
@@ -20,6 +21,18 @@ function CutscenePlayer:play(c,forcereplay)
 		c.camera = CutsceneCamera()
 		self.c = c
 		self.dt = 0
+	end
+end
+
+function CutscenePlayer:addGameTimer(...)
+	for k,unit in ipairs(arg) do
+		self.timers[unit] = true
+	end
+end
+
+function CutscenePlayer:removeGameTimer(...)
+	for k,unit in ipairs(arg) do
+		self.timers[unit] = nil
 	end
 end
 
@@ -51,27 +64,40 @@ function CutscenePlayer:update(dt)
 			return
 		end
 	end
+	for unit,v in pairs(self.timers) do
+		if unit.update then unit:update(dt) end
+	end
+	if self.convtime then
+		self.convtime = self.convtime - dt
+		if self.convtime <= 0 then
+			self.convtime = nil
+		end
+	end
 end
 
-function CutscenePlayer:playConversation(conv)
+function CutscenePlayer:playConversation(conv,time,speaker)
+	self.speaker = speaker
 	self.conv = conv
-	self.convdt = 0
+	self.convtime = time or 10000
 end
 
 function CutscenePlayer:draw()
 	love.graphics.push()
 	self.c:draw()
 	love.graphics.pop()
-	for i,v in pairs(self.conv) do
-		if self.convdt>=i and self.convdt<=v[2]+i then
+--	for i,v in pairs(self.conv) do
+--		if self.convdt>=i and self.convdt<=v[2]+i then
+		local v = self.conv
+		print (v)
+		if v and self.convtime then
 			local font = love.graphics.getFont()
 			love.graphics.setColor(0,0,0,220)
-			local w,h = font:getWidth(v[1])+10,select(2,font:getWrap(v[1],624))*font:getHeight()+10
+			local w,h = font:getWidth(v)+10,select(2,font:getWrap(v,624))*font:getHeight()+10
 			love.graphics.rectangle('fill',screen.halfwidth - w/2,screen.height - 105 ,w,h)
 			love.graphics.setColor(255,255,255,225)
-			love.graphics.printf(v[1],200,screen.height - 100,624,'center')
+			love.graphics.printf(v,200,screen.height - 100,624,'center')
 		end
-	end
+--	end
 	love.graphics.setFont(fonts.oldsans12)
 	for i,v in ipairs(self.options) do
 		v:draw()

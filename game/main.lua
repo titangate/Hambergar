@@ -48,7 +48,7 @@ anim = require "anim.anim"
 Blureffect = require 'libraries.blur'
 require 'units.init'
 
-
+local gametimers = {}
 screen = {
 	width = love.graphics.getWidth(),
 	height = love.graphics.getHeight(),
@@ -83,6 +83,7 @@ function pushsystem(system)
 	table.insert(gamesystems,system)
 	if system.pushed then system:pushed() end
 	currentsystem = system
+	SetGameSystem(system)
 end
 
 function popsystem()
@@ -90,6 +91,7 @@ function popsystem()
 	table.remove(gamesystems)
 	currentsystem = gamesystems[#gamesystems]
 	if currentsystem.pushed then currentsystem:pushed() end
+	SetGameSystem(currentsystem)
 end
 
 function pause(state)
@@ -97,7 +99,6 @@ function pause(state)
 end
 
 function SetGameSystem(gs)
-	assert(gs)
 	gamesystem = gs
 end
 

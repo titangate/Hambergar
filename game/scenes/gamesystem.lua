@@ -20,6 +20,7 @@ function GameSystem:initialize()
 	self:gotoState()
 	self.hpbar = AssassinHPBar(function()return GetCharacter():getHPPercent() end,30,30,200)
 	self.mpbar = AssassinMPBar(function()return GetCharacter():getMPPercent() end,30,60,200)
+	
 end
 
 function GameSystem:setCharacter(c)
@@ -151,6 +152,14 @@ function GameSystem:loadCheckpoint(point)
 	self:runMap(map,point)
 end
 
+function GameSystem:addGameTimer(...)
+	map:addUpdatable(...)
+end
+
+function GameSystem:removeGameTimer(...)
+	map:removeUpdatable(...)
+end
+
 local conversation = GameSystem:addState('conversation')
 function conversation:enterState()
 	self.bottompanel:hideButton()
@@ -204,12 +213,11 @@ function paused:draw()
 	if bossbar then bossbar:draw() end
 	local x,y = unpack(GetOrderDirection())
 	local px,py = love.mouse.getPosition()
---	love.graphics.setColor(255,255,255)
---	love.graphics.draw(img.cursor,px,py,math.atan2(y,x),1,1,16,16)
 	love.graphics.setColor(0,0,0,180)
 	love.graphics.rectangle('fill',-1000000,-100000,10000000,1000000)
 	goo:draw()
 end
+
 
 local GameSystem = GameSystem()
 return GameSystem

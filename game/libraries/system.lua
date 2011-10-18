@@ -351,7 +351,6 @@ function Trigger:registerEventType(type)
 end
 function Trigger:destroy()
 	self.co=nil
-	print ('trigger destroying')
 	for k,handler in ipairs(self.handlers) do
 		gamelistener:unregister(handler)
 	end
@@ -363,8 +362,9 @@ function Trigger:run(...)
 	assert(self.action)
 	if self.closed then return end
 	self.co = coroutine.create(self.action)
-	print (coroutine.resume(self.co,...))
+	print (coroutine.resume(self.co,self,...))
 end
+
 function wait(time)
 	local co=coroutine.running ()
 	Timer:new(time,1,function()
@@ -372,7 +372,6 @@ function wait(time)
 	end,true,true)
 	coroutine.yield()
 end
-
 
 function math.clamp(x,lower,upper)
 	return math.min(math.max(x,lower),upper)

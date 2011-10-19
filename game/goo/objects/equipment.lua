@@ -34,6 +34,4 @@ function goo.equipment:updateEquipment()
 	end
 end
 
-
 return goo.equipment
-

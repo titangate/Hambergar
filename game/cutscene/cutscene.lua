@@ -47,6 +47,7 @@ function CutscenePlayer:update(dt)
 		self.c:jumpToFrame(self.dt)
 	end
 	if self.dt > self.choicetime then
+		
 		if self.onFinish then
 			self:onFinish()
 		else
@@ -58,9 +59,11 @@ function CutscenePlayer:update(dt)
 		v:update(dt)
 		if v.isOn then
 			self.choice = v.text
+			escaped = false
 			for i,v in ipairs(self.options) do
 				v:fadeOut()
 			end
+			v.state = 'fadeoutbig'
 			return
 		end
 	end
@@ -75,10 +78,25 @@ function CutscenePlayer:update(dt)
 	end
 end
 
+function CutscenePlayer:keypressed(k)
+	if k=='escape' then
+		if not self:isChoosing() then
+			escaped = true
+			self:playConversation()
+			self:setChoiceTime(0)
+		end
+	end
+end
+
 function CutscenePlayer:playConversation(conv,time,speaker)
 	self.speaker = speaker
 	self.conv = conv
-	self.convtime = time or 10000
+	if conv then
+		self.convtime = time or 10000
+	else
+		self.convtime = 0.1
+	end
+	print (self.conv,self.convtime)
 end
 
 function CutscenePlayer:draw()
@@ -88,7 +106,6 @@ function CutscenePlayer:draw()
 --	for i,v in pairs(self.conv) do
 --		if self.convdt>=i and self.convdt<=v[2]+i then
 		local v = self.conv
-		print (v)
 		if v and self.convtime then
 			local font = love.graphics.getFont()
 			love.graphics.setColor(0,0,0,220)
@@ -114,8 +131,8 @@ function CutscenePlayer:setChoice(t)
 	end
 end
 
-function CutscenePlayer:revealChoice()
-	
+function CutscenePlayer:isChoosing()
+	return self.options[1].state == 'normal'
 end
 
 function CutscenePlayer:getChoice()
@@ -260,6 +277,7 @@ function DialogOption:initialize(x,y,color,text)
 	self.color = color
 	self.dt = 0
 	self.state = 'hidden'
+	self.sx,self.sy = 50,50
 end
 
 function DialogOption:fadeIn()
@@ -267,6 +285,7 @@ if self.state == 'normal' then return end
 	self.dt = 0
 	self.state = 'fadein'
 	self.isOn = nil
+	self.sx,self.sy = 50,50
 end
 
 function DialogOption:fadeOut()
@@ -299,7 +318,6 @@ function DialogOption:update(dt)
 end
 
 function DialogOption:draw()
-	
 	if self.state=='normal' then
 		self.color[4] = 204
 	elseif self.state == 'hidden' then
@@ -308,9 +326,13 @@ function DialogOption:draw()
 		self.color[4] = self.dt * 204
 	elseif self.state == 'fadeout' then
 		self.color[4] = 204 - 204 * self.dt
+	elseif self.state == 'fadeoutbig' then
+		self.color[4] = 204 - 204 * self.dt
+		self.sx = 50 * self.dt + 50
+		self.sy = self.sx
 	end
 	love.graphics.setColor(self.color)
-	love.graphics.draw(img.dot,self.x,self.y,math.pi/4,50,50,0.5,0.5)
+	love.graphics.draw(img.dot,self.x,self.y,math.pi/4,self.sx,self.sy,0.5,0.5)
 	love.graphics.setColor(255,255,255,self.color[4])
 	love.graphics.printf(self.text,self.x-50,self.y-6,100,'center')
 end

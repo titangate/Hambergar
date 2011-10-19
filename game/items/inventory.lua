@@ -1,4 +1,3 @@
-
 -- inventory
 Inventory=Object:subclass('Inventory')
 function Inventory:initialize(unit)
@@ -85,7 +84,6 @@ function Inventory:iterateItems(itemtype)
 		end
 		return coroutine.wrap(it)
 	end
-
 end
 
 function Inventory:equipItem(item)
@@ -102,7 +100,6 @@ function Inventory:equipItem(item)
 end
 
 function Inventory:unequipItem(item)
---	local item = self:getItemByType(item)
 	item:unequip(self.unit)
 	self.equipments[item.type]=nil
 	self.updateInvUI()

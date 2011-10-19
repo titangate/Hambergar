@@ -376,3 +376,16 @@ end
 function math.clamp(x,lower,upper)
 	return math.min(math.max(x,lower),upper)
 end
+
+escaped = false
+function cine_wait(time)
+	if escaped then
+		return
+	else
+		local co=coroutine.running ()
+		Timer:new(time,1,function()
+			coroutine.resume(co)
+		end,true,true)
+		coroutine.yield()
+	end
+end

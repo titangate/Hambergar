@@ -1,24 +1,26 @@
 
 local conv = {
-	assassin_greet =function(trig,cp)
-		wait(2)
+	assassin_greet = function(trig,cp)
+		cine_wait(2)
 		cp:playConversation('Hello, River.')
-		wait(3)
+		cine_wait(3)
 		cp:playConversation'You know my name?'
-		wait(3)
+		cine_wait(3)
 		cp:playConversation"Who could've not recognize the murderer of Kevin Luo?"
-		wait(5)
+		cine_wait(5)
 		cp:playConversation"That name again. Should not have taken that contract."
-		wait(5)
+		cine_wait(5)
 		cp:playConversation"And you should not have join Compass for some blood money."
-		wait(5)
-		cp:playConversation"Exchange with what? A hundred lives of other people?"
-		wait(5)
+		cine_wait(5)
+		cp:playConversation"I kill for a promise of life."
+		cine_wait(5)
+		cp:playConversation"One life versus a hundred lives of other people?"
+		cine_wait(5)
 		cp:playConversation"You don't judge me. What do you do?"
-		wait(4)
+		cine_wait(4)
 		cp:playConversation"I am a chemist, making potions that could prove to be my salvation."
-		wait(5)
-		cp:PlayConversation()
+		cine_wait(5)
+		cp:playConversation()
 		cp:setChoiceTime(0)
 	end,
 }

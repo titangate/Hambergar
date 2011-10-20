@@ -33,7 +33,7 @@ function AssassinCharacterPanel:initInventory()
 	eq:setPos(350,50)
 	eq:setInventory(self.unit.inventory)
 	eq:setItemtype{'consumable','amplifier','trophy','artifact','weapon'}
-	dp = goo.itempanel:new()
+	local dp = goo.itempanel:new()
 	dp:setSize(230,200)
 	dp:setPos(screen.width-250,50)
 	dp:setTitle('NO ITEM')
@@ -147,6 +147,7 @@ function AssassinCharacterPanel:initialize(unit)
 	self.container:setVisible(false)
 end
 function AssassinCharacterPanel:show()
+	self.unit.inventory:gotoState()
 --	self.container:setVisible(true)
 end
 function AssassinCharacterPanel:fold()

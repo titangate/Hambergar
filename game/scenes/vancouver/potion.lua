@@ -3,7 +3,7 @@ local conv = {
 	assassin_greet = function(trig,cp)
 		cine_wait(2)
 		cp:playConversation('Hello, River.')
-		cine_wait(3)
+		cine_wait(2)
 		cp:playConversation'You know my name?'
 		cine_wait(3)
 		cp:playConversation"Who could've not recognize the murderer of Kevin Luo?"
@@ -23,9 +23,27 @@ local conv = {
 		cp:playConversation()
 		cp:setChoiceTime(0)
 	end,
+	assassin_story = function(trig,cp)
+		cp:playConversation"So What made you here?"
+		cine_wait(5)
+		cp:playConversation"Wind."
+		cine_wait(2)
+		cp:playConversation"I mean seriously."
+		cine_wait(3)
+		cp:playConversation"I am. Korea was nuked. I was lucky enough to escape to a boat before all that happen."
+		cine_wait(4.5)
+		cp:playConversation"Wind favoured us, however the supply didn't. We had to draw to decide who gets to live."
+		cine_wait(4.5)
+		cp:playConversation"By the time the boat reaches the shore of Vancouver, I'm the only one left."
+		cine_wait(4)
+		cp:playConversation"That was.. familiar."
+		cine_wait(3.5)
+		cp:playConversation()
+		cp:setChoiceTime(0)
+	end,
 }
 
-return function(self)
+return function(npc)
 	local c = require 'cutscene.granvilleisland.potion'
 	local cp = CutscenePlayer(c)
 	pushsystem(cp)
@@ -49,9 +67,11 @@ return function(self)
 		cp:setChoice(c)
 		n = cp:getChoice()
 		if n == 'STORY' then
-			
+			local t = Trigger:new(conv.assassin_story)
+			t:run(cp)
+			cp:setChoiceTime(1000)
 		elseif n == 'POTION' then	
-		
+			pushsystem(ShopPanel(GetCharacter(),npc))
 		elseif n == 'LEAVE' then
 			popsystem()
 		end

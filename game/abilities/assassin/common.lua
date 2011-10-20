@@ -52,9 +52,10 @@ function AssassinPanelManager:shift(system)
 	if self.shiftsystem.container then
 		self.shiftsystem.container:setVisible(true)
 	end
-		if self.shiftsystem.show then
-			self.shiftsystem:show()
-		end
+	if self.shiftsystem.show then
+		print ('new sys')
+		self.shiftsystem:show()
+	end
 end
 
 function AssassinPanelManager:keypressed(k)
@@ -94,9 +95,9 @@ function AssassinPanelManager:show()
 	if self.currentsystem.container then
 		self.currentsystem.container:setVisible(true)
 	end
-		if self.currentsystem.show then
-			self.currentsystem:show()
-		end
+	if self.currentsystem.show then
+		self.currentsystem:show()
+	end
 	gamelistener:notify({type = 'openpanel'})
 end
 function AssassinPanelManager:fold()

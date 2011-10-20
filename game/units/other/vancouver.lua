@@ -8,7 +8,7 @@ end
 local meditation1 = require 'scenes.vancouver.meditation'
 function Mat:interact(unit)
 	if unit:isKindOf(Assassin) then
-		meditation1()
+		meditation1(self)
 	end
 end
 
@@ -28,11 +28,16 @@ PotionMaster = Unit:subclass'PotionMaster'
 function PotionMaster:initialize(...)
 	super.initialize(self,...)
 	self.controller = 'player'
+	self.inventory = Shop(self)
+	local inv = self.inventory
+	inv:addItem(FiveSlash())
+	inv:addItem(PeacockFeather:new())
+	inv:addItem(BigHealthPotion:new())
 end
 
 local potion = require 'scenes.vancouver.potion'
 function PotionMaster:interact(unit)
-	potion()
+	potion(self)
 end
 
 function PotionMaster:draw()

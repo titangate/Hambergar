@@ -1,6 +1,7 @@
--- inventory
-Inventory=Object:subclass('Inventory')
-function Inventory:initialize(unit)
+-- InventoryBase
+InventoryBase=StatefulObject:subclass('InventoryBase')
+function InventoryBase:initialize(unit)
+	super.initialize(self)
 	self.items={}
 	self.unit=unit
 	self.equipments={}
@@ -10,7 +11,7 @@ function Inventory:initialize(unit)
 	-- item is stored as a 2-d array, indexed (itemtype,itemname)
 end
 
-function Inventory:addItem(item)
+function InventoryBase:addItem(item)
 	local t=item.type
 	local n=item.name
 	self.items[t]=self.items[t] or {}
@@ -22,7 +23,7 @@ function Inventory:addItem(item)
 	self.updateInvUI()
 end
 
-function Inventory:hasItem(itemtype)
+function InventoryBase:hasItem(itemtype)
 	for k,v in pairs(self.items) do
 		if v[itemtype] then
 			return true
@@ -31,7 +32,7 @@ function Inventory:hasItem(itemtype)
 	return false
 end
 
-function Inventory:removeItem(itemtype,count)
+function InventoryBase:removeItem(itemtype,count)
 	count = count or 1
 	for k,v in pairs(self.items) do
 		if v[itemtype] then
@@ -51,7 +52,7 @@ function Inventory:removeItem(itemtype,count)
 	self.updateInvUI()
 end
 
-function Inventory:useItem(item)
+function InventoryBase:useItem(item)
 	assert(self.unit)
 	for k,v in pairs(self.items) do
 		if v[item] then
@@ -62,7 +63,7 @@ function Inventory:useItem(item)
 	self.updateInvUI()
 end
 
-function Inventory:getItemByType(itemtype)
+function InventoryBase:getItemByType(itemtype)
 	for k,v in pairs(self.items) do
 		if v[itemtype] then
 			return v[itemtype]
@@ -70,7 +71,7 @@ function Inventory:getItemByType(itemtype)
 	end
 end
 
-function Inventory:iterateItems(itemtype)
+function InventoryBase:iterateItems(itemtype)
 	if itemtype then
 		self.items[itemtype]=self.items[itemtype] or {}
 		return pairs(self.items[itemtype])
@@ -85,6 +86,12 @@ function Inventory:iterateItems(itemtype)
 		return coroutine.wrap(it)
 	end
 end
+
+function InventoryBase:clear()
+	self.items = {}
+end
+
+Inventory=InventoryBase:subclass('Inventory')
 
 function Inventory:equipItem(item)
 	if item.type == 'weapon' and item.char ~= self.unit:className() then
@@ -110,6 +117,7 @@ function Inventory:getEquip(itemtype)
 end
 
 function Inventory:interactItem(item,condition)
+	print 'ORIGINAL INTERACTION'
 	if item then
 		if condition == 'inventory' then
 			if item.use then
@@ -135,10 +143,6 @@ function Inventory:populateList(list,type)
 		b.buttontype = 'inventory'
 		list:addItem(b,k)
 	end
-end
-
-function Inventory:clear()
-	self.items = {}
 end
 
 function Inventory:save()

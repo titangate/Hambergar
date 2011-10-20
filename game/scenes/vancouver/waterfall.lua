@@ -57,7 +57,10 @@ function Waterfall:opening_load()
 	})
 	controller:setLockAvailability(true)
 	GetCharacter().skills.weaponskill:gotoState'interact'
-	
+	local inv = GetCharacter().inventory
+	inv:addItem(FiveSlash())
+	inv:addItem(PeacockFeather:new())
+	inv:addItem(BigHealthPotion:new())
 	local leon2 = Assassin(100,10,32,10)
 	leon2.direction = {0,-1}
 	leon2:gotoState'npc'

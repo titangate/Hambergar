@@ -14,7 +14,7 @@ function SwiftCharacterPanel:initInventory()
 		i:switchTab(i.currenttab)
 		eq:updateEquipment()
 	end
-	dp = goo.itempanel:new()
+	local dp = goo.itempanel:new()
 	dp:setSize(230,200)
 	dp:setPos(screen.width-250,50)
 	dp:setTitle('NO ITEM')
@@ -124,6 +124,7 @@ function SwiftCharacterPanel:initialize(unit)
 	self.container:setVisible(false)
 end
 function SwiftCharacterPanel:show()
+self.unit.inventory:gotoState()
 --	self.container:setVisible(true)
 end
 function SwiftCharacterPanel:fold()

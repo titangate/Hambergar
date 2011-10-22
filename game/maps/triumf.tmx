@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="40" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="waterloo" tilewidth="40" tileheight="40">
+  <image source="Untitled-1.png" width="360" height="40"/>
+ </tileset>
+ <tileset firstgid="10" name="VILFLR" tilewidth="40" tileheight="40">
+  <image source="VILFLR.png" width="360" height="280"/>
+ </tileset>
+ <tileset firstgid="73" name="indoortile" tilewidth="40" tileheight="40">
+  <image source="indoortile.png" width="480" height="320"/>
+ </tileset>
+ <tileset firstgid="169" name="wall" tilewidth="40" tileheight="40">
+  <image source="wall.png" width="400" height="400"/>
+ </tileset>
+ <layer name="Tile Layer 3" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKEL/f1Zj6Hgqqmqqqqqqj56VnLVHw==
+  </data>
+ </layer>
+ <layer name="Tile Layer 1" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztziEOgDAQAMG+j2LBN2gS/q84WXGu4gKZSdZvawAAAADwPVu0J/XKqckZPUlX5dTE3xp/a47oThqVU/zOCwpDE3Y=
+  </data>
+ </layer>
+</map>

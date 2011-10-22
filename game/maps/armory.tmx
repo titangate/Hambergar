@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Tile03" tilewidth="32" tileheight="32">
+  <image source="Tile03.png" width="640" height="640"/>
+ </tileset>
+ <layer name="块层 1" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzzERgEAQBMGzDWgANDz4eG2cBKoI2KCDzmdmVU0AAAAAAACAF5a2ti2g5Yu9He0MaPHhI42PLD6y+MjiI8toV7t/7ngAIPg4Ag==
+  </data>
+ </layer>
+ <layer name="块层 2" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1j0OQDAYgOGvEy7BwgVYOBOHwJ0cwnmw+xaRlKURVLxP8g5NOjT9SSoCAAAAAAAAAACwG6zxpM3a8sJarhitcWBEQi0yryzn12Ld88ShzHH+E6VarhUOVY7zn6jk/uNGtdlrTvqi1hyDX+x/y1fZ/xZfdfoGet6Bl7az4YwAkRX9+h9p
+  </data>
+ </layer>
+ <objectgroup name="objects" width="50" height="50">
+  <object name="Brandon" x="519" y="1028" width="67" height="47"/>
+ </objectgroup>
+ <objectgroup name="areas" width="50" height="50">
+  <object name="exit" x="478" y="1523" width="170" height="76"/>
+  <object name="spawningpoint" x="559" y="1246" width="165" height="72"/>
+ </objectgroup>
+</map>

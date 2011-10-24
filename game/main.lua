@@ -79,6 +79,7 @@ storydata = {
 
 gamesystems = {}
 function pushsystem(system)
+	print (system,'is pushed')
 	if gamesystems[#gamesystems] and gamesystems[#gamesystems].poped then gamesystems[#gamesystems]:poped() end
 	table.insert(gamesystems,system)
 	if system.pushed then system:pushed() end

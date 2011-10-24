@@ -2,7 +2,7 @@
 local conv = {
 	assassin_greet = function(trig,cp)
 		cine_wait(2)
-		cp:playConversation('Hello, River.')
+		cp:playConversation"Hello I'm Brandon the "
 		cine_wait(2)
 		cp:playConversation'You know my name?'
 		cine_wait(3)

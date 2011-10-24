@@ -259,12 +259,13 @@ function Map:loadUnitFromTileObject(obj)
 	local w,h=self.w,self.h
 	if loadstring('return '..obj.name)() then
 		local object = loadstring('return '..obj.name..':new()')()
+		assert(object)
 		object.x,object.y=obj.x-w/2,obj.y-h/2
 		if obj.properties.controller then
 			object.controller = obj.properties.controller
 		end
 		object.r = obj.properties.angle or math.random(3.14)
-		map:addObject(object)
+		self:addUnit(object)
 		if object.controller=='enemy' and object.enableAI then
 			object:enableAI()
 		end

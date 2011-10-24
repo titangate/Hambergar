@@ -91,8 +91,19 @@ style['goo button'] = {
 	borderColorHover = {0,0,0},
 	textColor = {255,255,255},
 	textColorHover = {255,255,255},
+	textFont = fonts.oldsans20
+}
+
+style['goo flag'] = {
+	backgroundColor = {100,100,100},
+	backgroundColorHover = {131,203,21},
+	borderColor = {0,0,0,255},
+	borderColorHover = {0,0,0},
+	textColor = {255,255,255},
+	textColorHover = {255,255,255},
 	textFont = fonts.oldsans12
 }
+
 
 style['goo big button'] = {
 	buttonColor = {255,255,255,255},

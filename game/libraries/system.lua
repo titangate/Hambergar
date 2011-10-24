@@ -343,7 +343,7 @@ function Trigger:registerEventType(type)
 	local handler = {
 		eventtype=type,
 		handle = function(handler,event)
-			self:run(self,event)
+			self:run(event)
 		end
 	}
 	table.insert(self.handlers,handler)

@@ -81,7 +81,7 @@ b_test:sizeToText()
 b_test.onClick = function( self, button )
 --	local gs = loadstring(save.gamesystem)()
 
-require 'scenes.vancouver.waterfall'
+	require 'scenes.vancouver.vancouver'
 	local gs = require 'scenes.gamesystem'
 	pushsystem(loadingscreen)
 	loadingscreen.finished = 	function ()

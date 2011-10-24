@@ -1,17 +1,24 @@
 
 local conv = {
-	meditation = {
-		[2] = {'From unreal lead me to the real.',5},
-		[8] = {'From darkness lead me to the light.',5},
-		[14] = {'From death lead me to immortality.',5},
-	},
+	meditation = function(trig,cp)
+		cine_wait(2)
+		cp:playConversation'From unreal lead me to the real.'
+		cine_wait(5)
+		cp:playConversation'From darkness lead me to the light.'
+		cine_wait(5)
+		cp:playConversation'From death lead me to immortality.'
+		cine_wait(5)
+		cp:playConversation()
+		cp:setChoiceTime(0)
+	end,
 }
 
 return function(self)
 	local c = require 'cutscene.waterfall.meditation'
 	local cp = CutscenePlayer(c)
-	print (c)
-	cp:playConversation(conv.meditation,true)
+	pushsystem(cp)
+	local t = Trigger:new(conv.meditation)
+	t:run(cp)
 	local choices1 = {
 		'SAVE',
 		'CHARACTER',
@@ -29,11 +36,10 @@ return function(self)
 			GetCharacter().manager.tree.learning = true
 			GetCharacter().manager:start()
 			print (GetCharacter().manager.tree.learning)
-			GetGameSystem().bottompanel.count=0
+--			GetGameSystem().bottompanel.count=0
 			pushsystem(GetCharacter().manager)
 		elseif n == 'LEAVE' then
 			popsystem()
 		end
 	end
-	pushsystem(cp)
 end

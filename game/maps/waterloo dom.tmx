@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="40" tileheight="40">
+<map version="1.0" orientation="orthogonal" width="40" height="40" tilewidth="40" tileheight="40">
  <tileset firstgid="1" name="waterloo" tilewidth="40" tileheight="40">
   <image source="Untitled-1.png" width="360" height="40"/>
  </tileset>
@@ -12,194 +12,14 @@
  <tileset firstgid="169" name="wall" tilewidth="40" tileheight="40">
   <image source="wall.png" width="400" height="400"/>
  </tileset>
- <layer name="Tile Layer 3" width="100" height="100">
+ <layer name="Tile Layer 3" width="40" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmbtOA0EQBE8i4vP4F6cGpzxSwCnGH8oQIF1bQt7xsdtjrkpqoYt2r0vQspkmAACAv+GuY1rPWHqfCu966Z1G3q31rKX3yrzzNnIfeYjsOj5nqerjNpmsj8fIU+Q58tLxOcvI391KPl4jb5H3yL7jcxa3A5ePj8gh8hk5dnzO4nbg8rHm/WjNzSzshz8jfbAftf5eVd2Pn/uN6LmSjzXvR+tZc9iPdflY8360njWK77Mq78coKvmouh8jqeSj6n6MxO1jflbV/RhJxkfvTWM/avlgP/I+enbGfuR99OyM/cj7+O0dt9PyztiPvI+enbEf7Ec12I9atPrYT/0/s7Ef7T6OE/sxgnM+5v+vZT/6k/XBfvSl0vcl7EctH6MCOTYnAS/4qAU+aoGP85x2dM35D7g7xIfi7hAfirtDfCjuDvGhuDvEh+LuEB+Ku0N8KO4O8aG4O8SH4u4QH4q7Q3wo7g7xobg7xIfi7hAfirtDfCjuDvGhuDvEh+LuEB+Ku0N8KO4O8aG4O8SH4u4QH4q7Q3wo7g7xobg7xIfi7hAfirtDfCjuDvGhuDvEh+LuEB+Ku0N8KO4O8aG4O8SH4u4QH4q7Q3wom9nPaw8AAAAAAAAAAAAAAAAAAAAAAADAWvgCKZt2sw==
+   eJztwwEJAAAMBKEL/f1Zj6Hgqqmqqqqqqj56VnLVHw==
   </data>
  </layer>
- <layer name="Tile Layer 1" width="100" height="100">
+ <layer name="Tile Layer 1" width="40" height="40">
   <data encoding="base64" compression="zlib">
-   eJztnGlv1DAQhrMUaDn+/3+AAuIqIECiiwQSLRLXF6DwBSj3fV8tjLUarbF8zNixa5t5pFdqN048WW/8xp44wyAIgiAIaRwCHQYtg46AjoKORX5m237SUZevrC0mW3lXPZRzxmNx6qCUWda2c2JCToFOg1ZAZ0BnQeciP7Ntvwh6Dnph1OUq64rJVt62L/Wc8VicOihlVrTtnJiQW6DjoBOgVdAUdNmjS8RyV0BXQU9AH0GfQBuOurDsfUtM00Bd5r7cc54miHLuXFRs50EXQGugddB1j64Ry90A3QS9Bf0GbYE2HXVhWb09sNx6oC7cl3PutuPHKBTTd0ZMemy3QXci9vVxF3RvmMW0dzIMi6B38Pd70Aej7CPQ42HedhuMmPR9qeQ6ZwRj4lyzCOfcc/Ea9GaYt90mI6aa2yOmv+Kcey6+gr4Zn/XQHpyYENWHPAA9HDWif69ZvB90fQ/Yt+n00B6x/vEU9GzUiOZ9kGoPvB9UfaOt7c2243xfej1UcrdHTEyI+o5sHpsK9kEqptVhdn8Yuj6w7Vzt5quHe3+Vsz1iYkKUf/wE/Rpm4zaK1NjuJeiV5X/UAL48mcxiwnvb0PWB8XNiwnq4/VWOPhrB31esf+yG89kzmY3bKFJju8+gL5b/UfvheAeM70l9z7a+Ea9vLMuJCevh9NW5+mgkxT9+DPPx2jbojyb9M1cZn1TZXZN5Xa7xB17fGD/GFJIej15PiFx9NKKPvbgsTObjtSXQPk36Z64yPqmyB7XvieIfekwh6fHo9YSI6aOd/aWFlPFgSVz+YbZHbmL6aJdsYP8b4+clcfmH6ec4386dc/fN/fv25daj/20D+98YPy+Jyz9MP8f5du6cu2/u37cvtx79bxsp/lESl3+Yfp4rB7BKELcuG6X731io/pErB7BGELcuGynziSVx+YetPXZ6jjOFlPmSkoTyH/h7qiEHkELKfElJXL97089ryAGkkDJfUhKXf5h+rq6jHtqj9vsrjn/knO/LTcr8VUko/RXmz3PO9+WmFT+n9FeYP88535ebVvxcn8ez5Up0xprvG1uc3E/tfq7P49lyJTpjzfeNLU7up3b/UHkNXw5Fz59vEUXJ2fjKmYyZA+LkZHaChUAORc+fL05oouRsfOVMxswBcXIy/zuu+T68BxTK4prvw3tAoSz6/IwOjlmFOSXzgybc/KBvW8x6nBopmR804eYHfdti1uPUiOozKOtxpg75tlHLUuoLrcepfTxIRY0bKetxfOtkOGtqqGttSqzHqZHW84OtPH9FpfX8YCvPX1FpPT/YyvNXVCQ/WBfiH3XRun/g9SH+UQcp6zlrpHX/0Ndv90Dr/mE+v9Q6vfhHL37eun/05uet+0dvft66f/Tm5637h/4uhB4Q/6iL1v2jlfUGVFr3j1aeb6fSun+08nw7FeUfLa//aOX5diqt+4eMP+pCxh91IeOPupDxR12If9RFb88ztO4fvT3P0Lp/9PY8XOv9VW/Pw7XeX/XmH7neYV6K3p5nUP1VzvcBmOR6H0Avfq76q5zvAzDJ9T6AXvzc9d4A7tp81zFMtgPle30fABXXewO4a/NdxzBZCpSX9wEIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIQpi/wAdOMA==
+   eJztziEOgDAQAMG+j2LBN2gS/q84WXGu4gKZSdZvawAAAADwPVu0J/XKqckZPUlX5dTE3xp/a47oThqVU/zOCwpDE3Y=
   </data>
  </layer>
- <objectgroup name="areas" width="100" height="100">
-  <object name="computergrid" x="1608" y="1472" width="2048" height="2384"/>
-  <object name="room1" x="1592" y="172" width="568" height="544"/>
-  <object name="engineeringroom" x="1590" y="830" width="2040" height="520"/>
-  <object name="dom" x="128" y="176" width="992" height="552"/>
-  <object name="Hallway1" x="1200" y="160" width="336" height="1176"/>
-  <object name="SpawingPoint" x="216" y="463" width="100" height="68"/>
-  <object name="computergridenter" x="2704" y="1368" width="110" height="84"/>
-  <object name="outside" x="2388" y="3004" width="568" height="592"/>
- </objectgroup>
- <objectgroup name="obstacles" width="100" height="100">
-  <object x="3600" y="1456" width="164" height="2392"/>
-  <object x="1504" y="1356" width="136" height="2500"/>
-  <object x="1508" y="2860" width="1048" height="124"/>
-  <object x="60" y="124" width="1088" height="116"/>
-  <object x="124" y="168" width="32" height="560"/>
-  <object x="1228" y="1280" width="1448" height="276"/>
-  <object x="1152" y="92" width="2616" height="148"/>
-  <object x="1600" y="168" width="40" height="232"/>
-  <object x="100" y="644" width="1048" height="112"/>
-  <object x="1600" y="620" width="752" height="216"/>
-  <object x="2104" y="100" width="496" height="736"/>
-  <object x="1080" y="236" width="160" height="120"/>
-  <object x="1080" y="444" width="160" height="912"/>
-  <object x="3600" y="140" width="204" height="1284"/>
-  <object x="2596" y="760" width="720" height="84"/>
-  <object x="1600" y="480" width="42" height="716"/>
-  <object x="1522" y="244" width="36" height="154"/>
-  <object x="1523" y="481" width="36" height="716"/>
-  <object x="1545" y="1149" width="69" height="49"/>
-  <object x="1540" y="333" width="77" height="65"/>
-  <object x="1548" y="483" width="69" height="52"/>
-  <object x="2842" y="1282" width="778" height="268"/>
-  <object x="2696" y="2860" width="1048" height="124"/>
- </objectgroup>
- <objectgroup name="objects" width="100" height="100">
-  <object name="TV" x="549" y="255" width="115" height="48">
-   <properties>
-    <property name="angle" value="0"/>
-   </properties>
-  </object>
-  <object name="HealthPotion" x="2007" y="545" width="53" height="51"/>
-  <object name="Transmitter_pickup" x="2000" y="297" width="89" height="80"/>
-  <object name="Station" x="1254" y="1169" width="112" height="100"/>
-  <object name="Computer" x="1750" y="1672" width="160" height="120"/>
-  <object name="Computer" x="1950" y="1672" width="160" height="120"/>
-  <object name="Computer" x="2168" y="1676" width="160" height="120"/>
-  <object name="Computer" x="2368" y="1676" width="160" height="120"/>
-  <object name="Computer" x="1983" y="1896" width="160" height="120"/>
-  <object name="Computer" x="2295" y="2074" width="160" height="120"/>
-  <object name="Computer" x="2063" y="2082" width="160" height="120"/>
-  <object name="Computer" x="1785" y="2080" width="160" height="120"/>
-  <object name="Computer" x="2537" y="2376" width="160" height="120"/>
-  <object name="Computer" x="2519" y="2152" width="160" height="120"/>
-  <object name="Computer" x="2203" y="2320" width="160" height="120"/>
-  <object name="Computer" x="2344" y="2584" width="160" height="120"/>
-  <object name="Box" x="1603" y="443" width="33" height="35">
-   <properties>
-    <property name="controller" value="enemy"/>
-   </properties>
-  </object>
-  <object name="Box" x="1604" y="405" width="33" height="35">
-   <properties>
-    <property name="controller" value="enemy"/>
-   </properties>
-  </object>
-  <object name="Box" x="1564" y="443" width="33" height="35">
-   <properties>
-    <property name="controller" value="enemy"/>
-   </properties>
-  </object>
-  <object name="Box" x="1521" y="406" width="33" height="35">
-   <properties>
-    <property name="controller" value="enemy"/>
-   </properties>
-  </object>
-  <object name="Box" x="1523" y="444" width="33" height="35">
-   <properties>
-    <property name="controller" value="enemy"/>
-   </properties>
-  </object>
-  <object name="Box" x="1563" y="401" width="33" height="35">
-   <properties>
-    <property name="controller" value="enemy"/>
-   </properties>
-  </object>
-  <object name="Ladybug" x="1387" y="1008" width="54" height="59">
-   <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="hallway"/>
-   </properties>
-  </object>
-  <object name="BlueMech" x="2875" y="1814" width="160" height="118">
-   <properties>
-    <property name="controller" value="enemy"/>
-    <property name="drop" value="Transmitter"/>
-    <property name="id" value="mech1"/>
-    <property name="phrase" value="boss"/>
-   </properties>
-  </object>
-  <object name="BlueMech" x="2537" y="1841" width="160" height="118">
-   <properties>
-    <property name="controller" value="enemy"/>
-    <property name="id" value="mech1"/>
-    <property name="phrase" value="boss"/>
-   </properties>
-  </object>
-  <object name="Ladybug" x="1290" y="1018" width="54" height="59">
-   <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="hallway"/>
-   </properties>
-  </object>
-  <object name="Bee" x="1407" y="1137" width="35" height="31">
-   <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="hallway"/>
-   </properties>
-  </object>
-  <object name="Bee" x="1335" y="1121" width="35" height="31">
-   <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="hallway"/>
-   </properties>
-  </object>
-  <object name="Bee" x="1451" y="1101" width="35" height="31">
-   <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="hallway"/>
-   </properties>
-  </object>
-  <object name="Bee" x="1388" y="1086" width="35" height="31">
-   <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="hallway"/>
-   </properties>
-  </object>
-  <object name="Dragonfly" x="2705" y="904" width="80" height="79">
-   <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="room"/>
-   </properties>
-  </object>
-  <object name="Dragonfly" x="2804" y="1140" width="80" height="79">
-   <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="room"/>
-   </properties>
-  </object>
-  <object name="Dragonfly" x="2825" y="1011" width="80" height="79">
-   <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="room"/>
-   </properties>
-  </object>
-  <object name="Ladybug" x="2386" y="1117" width="54" height="59">
-   <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="room"/>
-   </properties>
-  </object>
-  <object name="Ladybug" x="2295" y="968" width="54" height="59">
-   <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="room"/>
-   </properties>
-  </object>
-  <object name="Ladybug" x="2475" y="1004" width="54" height="59">
-   <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="room"/>
-   </properties>
-  </object>
-  <object name="Gate" x="2632" y="2964" width="208" height="172">
-   <properties>
-    <property name="angle" value="0"/>
-    <property name="controller" value="enemy"/>
-   </properties>
-  </object>
- </objectgroup>
 </map>

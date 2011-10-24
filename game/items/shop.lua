@@ -2,20 +2,22 @@
 Shop=InventoryBase:subclass('Shop')
 
 function Shop:purchase(item)
-	assert(false)
+	if not item.value then
+		return 0
+	end
+	self:addItem(item)
+	return item.value
 end
 
 function Shop:sell(item)
 	self:removeItem(item.name,1)
-	
 end
 
 function Shop:interactItem(item,condition)
-	print (item)
 	if item then
 		if condition == 'shop' then
 			assert(self.buyerinventory)
-			if self.buyerinventory:purchase(item) then
+			if self.buyerinventory:purchase(item.class(),item.value) then
 				self:sell(item)
 			end
 		end
@@ -41,28 +43,40 @@ function ShopInventory:initialize(origin)
 	self.items=origin.items
 	self.unit=origin.unit
 	self.equipments=origin.equipments
+	self.origin = origin
+	self.money = self.origin.money or 0
 end
-function ShopInventory:purchase(item)
-	print (item.name)
+function ShopInventory:purchase(item,price)
 	if price then
 		-- determine
+		if self.origin:spend(price) then
+			self.origin:addItem(item,1)
+			self.money = self.origin.money
+			return true
+		else
+			return false
+		end
 	end
-	self:addItem(item)
+	self.origin:addItem(item)
+	self.updateInvUI()
 	return true
 end
 
-function ShopInventory:sell(item)
-	item:unequip(self.unit)
-	self.equipments[item.type]=nil
+function ShopInventory:sell(item,price)
+	self.origin:removeItem(item.name)
+	self.origin:gain(price)
+	self.money = self.origin.money
 	self.updateInvUI()
 end
 
 function ShopInventory:interactItem(item,condition)
-	print 'SHOP INTERACTION'
 	if item then
 		if condition == 'inventory' then
 			assert(self.shop)
-			self.shop:purchase(item)
+			local m = self.shop:purchase(item)
+			if m>0 then
+				self:sell(item,m)
+			end
 		end
 	end
 end

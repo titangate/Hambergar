@@ -52,7 +52,6 @@ function goo.list:addItem(item,key)
 	self.items[key]=item
 	item:setPos(item.x,self.h)
 	self:setSize(self.w,self.h + item.h + self.style.vertSpacing)
-	print (self.h)
 end
 function goo.list:enterHover()
 end

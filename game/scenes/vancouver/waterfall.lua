@@ -1,21 +1,19 @@
- require 'scenes.vancouver.vancouver'
-local vancouver = VancouverMap()
-require 'cutscene.cutscene'
-preload('assassin','swift','commonenemies','tibet','vancouver')
 
+--local vancouver = require 'scenes.vancouver.vancouver'
+require 'cutscene.cutscene'
+--preload('assassin','swift','commonenemies','tibet','vancouver')
 
 local Waterfallbg={}
 function Waterfallbg:update(dt)
 end
 
-requireImage('assets/vancouver/waterfall.png','waterfall',vancouverbg)
+requireImage('assets/vancouver/waterfall.png','waterfall')
 function Waterfallbg:draw()
-	love.graphics.draw(vancouverbg.waterfall,0,300,0,2,2,300,150)
+	love.graphics.draw(img.waterfall,0,300,0,2,2,300,150)
 	love.graphics.push()
 	love.graphics.translate(-600,-600)
 	self.m:draw()
 	love.graphics.pop()
---	love.graphics.draw(vancouverbg.mat,0,150,0,1,1,64,64)
 end
 
 Waterfall = Map:subclass('Waterfall')
@@ -28,7 +26,6 @@ function Waterfall:initialize()
 	Waterfallbg.m = m
 	self.background = Waterfallbg
 	self:addUnit(Mat(0,150,60,5))
-	self:addUnit(PotionMaster(0,-150,60,5))
 	self.exitTrigger = Trigger(function(self,event)
 		if event.index == 'exit' then
 			pushsystem(vancouver)
@@ -41,7 +38,6 @@ end
 function Waterfall:destroy()
 	self.exitTrigger:destroy()
 end
-
 
 function Waterfall:opening_load()
 	local leon = Assassin:new(10,10,32,10)
@@ -70,6 +66,7 @@ function Waterfall:opening_load()
 end
 
 function Waterfall:enter_load(character)
+	character = character or GetCharacter()
 	assert(character)
 	character.x,character.y = 0,-200
 	map:addUnit(character)
@@ -79,7 +76,7 @@ function Waterfall:enter_load(character)
 		x2 = 600-screen.halfwidth,
 		y2 = 600-screen.halfheight
 	})
-	sefl:enter_loaded()
+	self:enter_loaded()
 end
 
 function Waterfall:enter_loaded()

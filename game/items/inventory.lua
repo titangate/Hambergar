@@ -11,14 +11,17 @@ function InventoryBase:initialize(unit)
 	-- item is stored as a 2-d array, indexed (itemtype,itemname)
 end
 
-function InventoryBase:addItem(item)
+function InventoryBase:addItem(item,stack)
+	print (item.name,item.stack)
 	local t=item.type
 	local n=item.name
+	local stack = stack or 1
 	self.items[t]=self.items[t] or {}
 	if self.items[t][n] then
-		self.items[t][n].stack = self.items[t][n].stack+1 
+		self.items[t][n].stack = self.items[t][n].stack+stack
 	else
 		self.items[t][n]=item
+		item.stack = stack
 	end
 	self.updateInvUI()
 end
@@ -37,6 +40,7 @@ function InventoryBase:removeItem(itemtype,count)
 	for k,v in pairs(self.items) do
 		if v[itemtype] then
 			local item=v[itemtype]
+			print (item.stack, 'STACK LEFT',count)
 			item.stack = item.stack - count
 			if item.stack==0 then
 				v[itemtype]=nil
@@ -93,6 +97,24 @@ end
 
 Inventory=InventoryBase:subclass('Inventory')
 
+function Inventory:initialize(unit)
+	super.initialize(self,unit)
+	self.money = 0
+end
+
+function Inventory:spend(m)
+	if self.money < m then
+		return false
+	else
+		self.money = self.money - m
+		return true
+	end
+end
+
+function Inventory:gain(m)
+	self.money = self.money + m
+end
+
 function Inventory:equipItem(item)
 	if item.type == 'weapon' and item.char ~= self.unit:className() then
 		return 
@@ -117,7 +139,6 @@ function Inventory:getEquip(itemtype)
 end
 
 function Inventory:interactItem(item,condition)
-	print 'ORIGINAL INTERACTION'
 	if item then
 		if condition == 'inventory' then
 			if item.use then

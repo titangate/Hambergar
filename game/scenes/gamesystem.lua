@@ -73,8 +73,8 @@ function GameSystem:runMap(m,checkpoint)
 	map = m()
 	map:load()
 	if map.loadCheckpoint and checkpoint then
-	map:loadCheckpoint(checkpoint)
-end
+		map:loadCheckpoint(checkpoint)
+	end
 end
 
 function GameSystem:setCheckpoint(m,c,depends)
@@ -218,6 +218,5 @@ function paused:draw()
 	goo:draw()
 end
 
-
-local GameSystem = GameSystem()
-return GameSystem
+local GS = GameSystem()
+return GS

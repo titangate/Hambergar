@@ -1,4 +1,8 @@
-vancouverbg = {}
+require 'scenes.vancouver.waterfall'
+require 'scenes.vancouver.granvilleisland'
+require 'scenes.vancouver.armory'
+preload('assassin','swift','commonenemies','tibet','vancouver')
+--vancouverbg = {}
 
 VancouverMap = Object:subclass('VancouverMap')
 
@@ -14,9 +18,50 @@ cities = {vancouver = {
 }
 }
 
+local place = {
+	waterfall = {
+		loc = {
+			x = 200,
+			y = 300,
+		},
+		map = Waterfall,
+	},
+	granvilleisland = {
+		loc = {
+			x = 400,
+			y = 300,
+		},
+		map = GranvilleIsland,
+	},
+	
+	armory = {
+		loc = {
+			x = 600,
+			y = 300,
+		},
+		map = Armory,
+	}
+}
+
 function VancouverMap:initialize()
 	self.anim = {}
-	
+	self.container = goo.object()
+	self.flags = {}
+	for k,p in pairs(place) do
+		local f = goo.flag(self.container)
+		f:setPos(p.loc.x,p.loc.y)
+		f:setSize(100,40)
+		f:setText(string.upper(k))
+		table.insert(self.flags,f)
+		f.onClick = function(button)
+			map:destroy()
+			map = p.map()
+			map:enter_load()
+			self:zoomInCity('vancouver')
+			self.closetime = 1
+		end
+	end
+	self.container:setVisible(false)
 end
 
 function VancouverMap:zoomOutCity(city)
@@ -26,6 +71,25 @@ function VancouverMap:zoomOutCity(city)
 	Blureffect.blur('motion',
 	{x = screen.halfwidth,
 	y = screen.halfheight},0,2)
+	
+	table.insert(self.anim,{
+		time = 10,
+		dt = 0,
+		x = 512,
+		y = 300,
+		ox = 256,
+		oy = 150,
+		sx = 4,
+		sy = 4,
+		alpha = 0,
+		delay = 1,
+		transform = {
+			sx = {vf=2,vi=4},
+			sy = {vf=2,vi=4},
+			alpha = {vf=255,vi=0}
+		},
+		img = cities[city].img[2]
+	})
 	table.insert(self.anim,{
 		time = 5,
 		dt = 0,
@@ -46,30 +110,19 @@ function VancouverMap:zoomOutCity(city)
 		},
 	})
 	
-	table.insert(self.anim,{
-		time = 10,
-		dt = 0,
-		x = 512,
-		y = 300,
-		ox = 256,
-		oy = 150,
-		sx = 4,
-		sy = 4,
-		alpha = 0,
-		delay = 1,
-		transform = {
-			sx = {vf=2,vi=4},
-			sy = {vf=2,vi=4},
-			alpha = {vf=255,vi=0}
-		},
-		img = cities[city].img[2]
-	})
+	self.container:setVisible(true)
+	for i,v in ipairs(self.flags) do
+		anim:easy(v,'opacity',0,255,2)
+	end
 end
 
 function VancouverMap:zoomInCity(city)
+	map.disableBlur = true
 	assert(cities[city])
 	local c = cities[city]
-	
+	Blureffect.blur('motion',
+	{x = screen.halfwidth,
+	y = screen.halfheight},0,2)
 	table.insert(self.anim,{
 		time = 10,
 		dt = 0,
@@ -77,54 +130,38 @@ function VancouverMap:zoomInCity(city)
 		y = 300,
 		ox = 256,
 		oy = 150,
-		delay = 10,
-		sx = 2,
-		sy = 2,
-		alpha = 155,
+		sx = 1,
+		sy = 1,
+		delay = 1,
+		alpha = 0,
 		transform = {
-			sx = {vi=2,vf=4},
-			sy = {vi=2,vf=4},
-			alpha = {vi=155,vf=0}
-		},
-		img = cities[city].img[2]
-	})
-	table.insert(self.anim,{
-		time = 10,
-		dt = 0,
-		x = 512,
-		y = 300,
-		ox = 256,
-		oy = 150,
-		sx = 2,
-		sy = 2,
-		delay = 5,
-		alpha = 155,
-		transform = {
-			sx = {vi=2,vf=4},
-			sy = {vi=2,vf=4},
-			alpha = {vi=155,vf=0}
-		},
-		img = cities[city].img[1]
-	})
-	table.insert(self.anim,{
-		time = 10,
-		dt = 0,
-		x = 512,
-		y = 300,
-		ox = 256,
-		oy = 150,
-		sx = 2,
-		sy = 2,
-		delay = 0,
-		transform = {
-			sx = {vi=2,vf=15},
-			sy = {vi=2,vf=15},
-			alpha = {vi=255,vf=125},
+			sx = {vf=1,vi=0.001},
+			sy = {vf=1,vi=0.001},
+			alpha = {vf=255,vi=0},
 			ox = {vi=256,vf=512*c.loc.x},
 			oy = {vi=150,vf=300*c.loc.y},
 		},
-		img = VancouverMap
 	})
+	
+	table.insert(self.anim,{
+		time = 5,
+		dt = 0,
+		x = 512,
+		y = 300,
+		ox = 256,
+		oy = 150,
+		sx = 2,
+		sy = 2,
+		alpha = 0,
+		delay = 0,
+		transform = {
+			sx = {vf=4,vi=2},
+			sy = {vf=4,vi=2},
+			alpha = {vf=0,vi=255}
+		},
+		img = cities[city].img[2]
+	})
+	self.container:setVisible(false)
 end
 
 function quadInOut( t, b, c, d )
@@ -138,6 +175,14 @@ function linear(t,b,c,d)
 end
 
 function VancouverMap:update(dt)
+	if self.closetime then
+		self.closetime = self.closetime - dt
+		if self.closetime <=0 then
+			self.closetime = nil
+			popsystem()
+			map.camera.sx,map.camera.sy = 1,1
+		end
+	end
 	Blureffect.update(dt)
 	dt = dt * 10
 	for k,v in ipairs(self.anim) do
@@ -177,5 +222,9 @@ function VancouverMap:draw()
 			map:draw()
 		end
 	end
+	goo:draw()
 	Blureffect.finish()
 end
+
+vancouver = VancouverMap()
+--return vancouvermap

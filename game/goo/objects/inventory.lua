@@ -8,6 +8,12 @@ function goo.inventory:initialize(parent)
 	-- tab button
 	self.tabs = {}
 	self.currenttab = 'all'
+	self.text = goo.imagelabel(self)
+	self.text:setPos(0,500)
+	self.text.textcolor={255,255,255}
+	self.text:setFont(fonts.midfont)
+	self.text:setSize(100,10)
+	self.text:setAlignMode('center')
 end
 
 function goo.inventory:setItemtype(itemtype)
@@ -41,6 +47,9 @@ function goo.inventory:switchTab(tab)
 	end
 	self.invlist.list:setPos(0,0)
 	self.currenttab = tab
+	if self.inv.money then
+		self.text:setText('MONEY '..self.inv.money)
+	end
 end
 
 return goo.inventory

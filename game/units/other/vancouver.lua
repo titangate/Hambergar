@@ -36,10 +36,32 @@ function PotionMaster:initialize(...)
 end
 
 local potion = require 'scenes.vancouver.potion'
+requireImage('assets/vancouver/tom.png','tom')
 function PotionMaster:interact(unit)
 	potion(self)
 end
 
 function PotionMaster:draw()
-	love.graphics.draw(img.mat,self.x,self.y,0,1,1,64,64)
+	love.graphics.draw(img.tom,self.x,self.y,0,2,2,6,7)
+end
+
+local armory = require 'scenes.vancouver.armory'
+Brandon = Unit:subclass'Brandon'
+function Brandon:initialize(x,y)
+	super.initialize(self,x,y,16,10)
+	self.controller = 'player'
+	self.inventory = Shop(self)
+	local inv = self.inventory
+	inv:addItem(FiveSlash())
+	inv:addItem(PeacockFeather:new())
+	inv:addItem(BigHealthPotion:new())
+end
+
+requireImage('assets/vancouver/brandon.png','brandon')
+function Brandon:interact(unit)
+	armory(self)
+end
+
+function Brandon:draw()
+	love.graphics.draw(img.brandon,self.x,self.y,0,2,2,6,7)
 end

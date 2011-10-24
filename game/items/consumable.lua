@@ -91,4 +91,32 @@ function BigHealthPotion:initialize(x,y)
 	super.initialize(self,x,y)
 	self.name = "BIG HEALTH POTION"
 	self.hpregen = 20
+	self.value = 10
 end
+--[[
+Coin = Item:subclass'Coin'
+function Coin:initialize(x,y)
+	super.initialize(self,'consumable',x,y)
+	self.name = 'Coin'
+	self.stack = 1
+	self.maxstack = 1000000
+end
+
+
+function Coin:getPanelData()
+	return {
+		title = self.name,
+		type = 'Money',
+		attributes = {
+			{text="Just coins, that's all."},
+		}
+	}
+end
+
+function Coin:update(dt)
+end
+
+function Coin:draw(x,y)
+	if not x then x,y = self.body:getPosition() end
+	love.graphics.draw(img.healthpotion,x,y,0,1,1,24,24)
+end]]

@@ -1,5 +1,5 @@
 local Blureffect = {dt=0,time=0,on=false}
-local blurbuffer = {}
+blurbuffer = {}
 for i=1,5 do
 	table.insert(blurbuffer,love.graphics.newFramebuffer())
 end

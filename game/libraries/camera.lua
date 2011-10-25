@@ -35,7 +35,7 @@ end
 
 function Camera:apply(z)
 	love.graphics.push()
---	love.graphics.translate(self.x+playable.halfwidth,self.y+playable.halfheight)	
+--	love.graphics.translate(self.x+playable.halfwidth,self.y+playable.halfheight)
 	love.graphics.translate(self.x*self.sx,self.y*self.sy)
 	love.graphics.scale(self.sx,self.sy)
 	love.graphics.rotate(self.r)
@@ -43,6 +43,7 @@ function Camera:apply(z)
 	for k,v in pairs(self.transformations) do
 		v:apply()
 	end
+--	print (self.x,self.y)
 --	love.graphics.translate(self.ox-playable.halfwidth,self.oy-playable.halfheight)
 end
 
@@ -64,9 +65,9 @@ function Camera:untransform(x,y)
 end
 
 function Camera:revert()
-	for k=#self.transformations,1,-1 do
-		self.transformations[k]:revert()
-	end
+--	for k=#self.transformations,1,-1 do
+--		self.transformations[k]:revert()
+--	end
 	love.graphics.pop()
 end
 

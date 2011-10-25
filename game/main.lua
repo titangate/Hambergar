@@ -46,6 +46,7 @@ require 'libraries.TEsound'
 goo=require "goo.goo"
 anim = require "anim.anim"
 Blureffect = require 'libraries.blur'
+Lighteffect = require 'libraries.vl'
 require 'units.init'
 
 local gametimers = {}

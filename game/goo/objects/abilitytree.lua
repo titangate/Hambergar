@@ -4,6 +4,8 @@ function goo.learnbutton:initialize(parent)
 	super.initialize(self,parent)
 end
 function goo.learnbutton:setSkill(skill,face)
+	assert(skill)
+	assert(face)
 	self.skill = skill
 	self.face = face
 	self.drawscale = self.h/face:getHeight()

@@ -1,6 +1,6 @@
 --require 'libraries.scene'
 --require 'libraries.unit'
-
+preload('electrician','commonenemies','waterloo')
 local loader = require("AdvTiledLoader/Loader")
 loader.path = "maps/"
 local m = loader.load("waterloo outside.tmx")
@@ -106,11 +106,19 @@ function Waterloo2:opening_load()
 	lawrence.controller = 'player'
 	SetCharacter(lawrence)
 	map:addUnit(lawrence)
-	map.camera = FollowerCamera:new(lawrence)
-	GetGameSystem():loadCharacter(lawrence)
+	map.camera = FollowerCamera:new(lawrence,{
+		x1 = -2000+screen.halfwidth,
+		y1 = -2000+screen.halfheight,
+		x2 = 2000-screen.halfwidth,
+		y2 = 2000-screen.halfheight
+	})
+--	map.camera.sx,map.camera.sy = 0.1,0.1
+--	GetGameSystem():loadCharacter(lawrence)
 	GetGameSystem().bottompanel:fillPanel(GetCharacter():getSkillpanelData())
 	GetGameSystem().bottompanel:setPos(screen.halfwidth-512,screen.height - 140)
 	self:opening_loaded()
+	
+	print ('character spawn at',x,y)
 end
 
 function Waterloo2:opening_enter()
@@ -121,6 +129,7 @@ function Waterloo2:opening_enter()
 end
 
 function Waterloo2:opening_loaded()
+	
 	local intro = CutSceneSequence:new()
 	intro:push(FadeOut:new('fadein',nil,{0,0,0},2),0)
 	self:playCutscene(intro)
@@ -177,8 +186,13 @@ function Waterloo2:boss_load()
 	lawrence.controller = 'player'
 	SetCharacter(lawrence)
 	map:addUnit(lawrence)
-	map.camera = FollowerCamera:new(lawrence)
-	GetGameSystem():loadCharacter(lawrence)
+	map.camera = FollowerCamera:new(lawrence,{
+		x1 = -2000+screen.halfwidth,
+		y1 = -2000+screen.halfheight,
+		x2 = 2000-screen.halfwidth,
+		y2 = 2000-screen.halfheight
+	})
+--	GetGameSystem():loadCharacter(lawrence)
 	GetGameSystem().bottompanel:fillPanel(GetCharacter():getSkillpanelData())
 	GetGameSystem().bottompanel:setPos(screen.halfwidth-512,screen.height - 140)
 	self:boss_loaded()

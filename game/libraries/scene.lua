@@ -201,6 +201,7 @@ function Map:update(dt)
 	if not self.disableBlur then
 		Blureffect.update(dt)
 	end
+	
 end
 
 function Map:draw()
@@ -209,16 +210,22 @@ function Map:draw()
 	end
 	if self.camera then self.camera:apply() end
 	if self.background then self.background:draw() end
+	
+	Lighteffect.begin(self.units)
+	Lighteffect.finish()
+--	if self.camera then self.camera:apply() end
 	for unit,v in pairs(self.units) do
 		if unit.draw then unit:draw() end
 	end
 	for unit,v in pairs(self.updatable) do
 		if unit.draw then unit:draw() end
 	end
+	
+--	if self.camera then self.camera:revert() end
 	local x,y = unpack(GetOrderDirection())
 	local px,py = unpack(GetOrderPoint())
 	love.graphics.draw(img.cursor,px,py,math.atan2(y,x),1,1,16,16)
-	if self.camera then map.camera:revert() end
+	if self.camera then self.camera:revert() end
 	if not self.disableBlur then
 		Blureffect.finish()
 	end
@@ -229,6 +236,7 @@ function Map:draw()
 		x,y = x+screen.halfwidth,y+screen.halfheight
 		love.graphics.circle('line',x,y,16,30) -- TODO: make a better lock on Image
 	end
+	
 end
 
 function Map:findUnitsInArea(area)

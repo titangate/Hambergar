@@ -36,7 +36,7 @@ function goo.conversationpanel:draw()
 	if self.fold<1 then
 		love.graphics.setScissor(0+self.x,0+self.y,self.w,self.h*self.fold)
 		love.graphics.draw(img.conversationbg)
-		love.graphics.draw(img.gridfilter,0,self.h*self.fold-16,0,100,1,16,16)
+--		love.graphics.draw(img.gridfilter,0,self.h*self.fold-16,0,100,1,16,16)
 	else
 		love.graphics.setScissor(0+self.x,0+self.y,self.w,self.h)
 		love.graphics.draw(img.conversationbg)	

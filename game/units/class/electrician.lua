@@ -1,4 +1,13 @@
 
+local GOO_SKINPATH = 'goo/skins/electrician/'
+requireImage(GOO_SKINPATH..'attritubebackground.png','attritubebackground')
+requireImage(GOO_SKINPATH..'conversationbg.png','conversationbg')
+
+
+requireImage(GOO_SKINPATH .. 'battery.png','batteryimg')
+requireImage(GOO_SKINPATH .. 'cpu.png','cpu')
+
+requireImage(GOO_SKINPATH..'electricianlevel.png','levelimg')
 animation.electrician = Animation:new(love.graphics.newImage('assets/electrician/electrician.png'),200,200,0.08,1,1,12,100)
 animation.weaponbolt = Animation:new(love.graphics.newImage('assets/electrician/weaponbolt.png'),200,200,0.08,1,1,12,100)
 animation.weaponsword = Animation:new(love.graphics.newImage('assets/electrician/weaponsword.png'),200,200,0.08,1,1,27,100,15,0)

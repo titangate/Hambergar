@@ -288,6 +288,17 @@ function Unit:update(dt)
 	self.mp = math.min(self.mp + self.MPRegen*dt,self.maxmp)
 end
 
+function Unit:drawLight(x,y)
+	if self.rad then
+		local nx,ny = normalize(self.x-x,self.y-y)
+		local x1,y1 = ny*self.rad/2,-nx*self.rad/2
+		local x2,y2 = -x1,-y1
+		x1,y1 = x1+self.x,y1+self.y
+		x2,y2 = x2+self.x,y2+self.y
+		love.graphics.polygon('fill',x1,y1,x2,y2,(x2-x)*1000,(y2-y)*1000,(x1-x)*1000,(y1-y)*1000)
+	end
+end
+
 function Unit:stop()
 	self.state = 'slide'
 	self:switchChannelSkill(nil)

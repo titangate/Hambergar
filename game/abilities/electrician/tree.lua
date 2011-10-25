@@ -9,6 +9,7 @@ for i,v in ipairs(files) do
 		end
 	end
 end
+
 ElectricianAbiTree = Object:subclass('ElectricianAbiTree')
 local pcb=require 'abilities.electrician.pcb'
 local scale = 15

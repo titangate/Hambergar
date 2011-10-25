@@ -11,15 +11,13 @@
 -- use goo.skin to point to the current skin directory.
 
 local style = {}
-requireImage( GOO_SKINPATH .. 'attritubebackground.png','attritubebackground')
+--[[
+img.attritubebackground = love.graphics.newImage(GOO_SKINPATH .. 'attritubebackground.png')
+img.conversationbg = love.graphics.newImage(GOO_SKINPATH .. 'conversationbg.png')
+img.batteryimg = love.graphics.newImage(GOO_SKINPATH .. 'batteryimg.png')
+img.cpu = love.graphics.newImage(GOO_SKINPATH .. 'cpu.png')
+img.levelimg = love.graphics.newImage(GOO_SKINPATH .. 'electricianlevel.png')]]
 
-requireImage(GOO_SKINPATH..'conversationbg.png','conversationbg')
-
-
-requireImage(GOO_SKINPATH .. 'battery.png','batteryimg')
-requireImage(GOO_SKINPATH .. 'cpu.png','cpu')
-
-requireImage(GOO_SKINPATH..'electricianlevel.png','levelimg')
 local levelquad = love.graphics.newQuad(0,0,24,24,48,24)
 function drawSkillLevel(x,y,current,max)
 	levelquad:setViewport(0,0,24,24)

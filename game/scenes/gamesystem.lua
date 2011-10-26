@@ -24,6 +24,7 @@ function GameSystem:initialize()
 end
 
 function GameSystem:setCharacter(c)
+	self:save(GetCharacter(),GetCharacter():className())
 	self.character = c
 	goo:setSkinAllObjects(c:getSkin())
 	GetGameSystem().bottompanel:fillPanel(GetCharacter():getSkillpanelData())

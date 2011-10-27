@@ -67,7 +67,7 @@ b_grid.onClick = function( self, button )
 	loadingscreen.finished = function ()
 		SetGameSystem(gs)
 		GetGameSystem():load()
-		GetGameSystem():runMap(Waterloo2,'opening')
+		GetGameSystem():runMap(Waterloo2,'boss')
 		pushsystem(GetGameSystem())
 	end
 end
@@ -106,7 +106,7 @@ b_option.onClick = function(self,button)
 	option = love.filesystem.load('mainmenu/option.lua')()
 	option:birth()
 end
-	height = height + 50
+height = height + 50
 	--[[
 local b_editor = goo.menuitem:new ( mainmenu)
 b_editor:setPos(10,height)

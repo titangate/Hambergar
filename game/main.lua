@@ -43,6 +43,7 @@ require "items.init"
 require "libraries.conversation"
 --require "editor.init"
 require 'libraries.TEsound'
+require 'libraries.stealth'
 goo=require "goo.goo"
 anim = require "anim.anim"
 Blureffect = require 'libraries.blur'

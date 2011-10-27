@@ -111,6 +111,13 @@ function Unit:setAngle(angle)
 	end
 end
 
+
+function Unit:getAngle()
+	if self.body and not self.preremoved then
+		return self.body:getAngle()
+	end
+end
+
 function Unit:kill(killer)
 	if self.isDead then
 		return
@@ -452,22 +459,23 @@ function Character:getManager()
 end
 
 Probe = Object:subclass('Probe')
-function Probe:initialize(unit,start,direction)
+function Probe:initialize(unit,start,direction,r)
 	self.unit = unit
 	self.start = start
 	self.direction = direction
 	self.controller = 'playerMissile'
 	self.life = 0.3
+	self.r = r or 64
 end
 
 function Probe:createBody(world)
 	local x,y = self.start.x,self.start.y
-	self.body = love.physics.newBody(world,x,y,1,1)
-	self.shape = love.physics.newCircleShape(self.body,0,0,64)
+	self.body = love.physics.newBody(world,x,y,0.0001,1)
+	self.shape = love.physics.newCircleShape(self.body,0,0,self.r)
 	self.body:setBullet(true)
 	self.shape:setSensor(true)
 	self.shape:setCategory(cc.terrain)
-	self.shape:setMask(cc.terrain,cc.playermissile,cc.enemymissile)
+	self.shape:setMask(cc.playermissile,cc.enemymissile,cc.player)
 	--[[
 	if self.controller then
 		local category,masks = unpack(typeinfo[self.controller])

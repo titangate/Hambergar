@@ -41,8 +41,8 @@ function GameSystem:save(thing,label)
 end
 
 function GameSystem:saveAll()
-	love.filesystem.write('checkpoint',table.save(map.savedata))
-	self:save(GetCharacter(),GetCharacter():className())
+--	love.filesystem.write('checkpoint',table.save(map.savedata))
+--	self:save(GetCharacter(),GetCharacter():className())
 end
 
 function GameSystem:load()

@@ -1,6 +1,5 @@
 --require 'libraries.scene'
 --require 'libraries.unit'
-require 'scenes.tibet.tibetgamesystem'
 preload('assassin','commonenemies','tibet')
 Tibet1 = Map:subclass('Tibet1')
 function Tibet1:initialize(w,h)

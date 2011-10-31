@@ -1,7 +1,44 @@
+require 'libraries.pathfinding.pathmap'
+aiconstant = {
+	suspicious = 2,
+	alarm = 20,
+	alarmtime = 5,
+}
+
+StealthSystem = {
+	units = {}
+}
+
+function StealthSystem.getAlertIndex(unit)
+	if unit == GetCharacter() then
+		local a
+		print (unit.region)
+		if unit.outfit and unit.region then
+			
+			a = unit.region.alert[unit.outfit.name]
+		end
+		return a or 0.5
+	end
+end
+
+function StealthSystem.getPatrolArea(lastseen)
+	local connected = {}
+	for v,_ in pairs(map.map[lastseen.region]) do
+		table.insert(connected,v)
+	end
+	return connected[math.random(#connected)]
+end
+
 DProbe = Probe:subclass'DProbe'
+function DProbe:initialize(...)
+	super.initialize(self,...)
+	self.life = 0.3
+end
+
 function DProbe:add(b,coll)
+	if self.offline then return end
 	self.unit:hit(b)
-	self.add = nil
+--	self.offline = true
 end
 
 function DProbe:draw()
@@ -14,23 +51,104 @@ function DProbe:createBody(world)
 	self.body = love.physics.newBody(world,x,y,0.0001,1)
 	self.shape = love.physics.newCircleShape(self.body,0,0,self.r)
 	self.body:setBullet(true)
-	self.shape:setCategory(cc.enemymissile)
-	self.shape:setMask(cc.playermissile,cc.enemymissile,cc.enemy)
+	self.shape:setCategory(15)
+	self.shape:setMask(cc.playermissile,cc.enemymissile,cc.enemy,15)
 	x,y = unpack(self.direction)
 	x,y = normalize(x,y)
 	self.body:setLinearVelocity(x*2000,y*2000)
 	self.shape:setData(self)
 end
 
-StealthNormal = Object:subclass'StealthNormal'
-function StealthNormal:initialize(unit,target)
+OrderMoveToClear = AtomicGoal:subclass('OrderMoveToClear')
+function OrderMoveToClear:initialize(owner,unit,range)
+	assert(unit)
+	self.start = owner
 	self.unit = unit
-	self.target = target
-	self.spotvalue = 0
+	self.range = range
+	self.time = 0
+	self.clear = false
+	super.initialize(self,x,y)
+end
+
+function OrderMoveToClear:process(dt,owner)
+	if self.start.ai.alertlevel>aiconstant.alarmtime-0.2 then
+		return STATE_SUCCESS,dt
+	end
+	owner.direction = map:getDirection(owner,self.unit)
+	owner.state = 'move'
+--	owner:setAngle(math.atan2(dy,dx))
+	return STATE_ACTIVE,dt
+end
+
+OrderSearch = AtomicGoal:subclass'OrderSearch'
+function OrderSearch:initialize(owner,region)
+--	assert(region)
+	self.start = owner
+--	self.target = target
+	self.region = region
+--	self:reset()
+	super.initialize(self)
+end
+
+function OrderSearch:revert()
+	local connected = {}
+	local r = map.basegraph[self.region]
+	self.patrolregion = r[math.random(#r)]
+	print(self.patrolregion)
+	self.target = {
+		x = self.patrolregion.x,
+		y = self.patrolregion.y,
+		region = self.patrolregion
+	}
+end
+
+function OrderSearch:process(dt,owner)
+	if getdistance(owner,self.target)<100 then
+		return STATE_SUCCESS,dt
+	end
+	local origin = owner
+	owner.direction = map:getDirection(owner,self.target)
+	owner.state = 'move'
+	return STATE_ACTIVE,dt
+end
+
+b_StealthMeter = Buff:subclass'b_StealthMeter'
+function b_StealthMeter:initialize(...)
+	super.initialize(self,...)
+end
+
+function b_StealthMeter:draw(unit)
+	local v = unit.ai.alertlevel
+	local color,maxlevel
+	if unit.ai:getCurrentState() and unit.ai:getCurrentState().class==StealthSuspicious then
+		color = {0,255,0}
+		maxlevel = aiconstant.alarm
+	elseif unit.ai:getCurrentState() and unit.ai:getCurrentState().class==StealthAlarm then
+		maxlevel = aiconstant.alarmtime
+		color = {255,0,0}
+	else
+		maxlevel = aiconstant.suspicious
+		color = {0,0,255}
+	end
+	drawAwarenessLevel(unit.x,unit.y,v,maxlevel,color)
+end
+
+StealthNormal = StatefulObject:subclass'StealthNormal'
+function StealthNormal:initialize(t2,t,attackskill,range)
+	super.initialize(self)
+	self.unit = t2
+	self.target = t
 	self.alertlevel = 0
 	self.visionrange = 1.1
 	self.dt = 0
 	self.detectrate = 0.05
+	self.subai = Sequence:new()
+	self.subai:push(OrderMoveToClear:new(t2,t,range))
+	self.subai:push(OrderStop:new())
+	self.subai:push(OrderChannelSkill:new(attackskill,function()return {normalize(t.x-t2.x,t.y-t2.y)},t2,attackskill end))
+	self.subai:push(OrderWaitUntil:new(function()t2:setAngle(math.atan2(t.y-t2.y,t.x-t2.x))return self.alertlevel<aiconstant.alarmtime-0.2 or t.invisible end))
+	self.subai:push(OrderStop:new())
+	self.subai.loop = true
 end
 
 function StealthNormal:fireDetector()
@@ -43,17 +161,113 @@ end
 
 function StealthNormal:hit(unit)
 	if unit == self.target then
-		self.alertlevel = self.alertlevel + 0.1
+		self.alertlevel = self.alertlevel + StealthSystem.getAlertIndex(unit)
+		self.lastseen = {
+			x = unit.x,
+			y = unit.y,
+			region = unit.region,
+		}
 	end
-	print (self.alertlevel)
 end
 
-function StealthNormal:process(dt)
+function StealthNormal:process(dt,owner)
+	if self.paused then return STATE_ACTIVE,dt end
 	self.dt = self.dt + dt
 	if self.dt > self.detectrate then
 		self.dt = self.dt - self.detectrate
 		self:fireDetector()
 	end
-	self.alertlevel = self.alertlevel - dt
-	return STATE_ACTIVE,dt
+	if self.alertlevel >= aiconstant.suspicious then
+		self.alerlevel = self.alertlevel + 15
+		self:gotoState'suspicious'
+	end
+	self.alertlevel = math.max(0,self.alertlevel - dt)
+	if self.patrolai then
+		return self.patrolai:process(dt,owner)
+	else
+		return STATE_ACTIVE,dt
+	end
+end
+
+
+function StealthNormal:pause()
+	self.paused = true
+end
+
+function StealthNormal:resume()
+	self.paused = nil
+end
+
+
+StealthSuspicious = StealthNormal:addState'suspicious'
+function StealthSuspicious:process(dt)
+	self.dt = self.dt + dt
+	if self.dt > self.detectrate then
+		self.dt = self.dt - self.detectrate
+		self:fireDetector()
+	end
+	if self.alertlevel >= aiconstant.alarm then
+		self:gotoState'alarm'
+	end
+	if self.alertlevel <= 0 then
+		self:gotoState()
+	end
+	self.alertlevel = math.max(0,self.alertlevel - dt)
+	return self.suspiciousai:process(dt,self.unit)
+end
+
+function StealthSuspicious:fireDetector()
+	local dx,dy = self.target.x-self.unit.x,self.target.y-self.unit.y
+	local detector = DProbe(self,self.unit,{normalize(dx,dy)},16)
+	map:addUnit(detector)
+end
+
+function StealthSuspicious:enterState()
+	self.suspiciousai = Sequence() -- TODO
+	self.suspiciousai:push(OrderSearch(self.unit,self.target.region))
+	self.suspiciousai:push(OrderStop())
+	self.suspiciousai:revert()
+	self.suspiciousai.loop = true
+end
+
+function StealthSuspicious:hit(unit)
+	if unit == self.target then
+		self.alertlevel = math.max(self.alertlevel,15)
+		self.alertlevel = self.alertlevel + StealthSystem.getAlertIndex(unit)
+		self.lastseen = {
+			x = unit.x,
+			y = unit.y,
+			region = unit.region,
+		}
+	end
+end
+
+StealthAlarm = StealthNormal:addState'alarm'
+function StealthAlarm:hit(unit)
+	if unit == self.target then
+		self.alertlevel = aiconstant.alarmtime
+		StealthSystem.lastseen = unit
+	end
+end
+
+function StealthAlarm:fireDetector()
+	local dx,dy = self.target.x-self.unit.x,self.target.y-self.unit.y
+	local detector = DProbe(self,self.unit,{normalize(dx,dy)},16)
+	map:addUnit(detector)
+end
+
+function StealthAlarm:process(dt)
+	self.dt = self.dt + dt
+	if self.dt > self.detectrate then
+		self.dt = self.dt - self.detectrate
+		self:fireDetector()
+	end
+	self.alertlevel = math.max(0,self.alertlevel - dt)
+	if self.alertlevel <= 0 then
+		self.alertlevel = 15
+		self:gotoState'suspicious'
+		self.unit.state = 'slide'
+		return STATE_ACTIVE,dt
+	end
+	return self.subai:process(dt,self.unit)
 end

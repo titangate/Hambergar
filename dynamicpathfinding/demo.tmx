@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="32" tileheight="32">
+ <objectgroup name="pathmap" width="50" height="50">
+  <object name="3" x="69" y="20" width="238" height="147"/>
+  <object name="4" x="297" y="61" width="337" height="66"/>
+  <object name="5" x="629" y="62" width="370" height="66"/>
+  <object name="1" x="336" y="113" width="260" height="210"/>
+  <object name="2" x="829" y="82" width="244" height="200"/>
+  <object name="6" x="282" y="302" width="392" height="58"/>
+  <object name="7" x="666" y="297" width="352" height="73"/>
+ </objectgroup>
+</map>

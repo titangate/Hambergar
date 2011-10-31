@@ -15,7 +15,7 @@ mainmenu.onClose = function(self)
 	anim:easy( mainmenu, 'xscale', 1, 3, 1, 'quadInOut')
 	anim:easy( mainmenu, 'yscale', 1, 3, 1, 'quadInOut')
 end
---[[
+
 local b_continue = nil
 if love.filesystem.exists('checkpoint') then
 	b_continue = goo.menuitem:new( mainmenu )
@@ -35,7 +35,7 @@ if love.filesystem.exists('checkpoint') then
 	end
 end
 
-height = height + 50]]
+height = height + 50
 local b_startgame = goo.menuitem:new( mainmenu )
 b_startgame:setPos( 10, height )
 b_startgame:setText( 'Start Game' )
@@ -136,10 +136,9 @@ b_test.onClick = function (self,button)
 	test()
 end
 height = height + 50
---[[
-if love.filesystem.exists('lastsave.sav') then
+if love.filesystem.exists('checkpoint') then
 	mainmenu:highlightitem(b_continue)
 else
 	mainmenu:highlightitem(b_startgame)
-end]]
+end
 return mainmenu

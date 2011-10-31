@@ -9,6 +9,7 @@ preloadlist(
 		'abilities.assassin.ultimate',
 		'abilities.assassin.tree',
 		'abilities.assassin.character',
+		'abilities.assassin.stealth',
 	},
 	electrician = {
 		'abilities.electrician.battery',

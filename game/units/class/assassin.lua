@@ -20,6 +20,8 @@ function Assassin:initialize(x,y)
 		invis = Invis:new(self,1),
 		snipe = Snipe:new(self,1),
 		dws = DWS:new(self,0),
+		takedown = Takedown(self,1),
+		changeoutfit = ChangeOutfit(self,1),
 	}
 	self:setWeaponSkill()
 	self.spirit = 10
@@ -76,6 +78,82 @@ function Assassin:draw()
 	end
 	self:drawBuff()
 	love.graphics.setColor(255,255,255,255)
+end
+
+local StealthAssassin = Assassin:addState'stealth'
+
+
+function StealthAssassin:playAnimation(anim,speed,loop)
+	if self.animation[anim] then
+		if #(self.animation[anim]) > 0 then
+			self.anim = self.animation[anim][math.random(#self.animation[anim])]
+		else
+			self.anim = self.animation[anim]
+		end
+		self.anim:reset()
+		self.animspeed = speed
+		self.animloop = loop
+	end
+end
+
+function StealthAssassin:resetAnimation()
+	self.animspeed = 1
+	self.anim = self.animation.stand
+	self.animloop = true
+end
+
+function StealthAssassin:update(dt)
+	Assassin.update(self,dt)
+	local u = GetOrderUnit()
+	if u and u.ai and u.ai.alertlevel == 0 and getdistance(self,u)<100 then
+		self.takingdown = true
+	else
+		self.takingdown = false
+	end
+	if self.animation.move and self.state == 'move' and self.anim == self.animation.stand then
+		self.animation.move:update(dt)
+	elseif self.anim then
+		if self.anim:update(dt*self.animspeed) and not self.animloop then
+			self:resetAnimation()
+		end
+	end
+end
+
+function StealthAssassin:draw()
+	local facing = GetOrderDirection()
+	facing = math.atan2(facing[2],facing[1])
+	if self.outfit then
+		if self.animation.move and self.state == 'move' and self.anim == self.animation.stand then
+			self.animation.move:draw(self.x,self.y,facing)
+		elseif self.anim then
+			self.anim:draw(self.x,self.y,facing)
+		end
+		self:drawBuff()
+	else
+		Assassin.draw(self)
+	end
+end
+
+function StealthAssassin:getSkillpanelData()
+	return {
+		buttons = {
+			{skill = self.skills.dash,hotkey='b',face=character[self.skills.dash.name]},
+			{skill = self.skills.roundaboutshot,hotkey='r',face=character[self.skills.roundaboutshot.name]},
+			{skill = self.skills.stim,hotkey='e',face=character[self.skills.stim.name]},
+			{skill = self.skills.mindripfield,hotkey='f',face=character[self.skills.mindripfield.name]},
+			{skill = self.skills.weaponskill,hotkey='lb',face=character[self.skills.pistol.name]},
+			{skill = self.skills.invis,hotkey='v',face=character[self.skills.invis.name]},
+			{skill = self.skills.snipe,hotkey='g',face=character[self.skills.pistol.name]},
+			{skill = self.skills.takedown,hotkey='z',face=character.takedown},
+			{skill = self.skills.changeoutfit,hotkey='r',face=character.change},
+		}
+	}
+end
+
+function StealthAssassin:enterState()
+	if self==GetCharacter() then
+		SetCharacter(self)
+	end
 end
 
 local DWSAssassin = Assassin:addState('DWS')

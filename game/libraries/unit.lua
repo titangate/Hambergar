@@ -474,7 +474,7 @@ function Probe:createBody(world)
 	self.shape = love.physics.newCircleShape(self.body,0,0,self.r)
 	self.body:setBullet(true)
 	self.shape:setSensor(true)
-	self.shape:setCategory(cc.terrain)
+	self.shape:setCategory(15)
 	self.shape:setMask(cc.playermissile,cc.enemymissile,cc.player)
 	--[[
 	if self.controller then
@@ -495,6 +495,19 @@ function Probe:update(dt)
 		self.offline = true
 		map:removeUnit(self)
 	end
+end
+
+function Probe:preremove()
+	self.shape:setMask(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
+    self.preremoved = true
+end
+function Probe:destroy()
+    if self.preremoved then
+        if self.shape then self.shape:destroy() end
+        if self.body then self.body:destroy() end
+		self.shape = nil
+		self.body = nil
+    end
 end
 
 --[[
@@ -541,7 +554,6 @@ function Character:load(save)
 		self.inventory:load(save.inventory)
 	end
 end
-
 
 function Character:register()
 end

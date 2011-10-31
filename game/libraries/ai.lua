@@ -10,6 +10,12 @@ function AtomicGoal:process(dt,owner)
 	return STATE_FAIL
 end
 
+function AtomicGoal:pause()
+end
+
+function AtomicGoal:resume()
+end
+
 function AtomicGoal:reset()
 end
 
@@ -168,7 +174,7 @@ end
 function Detector:draw()
 	love.graphics.circle('line',self.body:getX(),self.body:getY(),3)
 end
-
+--[[
 OrderMoveToClear = OrderMoveTo:subclass('OrderMoveToClear')
 function OrderMoveToClear:initialize(x,y,owner,unit,range)
 	self.start = owner
@@ -196,7 +202,7 @@ function OrderMoveToClear:process(dt,owner)
 		return STATE_SUCCESS,dt
 	end
 	return super.process(self,dt,owner)
-end
+end]]
 
 Sequence = Object:subclass('Sequence')
 function Sequence:initialize()

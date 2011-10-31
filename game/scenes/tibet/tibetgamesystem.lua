@@ -16,24 +16,24 @@ function tibetbackground:draw()
 	end
 	local x,y = map.camera.x,map.camera.y
 	for j = 1,2 do
-		map.camera:push(Camera:new(0,0,1.2,1.2))
-		map.camera:apply()
+--		map.camera:push(Camera:new(0,0,1.2,1.2))
+		
+		love.graphics.push()
+		love.graphics.scale(1.2)
 		love.graphics.setColor(255,255,255,175)
 		love.graphics.drawq(img.cloud,cloudquad,self.cloudtime,-j*40,0,2,2,4000,4000)
 		love.graphics.setColor(255,255,255,255)	
-		map.camera:revert()
+		love.graphics.pop()
 	end
-	map.camera:clear()
 	for i,v in ipairs(batches) do
 		love.graphics.draw(v,0,0,0,1,1,1000,1000)
 	end
 	for j = 1,2 do
-		map.camera:push(Camera:new(0,0,1.2,1.2))
-		map.camera:apply()
+		love.graphics.push()
+		love.graphics.scale(1.2)
 		love.graphics.setColor(255,255,255,175)
 		love.graphics.drawq(img.cloud,cloudquad,self.cloudtime,-j*40,0,2,2,4000,4000)
 		love.graphics.setColor(255,255,255,255)	
-		map.camera:revert()
+		love.graphics.pop()
 	end	
-	map.camera:clear()
 end

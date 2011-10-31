@@ -27,7 +27,7 @@ function Waterfall:initialize()
 	self.background = Waterfallbg
 	self:addUnit(Mat(0,150,60,5))
 	self.exitTrigger = Trigger(function(self,event)
-		if event.index == 'exit' then
+		if event.index == 'exit' and event.unit == GetCharacter() then
 			pushsystem(vancouver)
 			vancouver:zoomOutCity('vancouver')
 		end

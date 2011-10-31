@@ -224,6 +224,9 @@ function Map:draw()
 --	if self.camera then self.camera:revert() end
 	local x,y = unpack(GetOrderDirection())
 	local px,py = unpack(GetOrderPoint())
+	if StealthSystem.lastseen then
+		love.graphics.circle('fill',StealthSystem.lastseen.x,StealthSystem.lastseen.y,16)
+	end
 	love.graphics.draw(img.cursor,px,py,math.atan2(y,x),1,1,16,16)
 	if self.camera then self.camera:revert() end
 	if not self.disableBlur then
@@ -282,6 +285,7 @@ function Map:loadUnitFromTileObject(obj)
 		end
 	end
 end
+
 function Map:loadTiled(tmx)
 	local w,h=self.w,self.h
 	local loader = require("AdvTiledLoader/Loader")
@@ -311,6 +315,7 @@ function Map:loadTiled(tmx)
 			end
 		end
 	end
+	self.tiled = m
 	return m
 end
 

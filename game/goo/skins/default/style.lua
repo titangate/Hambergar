@@ -21,6 +21,13 @@ function drawSkillLevel(x,y,level,maxlevel)
 	love.graphics.setColor(255,255,255,255)
 end
 
+function drawAwarenessLevel(x,y,level,maxlevel,color)
+	love.graphics.setColor(color)
+	local percent = level/maxlevel
+	love.graphics.rectangle('fill',x,y,percent*50-25,5)
+	love.graphics.setColor(255,255,255,255)
+end
+
 style['goo list'] = {
 	vertSpacing = 5,
 }

@@ -12,7 +12,6 @@ StealthSystem = {
 function StealthSystem.getAlertIndex(unit)
 	if unit == GetCharacter() then
 		local a
-		print (unit.region)
 		if unit.outfit and unit.region then
 			
 			a = unit.region.alert[unit.outfit.name]
@@ -92,9 +91,9 @@ end
 
 function OrderSearch:revert()
 	local connected = {}
-	local r = map.basegraph[self.region]
+	local r = map.regions -- basegraph[self.region]
 	self.patrolregion = r[math.random(#r)]
-	print(self.patrolregion)
+	print(self.patrolregion.name,'is being patrolled')
 	self.target = {
 		x = self.patrolregion.x,
 		y = self.patrolregion.y,
@@ -108,6 +107,7 @@ function OrderSearch:process(dt,owner)
 	end
 	local origin = owner
 	owner.direction = map:getDirection(owner,self.target)
+	print (unpack(owner.direction))
 	owner.state = 'move'
 	return STATE_ACTIVE,dt
 end
@@ -224,10 +224,18 @@ end
 
 function StealthSuspicious:enterState()
 	self.suspiciousai = Sequence() -- TODO
-	self.suspiciousai:push(OrderSearch(self.unit,self.target.region))
-	self.suspiciousai:push(OrderStop())
-	self.suspiciousai:revert()
-	self.suspiciousai.loop = true
+--	self.suspiciousai:push(OrderMoveTo(self.target.x,self.target.y))
+	local patrolai = Sequence()
+	patrolai:push(OrderSearch(self.unit,self.target.region))
+	patrolai:push(OrderStop())
+	patrolai:push(OrderWaitUntil(function()
+		patrolai:revert()
+		return true
+	end))
+	patrolai.loop = true
+	patrolai:revert()
+	self.suspiciousai:push(patrolai)
+--	self.suspiciousai.loop = true
 end
 
 function StealthSuspicious:hit(unit)

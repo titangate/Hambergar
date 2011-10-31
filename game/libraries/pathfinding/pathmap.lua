@@ -36,6 +36,7 @@ function PathMap:insertRegion(r)
 	self.joint[r] = self.joint[r] or {}
 	self.basegraph[r] = self.basegraph[r] or {}
 	self.map[r][r] = 0
+	r.index = #self.regions
 	for i=1,#self.regions do
 		local g = self.regions[i]
 		if intersect(r,g) then
@@ -101,19 +102,19 @@ function PathMap:getPath(i,j)
 end
 
 function PathMap:loadTiled(tmx)
-	
 	local m = super.loadTiled(self,tmx)
 	m.drawObjects=true -- DEBUG LINE
 	local oj = m.objectLayers
 	for k,v in pairs(oj) do
 		if v.name == 'pathmap' then
 			for _,obj in pairs(v.objects) do
+				if obj.name == '' then obj.name= tostring(math.random(100)) end -- TODO
 				local r = {
 					x = obj.x+obj.width/2-self.w/2,
 					y = obj.y+obj.height/2-self.h/2,
 					w = obj.width,
 					h = obj.height,
-					name = obj.name
+					name = obj.name 
 				}
 				r.alert = obj.properties
 				self:insertRegion(r)

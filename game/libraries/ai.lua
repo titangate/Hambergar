@@ -65,7 +65,7 @@ function OrderMoveTowardsRange:process(dt,owner)
 	end
 	owner.direction = {normalize(dx,dy)}
 	owner.state = 'move'
-	owner:setAngle(math.atan2(dy,dx))
+--	owner:setAngle(math.atan2(dy,dx))
 	return STATE_ACTIVE,dt
 end
 
@@ -388,8 +388,8 @@ function AI.ApproachAndAttack(t2,t,attackskill,range,firerange)
 	AIDemo = Sequence:new()
 	AIDemo:push(OrderMoveTowardsRange:new(t,range))
 	AIDemo:push(OrderStop:new())
-	AIDemo:push(OrderChannelSkill:new(attackskill,function()return {normalize(t.x-t2.x,t.y-t2.y)},t2,attackskill end))
-	AIDemo:push(OrderWaitUntil:new(function()t2:setAngle(math.atan2(t.y-t2.y,t.x-t2.x))return getdistance(t,t2)>firerange or t.invisible end))
+	AIDemo:push(OrderChannelSkill:new(attackskill,function()t2:setAngle(math.atan2(t.y-t2.y,t.x-t2.x))return {normalize(t.x-t2.x,t.y-t2.y)},t2,attackskill end))
+	AIDemo:push(OrderWaitUntil:new(function()return getdistance(t,t2)>firerange or t.invisible end))
 	AIDemo:push(OrderStop:new())
 	AIDemo.loop = true
 	return AIDemo

@@ -2,7 +2,7 @@ require 'libraries.pathfinding.pathmap'
 aiconstant = {
 	suspicious = 2,
 	alarm = 20,
-	alarmtime = 5,
+	alarmtime = 10,
 }
 
 StealthSystem = {
@@ -40,10 +40,11 @@ function DProbe:add(b,coll)
 --	self.offline = true
 end
 
+--[[
 function DProbe:draw()
 	love.graphics.circle('fill',self.body:getX(),self.body:getY(),self.r,10)
 end
-
+]]--
 
 function DProbe:createBody(world)
 	local x,y = self.start.x,self.start.y
@@ -107,7 +108,7 @@ function OrderSearch:process(dt,owner)
 	end
 	local origin = owner
 	owner.direction = map:getDirection(owner,self.target)
-	print (unpack(owner.direction))
+--	print (unpack(owner.direction))
 	owner.state = 'move'
 	return STATE_ACTIVE,dt
 end
@@ -145,8 +146,8 @@ function StealthNormal:initialize(t2,t,attackskill,range)
 	self.subai = Sequence:new()
 	self.subai:push(OrderMoveToClear:new(t2,t,range))
 	self.subai:push(OrderStop:new())
-	self.subai:push(OrderChannelSkill:new(attackskill,function()return {normalize(t.x-t2.x,t.y-t2.y)},t2,attackskill end))
-	self.subai:push(OrderWaitUntil:new(function()t2:setAngle(math.atan2(t.y-t2.y,t.x-t2.x))return self.alertlevel<aiconstant.alarmtime-0.2 or t.invisible end))
+	self.subai:push(OrderChannelSkill:new(attackskill,function()t2:setAngle(math.atan2(t.y-t2.y,t.x-t2.x))return {normalize(t.x-t2.x,t.y-t2.y)},t2,attackskill end))
+	self.subai:push(OrderWaitUntil:new(function()return self.alertlevel<aiconstant.alarmtime-0.2 or t.invisible end))
 	self.subai:push(OrderStop:new())
 	self.subai.loop = true
 end
@@ -224,7 +225,7 @@ end
 
 function StealthSuspicious:enterState()
 	self.suspiciousai = Sequence() -- TODO
---	self.suspiciousai:push(OrderMoveTo(self.target.x,self.target.y))
+	self.suspiciousai:push(OrderMoveTo(self.target.x,self.target.y))
 	local patrolai = Sequence()
 	patrolai:push(OrderSearch(self.unit,self.target.region))
 	patrolai:push(OrderStop())

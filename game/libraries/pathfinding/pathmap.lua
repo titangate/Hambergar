@@ -156,6 +156,7 @@ function PathMap:getDirection(origin,target)
 		local target = intermediate or target.region
 		target = self.joint[origin.region][target] or target
 		assert(target)
+--		print (target.name)
 		return {normalize(target.x-origin.x,target.y-origin.y)}
 	end
 	return {0,0}

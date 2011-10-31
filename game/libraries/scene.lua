@@ -224,9 +224,10 @@ function Map:draw()
 --	if self.camera then self.camera:revert() end
 	local x,y = unpack(GetOrderDirection())
 	local px,py = unpack(GetOrderPoint())
+	--[[
 	if StealthSystem.lastseen then
 		love.graphics.circle('fill',StealthSystem.lastseen.x,StealthSystem.lastseen.y,16)
-	end
+	end]]
 	love.graphics.draw(img.cursor,px,py,math.atan2(y,x),1,1,16,16)
 	if self.camera then self.camera:revert() end
 	if not self.disableBlur then

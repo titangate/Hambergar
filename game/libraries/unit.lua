@@ -285,6 +285,7 @@ function Unit:update(dt)
 				x,y = unpack(self.direction)
 				x,y = x*self.movingforce*self.movementspeedbuffpercent,y*self.movingforce*self.movementspeedbuffpercent
 				self.body:applyForce(x,y)
+				self.body:setAngle(math.atan2(y,x))
 			else
 				self.body:setLinearVelocity(x*0.95,y*0.95)
 			end

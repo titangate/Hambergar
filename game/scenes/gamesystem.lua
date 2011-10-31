@@ -126,6 +126,9 @@ function GameSystem:keypressed(k)
 		pushsystem(GetCharacter().manager)
 		return
 	end
+	if k=='m' then
+		scenetest(k)
+	end
 	if k==' ' then
 		Lighteffect.lightOn(GetCharacter())
 	end

@@ -71,7 +71,13 @@ function KingEdStation:checkpoint1_loaded()
 	map:addUnit(i2)
 	i:addBuff(b_StealthMeter(),-1)
 	--GetGameSystem().bossbar = AssassinHPBar:new(function()return i.ai.alertlevel/aiconstant.alarm end,screen.halfwidth-400,screen.height-100,800)
-	self:printMap()
+	function scenetest()
+		i2.ai:setSuspicious({
+			x = GetCharacter().x,
+			y = GetCharacter().y,
+			region = GetCharacter().region
+		})
+	end
 end
 
 function KingEdStation:destroy()

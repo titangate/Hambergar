@@ -80,6 +80,28 @@ function OrderMoveToClear:process(dt,owner)
 	return STATE_ACTIVE,dt
 end
 
+
+OrderMoveToRegion = AtomicGoal:subclass('OrderMoveToRegion')
+function OrderMoveToRegion:initialize(owner,target,range)
+	assert(owner)
+	self.start = owner
+	self.target = target
+	self.range = range
+	self.time = 0
+	self.clear = false
+	super.initialize(self,x,y)
+end
+
+function OrderMoveToRegion:process(dt,owner)
+	if getdistance(owner,self.target)<100 then
+		return STATE_SUCCESS,dt
+	end
+	owner.direction = map:getDirection(owner,self.target)
+	owner.state = 'move'
+--	owner:setAngle(math.atan2(dy,dx))
+	return STATE_ACTIVE,dt
+end
+
 OrderSearch = AtomicGoal:subclass'OrderSearch'
 function OrderSearch:initialize(owner,region)
 --	assert(region)
@@ -179,8 +201,8 @@ function StealthNormal:process(dt,owner)
 		self:fireDetector()
 	end
 	if self.alertlevel >= aiconstant.suspicious then
-		self.alerlevel = self.alertlevel + 15
-		self:gotoState'suspicious'
+		self.alertlevel = self.alertlevel + 15
+		self:setSuspicious()
 	end
 	self.alertlevel = math.max(0,self.alertlevel - dt)
 	if self.patrolai then
@@ -188,6 +210,11 @@ function StealthNormal:process(dt,owner)
 	else
 		return STATE_ACTIVE,dt
 	end
+end
+
+function StealthNormal:setSuspicious(target)
+	self.checking = target
+	self:gotoState'suspicious'
 end
 
 
@@ -211,6 +238,7 @@ function StealthSuspicious:process(dt)
 		self:gotoState'alarm'
 	end
 	if self.alertlevel <= 0 then
+		self.checking = nil
 		self:gotoState()
 	end
 	self.alertlevel = math.max(0,self.alertlevel - dt)
@@ -224,8 +252,9 @@ function StealthSuspicious:fireDetector()
 end
 
 function StealthSuspicious:enterState()
+	self.checking = self.checking or self.target
 	self.suspiciousai = Sequence() -- TODO
-	self.suspiciousai:push(OrderMoveTo(self.target.x,self.target.y))
+	self.suspiciousai:push(OrderMoveToRegion(self.unit,self.checking))
 	local patrolai = Sequence()
 	patrolai:push(OrderSearch(self.unit,self.target.region))
 	patrolai:push(OrderStop())

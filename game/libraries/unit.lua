@@ -159,7 +159,7 @@ function Unit:getMPPercent()
 end
 
 function Unit:createBody(world)
-	self.body = love.physics.newBody(world,self.x,self.y,self.mass,self.mass)
+	self.body = love.physics.newBody(world,self.x,self.y,self.mass)
 	self.shape = love.physics.newCircleShape(self.body,0,0,self.rad)
 	if self.controller then
 		category,masks = unpack(typeinfo[self.controller])

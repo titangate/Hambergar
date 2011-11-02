@@ -61,7 +61,9 @@ end
 
 function MapBlock:add(b,c)
 --	print (b,c)
-	self:notifyListeners({type='add',area=self,index=self.index,unit = b,coll=c})
+	if b:isKindOf(Unit) then
+		self:notifyListeners({type='add',area=self,index=self.index,unit = b,coll=c})
+	end
 end
 
 function MapBlock:destroy()
@@ -197,6 +199,9 @@ function Map:update(dt)
 	end
 	for unit,v in pairs(self.updatable) do
 		if unit.update then unit:update(dt) end
+	end
+	if self.background then
+		self.background:update(dt)
 	end
 	if not self.disableBlur then
 		Blureffect.update(dt)

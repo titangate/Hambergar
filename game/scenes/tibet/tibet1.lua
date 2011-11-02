@@ -19,7 +19,6 @@ function Tibet1:initialize()
 end
 function Tibet1:update(dt)
 	super.update(self,dt)
-	self.background:update(dt)
 	if self.cutscene and self.cutscene:update(dt)==STATE_SUCCESS then
 		self.cutscene = nil
 	end

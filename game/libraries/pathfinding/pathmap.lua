@@ -44,11 +44,11 @@ function PathMap:insertRegion(r)
 			self.map[g][r] = self.map[r][g]
 			table.insert(self.basegraph[g],r)
 			table.insert(self.basegraph[r],g)
---			self.joint[g][r] = {x=(math.max(r.x-r.w/2,g.x-g.w/2)+math.min(r.x+r.w/2,g.x+g.w/2))/2,
---				y=(math.max(r.y-r.h/2,g.y-g.h/2)+math.min(r.y+r.h/2,g.y+g.h/2))/2}
+			self.joint[g][r] = {x=(math.max(r.x-r.w/2,g.x-g.w/2)+math.min(r.x+r.w/2,g.x+g.w/2))/2,
+				y=(math.max(r.y-r.h/2,g.y-g.h/2)+math.min(r.y+r.h/2,g.y+g.h/2))/2}
 --			self.next[r][g] = g
 --			self.next[g][r] = r
-			self.joint[g][r] = r
+--			self.joint[g][r] = r
 		end
 	end
 	table.insert(self.regions,r)

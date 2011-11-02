@@ -1,18 +1,17 @@
-preload('assassin','commonenemies','tibet','vancouver')
+preload('assassin','commonenemies','tibet','vancouver','stealth')
 KingEdStation = PathMap:subclass('KingEdStation')
-
 
 local kingedbg={}
 function kingedbg:update(dt)
 end
 function kingedbg:draw()
 	love.graphics.push()
-	love.graphics.translate(-1600,-1600)
+	love.graphics.translate(-map.w/2,-map.h/2)
 	self.m:draw()
 	love.graphics.pop()
 end
 function KingEdStation:initialize()
-	local w = 3200
+	local w = 4096
 	local h = w
 	self.w,self.h=w,h
 	super.initialize(self,w,h)
@@ -20,7 +19,7 @@ function KingEdStation:initialize()
 	kingedbg.m = m
 	self.background = kingedbg
 	self.savedata = {
-		map = 'scenes.tibet.station',
+		map = 'scenes.whistler.station',
 	}
 end
 function KingEdStation:update(dt)
@@ -45,15 +44,15 @@ function KingEdStation:checkpoint1_load()
 	local leon = Assassin:new(x,y,32,10)
 	leon.direction = {0,-1}
 	leon.controller = 'player'
-	leon.HPRegen = 1000
+--	leon.HPRegen = 1000
 	SetCharacter(leon)
 	leon:gotoState'stealth'
 	map:addUnit(leon)
 	map.camera = FollowerCamera:new(leon,{
-		x1 = -1600+screen.halfwidth,
-		y1 = -1600+screen.halfheight,
-		x2 = 1600-screen.halfwidth,
-		y2 = 1600-screen.halfheight
+		x1 = -self.w/2+screen.halfwidth,
+		y1 = -self.h/2+screen.halfheight,
+		x2 = self.w/2-screen.halfwidth,
+		y2 = self.h/2-screen.halfheight
 	})
 	GetGameSystem().bottompanel:fillPanel(GetCharacter():getSkillpanelData())
 	GetGameSystem().bottompanel:setPos(screen.halfwidth-512,screen.height - 140)
@@ -89,6 +88,7 @@ function KingEdStation:checkpoint1_loaded()
 	patrolai:push(OrderMoveTo(unpack(map.waypoints.guard3patrol1)))
 	patrolai:push(OrderMoveTo(unpack(map.waypoints.guard3patrol2)))
 	patrolai:push(OrderMoveTo(unpack(map.waypoints.guard3patrol3)))
+	patrolai:push(OrderStop())
 	patrolai:push(OrderWait(10))
 	
 	patrolai:push(OrderMoveTo(unpack(map.waypoints.guard3patrol3)))
@@ -100,9 +100,47 @@ function KingEdStation:checkpoint1_loaded()
 	guard3.ai.patrolai = patrolai
 	guard3:addBuff(b_StealthMeter(),-1)
 	map:addUnit(guard3)
+	local x,y = unpack(map.waypoints.g1)
+	local g1 = IALShotgunner(x,y,'enemy')
+	g1.ai = StealthNormal(g1,GetCharacter(),g1.skills.gun,100)
+	map:addUnit(g1)
+	local x,y = unpack(map.waypoints.g2)
+	local g2 = IALShotgunner(x,y,'enemy')
+	g2.ai = StealthNormal(g2,GetCharacter(),g2.skills.gun,100)
+	map:addUnit(g2)
+	
+	local x,y = unpack(map.waypoints.captain1)
+	local captain = IALSwordsman(x,y,'enemy')
+	local patrolai = Sequence()
+	patrolai:push(OrderStop())
+	patrolai:push(OrderWait(10))
+	patrolai:push(OrderMoveTo(unpack(map.waypoints.captain1)))
+	patrolai:push(OrderStop())
+	patrolai:push(OrderWait(10))
+	patrolai:push(OrderMoveTo(unpack(map.waypoints.captain2)))
+	patrolai.loop = true
+	captain.ai = StealthNormal(captain,GetCharacter(),captain.skills.melee,100)
+	captain.ai.patrolai = patrolai
+	captain:addBuff(b_StealthMeter(),-1)
+	table.insert(captain.drops,StationKeycard())
+	map:addUnit(captain)
+	
+	self.exitTrigger = Trigger(function(self,event)
+		if (event.index == 'BuildingEntrance' or event.index == 'OfficeEntrance') and event.unit == GetCharacter() then
+			StealthSystem.lethalAttract()
+		end
+	end)
+	self.exitTrigger:registerEventType('add')
+	GetCharacter().skills.weaponskill:gotoState'interact'
+	
+	function utilitybox:interact(unit)
+		g1.ai:setSuspicious(self)
+		g2.ai:setSuspicious(self)
+	end
 end
 
 function KingEdStation:destroy()
+	self.exitTrigger:destroy()
 end
 
 return KingEdStation()

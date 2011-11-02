@@ -20,14 +20,18 @@ function Takedown:active()
 	end	
 	local u = GetOrderUnit()
 	if self.unit.takingdown then
+		u:drop()
+		u:stop()
 		u:addBuff(b_Takedown(),3600)
 		u.ai:pause()
 		super.active(self)
+		self.unit.alertlevel = self.unit.alertlevel + 1
+		Timer(3,1,function()
+			self.unit.alertlevel = self.unit.alertlevel - 1
+		end)
 	end
-	StealthSystem.lethalAttract(self.unit)
+	StealthSystem.lethalAttract()
 end
-
-
 
 function Takedown:getPanelData()
 	return{
@@ -69,8 +73,12 @@ function ChangeOutfit:active()
 		self.unit.animation = u.animation
 		self.unit.outfit = u.class
 		self.unit:resetAnimation()
+		self.unit.alertlevel = self.unit.alertlevel + 1
+		Timer(3,1,function()
+			self.unit.alertlevel = self.unit.alertlevel - 1
+		end)
 	end
-	StealthSystem.lethalAttract(self.unit)
+	StealthSystem.lethalAttract()
 end
 
 function ChangeOutfit:getPanelData()

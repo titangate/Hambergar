@@ -59,7 +59,17 @@ function Unit:initialize(x,y,rad,mass)
 	self.invisible = false
 	self.invulnerable = false
 	self.immue = {}
+	self.drops = {}
 	setmetatable(self.bht,bufftable)
+end
+
+function Unit:drop()
+	local i = table.remove(self.drops)
+	while i do
+		i.x,i.y = self.x,self.y
+		map:addUnit(i)
+		i = table.remove(self.drops)
+	end
 end
 
 function Unit:getDamageDealing(amount,type)
@@ -126,6 +136,7 @@ function Unit:kill(killer)
 	CreateExplosion(self.x,self.y)
 	self:notifyListeners({type='death',killer = killer,unit=self})
 	self.isDead = true
+	self:drop()
 end
 
 function Unit:getHP()
@@ -159,7 +170,7 @@ function Unit:getMPPercent()
 end
 
 function Unit:createBody(world)
-	self.body = love.physics.newBody(world,self.x,self.y,self.mass)
+	self.body = love.physics.newBody(world,self.x,self.y,self.mass,self.mass)
 	self.shape = love.physics.newCircleShape(self.body,0,0,self.rad)
 	if self.controller then
 		category,masks = unpack(typeinfo[self.controller])
@@ -471,6 +482,8 @@ end
 
 function Probe:createBody(world)
 	local x,y = self.start.x,self.start.y
+--	assert(math.abs(x)<map.w/2)
+--	assert(math.abs(y)<map.h/2)
 	self.body = love.physics.newBody(world,x,y,0.0001,1)
 	self.shape = love.physics.newCircleShape(self.body,0,0,self.r)
 	self.body:setBullet(true)

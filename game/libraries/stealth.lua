@@ -19,7 +19,8 @@ function StealthSystem.getAlertIndex(unit)
 				a = unit.region.alert.Assassin
 			end
 		end
-		return a or 0.5
+		a = a or 0.5
+		return a+unit.alertlevel
 	end
 end
 
@@ -34,8 +35,15 @@ end
 function StealthSystem.lethalAttract(unit)
 	for i,v in ipairs(StealthSystem.units) do
 		v.ai.passive = true
-		v.ai:setSuspicious(unit)
-		print (v,'lethal')
+		if v.ai:getCurrentState() ~= StealthSuspicious then
+			v.ai:setSuspicious(unit)
+		end
+	end
+end
+
+function StealthSystem.alarm()
+	for i,v in ipairs(StealthSystem.units) do
+		v.ai:gotoState'alarm'
 	end
 end
 
@@ -214,7 +222,7 @@ function StealthNormal:process(dt,owner)
 	end
 	if self.alertlevel >= aiconstant.suspicious then
 		
-		self:setSuspicious()
+		self:setSuspicious(self.target)
 	end
 	self.alertlevel = math.max(0,self.alertlevel - dt)
 	if self.patrolai then
@@ -226,7 +234,8 @@ end
 
 function StealthNormal:setSuspicious(target)
 	self.checking = target
-	self.alertlevel = self.alertlevel + 15
+	self.passive = not target
+--	self.alertlevel = self.alertlevel + 15
 	self:gotoState'suspicious'
 end
 
@@ -242,18 +251,22 @@ end
 
 StealthSuspicious = StealthNormal:addState'suspicious'
 function StealthSuspicious:process(dt)
+	
+	if self.paused then return STATE_ACTIVE,dt end
 	self.dt = self.dt + dt
 	if self.dt > self.detectrate then
 		self.dt = self.dt - self.detectrate
 		self:fireDetector()
 	end
 	if self.alertlevel >= aiconstant.alarm then
-		self:gotoState'alarm'
+		StealthSystem.alarm()
 	end
 	if self.alertlevel <= 0 then
 		self.checking = nil
+--		assert(false)
 		self:gotoState()
 	end
+	
 	self.alertlevel = math.max(0,self.alertlevel - dt)
 	if self.suspiciousai then
 		return self.suspiciousai:process(dt,self.unit)
@@ -269,11 +282,13 @@ function StealthSuspicious:fireDetector()
 end
 
 function StealthSuspicious:enterState()
+	self.alertlevel = 15
 	if self.passive then
 		self.passive = nil
 		self.suspiciousai = nil
 		return
 	end
+	
 	self.checking = self.checking or self.target
 	self.suspiciousai = Sequence() -- TODO
 	self.suspiciousai:push(OrderMoveToRegion(self.unit,self.checking))
@@ -317,6 +332,8 @@ function StealthAlarm:fireDetector()
 end
 
 function StealthAlarm:process(dt)
+	if self.paused then return STATE_ACTIVE,dt end
+	
 	self.dt = self.dt + dt
 	if self.dt > self.detectrate then
 		self.dt = self.dt - self.detectrate
@@ -324,7 +341,7 @@ function StealthAlarm:process(dt)
 	end
 	self.alertlevel = math.max(0,self.alertlevel - dt)
 	if self.alertlevel <= 0 then
-		self.alertlevel = 15
+--		self.alertlevel = 15
 		self:gotoState'suspicious'
 		self.unit.state = 'slide'
 		return STATE_ACTIVE,dt

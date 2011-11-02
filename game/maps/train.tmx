@@ -8,4 +8,16 @@
    eJxjZGBgYBzFo3gUj+JRPIpH8ZDGAK1BAfU=
   </data>
  </layer>
+ <objectgroup name="areas" width="50" height="10">
+  <object name="chr" x="330" y="238" width="66" height="56"/>
+ </objectgroup>
+ <objectgroup name="obstacles" width="50" height="10">
+  <object x="2" y="608" width="2128" height="32"/>
+ </objectgroup>
+ <objectgroup name="lightobstacles" width="50" height="10">
+  <object x="4" y="606" width="330" height="32"/>
+  <object x="476" y="610" width="736" height="32"/>
+  <object x="1408" y="610" width="708" height="30"/>
+  <object x="2560" y="602" width="610" height="42"/>
+ </objectgroup>
 </map>

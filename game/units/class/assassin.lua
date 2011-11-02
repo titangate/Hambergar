@@ -154,6 +154,7 @@ function StealthAssassin:enterState()
 	if self==GetCharacter() then
 		SetCharacter(self)
 	end
+	self.alertlevel = 0
 end
 
 local DWSAssassin = Assassin:addState('DWS')

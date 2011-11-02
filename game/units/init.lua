@@ -26,6 +26,9 @@ preloadlist(
 	},
 	vancouver = {
 		'units.other.vancouver'
+	},
+	stealth = {
+		'units.other.stealth'
 	}
 }
 )

@@ -24,6 +24,7 @@ function Takedown:active()
 		u.ai:pause()
 		super.active(self)
 	end
+	StealthSystem.lethalAttract(self.unit)
 end
 
 
@@ -69,6 +70,7 @@ function ChangeOutfit:active()
 		self.unit.outfit = u.class
 		self.unit:resetAnimation()
 	end
+	StealthSystem.lethalAttract(self.unit)
 end
 
 function ChangeOutfit:getPanelData()

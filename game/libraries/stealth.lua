@@ -12,9 +12,12 @@ StealthSystem = {
 function StealthSystem.getAlertIndex(unit)
 	if unit == GetCharacter() then
 		local a
-		if unit.outfit and unit.region then
-			
-			a = unit.region.alert[unit.outfit.name]
+		if unit.region then
+			if unit.outfit then
+				a = unit.region.alert[unit.outfit.name]
+			else
+				a = unit.region.alert.Assassin
+			end
 		end
 		return a or 0.5
 	end
@@ -26,6 +29,14 @@ function StealthSystem.getPatrolArea(lastseen)
 		table.insert(connected,v)
 	end
 	return connected[math.random(#connected)]
+end
+
+function StealthSystem.lethalAttract(unit)
+	for i,v in ipairs(StealthSystem.units) do
+		v.ai.passive = true
+		v.ai:setSuspicious(unit)
+		print (v,'lethal')
+	end
 end
 
 DProbe = Probe:subclass'DProbe'
@@ -40,11 +51,11 @@ function DProbe:add(b,coll)
 --	self.offline = true
 end
 
---[[
+
 function DProbe:draw()
 	love.graphics.circle('fill',self.body:getX(),self.body:getY(),self.r,10)
 end
-]]--
+
 
 function DProbe:createBody(world)
 	local x,y = self.start.x,self.start.y
@@ -172,12 +183,13 @@ function StealthNormal:initialize(t2,t,attackskill,range)
 	self.subai:push(OrderWaitUntil:new(function()return self.alertlevel<aiconstant.alarmtime-0.2 or t.invisible end))
 	self.subai:push(OrderStop:new())
 	self.subai.loop = true
+	table.insert(StealthSystem.units,self.unit)
 end
 
 function StealthNormal:fireDetector()
 	local r = self.unit:getAngle()
 	assert(r)
-	local fireangle = math.random()*self.visionrange-self.visionrange/2
+	local fireangle = math.random()*self.visionrange-self.visionrange/2+r
 	local detector = DProbe(self,self.unit,{math.cos(fireangle),math.sin(fireangle)},16)
 	map:addUnit(detector)
 end
@@ -201,7 +213,7 @@ function StealthNormal:process(dt,owner)
 		self:fireDetector()
 	end
 	if self.alertlevel >= aiconstant.suspicious then
-		self.alertlevel = self.alertlevel + 15
+		
 		self:setSuspicious()
 	end
 	self.alertlevel = math.max(0,self.alertlevel - dt)
@@ -214,6 +226,7 @@ end
 
 function StealthNormal:setSuspicious(target)
 	self.checking = target
+	self.alertlevel = self.alertlevel + 15
 	self:gotoState'suspicious'
 end
 
@@ -242,7 +255,11 @@ function StealthSuspicious:process(dt)
 		self:gotoState()
 	end
 	self.alertlevel = math.max(0,self.alertlevel - dt)
-	return self.suspiciousai:process(dt,self.unit)
+	if self.suspiciousai then
+		return self.suspiciousai:process(dt,self.unit)
+	else
+		return STATE_ACTIVE,dt
+	end
 end
 
 function StealthSuspicious:fireDetector()
@@ -252,6 +269,11 @@ function StealthSuspicious:fireDetector()
 end
 
 function StealthSuspicious:enterState()
+	if self.passive then
+		self.passive = nil
+		self.suspiciousai = nil
+		return
+	end
 	self.checking = self.checking or self.target
 	self.suspiciousai = Sequence() -- TODO
 	self.suspiciousai:push(OrderMoveToRegion(self.unit,self.checking))

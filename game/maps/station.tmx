@@ -9,9 +9,17 @@
  <tileset firstgid="33" name="Cave_SquareTiles" tilewidth="64" tileheight="64">
   <image source="Cave_SquareTiles.jpg" width="256" height="256"/>
  </tileset>
+ <tileset firstgid="49" name="station" tilewidth="64" tileheight="64">
+  <image source="station.png" width="256" height="256"/>
+ </tileset>
+ <layer name="Tile Layer 2" width="50" height="50" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMA6BVWv9yC/AEBwUTAAC4qqqqqqqqqvrsAPcbYio=
+  </data>
+ </layer>
  <layer name="Tile Layer 1" width="50" height="50" visible="0">
   <data encoding="base64" compression="zlib">
-   eJztldENgCAMBXUEJzBuwP7T+eMHIYW0KKWYu+T9mEp6KQ3bBgAAAAAAAAAAAAARORtZCa3HrshMvvS4nIOHzSM96fmeKvH0kHqspeakqff0OBrprZfmoWW0RzLUR/bQ1ue1kTzK3Ygyj3JvLR5pYY8yUTx6+rLsued+SPe+lVqt9P55e2h6b73rmjNmeljmNMLjL2jmkefNv9bz8VjXA2JwA557NgM=
+   eJztldEKgzAMRd0n7AvGnA8TJ/T/v24vPkhoS9LOLIVz4L5IWnOIwWkCAAAAAAAAAAAAgIg8KhkJrcdNkcWYl3jH3HH+lx5PYz6ir7fx/BbEozdeHulIy/NUiKdHrsdSSk6aek+PeyWt9bl5aLnaIxnqI3to68+1kTzkbkSZh9xbi0ca2EMmikdLX5Y999yP3HdfS6k29//z9tD0Xvuva+74p4dlTld4aNidszb0qJnHOT1nrffjMa4HxOALxGJBMQ==
   </data>
  </layer>
  <objectgroup name="obstacles" width="50" height="50" visible="0">
@@ -32,7 +40,7 @@
   <object x="1712" y="1928" width="784" height="56"/>
   <object x="676" y="1924" width="44" height="356"/>
   <object x="672" y="2428" width="40" height="400"/>
-  <object x="136" y="1852" width="572" height="96"/>
+  <object x="130" y="1820" width="588" height="110"/>
   <object x="136" y="1916" width="48" height="900"/>
   <object x="124" y="2756" width="188" height="56"/>
   <object x="480" y="2768" width="224" height="56"/>
@@ -40,6 +48,11 @@
   <object x="480" y="2819" width="1991" height="64"/>
   <object x="139" y="2876" width="57" height="213"/>
   <object x="135" y="3068" width="2300" height="60"/>
+  <object x="2692" y="1730" width="28" height="448"/>
+  <object x="2696" y="2148" width="442" height="28"/>
+  <object x="3104" y="1732" width="32" height="438"/>
+  <object x="2690" y="1722" width="73" height="32"/>
+  <object x="3025" y="1723" width="110" height="39"/>
  </objectgroup>
  <objectgroup name="pathmap" width="50" height="50">
   <object x="168" y="1936" width="564" height="900">
@@ -54,11 +67,23 @@
     <property name="IALMachineGunner" value="0"/>
    </properties>
   </object>
-  <object name="2" x="1040" y="1960" width="406" height="282"/>
+  <object name="2" x="1040" y="1926" width="406" height="282">
+   <properties>
+    <property name="IALMachineGunner" value="0"/>
+   </properties>
+  </object>
   <object name="cor" x="2234" y="1946" width="278" height="304"/>
-  <object x="978" y="2624" width="476" height="224"/>
-  <object x="1456" y="2204" width="332" height="408"/>
-  <object x="1052" y="2218" width="376" height="424"/>
+  <object x="978" y="2624" width="476" height="224">
+   <properties>
+    <property name="IALMachineGunner" value="0"/>
+   </properties>
+  </object>
+  <object x="1462" y="2204" width="342" height="416"/>
+  <object x="1052" y="2204" width="376" height="424">
+   <properties>
+    <property name="IALMachineGunner" value="0"/>
+   </properties>
+  </object>
   <object name="in" x="1814" y="2218" width="398" height="378"/>
   <object x="3468" y="2520"/>
   <object x="7728" y="1840"/>
@@ -70,10 +95,36 @@
   <object x="1824" y="2610" width="406" height="252"/>
   <object name="cor" x="2232" y="2244" width="278" height="304"/>
   <object name="cor" x="2222" y="2542" width="278" height="304"/>
+  <object x="-36" y="844" width="2708" height="1072">
+   <properties>
+    <property name="Assassin" value="0"/>
+   </properties>
+  </object>
+  <object x="2568" y="824" width="644" height="896">
+   <properties>
+    <property name="Assassin" value="0.5"/>
+   </properties>
+  </object>
+  <object x="2712" y="1700" width="412" height="464">
+   <properties>
+    <property name="Assassin" value="0"/>
+   </properties>
+  </object>
+  <object x="1524" y="1852" width="235" height="167">
+   <properties>
+    <property name="Assassin" value="0.5"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="areas" width="50" height="50" visible="0">
-  <object name="chr" x="1576" y="2334" width="122" height="122"/>
-  <object name="i" x="408" y="2278" width="144" height="88"/>
-  <object name="i2" x="798" y="2158" width="144" height="88"/>
+  <object name="chr" x="1460" y="1222" width="122" height="122"/>
+  <object name="i" x="680" y="2340" width="144" height="88"/>
+  <object name="i2" x="680" y="2162" width="144" height="88"/>
+  <object name="guard1" x="1557" y="1905" width="29" height="31"/>
+  <object name="guard2" x="1667" y="1913" width="33" height="31"/>
+  <object name="guard3" x="1616" y="2182" width="60" height="52"/>
+  <object name="guard3patrol1" x="1630" y="1628" width="52" height="56"/>
+  <object name="guard3patrol2" x="2870" y="1618" width="58" height="56"/>
+  <object name="guard3patrol3" x="2900" y="2068" width="48" height="42"/>
  </objectgroup>
 </map>

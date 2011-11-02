@@ -42,7 +42,7 @@ end
 
 function KingEdStation:checkpoint1_load()
 	local x,y = unpack(map.waypoints.chr)
-	local leon = Assassin:new(-120,650,32,10)
+	local leon = Assassin:new(x,y,32,10)
 	leon.direction = {0,-1}
 	leon.controller = 'player'
 	leon.HPRegen = 1000
@@ -61,14 +61,16 @@ function KingEdStation:checkpoint1_load()
 end
 
 function KingEdStation:checkpoint1_loaded()
-	local x,y = unpack(map.waypoints.i)
+	local x,y = unpack(map.waypoints.guard1)
 	local i = IALMachineGunner(x,y,'enemy')
 	i.ai = StealthNormal(i,GetCharacter(),i.skills.gun,100)
-	local x,y = unpack(map.waypoints.i2)
+	local x,y = unpack(map.waypoints.guard2)
 	local i2 = IALMachineGunner(x,y,'enemy')
 	i2.ai = StealthNormal(i2,GetCharacter(),i2.skills.gun,100)
 	map:addUnit(i)
 	map:addUnit(i2)
+	i:setAngle(-math.pi/2)
+	i2:setAngle(-math.pi/2)
 	i:addBuff(b_StealthMeter(),-1)
 	--GetGameSystem().bossbar = AssassinHPBar:new(function()return i.ai.alertlevel/aiconstant.alarm end,screen.halfwidth-400,screen.height-100,800)
 	function scenetest()
@@ -78,6 +80,26 @@ function KingEdStation:checkpoint1_loaded()
 			region = GetCharacter().region
 		})
 	end
+	local x,y = unpack(map.waypoints.guard3)
+	local guard3 = IALMachineGunner(x,y,'enemy')
+	local patrolai = Sequence()
+	patrolai:push(OrderStop())
+	patrolai:push(OrderWait(10))
+	patrolai:push(OrderMoveTo(unpack(map.waypoints.guard3)))
+	patrolai:push(OrderMoveTo(unpack(map.waypoints.guard3patrol1)))
+	patrolai:push(OrderMoveTo(unpack(map.waypoints.guard3patrol2)))
+	patrolai:push(OrderMoveTo(unpack(map.waypoints.guard3patrol3)))
+	patrolai:push(OrderWait(10))
+	
+	patrolai:push(OrderMoveTo(unpack(map.waypoints.guard3patrol3)))
+	patrolai:push(OrderMoveTo(unpack(map.waypoints.guard3patrol2)))
+	patrolai:push(OrderMoveTo(unpack(map.waypoints.guard3patrol1)))
+	patrolai:push(OrderMoveTo(unpack(map.waypoints.guard3)))
+	patrolai.loop = true
+	guard3.ai = StealthNormal(guard3,GetCharacter(),guard3.skills.gun,100)
+	guard3.ai.patrolai = patrolai
+	guard3:addBuff(b_StealthMeter(),-1)
+	map:addUnit(guard3)
 end
 
 function KingEdStation:destroy()

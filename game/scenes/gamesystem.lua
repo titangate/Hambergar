@@ -91,7 +91,8 @@ function GameSystem:update(dt)
 		GetCharacter().state = 'move'
 	else
 		GetCharacter().state = 'slide'
-	end	
+	end
+	print (map)	
 	map:update(dt)
 	self.hpbar:update(dt)
 	self.mpbar:update(dt)

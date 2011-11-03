@@ -1,9 +1,22 @@
-preload('assassin','commonenemies','tibet','vancouver','stealth','electrician')
+
+local coordinateshift = {
+	x = 0,
+	y = 0,
+}
+preload('assassin','commonenemies','tibet','vancouver','stealth','whistler')
 KingEdTrain = Map:subclass'KingEdTrain'
-local kingedbg={}
-function kingedbg:update(dt)
+local trainbg={}
+local lightsource = {
+	x = 0,
+	y = 400,
+}
+function trainbg:update(dt)
+	lightsource.x = lightsource.x - 1000*dt
+	if lightsource.x < -2000 then
+		lightsource.x = 6000
+	end
 end
-function kingedbg:draw()
+function trainbg:draw()
 	love.graphics.push()
 	love.graphics.translate(-map.w/2,-map.h/2)
 	self.m:draw()
@@ -15,11 +28,12 @@ function KingEdTrain:initialize()
 	self.w,self.h=w,h
 	super.initialize(self,w,h)
 	local m = self:loadTiled'train.tmx'
-	kingedbg.m = m
-	self.background = kingedbg
+	trainbg.m = m
+	self.background = trainbg
 	self.savedata = {
 		map = 'scenes.whistler.station',
 	}
+	Lighteffect.lightOn(lightsource)
 end
 
 function KingEdTrain:update(dt)
@@ -43,7 +57,7 @@ function KingEdTrain:checkpoint1_load()
 	SetCharacter(leon)
 	leon:gotoState'stealth'
 	map:addUnit(leon)
-	map:addUnit(Paddle(0,0))
+--	map:addUnit(Paddle(0,0))
 	map.camera = FollowerCamera:new(leon,{
 		x1 = -self.w/2+screen.halfwidth,
 		y1 = -self.h/2+screen.halfheight,
@@ -58,12 +72,51 @@ end
 function KingEdTrain:checkpoint1_loaded()
 	
 	self.exitTrigger = Trigger(function(self,event)
-		if (event.index == 'BuildingEntrance' or event.index == 'OfficeEntrance') and event.unit == GetCharacter() then
-			StealthSystem.lethalAttract()
+		if event.index == 'exit' and event.unit == GetCharacter() then
+			map.update = map.exitToStation
 		end
 	end)
---	self.exitTrigger:registerEventType('add')
+	map:addUnit(StationKeycard(-800,0))
+	
+	function emergencystop:interact(unit)
+		if unit.inventory:hasItem'KEYCARD' then
+			unit.inventory:removeItem'KEYCARD'
+			map:finish()
+		end
+	end
+	
+	self.exitTrigger:registerEventType('add')
 	GetCharacter().skills.weaponskill:gotoState'interact'
+	
+end
+
+function KingEdTrain:startTrain()
+	
+end
+
+function KingEdTrain:stopTrain()
+end
+
+function KingEdTrain:opening()
+	require 'scenes.whistler.lily'()
+end
+
+function KingEdTrain:enterFromStation()
+end
+
+function KingEdTrain:exitToStation()
+	self:removeUnit(GetCharacter())
+	self.station = require 'scenes.whistler.station'
+	map = self.station
+	
+	map:addUnit(GetCharacter())
+	map:checkpoint1_enter()
+end
+
+function KingEdTrain:finish()
+--	assert(false)
+	map.camera:shake(100,0.5)
+	require 'scenes.whistler.ending'()
 end
 
 function KingEdTrain:destroy()

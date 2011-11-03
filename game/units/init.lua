@@ -29,6 +29,9 @@ preloadlist(
 	},
 	stealth = {
 		'units.other.stealth'
+	},
+	whistler = {
+		'units.other.whistler'
 	}
 }
 )

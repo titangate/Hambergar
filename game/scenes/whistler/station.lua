@@ -10,6 +10,7 @@ function kingedbg:draw()
 	self.m:draw()
 	love.graphics.pop()
 end
+
 function KingEdStation:initialize()
 	local w = 4096
 	local h = w
@@ -21,17 +22,14 @@ function KingEdStation:initialize()
 	self.savedata = {
 		map = 'scenes.whistler.station',
 	}
-end
-function KingEdStation:update(dt)
-	super.update(self,dt)
-end
-function KingEdStation:draw()
-	super.draw(self)
+	assert (utilitybox)
+	print ('MAP IS BEING INITIALIZED')
 end
 
 function KingEdStation:load()
 	
 end
+
 
 function KingEdStation:loadCheckpoint(checkpoint)
 	if checkpoint == 'opening' then
@@ -59,6 +57,25 @@ function KingEdStation:checkpoint1_load()
 	self:checkpoint1_loaded()
 end
 
+function KingEdStation:checkpoint1_enter()
+	local leon = GetCharacter()
+--	leon.direction = {0,-1}
+	leon.controller = 'player'
+--	leon.HPRegen = 1000
+	SetCharacter(leon)
+	leon:gotoState'stealth'
+--	map:addUnit(leon)
+	map.camera = FollowerCamera:new(leon,{
+		x1 = -self.w/2+screen.halfwidth,
+		y1 = -self.h/2+screen.halfheight,
+		x2 = self.w/2-screen.halfwidth,
+		y2 = self.h/2-screen.halfheight
+	})
+--	GetGameSystem().bottompanel:fillPanel(GetCharacter():getSkillpanelData())
+--	GetGameSystem().bottompanel:setPos(screen.halfwidth-512,screen.height - 140)
+	self:checkpoint1_loaded()
+end
+
 function KingEdStation:checkpoint1_loaded()
 	local x,y = unpack(map.waypoints.guard1)
 	local i = IALMachineGunner(x,y,'enemy')
@@ -72,13 +89,6 @@ function KingEdStation:checkpoint1_loaded()
 	i2:setAngle(-math.pi/2)
 	i:addBuff(b_StealthMeter(),-1)
 	--GetGameSystem().bossbar = AssassinHPBar:new(function()return i.ai.alertlevel/aiconstant.alarm end,screen.halfwidth-400,screen.height-100,800)
-	function scenetest()
-		i2.ai:setSuspicious({
-			x = GetCharacter().x,
-			y = GetCharacter().y,
-			region = GetCharacter().region
-		})
-	end
 	local x,y = unpack(map.waypoints.guard3)
 	local guard3 = IALMachineGunner(x,y,'enemy')
 	local patrolai = Sequence()
@@ -139,8 +149,10 @@ function KingEdStation:checkpoint1_loaded()
 	end
 end
 
+
 function KingEdStation:destroy()
 	self.exitTrigger:destroy()
+	
 end
 
 return KingEdStation()

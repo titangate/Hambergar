@@ -9,7 +9,8 @@
   </data>
  </layer>
  <objectgroup name="areas" width="50" height="10">
-  <object name="chr" x="330" y="238" width="66" height="56"/>
+  <object name="chr" x="2052" y="428" width="66" height="56"/>
+  <object name="exit" x="2110" y="608" width="490" height="92"/>
  </objectgroup>
  <objectgroup name="obstacles" width="50" height="10">
   <object x="2" y="608" width="2128" height="32"/>
@@ -19,5 +20,12 @@
   <object x="476" y="610" width="736" height="32"/>
   <object x="1408" y="610" width="708" height="30"/>
   <object x="2560" y="602" width="610" height="42"/>
+ </objectgroup>
+ <objectgroup name="objects" width="50" height="10">
+  <object name="EmergencyStop" x="804" y="24" width="38" height="38">
+   <properties>
+    <property name="id" value="emergencystop"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

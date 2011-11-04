@@ -297,6 +297,7 @@ function Map:loadTiled(tmx)
 	local loader = require("AdvTiledLoader/Loader")
 	loader.path = "maps/"
 	local m = loader.load(tmx)
+	print ('map with problem,',map)
 	m.useSpriteBatch=true
 	m.drawObjects=false
 	local oj = m.objectLayers

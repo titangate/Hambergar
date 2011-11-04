@@ -22,7 +22,7 @@
    eJzt1lsKwjAQheG6BFdQvDxYVMj+VyeID2VIwkxCYib9PzgvZdJyjCldFgAAAAAAAAAAAAAAAAD/tmZyBK37nxS5G3MTz7hWrB+h/8WYl+jzMK5/Ou9fm9H7h19KrodEPPSPdUsl9Vto5j30P2dSOh/b/9Za9w+G+Rn7a+f3szP0l2ff+/7L95mlf1DMz9Zfxnv/kj6W95+H8x8717mkZmPfPV76azrnvgM19/DY3/K/GKm/xrtztj61vjT7v0/NWuv9e6D/sfsDAIB5fACvTEEx
   </data>
  </layer>
- <objectgroup name="obstacles" width="64" height="64" visible="0">
+ <objectgroup name="obstacles" width="64" height="64">
   <object x="1532" y="2688" width="36" height="452"/>
   <object x="1930" y="2700" width="52" height="444"/>
   <object x="1848" y="2692" width="136" height="40"/>
@@ -59,7 +59,7 @@
   <object x="2898" y="3360" width="84" height="274"/>
  </objectgroup>
  <objectgroup name="pathmap" width="64" height="64">
-  <object x="680" y="2448" width="564" height="900">
+  <object x="632" y="2442" width="564" height="900">
    <properties>
     <property name="IALMachineGunner" value="0"/>
    </properties>
@@ -158,7 +158,7 @@
     <property name="IALMachineGunner" value="0"/>
    </properties>
   </object>
-  <object name="BuildingEntrace" x="2036" y="2364" width="235" height="167">
+  <object name="BuildingEntrace" x="2016" y="2334" width="235" height="167">
    <properties>
     <property name="Assassin" value="0.5"/>
     <property name="IALMachineGunner" value="0"/>
@@ -169,8 +169,9 @@
     <property name="IALMachineGunner" value="0"/>
    </properties>
   </object>
+  <object x="1154" y="2774" width="106" height="190"/>
  </objectgroup>
- <objectgroup name="areas" width="64" height="64">
+ <objectgroup name="areas" width="64" height="64" visible="0">
   <object name="chr" x="1981" y="1419" width="122" height="122"/>
   <object name="g2" x="1192" y="2852" width="144" height="88"/>
   <object name="g1" x="1198" y="2802" width="144" height="88"/>
@@ -190,7 +191,7 @@
   <object name="captain2" x="2532" y="3491" width="68" height="63"/>
   <object name="OfficeEntrance" x="1104" y="2731" width="201" height="277"/>
  </objectgroup>
- <objectgroup name="objects" width="64" height="64">
+ <objectgroup name="objects" width="64" height="64" visible="0">
   <object name="UtilityBox" x="1603" y="2769" width="55" height="51">
    <properties>
     <property name="id" value="utilitybox"/>

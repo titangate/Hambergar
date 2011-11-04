@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="50" height="10" tilewidth="64" tileheight="64">
+<map version="1.0" orientation="orthogonal" width="64" height="64" tilewidth="64" tileheight="64">
  <tileset firstgid="1" name="station" tilewidth="64" tileheight="64">
   <image source="station.png" width="256" height="256"/>
  </tileset>
- <layer name="Tile Layer 1" width="50" height="10">
+ <layer name="Tile Layer 1" width="64" height="64">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYBzFo3gUj+JRPIpH8ZDGAK1BAfU=
+   eJztzwENAAAIw7Dj3zS5DEibTMASAACg5kn+/fv379+/f//+AQAAAAAAAAAAAOCmBQlqAfU=
   </data>
  </layer>
- <objectgroup name="areas" width="50" height="10">
-  <object name="chr" x="2052" y="428" width="66" height="56"/>
-  <object name="exit" x="2110" y="608" width="490" height="92"/>
+ <objectgroup name="areas" width="64" height="64">
+  <object name="chr" x="2500" y="1132" width="66" height="56"/>
+  <object name="exit" x="2558" y="1312" width="490" height="92"/>
+  <object name="trail" x="472" y="1372" width="76" height="56"/>
  </objectgroup>
- <objectgroup name="obstacles" width="50" height="10">
-  <object x="2" y="608" width="2128" height="32"/>
+ <objectgroup name="obstacles" width="64" height="64">
+  <object x="450" y="1312" width="2128" height="32"/>
  </objectgroup>
- <objectgroup name="lightobstacles" width="50" height="10">
-  <object x="4" y="606" width="330" height="32"/>
-  <object x="476" y="610" width="736" height="32"/>
-  <object x="1408" y="610" width="708" height="30"/>
-  <object x="2560" y="602" width="610" height="42"/>
+ <objectgroup name="lightobstacles" width="64" height="64">
+  <object x="452" y="1310" width="330" height="32"/>
+  <object x="924" y="1314" width="736" height="32"/>
+  <object x="1856" y="1314" width="708" height="30"/>
+  <object x="3008" y="1306" width="610" height="42"/>
  </objectgroup>
- <objectgroup name="objects" width="50" height="10">
-  <object name="EmergencyStop" x="804" y="24" width="38" height="38">
+ <objectgroup name="objects" width="64" height="64">
+  <object name="EmergencyStop" x="1252" y="728" width="38" height="38">
    <properties>
     <property name="id" value="emergencystop"/>
    </properties>

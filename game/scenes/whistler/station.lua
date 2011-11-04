@@ -17,13 +17,15 @@ function KingEdStation:initialize()
 	self.w,self.h=w,h
 	super.initialize(self,w,h)
 	local m = self:loadTiled'station.tmx'
+	
 	kingedbg.m = m
 	self.background = kingedbg
 	self.savedata = {
-		map = 'scenes.whistler.station',
+--		map = 'scenes.whistler.station',
 	}
 	assert (utilitybox)
-	print ('MAP IS BEING INITIALIZED')
+	
+	print 'after initialize'
 end
 
 function KingEdStation:load()

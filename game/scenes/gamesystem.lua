@@ -92,7 +92,6 @@ function GameSystem:update(dt)
 	else
 		GetCharacter().state = 'slide'
 	end
-	print (map)	
 	map:update(dt)
 	self.hpbar:update(dt)
 	self.mpbar:update(dt)

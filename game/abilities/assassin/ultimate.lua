@@ -84,6 +84,7 @@ DWSEffect:addAction(function (unit,caster,skill)
 	end),2)
 	map:playCutscene(dws)
 end)
+
 DWS = ActiveSkill:subclass('DWS')
 function DWS:initialize(unit,level)
 	level = level or 0
@@ -129,10 +130,6 @@ end
 
 function DWS:geteffectinfo()
 	return self.unit,self.unit,self
-end
-
-function DWS:stop()
-	self.time = 0
 end
 
 function DWS:setLevel(lvl)

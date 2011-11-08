@@ -291,6 +291,7 @@ function Unit:update(dt)
 				self.body:setLinearVelocity(x,y)
 			end
 		elseif self.state == 'move' and self.allowmovement then
+			self.body:setAngularVelocity(0)
 			local x,y = self.body:getLinearVelocity()
 			if x*x+y*y < speedlimit then
 				x,y = unpack(self.direction)

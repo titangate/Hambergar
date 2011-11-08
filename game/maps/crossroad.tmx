@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="13" height="13" tilewidth="256" tileheight="256">
+ <tileset firstgid="1" name="roadtile" tilewidth="256" tileheight="256">
+  <image source="roadtile.png" width="1024" height="512"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="13" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjY2BgYMOCWXCI48MjSQ8jDsyMR24w+2cw6wEA0gwDoA==
+  </data>
+ </layer>
+ <objectgroup name="areas" width="13" height="13">
+  <object name="left" x="-64" y="1496" width="280" height="376"/>
+  <object name="right" x="3120" y="1452" width="264" height="480"/>
+  <object name="bottom" x="1380" y="3132" width="592" height="256"/>
+  <object name="top" x="1424" y="-32" width="560" height="248"/>
+  <object name="chr" x="1564" y="1630" width="148" height="96"/>
+ </objectgroup>
+</map>

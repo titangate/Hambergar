@@ -16,7 +16,7 @@ function Lighteffect.begin(units)
 	map.camera:apply()
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.setBlendMode('additive')
-	love.graphics.draw(lightpic,Lighteffect.source.x,Lighteffect.source.y,0,2,2,512,512)
+	love.graphics.draw(lightpic,Lighteffect.source.x,Lighteffect.source.y,0,Lighteffect.source.sx,Lighteffect.source.sy,512,512)
 	love.graphics.setBlendMode('subtractive')
 	love.graphics.setColor(0,0,0,130)
 	for unit,v in pairs(units) do

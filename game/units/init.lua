@@ -31,10 +31,13 @@ preloadlist(
 		'units.other.stealth'
 	},
 	whistler = {
-		'units.other.whistler'
+		'units.other.whistler',
+		'units.enemies.dungeon',
 	}
 }
 )
+
+require 'units.other.doodad'
 --[[
 require ('units.enemies.box.lua')
 require "units.enemies.lizardguard"

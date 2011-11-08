@@ -12,14 +12,12 @@
  <tileset firstgid="49" name="station" tilewidth="64" tileheight="64">
   <image source="station.png" width="256" height="256"/>
  </tileset>
+ <tileset firstgid="65" name="stationwall" tilewidth="64" tileheight="64">
+  <image source="stationwall.png" width="256" height="192"/>
+ </tileset>
  <layer name="Tile Layer 2" width="64" height="64">
   <data encoding="base64" compression="zlib">
    eJztz8EJAAAIA7Gu5P7LuYWC5qD/JpEkSZIkSZKkn9WR8fPz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz7//m5+fn5+fn55/2S5Ju1vUKYio=
-  </data>
- </layer>
- <layer name="Tile Layer 1" width="64" height="64">
-  <data encoding="base64" compression="zlib">
-   eJzt1lsKwjAQheG6BFdQvDxYVMj+VyeID2VIwkxCYib9PzgvZdJyjCldFgAAAAAAAAAAAAAAAAD/tmZyBK37nxS5G3MTz7hWrB+h/8WYl+jzMK5/Ou9fm9H7h19KrodEPPSPdUsl9Vto5j30P2dSOh/b/9Za9w+G+Rn7a+f3szP0l2ff+/7L95mlf1DMz9Zfxnv/kj6W95+H8x8717mkZmPfPV76azrnvgM19/DY3/K/GKm/xrtztj61vjT7v0/NWuv9e6D/sfsDAIB5fACvTEEx
   </data>
  </layer>
  <objectgroup name="obstacles" width="64" height="64">
@@ -27,15 +25,15 @@
   <object x="1930" y="2700" width="52" height="444"/>
   <object x="1848" y="2692" width="136" height="40"/>
   <object x="1544" y="2696" width="152" height="36"/>
-  <object x="2306" y="2694" width="152" height="36"/>
-  <object x="2610" y="2690" width="136" height="40"/>
+  <object x="2299" y="2689" width="131" height="58"/>
+  <object x="2623" y="2689" width="112" height="68"/>
   <object x="2294" y="2686" width="36" height="452"/>
   <object x="2718" y="2694" width="36" height="440"/>
   <object x="2302" y="3102" width="452" height="36"/>
   <object x="1224" y="3288" width="1784" height="44"/>
   <object x="2960" y="2444" width="52" height="888"/>
-  <object x="1224" y="2428" width="836" height="64"/>
-  <object x="2224" y="2440" width="784" height="56"/>
+  <object x="1196" y="2368" width="836" height="64"/>
+  <object x="2230" y="2374" width="784" height="56"/>
   <object x="1188" y="2436" width="44" height="356"/>
   <object x="1184" y="2940" width="40" height="400"/>
   <object x="642" y="2332" width="588" height="110"/>
@@ -51,7 +49,7 @@
   <object x="3616" y="2244" width="32" height="438"/>
   <object x="3202" y="2234" width="73" height="32"/>
   <object x="3537" y="2235" width="110" height="39"/>
-  <object x="2976" y="2434" width="250" height="158"/>
+  <object x="2986" y="2416" width="250" height="158"/>
   <object x="3630" y="2454" width="82" height="167"/>
   <object x="651" y="3622" width="135" height="90"/>
   <object x="1282" y="3377" width="192" height="69"/>
@@ -74,12 +72,12 @@
     <property name="IALMachineGunner" value="0"/>
    </properties>
   </object>
-  <object name="1" x="1216" y="2464" width="330" height="348">
+  <object name="1" x="1213" y="2438" width="332" height="377">
    <properties>
     <property name="IALMachineGunner" value="0"/>
    </properties>
   </object>
-  <object name="2" x="1544" y="2446" width="406" height="282">
+  <object name="2" x="1539" y="2444" width="406" height="282">
    <properties>
     <property name="IALMachineGunner" value="0"/>
    </properties>
@@ -99,17 +97,16 @@
     <property name="IALMachineGunner" value="0"/>
    </properties>
   </object>
-  <object x="1564" y="2716" width="372" height="440">
+  <object x="1550" y="2718" width="396" height="436">
    <properties>
     <property name="IALMachineGunner" value="0"/>
    </properties>
   </object>
-  <object name="in" x="2326" y="2730" width="398" height="378">
+  <object name="in" x="2327" y="2717" width="398" height="394">
    <properties>
     <property name="IALMachineGunner" value="0"/>
    </properties>
   </object>
-  <object x="3980" y="3032"/>
   <object x="1942" y="2435" width="402" height="274">
    <properties>
     <property name="IALMachineGunner" value="0"/>
@@ -120,7 +117,7 @@
     <property name="IALMachineGunner" value="0"/>
    </properties>
   </object>
-  <object x="1946" y="3128" width="400" height="252">
+  <object x="1955" y="3128" width="400" height="252">
    <properties>
     <property name="IALMachineGunner" value="0"/>
    </properties>
@@ -152,7 +149,7 @@
     <property name="IALMachineGunner" value="0"/>
    </properties>
   </object>
-  <object x="3224" y="2212" width="412" height="464">
+  <object x="3195" y="2201" width="412" height="464">
    <properties>
     <property name="Assassin" value="0"/>
     <property name="IALMachineGunner" value="0"/>
@@ -190,6 +187,8 @@
   <object name="captain1" x="1824" y="3485" width="70" height="65"/>
   <object name="captain2" x="2532" y="3491" width="68" height="63"/>
   <object name="OfficeEntrance" x="1104" y="2731" width="201" height="277"/>
+  <object name="trail" x="567" y="1218" width="54" height="48"/>
+  <object name="exit" x="2545" y="1151" width="490" height="92"/>
  </objectgroup>
  <objectgroup name="objects" width="64" height="64" visible="0">
   <object name="UtilityBox" x="1603" y="2769" width="55" height="51">
@@ -198,5 +197,62 @@
    </properties>
   </object>
   <object name="UtilityBox" x="1610" y="1990" width="55" height="51"/>
+  <object name="desk2" x="2386" y="2998" width="43" height="41"/>
+  <object name="desk" x="2625" y="2983" width="43" height="41">
+   <properties>
+    <property name="angle" value="0"/>
+   </properties>
+  </object>
+  <object name="chair" x="2393" y="2844" width="43" height="41"/>
+  <object name="chair" x="1854" y="3000" width="43" height="41">
+   <properties>
+    <property name="angle" value="0"/>
+   </properties>
+  </object>
+  <object name="chair" x="1792" y="2998" width="43" height="41">
+   <properties>
+    <property name="angle" value="0"/>
+   </properties>
+  </object>
+  <object name="desk2" x="1814" y="2926" width="43" height="41">
+   <properties>
+    <property name="angle" value="0"/>
+   </properties>
+  </object>
+  <object name="toilet" x="3301" y="2603" width="43" height="41">
+   <properties>
+    <property name="angle" value="0"/>
+   </properties>
+  </object>
+  <object name="toilet" x="3392" y="2604" width="43" height="41">
+   <properties>
+    <property name="angle" value="0"/>
+   </properties>
+  </object>
+  <object name="toilet" x="3484" y="2604" width="43" height="41">
+   <properties>
+    <property name="angle" value="0"/>
+   </properties>
+  </object>
+  <object name="sink" x="3575" y="2344" width="43" height="41">
+   <properties>
+    <property name="angle" value="-1.57"/>
+   </properties>
+  </object>
+  <object name="sink" x="3576" y="2430" width="43" height="41">
+   <properties>
+    <property name="angle" value="-1.57"/>
+   </properties>
+  </object>
+  <object name="sinkwithwater" x="3575" y="2511" width="43" height="41">
+   <properties>
+    <property name="angle" value="-1.57"/>
+   </properties>
+  </object>
  </objectgroup>
+ <layer name="Tile Layer 3" width="64" height="64">
+  <data encoding="base64" compression="zlib">
+   eJzt2FEOgyAQRVG3Zo1p1P3vp/bDlBiGMggDyj0JHzWD9NUhtB0GAAAAAAAAAAAAAAAAALWN+3idrn1fTxXeSw2zcP2d6f7H5yuNKaLGN0ezRmh+6fzS/d11/tX45mjWCM2/Y/6ryP/Te/5lH6tnbJnWSs2vPZc09bmebYzU/Nq+1NS3lF87j/zX61vK33v/k99fswj10rmkOcfukL8k8ttx+9Ll9ueT88dkk/ZuqZHru22M1Ger+T2f+r+BBeveDrHs+0Pv+a33div7HgCAJ/oA80lDAA==
+  </data>
+ </layer>
 </map>

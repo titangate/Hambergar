@@ -358,6 +358,9 @@ end
 function Trigger:close()
 	self.closed = true
 end
+function Trigger:open()
+	self.closed = nil
+end
 function Trigger:run(...)
 	assert(self.action)
 	if self.closed then return end
@@ -388,4 +391,11 @@ function cine_wait(time)
 		end,true,true)
 		coroutine.yield()
 	end
+end
+
+function table.exist(t,i)
+	for _,v in ipairs(t) do
+		if v== i then return true end
+	end
+	return false
 end

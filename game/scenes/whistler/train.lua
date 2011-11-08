@@ -9,9 +9,10 @@ local trainbg={
 	dt = 0,
 }
 local lightsource = {
-	x = 0,
-	y = 400,
+	x = 5000,
+	y = 0,
 }
+
 function trainbg:update(dt)
 	self.dt = self.dt + dt
 	if self.dtfunc then
@@ -36,11 +37,15 @@ function trainbg:draw()
 	love.graphics.drawq(img.trail,trailquad,-1024,traily,0)
 	love.graphics.drawq(img.trail,trailquad,2048,traily,0)
 	love.graphics.drawq(img.trail,trailquad,-2048,traily,0)
-	love.graphics.push()
---		love.graphics.translate(0,-600)
-		love.graphics.translate(lightsource.x,0)
-		station:draw()
-	love.graphics.pop()
+--	if stationt then
+	if self.dtfunc then
+		love.graphics.push()
+			love.graphics.translate(lightsource.x,0)
+			love.graphics.translate(-station.w/2,-station.h/2)
+			station.background.m:draw()
+		love.graphics.pop()
+	end
+--	end
 end
 
 function KingEdTrain:initialize()
@@ -56,12 +61,13 @@ function KingEdTrain:initialize()
 	}
 	Lighteffect.lightOn(lightsource)
 	function scenetest()
-		if self.running then
-			self:stopTrain()
+		if map.running then
+			map:stopTrain()
 		else
-			self:startTrain()
+			map:startTrain()
 		end
 	end
+	assert(emergencystop)
 end
 
 function KingEdTrain:update(dt)
@@ -83,6 +89,7 @@ function KingEdTrain:checkpoint1_load()
 	leon.direction = {0,-1}
 	leon.controller = 'player'
 	SetCharacter(leon)
+	leon.HPRegen = 1000
 	leon:gotoState'stealth'
 	map:addUnit(leon)
 --	map:addUnit(Paddle(0,0))
@@ -95,17 +102,36 @@ function KingEdTrain:checkpoint1_load()
 	GetGameSystem().bottompanel:fillPanel(GetCharacter():getSkillpanelData())
 	GetGameSystem().bottompanel:setPos(screen.halfwidth-512,screen.height - 140)
 	self:checkpoint1_loaded()
-	traily = map.waypoints.trail[2]
+end
+
+function KingEdTrain:checkpoint1_enter()
+	local x,y = unpack(map.waypoints.chr)
+	leon = GetCharacter()
+	leon.x,leon.y = x,y
+--	SetCharacter(leon)
+	leon:gotoState'stealth'
+	map:addUnit(leon)
+	map.camera = FollowerCamera:new(leon,{
+		x1 = -self.w/2+screen.halfwidth,
+		y1 = -self.h/2+screen.halfheight,
+		x2 = self.w/2-screen.halfwidth,
+		y2 = self.h/2-screen.halfheight
+	})
+	GetGameSystem().bottompanel:fillPanel(GetCharacter():getSkillpanelData())
+	GetGameSystem().bottompanel:setPos(screen.halfwidth-512,screen.height - 140)
+	self:checkpoint1_loaded()
 end
 
 function KingEdTrain:checkpoint1_loaded()
 	
+	traily = map.waypoints.trail[2]
+	lightsource.y = traily
 	self.exitTrigger = Trigger(function(self,event)
-		if map.docking and event.index == 'exit' and event.unit == GetCharacter() then
+		if event.index == 'exit' and event.unit == GetCharacter() then
 			map.update = map.exitToStation
 		end
 	end)
-	map:addUnit(StationKeycard(-800,0))
+	self.exitTrigger:registerEventType'add'
 	
 	function emergencystop:interact(unit)
 		if unit.inventory:hasItem'KEYCARD' then
@@ -114,12 +140,17 @@ function KingEdTrain:checkpoint1_loaded()
 		end
 	end
 	
-	self.exitTrigger:registerEventType('add')
 	GetCharacter().skills.weaponskill:gotoState'interact'
 
 	station = require 'scenes.whistler.station'
 	station.train = self
 	self.station = station
+	function lily:interact(unit)
+		map:removeUnit(lily)
+		PlayMusic('music/dreamtheme.mp3')
+		require 'scenes.whistler.lily'()
+	end
+	self:startTrain()
 end
 
 function KingEdTrain:startTrain()
@@ -127,7 +158,8 @@ function KingEdTrain:startTrain()
 		return 100*(time)*dt
 	end
 	trainbg.dt = 0
-	Timer(10,0,function()trainbg.dtfunc = nil end)
+	lightsource.x = 0
+	Timer(10,1,function()trainbg.dtfunc = nil end)
 	self.running = true
 	self.docking = nil
 end
@@ -148,15 +180,27 @@ function KingEdTrain:opening()
 end
 
 function KingEdTrain:enterFromStation()
+	self.exitTrigger:registerEventType'add'
+	
+	self:startTrain()
 end
 
+local stationloaded = false
 function KingEdTrain:exitToStation()
 	self:removeUnit(GetCharacter())
+	self.update = nil
+	self:update(0.016)
+	self.exitTrigger:destroy()
 	map = station
 --	GetCharacter().y = GetCharacter().y - 700
 	map:addUnit(GetCharacter())
-	map:checkpoint1_enter()
-	self.update = nil
+--	map:startTrain()
+	if stationloaded then
+	map:enterFromTrain()
+	else
+		station:checkpoint1_enter()
+		stationloaded = true
+	end
 end
 
 function KingEdTrain:finish()

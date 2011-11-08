@@ -1,15 +1,45 @@
 preload('assassin','commonenemies','tibet','vancouver','stealth')
 KingEdStation = PathMap:subclass('KingEdStation')
-
-local kingedbg={}
+requireImage('assets/whistler/trail.png','trail')
+img.trail:setWrap('repeat','clamp')
+local traily
+local trailquad = love.graphics.newQuad(0,0,1024,52,12,52)
+local kingedbg={
+	x = 0,
+	dt = 0,
+}
 function kingedbg:update(dt)
+	
+	self.dt = self.dt + dt
+--	print (self.dtfunc)
+	if self.dtfunc then
+		self.x = self.x - self.dtfunc(self.dt,dt)
+	else
+--		self.x = self.x - 1000*dt
+	end
+	if self.x < -5000 then
+		self.x = 5000
+	end
 end
 function kingedbg:draw()
 	love.graphics.push()
 	love.graphics.translate(-map.w/2,-map.h/2)
 	self.m:draw()
 	love.graphics.pop()
+--	love.graphics.drawq(img.trail,trailquad,0,traily,0)
+--	love.graphics.drawq(img.trail,trailquad,1024,traily,0)
+--	love.graphics.drawq(img.trail,trailquad,-1024,traily,0)
+--	love.graphics.drawq(img.trail,trailquad,2048,traily,0)
+--	love.graphics.drawq(img.trail,trailquad,-2048,traily,0)
+	
+	love.graphics.push()
+		love.graphics.translate(kingedbg.x,0)
+		love.graphics.translate(-map.train.w/2,-map.train.h/2)
+		map.train.background.m:draw()
+	love.graphics.pop()
 end
+
+local stationcount = 0
 
 function KingEdStation:initialize()
 	local w = 4096
@@ -24,8 +54,9 @@ function KingEdStation:initialize()
 --		map = 'scenes.whistler.station',
 	}
 	assert (utilitybox)
-	
-	print 'after initialize'
+	traily = map.waypoints.trail[2]
+	stationcount = stationcount + 1
+	assert(stationcount<2)
 end
 
 function KingEdStation:load()
@@ -57,6 +88,7 @@ function KingEdStation:checkpoint1_load()
 	GetGameSystem().bottompanel:fillPanel(GetCharacter():getSkillpanelData())
 	GetGameSystem().bottompanel:setPos(screen.halfwidth-512,screen.height - 140)
 	self:checkpoint1_loaded()
+	assert(self.train)
 end
 
 function KingEdStation:checkpoint1_enter()
@@ -149,6 +181,53 @@ function KingEdStation:checkpoint1_loaded()
 		g1.ai:setSuspicious(self)
 		g2.ai:setSuspicious(self)
 	end
+	
+	self.exitTrigger = Trigger(function(self,event)
+		if event.index == 'exit' and event.unit == GetCharacter() then
+			print 'exiting'
+			map.update = map.exitToTrain
+		end
+	end)
+		self.exitTrigger:registerEventType'add'
+		self:startTrain()
+end
+
+function KingEdStation:enterFromTrain()
+	self:startTrain()
+	self.exitTrigger:registerEventType'add'
+end
+
+
+function KingEdStation:exitToTrain()
+	self.exitTrigger:destroy()	
+	self.update = nil
+	self:removeUnit(GetCharacter())
+	self:update(0.016)
+	map = self.train
+	map:addUnit(GetCharacter())
+	map:enterFromStation()
+end
+
+function KingEdStation:startTrain()
+	kingedbg.dtfunc = function(time,dt)
+		return 100*(time)*dt
+	end
+	kingedbg.x = 0
+	kingedbg.dt = 0
+	Timer(10,1,function()kingedbg.dtfunc = nil end)
+	self.running = true
+	self.docking = nil
+end
+
+function KingEdStation:stopTrain()
+	kingedbg.x = 5000
+	kingedbg.dtfunc = function(time,dt)
+		return 100*(10-time)*dt
+	end
+	kingedbg.dt = 0
+	Timer(10,1,function()kingedbg.dtfunc = nil end)
+	self.running = nil
+	self.docking = true
 end
 
 

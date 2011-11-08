@@ -2,100 +2,65 @@
 local conv = {
 	opening = function(trig,cp)
 		cine_wait(2)
-		cp:playConversation'River? River? Are you there?'
-		cine_wait(5)
-		cp:playConversation"Arr. Yeah, I'm alright."
-		cine_wait(5)
-		cp:playConversation"I hope the trial wasn't too hard for you."
-		cine_wait(5)
-		cp:playConversation"Well... Warlock, I don't think I've found the rune."
-		cine_wait(5)
-		cp:playConversation"What? That's not possible! The prophet says... It should..."
-		cine_wait(5)
-		cp:playConversation"It's not here, I'm sorry. There's nothing I can do."
-		cine_wait(5)
-		cp:playConversation".... Fine, I guess I don't have any suggestions either. Now stay there, I've sent the choper to pick you up."
-		cine_wait(7)
-		cp:playConversation"Alright. -BEEP-"
-		cine_wait(12)
-		cp:playConversation("So it all ends up nothing, didn't it, Leon?",5)
-		cine_wait(8)
-		cp:playConversation"You... It's you again!"
-		cine_wait(4)
-		cp:playConversation"Calm down now, I know you have a lot to say."
-		cine_wait(5)
-		cp:playConversation"In fact I don't. I just want to rip your guts out."
-		cine_wait(5)
-		cp:playConversation"Not if you still wants to see her again, do you?"
-		cine_wait(5)
-		cp:playConversation"What??"
-		cine_wait(4)
-		cp:playConversation()
-		cp:setChoiceTime(0)
-	end,
-	lily = function(trig,cp)
-		cp:playConversation'What do you mean by... is she... alive?'
-		cine_wait(5)
-		cp:playConversation"I do not kill, not the innocents."
-		cine_wait(5)
-		cp:playConversation"I saw you killed her... There's no way. I dreamed of it everyday."
-		cine_wait(5)
-		cp:playConversation"She only fell into a coma. Do you really think I'd kill her? She has a bigger use alive than dead."
-		cine_wait(7)
-		cp:playConversation"You're a liar... show me the proof."
-		cine_wait(5)
-		cp:playConversation"You met her on Skytrain. She noticed you and asked for your number. Then she said, 'Your watch was an hour behind.'"
-		cine_wait(7)
-		cp:playConversation"On the day before, you assassinated Cambol Riad. You're too tired and you forgot about the time change."
-		cine_wait(6)
-		cp:playConversation"You're an asshole."
-		cine_wait(4)
-		cp:playConversation"If you ever want to see her, talk to me while meditating."
-		cine_wait(4)
-		cp:playConversation()
-		cp:setChoiceTime(0)
-	end,
-
-	rune = function(trig,cp)
-		cp:playConversation'Did you take the rune?'
-		cine_wait(5)
-		cp:playConversation"No. In fact, when i tried to search for it, turns out someone else has taken it already."
-		cine_wait(7)
-		cp:playConversation"Who do you think took it?"
-		cine_wait(5)
-		cp:playConversation"Well investigation isn't really my profession. Beside, I'm not on your side. Not yet."
-		cine_wait(7)
-		cp:playConversation()
-		cp:setChoiceTime(0)
-	end,
-
-	compass = function(trig,cp)
-		cp:playConversation'What is Compass up to?'
-		cine_wait(4)
-		cp:playConversation"To destroy Vancouver and implement the vision of His Grace."
-		cine_wait(5)
-		cp:playConversation"Whoever your king is, he must be mad and cruel, attempting to kill millions of innocents."
-		cine_wait(5)
-		cp:playConversation"God cherish innocents, there would be no better sacrifice."
-		cine_wait(4)
-		cp:playConversation()
-		cp:setChoiceTime(0)
-	end,
-
-	leave = function(trig,cp)
-		cp:playConversation"Before the chopper comes, I would like to give you something."
-		cine_wait(4)
-		cp:playConversation"What is it?"
+		cp:playConversation'Is that.. you.. Lily?'
 		cine_wait(3)
-		cp:playConversation"Remember they day you came to my temple? You told me you wish no longer wish to be a killer. You gave me this pistol, claiming there is too much blood on it that you wish it sealed."
-		cine_wait(8)
-		cp:playConversation"Now that you're a killer once more, I should give this thing back to you, as a token of honesty."
-		cine_wait(5.5)
-		cp:playConversation"Great, good old memories."
+		cp:playConversation"Don't you recognize me anymore?"
 		cine_wait(3.5)
-		cp:playConversation"Every one of us is but a slave to karma, Leon. Amitabha."
+		cp:playConversation"This is not possible... I clearly remember... you..."
 		cine_wait(4)
-		cp:playConversation"Namu Amitabha."
+		cp:playConversation"You left me die in the hand of Compass. You have not forgotten it."
+		cine_wait(4)
+		cp:playConversation"No.. hear me explain..."
+		cine_wait(3)
+		cp:playConversation"I know what you are seeking. Stop lying to yourself, Leon."
+		cine_wait(4)
+		cp:playConversation()
+		cp:setChoiceTime(0)
+	end,
+	leon = function(trig,cp)
+		cp:playConversation"You're right. Whatever I tried to do, nothing is resolved since your death. I've lost everything, my one true love, my identity."
+		cine_wait(8)
+		cp:playConversation"Then what are you fighting for?"
+		cine_wait(4)
+		cp:playConversation()
+		cp:setChoiceTime(0)
+	end,
+
+	defence = function(trig,cp)
+		cp:playConversation'I need to stop Compass. They will destroy everything if I fail.'
+		cine_wait(5)
+		cp:playConversation"What about me? Do you love them over me?"
+		cine_wait(7)
+		cp:playConversation()
+		cp:setChoiceTime(0)
+	end,
+
+	vengence = function(trig,cp)
+		cp:playConversation'They will pay for your blood.'
+		cine_wait(4)
+		cp:playConversation"Will that bring me back from death?"
+		cine_wait(5)
+		cp:playConversation()
+		cp:setChoiceTime(0)
+	end,
+
+	train = function(trig,cp)
+		cp:playConversation'Why are we.. here?'
+		cine_wait(4)
+		cp:playConversation"This is the place we first met, remember?"
+		cine_wait(5)
+		cp:playConversation"But... Why? What is your purpose here?"
+		cine_wait(4)
+		cp:playConversation"Same reason as you."
+		cine_wait(4)
+		cp:playConversation()
+		cp:setChoiceTime(0)
+	end,
+
+	lily = function(trig,cp)
+		cp:playConversation"Do you know how much I miss you?"
+		cine_wait(4)
+		cp:playConversation"Come and find me. (chuckles)"
 		cine_wait(5)
 		popsystem()
 	end,
@@ -108,34 +73,43 @@ return function(self)
 	local t = Trigger:new(conv.opening)
 	t:run(cp)
 	local choices1 = {
-		'LILY',
-		'COMPASS',
-		'RUNE',
+		'LEON',
+		'TRAIN',
+		'LILY'
 	}
 	local choices2 = {
-		'LEAVE',
-		'COMPASS',
-		'RUNE',
+		'DEFENCE',
+		'VENGENCE'
 	}
 	local c = choices1
 	
-	cp:setChoiceTime(2)
+	cp:setChoiceTime(1000)
 	cp.onFinish = function(self)
 		cp:setChoice(c)
 		n = cp:getChoice()
-		if n == 'LILY' then
-			local t = Trigger:new(conv.lily)
+		if n == 'LEON' then
+			local t = Trigger:new(conv.leon)
 			t:run(cp)
 			c = choices2
-		elseif n == 'RUNE' then	
-			local t = Trigger:new(conv.rune)
+			cp:setChoiceTime(1000)
+		elseif n == 'DEFENCE' then	
+			local t = Trigger:new(conv.defence)
 			t:run(cp)
-		elseif n == 'COMPASS' then
-			local t = Trigger:new(conv.compass)
+			c = choices1
+			cp:setChoiceTime(1000)
+		elseif n == 'VENGENCE' then
+			local t = Trigger:new(conv.vengence)
 			t:run(cp)
-		elseif n == 'LEAVE' then
-			local t = Trigger:new(conv.leave)
+			c = choices1
+			cp:setChoiceTime(1000)
+		elseif n == 'TRAIN' then
+			local t = Trigger:new(conv.train)
 			t:run(cp)
+			cp:setChoiceTime(1000)
+		elseif n == 'LILY' then
+			local t = Trigger:new(conv.lily)
+			t:run(cp)
+			cp:setChoiceTime(1000)
 		end
 	end
 end

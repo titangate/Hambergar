@@ -59,10 +59,10 @@ function DProbe:add(b,coll)
 --	self.offline = true
 end
 
-
+--[[
 function DProbe:draw()
 	love.graphics.circle('fill',self.body:getX(),self.body:getY(),self.r,10)
-end
+end]]
 
 
 function DProbe:createBody(world)
@@ -236,6 +236,7 @@ function StealthNormal:setSuspicious(target)
 	self.checking = target
 	self.passive = not target
 --	self.alertlevel = self.alertlevel + 15
+	self:gotoState()
 	self:gotoState'suspicious'
 end
 

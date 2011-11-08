@@ -1,6 +1,4 @@
 
-animation.mansword = Animation:new(love.graphics.newImage('assets/ial/mansword.png'),49.5,43,0.08,1.8,1.8,6,23)
-
 
 
 IALSwordsmanMelee = Melee:subclass('IALSwordsmanMelee')
@@ -21,6 +19,9 @@ function IALThreewayShotgun:initialize(unit)
 	super.initialize(self,unit)
 	self.damage = 50
 end
+
+
+animation.mansword = Animation:new(love.graphics.newImage('assets/ial/mansword.png'),49.5,43,0.08,1.8,1.8,6,23)
 
 IALSwordsman = AnimatedUnit:subclass('IALSwordsman')
 function IALSwordsman:initialize(x,y,controller)

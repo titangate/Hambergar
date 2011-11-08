@@ -273,6 +273,7 @@ function Map:findUnitsWithCondition(func)
 end
 
 function Map:loadUnitFromTileObject(obj)
+	print (obj,obj.properties.id)
 	local w,h=self.w,self.h
 	if loadstring('return '..obj.name)() then
 		local object = loadstring('return '..obj.name..':new()')()

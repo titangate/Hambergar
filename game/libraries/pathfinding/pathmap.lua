@@ -102,10 +102,7 @@ function PathMap:getPath(i,j)
 end
 
 function PathMap:loadTiled(tmx)
-print ('map',map,map.class)
 	local m = super.loadTiled(self,tmx)
-	print ('map',map,map.class)
-	m.drawObjects=true -- DEBUG LINE
 	local oj = m.objectLayers
 	for k,v in pairs(oj) do
 		if v.name == 'pathmap' then
@@ -124,7 +121,6 @@ print ('map',map,map.class)
 		end
 	end
 	self:buildMap()
-	print ('map',map,map.class)
 	return m
 end
 

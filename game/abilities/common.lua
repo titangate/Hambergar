@@ -219,7 +219,9 @@ end
 
 PistolEffect = ShootMissileEffect:new()
 PistolEffect:addAction(function(point,caster,skill)
-	local Missile = skill.bullettype:new(1,1,1000,caster.x,caster.y,unpack(point))
+	assert(skill)
+	assert(skill.bullettype)
+	local Missile = skill.bullettype(1,1,1000,caster.x,caster.y,unpack(point))
 	Missile.controller = caster.controller..'Missile'
 	Missile.effect = skill.bulleteffect
 	Missile.skill = skill

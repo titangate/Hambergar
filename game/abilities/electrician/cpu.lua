@@ -83,6 +83,7 @@ end
 function BoltTrail:draw()
 	love.graphics.draw(self.p)
 end
+
 BoltMissile = Missile:subclass('BoltMissile')
 function BoltMissile:initialize(...)
 	super.initialize(self,...)

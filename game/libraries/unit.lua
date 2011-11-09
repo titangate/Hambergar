@@ -406,7 +406,7 @@ function Character:setWeaponSkill(skill)
 end
 
 function Character:pickUp(item)
-	return self.inventory:handleDrag(self.inventory:pickUp(item))
+	return self.inventory:addItem(item)
 end
 
 function table.copy(t)

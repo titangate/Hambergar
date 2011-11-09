@@ -12,7 +12,6 @@ function Skill:getorderinfo()
 	return self:geteffectinfo()
 end
 
-
 function Skill:stop()
 	self.time = 0
 end

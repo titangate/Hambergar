@@ -75,9 +75,9 @@ function DreamMaze:checkpoint1_load()
 	leon.direction = {0,-1}
 	leon.controller = 'player'
 	leon.skills.stim:setLevel(5)
---	leon.HPRegen = 1000
+	leon.HPRegen = 1000
 	SetCharacter(leon)
-	leon:gotoState'stealth'
+--	leon:gotoState'stealth'
 	map:addUnit(leon)
 	map.camera = FollowerCamera:new(leon,{
 		x1 = -self.w+screen.halfwidth,
@@ -87,6 +87,7 @@ function DreamMaze:checkpoint1_load()
 	})
 	GetGameSystem().bottompanel:fillPanel(GetCharacter():getSkillpanelData())
 	GetGameSystem().bottompanel:setPos(screen.halfwidth-512,screen.height - 140)
+	leon:pickUp(Theravada())
 	self:checkpoint1_loaded()
 end
 
@@ -127,9 +128,9 @@ function DreamMaze:checkpoint1_loaded()
 		if table.exist(dirs,event.index) and event.unit == GetCharacter() then
 			trig:close()
 			Timer(1,1,function()trig:open()end)
-			
+			print (event.index,self.destination)
 			if event.index == self.destination then
-				self.correctcount = self.correctcount + 10
+				self.correctcount = self.correctcount + 1
 				if self.correctcount > self.maxcount then
 					self:finish()
 				else	
@@ -143,9 +144,8 @@ function DreamMaze:checkpoint1_loaded()
 		end
 	end)
 	self.exitTrigger:registerEventType'add'
-	self.destination = right
+	self.destination = 'left'
 	lightsource:setShift(300,0)
-	print (self.destination,'is destination')
 	self:spawnEnemies()
 	Lighteffect.lightOn(lightsource)
 end
@@ -158,6 +158,7 @@ end
 function DreamMaze:finish()
 	self:destroy()
 	self.update = function()
+		self:destroy()
 		map = require 'scenes.whistler.train'
 		map:load()
 		map:checkpoint1_enter()
@@ -189,8 +190,14 @@ function DreamMaze:puzzle(index)
 end
 
 function DreamMaze:spawnEnemies()
-	local u = SkeletonSwordsman:new(0,0,'enemy')
-	u:enableAI()
-	map:addUnit(u)
-	print 'enemies spawned'
+	for i = 1,3 do
+		local u = SkeletonMagician:new(math.random(300)-150,math.random(300)-150,'enemy')
+		u:enableAI()
+		map:addUnit(u)
+	end
+	for i = 1,2 do
+		local u = SkeletonSwordsman:new(math.random(300)-150,math.random(300)-150,'enemy')
+		u:enableAI()
+		map:addUnit(u)
+	end
 end

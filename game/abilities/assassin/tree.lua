@@ -170,7 +170,7 @@ function AssassinAbiTree:learn(skill)
 		if self.unit.spirit>=1 then
 			local s = skill:setLevel(skill.level+1)
 			self.unit.spirit = self.unit.spirit - 1
-			if s and s[1] then 
+			if s and s[1] then
 				self:enableabi(skill,s[1])
 			else
 				self:enableabi(skill,skill)

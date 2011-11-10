@@ -51,6 +51,7 @@ end
 function GameSystem:prepareToContinue(checkpoint)
 	self.m = table.load(love.filesystem.read(checkpoint))
 	self.map = require(self.m.map)
+--	print (self.map,'map',self.map.class)
 end
 
 function GameSystem:continue()
@@ -71,7 +72,11 @@ function GameSystem:runMap(m,checkpoint)
 		map:destroy()
 	end
 	gamelistener = Listener:new()
-	map = m()
+	if m:isKindOf(Map) then
+		map = m
+	else
+		map = m()
+	end
 	map:load()
 	if map.loadCheckpoint and checkpoint then
 		map:loadCheckpoint(checkpoint)
@@ -135,6 +140,9 @@ function GameSystem:keypressed(k)
 	if k=='escape' then
 		self:pushState('pause')
 	end
+	if k=='k' then
+		self:pushState'retry'
+	end
 end
 
 function GameSystem:changeState(state)
@@ -189,7 +197,7 @@ function cutscene:update(dt)
 	if self.bossbar then self.bossbar:update(dt) end
 end
 
-local paused = GameSystem:addState('pause')
+local paused = GameSystem:addState'pause'
 function paused:keypressed()
 end
 function paused:update(dt)
@@ -201,16 +209,50 @@ function paused:enterState()
 	love.mouse.setVisible(true)
 end
 function paused:pushedState()
-	local pausemenu = love.filesystem.load('mainmenu/pausemenu.lua')()
-	pausemenu:birth()
-	love.mouse.setVisible(true)
+	paused.enterState(self)
 end
 
-function paused:popedState()
+function paused:poppedState()
 	love.mouse.setVisible(false)
 end
 
 function paused:draw()
+	map:draw()
+	self.hpbar:draw()
+	self.mpbar:draw()
+	if bossbar then bossbar:draw() end
+	local x,y = unpack(GetOrderDirection())
+	local px,py = love.mouse.getPosition()
+	love.graphics.setColor(0,0,0,180)
+	love.graphics.rectangle('fill',-1000000,-100000,10000000,1000000)
+	goo:draw()
+end
+
+
+local retry = GameSystem:addState'retry'
+function retry:keypressed()
+end
+function retry:update(dt)
+end
+
+function retry:enterState()
+	self.retryscreen = goo.retryscreen()
+	self.retryscreen:open()
+	assert(self.retryscreen)
+	local pausemenu = love.filesystem.load('mainmenu/retrymenu.lua')()
+	pausemenu:birth()
+	love.mouse.setVisible(true)
+end
+function retry:pushedState()
+	retry.enterState(self)
+end
+
+function retry:poppedState()
+	love.mouse.setVisible(false)
+	self.retryscreen:close()
+end
+
+function retry:draw()
 	map:draw()
 	self.hpbar:draw()
 	self.mpbar:draw()

@@ -196,6 +196,6 @@ function love.draw()
 	currentsystem:draw()
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.setFont(fonts.oldsans24)
-	love.graphics.print(love.timer.getFPS(),30,30)
+	love.graphics.print(love.timer.getFPS(),screen.width-100,30)
 end
 

@@ -166,5 +166,10 @@ style['goo conversation panel'] = {
 	speakerFont = fonts.oldsans24
 }
 
+style['goo retry screen'] = {
+	imgLeft = love.graphics.newImage(GOO_SKINPATH..'deathleft.png'),
+	imgRight = love.graphics.newImage(GOO_SKINPATH..'deathright.png'),
+}
+
 return style, fonts
 

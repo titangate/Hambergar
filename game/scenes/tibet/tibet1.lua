@@ -134,7 +134,7 @@ function Tibet1:checkpoint1_loaded()
 			map:addUnit(box)
 			map:playCutscene(hansdisappear)
 		elseif event.type == 'death' and event.unit == GetCharacter() then
-			GetGameSystem():loadCheckpoint()
+			GetGameSystem():pushState'retry'
 		elseif event.type == 'add' and event.unit == GetCharacter() then	
 			if event.index == 2 and not entered[2] then
 				entered[2] = true
@@ -155,4 +155,4 @@ function Tibet1:destroy()
 	gamelistener:unregister(self.tibet1listener)
 end
 
-return Tibet1()
+return Tibet1

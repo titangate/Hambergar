@@ -297,7 +297,7 @@ function Tibet2:nextwave()
 			u:enableAI()
 			map:addUnit(u)
 		end
-		for i=1,10 do
+		for i=1,9 do
 			local u = IALSwordsman:new(i*100,-800,'enemy')
 			u:enableAI()
 			map:addUnit(u)
@@ -327,10 +327,9 @@ function Tibet2:opening_loaded()
 		if event.type == 'death' then
 			if event.unit == GetCharacter() then
 				self.update = function()
-					GetGameSystem():loadCheckpoint()
+					GetGameSystem():pushState'retry'
 				end
 			else
-					print (self.count.enemy)
 				if self.count.enemy <= 0 then
 					self:nextwave()
 					return

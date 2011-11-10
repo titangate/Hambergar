@@ -14,18 +14,6 @@ pausemenu.onClose = function(self)
 	anim:easy( pausemenu, 'xscale', 1, 3, 1, 'quadInOut')
 	anim:easy( pausemenu, 'yscale', 1, 3, 1, 'quadInOut')
 end
-
-local b_continue = goo.menuitem:new( pausemenu )
-b_continue:setPos( 10, height )
-b_continue:setText( 'Continue' )
-b_continue:sizeToText()
-b_continue.onClick = function(self,button)
-	GetGameSystem():popState()
-	pausemenu:onClose()
-	love.mouse.setVisible(false)
-end
-height = height + 50
-
 local b_continue = goo.menuitem:new( pausemenu )
 b_continue:setPos( 10, height )
 b_continue:setText( 'Restart From Last Checkpoint' )
@@ -37,7 +25,6 @@ b_continue.onClick = function(self,button)
 	pausemenu:onClose()
 end
 height = height + 50
-
 local b_quit = goo.menuitem:new( pausemenu )
 b_quit:setPos( 10, height )
 b_quit:setText( 'Quit to Main Menu' )

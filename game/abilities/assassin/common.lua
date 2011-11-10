@@ -53,7 +53,6 @@ function AssassinPanelManager:shift(system)
 		self.shiftsystem.container:setVisible(true)
 	end
 	if self.shiftsystem.show then
-		print ('new sys')
 		self.shiftsystem:show()
 	end
 end
@@ -119,20 +118,19 @@ end
 
 function AssassinPanelManager:draw()
 	if self.dt < 1.1 then
-		map:draw()
-		love.graphics.setScissor(0,0,love.graphics.getWidth()*self.dt,love.graphics.getHeight())
 		love.graphics.draw(img.background,-self.dt/self.time*img.background:getWidth(),0,0,1.1,1.1)
 		self.currentsystem:draw()
 		love.graphics.drawq(img.scroll,scrollq,love.graphics.getWidth()*self.dt-50,0,0,1,1)
+		
+		love.graphics.setScissor(love.graphics.getWidth()*self.dt,0,screen.width,love.graphics.getHeight())
+		map:draw()
 		love.graphics.setScissor()
 	elseif self.folddt < 1 then
-		map:draw()
-		
-		love.graphics.setScissor(0,0,love.graphics.getWidth()*(1-self.folddt),love.graphics.getHeight())
+	--	love.graphics.setScissor(0,0,love.graphics.getWidth()*(1-self.folddt),love.graphics.getHeight())
 		love.graphics.draw(img.background,-self.dt/self.time*img.background:getWidth(),0,0,1.1,1.1)
 		
 		self.currentsystem:draw()
-		love.graphics.setScissor()
+	--	love.graphics.setScissor()
 		love.graphics.drawq(img.scroll,scrollq,love.graphics.getWidth()*(1-self.folddt)-50,0,0,1,1)
 		if self.folddt>=0.95 then
 			if self.currentsystem.container then
@@ -140,6 +138,9 @@ function AssassinPanelManager:draw()
 			end
 			popsystem()
 		end
+		love.graphics.setScissor(love.graphics.getWidth()*(1-self.folddt),0,screen.width,love.graphics.getHeight())
+		map:draw()
+		love.graphics.setScissor()
 	elseif self.shifttime then
 		love.graphics.draw(img.background,-self.dt/self.time*img.background:getWidth(),0,0,1.1,1.1)
 		love.graphics.translate((1-self.shifttime)*love.graphics.getWidth(),0)

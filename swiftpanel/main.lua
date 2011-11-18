@@ -83,7 +83,7 @@ love.graphics.setColor(255,255,255)
 	self.wheel1:draw(self.wheelangle)
 	self.wheel2:draw(self.wheelangle)
 	love.graphics.setColor(166,202,255)
-	love.graphics.setColor(255,252,160)
+--	love.graphics.setColor(255,252,160)
 	for i,v in ipairs(self.bodies) do
 		local x,y = v:getPosition()
 		love.graphics.circle('fill',x,y,4)
@@ -95,12 +95,12 @@ sp:activateWheel(5)
 
 function love.draw()
 	love.graphics.translate(100,100)
-	love.graphics.scale(0.25)
+	love.graphics.scale(0.5)
 	sp:draw()
 end
 
 function love.update(dt)
-	sp:update(dt)
+	sp:update(dt/2)
 end
 
 function love.keypressed()

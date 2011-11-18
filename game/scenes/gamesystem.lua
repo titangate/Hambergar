@@ -11,6 +11,7 @@ function SetCharacter(c)
 	c:register()
 end
 
+requireImage('assets/dot.png','dot')
 GameSystem = StatefulObject:subclass'GameSystem'
 function GameSystem:initialize()
 	super.initialize(self)
@@ -20,7 +21,10 @@ function GameSystem:initialize()
 	self:gotoState()
 	self.hpbar = AssassinHPBar(function()return GetCharacter():getHPPercent() end,30,30,200)
 	self.mpbar = AssassinMPBar(function()return GetCharacter():getMPPercent() end,30,60,200)
-	
+	self.fader = goo.image()
+	self.fader:setImage(img.dot)
+	self.fader:fill(screen.width,screen.height)
+	self.fader.opacity = 0
 end
 
 function GameSystem:setCharacter(c)
@@ -41,8 +45,8 @@ function GameSystem:save(thing,label)
 end
 
 function GameSystem:saveAll()
---	love.filesystem.write('checkpoint',table.save(map.savedata))
---	self:save(GetCharacter(),GetCharacter():className())
+	love.filesystem.write('checkpoint',table.save(map.savedata))
+	self:save(GetCharacter(),GetCharacter():className())
 end
 
 function GameSystem:load()

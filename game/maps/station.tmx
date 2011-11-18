@@ -57,21 +57,9 @@
   <object x="2898" y="3360" width="84" height="274"/>
  </objectgroup>
  <objectgroup name="pathmap" width="64" height="64">
-  <object x="632" y="2442" width="564" height="900">
-   <properties>
-    <property name="IALMachineGunner" value="0"/>
-   </properties>
-  </object>
-  <object x="648" y="3332" width="748" height="312">
-   <properties>
-    <property name="IALMachineGunner" value="0"/>
-   </properties>
-  </object>
-  <object x="1364" y="3436" width="1602" height="212">
-   <properties>
-    <property name="IALMachineGunner" value="0"/>
-   </properties>
-  </object>
+  <object x="632" y="2442" width="564" height="900"/>
+  <object x="648" y="3332" width="748" height="312"/>
+  <object x="1364" y="3436" width="1602" height="212"/>
   <object name="1" x="1213" y="2438" width="332" height="377">
    <properties>
     <property name="IALMachineGunner" value="0"/>

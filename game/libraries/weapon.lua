@@ -77,3 +77,12 @@ function Interact:update(dt)
 		u:interact(self.unit)
 	end
 end
+
+local dws = FireWeapon:addState'DWS'
+function dws:enterState()
+	self.skill:gotoState'DWS'
+end
+
+function dws:exitState()
+	self.skill:gotoState()
+end

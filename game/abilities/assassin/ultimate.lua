@@ -6,7 +6,7 @@ function b_DWS:stop(unit,dt)
 	unit:stop()
 end
 function b_DWS:start(unit)
-	unit:gotoState('DWS')
+	unit:gotoState'DWS'
 	unit:switchChannelSkill(GetCharacter().skills.pistoldwsalt)
 end
 DWSEffect = UnitEffect:new()

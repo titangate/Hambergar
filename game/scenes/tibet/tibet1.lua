@@ -2,7 +2,7 @@
 --require 'libraries.unit'
 require 'scenes.tibet.tibetgamesystem'
 preload('assassin','commonenemies','tibet')
-Tibet1 = Map:subclass('Tibet1')
+Tibet1 = Map:subclass'Tibet1'
 function Tibet1:initialize(w,h)
 	super.initialize(self,w,h)
 end

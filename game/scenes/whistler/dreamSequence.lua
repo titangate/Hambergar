@@ -156,13 +156,16 @@ function DreamMaze:update(dt)
 end
 
 function DreamMaze:finish()
+	anim:easy(GetGameSystem().fader,'opacity',0,255,1,'linear')
+	Timer(2,1,function()
 	self:destroy()
 	self.update = function()
-		self:destroy()
-		map = require 'scenes.whistler.train'
-		map:load()
-		map:checkpoint1_enter()
-	end
+			self:destroy()
+			map = require 'scenes.whistler.train'
+			map:load()
+			map:checkpoint1_enter()
+		end
+	end)
 end
 
 function DreamMaze:puzzle(index)

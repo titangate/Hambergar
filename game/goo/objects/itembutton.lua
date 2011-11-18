@@ -40,13 +40,14 @@ function goo.itembutton:mousepressed(x,y,button)
 	if self.parent:isKindOf(goo.list) then
 		self.parent:mousepressed(x,y,button)
 	end
+	
+	if button == 'r' and self.item then
+		self.inv:interactItem(self.item,self.buttontype)
+	end
 end
 
 function goo.itembutton:mousereleased(x,y,button)
 	super.mousereleased(self,x,y,button)
-	if button == 'r' and self.item then
-		self.inv:interactItem(self.item,self.buttontype)
-	end
 end
 
 function goo.itembutton:enterHover()

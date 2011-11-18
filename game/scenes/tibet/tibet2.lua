@@ -89,7 +89,7 @@ function Tibet2:boss_loaded()
 		map.camera = ContainerCamera:new(200,nil,hans,GetCharacter())
 		GetGameSystem():gotoState()
 		GetGameSystem().bottompanel:conversation()
-		PlayMusic('music/boss1.mp3')
+		PlayMusic'music/boss1.mp3'
 		hans:enableAI()
 		GetGameSystem().bossbar = AssassinHPBar:new(function()return hans:getHPPercent() end,screen.halfwidth-400,screen.height-100,800)
 	end),0)
@@ -98,7 +98,7 @@ function Tibet2:boss_loaded()
 		if event.type == 'death' then
 			if event.unit == GetCharacter() then
 				self.update = function()
-					GetGameSystem():loadCheckpoint()
+					GetGameSystem():pushState'retry'
 				end
 			else
 				if self.count.enemy <= 0 then
@@ -111,7 +111,7 @@ function Tibet2:boss_loaded()
 					local panel1 = goo.object:new()
 					anim:easy(panel1,'x',-300,0,1,'quadInOut')
 					anim:easy(panel2,'x',300,0,1,'quadInOut')
-					local text = 'DEMO END. THANKS FOR PLAYING!'
+					local text = 'HANS THE VOLCANO KILLED'
 					local x,y = 100,screen.halfheight-50
 					for c in text:gmatch"." do
 						dws:push(ExecFunction:new(function()
@@ -167,45 +167,9 @@ function Tibet2:boss_loaded()
 					anim:easy(panel2,'x',0,-screen.width,2,'quadInOut')
 					map.timescale = 1
 					end),0)
-					local sp = nil
 					dws:push(ExecFunction:new(function()
-					 sp = goo.itempanel:new(self.container)
-					sp:setSize(screen.width-200,100)
-					sp:setPos(100,150)
-					sp:fillPanel({
-						title = 'CREDITS',
-						type = 'DEDICATED TO MY AWESOME FRIENDS',
-						attributes = {
-							{text = 'DESIGN',data = 'LEON JIANG'},
-							{text = 'PROGRAM',data = 'LEON JIANG'},
-							{text = 'TEST',data = 'LEON JIANG'},
-							{text = 'ARTWORK',data = 'LEON JIANG'},
-							{text = 'TOP DOWN SPRITE PACK',data = 'VENI-MORTEM @ DEVIANT ART'},
-							{text = 'SOUND RESOURCES',data = 'FROM WARCRAFT III: REIGN OF CHAOS'},
-							{text = 'MUSIC',data = "FROM THE WITCHER II: ASSASSINS OF KINGS"},
-							{text = 'PHYSICS ENGINE',data = 'BOX2D'},
-							{text = 'GAME ENGINE',data = 'LOVE2D'},
-							{text = 'PRODUCED BY',data = 'GAMEMASTER STUDIO'},
-							{text = ' ',data = 'RING0DEV'},
-						}
-					})
-					anim:easy(sp,'opacity',0,255,2,'linear')
-					end),0)
-					dws:wait(10)
-					dws:push(ExecFunction:new(function()
-					panel1:destroy()
-					panel2:destroy()
-					end),2)
-					dws:push(FadeOut:new('fadeout',nil,{0,0,0},2),2)
-					dws:wait(2)
-					dws:push(ExecFunction:new(function()
-						sp:destroy()
 						popsystem()
-						love.graphics.reset()
-						PlayTutorial()
-						pushsystem(MainMenu)
-						mainmenu = love.filesystem.load("mainmenu/mainmenu.lua")()
-						mainmenu:birth()
+						
 					end),2)
 					map:playCutscene(dws)
 				end
@@ -308,7 +272,7 @@ function Tibet2:nextwave()
 end
 
 function Tibet2:opening_loaded()
-	local intro = CutSceneSequence:new()
+	local intro = CutSceneSequence()
 	intro:push(FadeOut:new('fadein',nil,{0,0,0},2),0)
 	intro:wait(2)
 	intro:push(ExecFunction:new(function()

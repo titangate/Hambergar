@@ -79,8 +79,6 @@ function AssassinAbiTree:initialize(unit)
 	function self.container:keypressed(k)
 		if responds[k] then
 			local x,y = controller:GetWalkDirection()
-			for k,v in pairs(self.highlighted) do
-		end
 			local newlockon = self:direct(self.highlighted,{x,y},function(obj)
 				return obj:isKindOf(goo.learnbutton)
 			end)
@@ -89,7 +87,6 @@ function AssassinAbiTree:initialize(unit)
 				self.highlighted = newlockon
 			end
 		end
-		print (k,'is received by tree')
 		if k=='return' then
 			local x,y = love.mouse.getPosition()
 			love.mousepressed(x,y,'l')
@@ -102,7 +99,7 @@ function AssassinAbiTree:initialize(unit)
 	local lb = goo.imagelabel:new(sp)
 	lb:setSize(500,50)
 	lb:setFont(fonts.oldsans32)
-	lb:setAlignMode('center')
+	lb:setAlignMode'center'
 	lb:setPos(0,35)
 	self.sp = sp
 	self.spiritlabel = lb

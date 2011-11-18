@@ -66,11 +66,11 @@ function AssassinPanelManager:keypressed(k)
 	end
 	if k=='LB' or k=='c' then
 		self:shift(self.character)
-			gamelistener:notify({type = 'shiftpanel',panel = 'character'})
+		gamelistener:notify({type = 'shiftpanel',panel = 'character'})
 	end
-	if k=='RB' or k=='a' then
+	if k=='RB' or k=='i' then
 		self:shift(self.tree)
-			gamelistener:notify({type = 'shiftpanel',panel = 'ability'})
+		gamelistener:notify({type = 'shiftpanel',panel = 'ability'})
 	end
 	if self.currentsystem.keypressed then self.currentsystem:keypressed(k) end
 end

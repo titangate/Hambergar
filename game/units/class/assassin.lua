@@ -161,7 +161,7 @@ local DWSAssassin = Assassin:addState('DWS')
 function DWSAssassin:enterState()
 	for k,v in pairs(self.skills) do
 		if v.states.DWS then
-			v:gotoState('DWS')
+			v:gotoState'DWS'
 		end
 	end
 	if not self.particles then

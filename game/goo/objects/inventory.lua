@@ -13,7 +13,7 @@ function goo.inventory:initialize(parent)
 	self.text.textcolor={255,255,255}
 	self.text:setFont(fonts.midfont)
 	self.text:setSize(100,10)
-	self.text:setAlignMode('center')
+	self.text:setAlignMode'center'
 end
 
 function goo.inventory:setItemtype(itemtype)
@@ -50,6 +50,9 @@ function goo.inventory:switchTab(tab)
 	if self.inv.money then
 		self.text:setText('MONEY '..self.inv.money)
 	end
+end
+
+function goo.inventory:keypressed(k)
 end
 
 return goo.inventory

@@ -6,6 +6,7 @@ function goo.list:initialize(parent)
 	self.dragState = false
 	self.draggable = false
 	self.items = {}
+--	self.highlight = 1
 end
 function goo.list:setSkin()
 end
@@ -14,7 +15,54 @@ function goo.list:update(dt)
 end
 function goo.list:draw( x, y )
 	super.draw(self)
+	if self.highlight then
+			local item = self.items[self.highlight]
+			if item then
+			love.graphics.setColor(255,255,255)
+			love.graphics.rectangle('line',item.x,item.y,item.w,item.h)
+		end
+	end
 end
+local responds = {
+	LSU = 1,
+	LSD = 1,
+	w = 1,
+	s = 1,
+}
+local responds2 = {
+	LSL = 1,
+	LSR = 1,
+	a = 1,
+	d = 1,
+}
+function goo.list:focus()
+	local x,y = self.highlighted:getAbsolutePos()
+	love.mouse.setPosition(x+50,y+24)
+	self.hoverState = true
+end
+function goo.list:keypressed(k)
+	if self.hoverState then
+		if responds[k] then
+			local x,y = controller:GetWalkDirection()
+			local newlockon = self:direct(self.highlighted,{x,y},function(obj)
+				return true -- and newlockon:isKindOf(goo.itembutton) -- not obj:isKindOf(goo.imagelabel)
+			end)
+			if newlockon then
+				local x,y = newlockon:getAbsolutePos()
+				love.mouse.setPosition(x+24,y+24)
+				self.highlighted = newlockon	
+			end
+		end
+		if k=='return' then
+			local x,y = love.mouse.getPosition()
+			print (x,y)
+			love.mousepressed(x,y,'r')
+		end
+	end
+end
+function goo.list:getDirectItem(direction)
+end
+
 function goo.list:mousepressed(x,y,menuitem)
 	super.mousepressed(self,x,y,menuitem)
 	if self.hoverState then
@@ -49,9 +97,11 @@ function goo.list:reposition()
 end
 function goo.list:addItem(item,key)
 	key = key or #self.items
-	self.items[key]=item
+	print (item,key)
+	self.items[key+1]=item
 	item:setPos(item.x,self.h)
 	self:setSize(self.w,self.h + item.h + self.style.vertSpacing)
+	self.highlighted = item
 end
 function goo.list:enterHover()
 end
@@ -67,5 +117,9 @@ function goo.list:mousepressed(x,y,k)
 	elseif k=='wu' then
 		self:setPos(self.x,math.min(math.max(self.y+10,self.parent.h-self.h),0))
 	end
+end
+
+function goo.list:scrollTo(key)
+	self:setPos(self.x,math.min(math.max(self.items[key].y,self.parent.h-self.h),0))
 end
 return goo.list

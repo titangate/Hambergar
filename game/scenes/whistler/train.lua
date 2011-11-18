@@ -151,6 +151,8 @@ function KingEdTrain:checkpoint1_loaded()
 		require 'scenes.whistler.lily'()
 	end
 	self:startTrain()
+	
+	anim:easy(GetGameSystem().fader,'opacity',255,0,1,'linear')
 end
 
 function KingEdTrain:startTrain()

@@ -180,6 +180,7 @@ xboxkeymap =
 	RSP = 'r',
 	LSP = 'e',
 }
+
 function XBOX360Controller:keypressed(b)
 	if xboxkeymap[b] then
 		love.keypressed(xboxkeymap[b])
@@ -189,6 +190,7 @@ function XBOX360Controller:keypressed(b)
 		love.mousepressed(0,0,'l')
 	end
 end
+
 function XBOX360Controller:keyreleased(b)
 	if xboxkeymap[b] then
 		love.keyreleased(xboxkeymap[b])

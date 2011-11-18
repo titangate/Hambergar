@@ -162,7 +162,7 @@ function Inventory:populateList(list,type)
 		b:setSize(list.w,50)
 		b:setInventory(self)
 		b.buttontype = 'inventory'
-		list:addItem(b,k)
+		list:addItem(b)
 	end
 end
 

@@ -406,7 +406,8 @@ end
 
 function goo:mousepressed( x, y, button )
 	local object = self.BASEOBJECT.mousehover
-	if object.visible and object.available then object:mousepressed( x, y, button ) end
+	if object.visible and object.available then
+		object:mousepressed( x, y, button ) end
 end
 
 function goo:mousereleased( x, y, button )

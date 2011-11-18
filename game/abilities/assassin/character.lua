@@ -33,7 +33,7 @@ function AssassinCharacterPanel:initInventory()
 	eq:setPos(350,50)
 	eq:setInventory(self.unit.inventory)
 	eq:setItemtype{'consumable','amplifier','trophy','artifact','weapon'}
-	local dp = goo.itempanel:new()
+	local dp = goo.itempanel(self.container)
 	dp:setSize(230,200)
 	dp:setPos(screen.width-250,50)
 	dp:setTitle('NO ITEM')
@@ -51,13 +51,37 @@ function AssassinCharacterPanel:initInventory()
 			dp:setVisible(false)
 		end
 	end
-
+	self.container.highlighted = i
 	self.inventory = i
+	self.eq = eq
 end
 function AssassinCharacterPanel:initialize(unit)
 	self.dt = 0
 	self.unit = unit
 	self.container = goo.object:new()
+	self.container:setSize(screen.width,screen.height)
+	local responds = {
+		a = 1,
+		d = 1,
+		LSL = 1,
+		LSR = 1,
+	}
+	local p = self
+	function self.container:keypressed(k)
+		if responds[k] then
+			local x,y = controller:GetWalkDirection()
+			local newlockon = self:direct(self.highlighted,{x,y},function(obj)
+				print (obj.class)
+				return obj == p.inventory or obj == p.eq -- and newlockon:isKindOf(goo.itembutton) -- not obj:isKindOf(goo.imagelabel)
+			end)
+			if newlockon then
+				local x,y = newlockon:getAbsolutePos()
+--				love.mouse.setPosition(x+50,y+100)
+				newlockon.invlist.list:focus()
+				self.highlighted = newlockon	
+			end
+		end
+	end
 	
 	self.attpanel = goo.itempanel:new(self.container)
 	self.attpanel:setPos(680,75)

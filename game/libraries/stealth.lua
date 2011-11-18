@@ -303,6 +303,7 @@ function StealthSuspicious:enterState()
 	patrolai.loop = true
 	patrolai:revert()
 	self.suspiciousai:push(patrolai)
+	self.unit:stop()
 --	self.suspiciousai.loop = true
 end
 

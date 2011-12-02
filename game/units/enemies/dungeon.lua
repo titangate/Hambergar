@@ -1,4 +1,5 @@
 
+require 'units.class.chain'
 animation.skeletonsword = Animation(love.graphics.newImage('assets/dungeon/skeletonsword.png'),99,86,0.04,1,1,12,46)
 
 SkeletonSwordsman = AnimatedUnit:subclass('SkeletonSwordsman')
@@ -426,4 +427,97 @@ function SkeletonMagician:enableAI(ai)
 	AIDemo:push(demoselector)
 	AIDemo.loop = true
 	self.ai = AIDemo
+end
+
+requireImage'assets/whistler/guardian.png'
+local ox,oy = img.guardian:getWidth()/2,img.guardian:getHeight()/2
+
+Guardian = Unit:subclass'Guardian'
+function Guardian:initialize(x,y,controller)
+	super.initialize(self,x,y,16,0)
+	self.hp = 100
+	self.maxhp = 100
+	self.controller = controller
+	self.chain = Chain(self,8,8)
+	self.chain:setChainMask({},cc.enemymissile)
+end
+
+function Guardian:createBody(world)
+	super.createBody(self,world)
+	self.chain:createBody(world)
+	self.chain:setSensor(false)
+	self.chain:setAngle(self.body:getAngle())
+	self.chain:stab(self.body:getAngle())
+end
+
+function Guardian:launch()
+end
+
+function Guardian:loose()
+end
+
+function Guardian:update(dt)
+	super.update(self,dt)
+	if self.dt then
+		self.dt = self.dt - dt
+		if self.dt <= 0 then
+			self.present = self.target
+			self.dt = nil
+		end
+	end
+	self.chain:update(dt)
+end
+
+function Guardian:preremove()
+	super.preremove(self)
+	self.chain:preremove()
+end
+
+function Guardian:destroy()
+	
+	super.destroy(self)
+	self.chain:destroy()
+end
+
+function Guardian:damage(type,amount,source)
+	if type == 'Bomb' then -- only bomb can destroy Guardians
+		super.damage(self,type,amount,source)
+	end
+--	self:switch(self.switchStates[math.random(#self.switchStates)])
+end
+
+function Guardian:draw()
+	love.graphics.draw(img.guardian,self.x,self.y,self.body:getAngle(),1,1,ox,oy)
+	self.chain:draw()
+end
+
+GuardianSpear = SkeletonSpear:subclass'GuardianSpear'
+function GuardianSpear:initialize(...)
+	super.initialize(self,...)
+	self.casttime = 0.5
+end
+
+ArcherGuardian = Unit:subclass'ArcherGuardian'
+function ArcherGuardian:initialize()
+	super.initialize(self,x,y,16,0)
+	self.hp = 100
+	self.maxhp = 100
+	self.controller = controller
+	self.skills = {
+		gun = GuardianSpear(self)
+	}
+end
+
+function ArcherGuardian:damage(type,amount,source)
+	if type == 'Bomb' then -- only bomb can destroy Guardians
+		super.damage(self,type,amount,source)
+	end
+end
+
+function ArcherGuardian:enableAI(ai)
+	self.ai = ai or AI.Attack(self,self.skills.gun)
+end
+
+function ArcherGuardian:draw()
+	love.graphics.draw(img.guardian,self.x,self.y,self.body:getAngle(),1,1,ox,oy)
 end

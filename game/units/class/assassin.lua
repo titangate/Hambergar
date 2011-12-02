@@ -22,8 +22,10 @@ function Assassin:initialize(x,y)
 		dws = DWS:new(self,0),
 		takedown = Takedown(self,1),
 		changeoutfit = ChangeOutfit(self,1),
+		useitem = UseItem(self,0),
 	}
 	self:setWeaponSkill()
+	self:setUseItem()
 	self.spirit = 10
 	self.manager = AssassinPanelManager:new(self)
 end
@@ -50,6 +52,7 @@ function Assassin:damage(...)
 end
 
 function Assassin:getSkillpanelData()
+	assert(self.skills.useitem)
 	return {
 		buttons = {
 			{skill = self.skills.dash,hotkey='b',face=character[self.skills.dash.name]},
@@ -60,6 +63,7 @@ function Assassin:getSkillpanelData()
 			{skill = self.skills.invis,hotkey='v',face=character[self.skills.invis.name]},
 			{skill = self.skills.snipe,hotkey='g',face=character[self.skills.pistol.name]},
 			{skill = self.skills.dws,hotkey='z',face=character.divide},
+			{skill = self.skills.useitem,hotkey='q',face=character.divide},
 		}
 	}
 end

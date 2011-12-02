@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="30" height="75" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="snowcliff" tilewidth="64" tileheight="64">
+  <image source="snowcliff.png" width="1024" height="384"/>
+ </tileset>
+ <tileset firstgid="97" name="stair" tilewidth="64" tileheight="64">
+  <image source="stair.png" width="512" height="128"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="30" height="75">
+  <data encoding="base64" compression="zlib">
+   eJztzUVSQwEARMFcAbdgwYIGDe7uwYNz/1PQN2DxV1TNq+rtTKmUUkoppZRSSimllFJKKaWUUkoppfR/aqGVNtrpoJMuuumhlz7K9DPAIEMFfoepMMIoY4wzQZVJpphmhlnmqDFf4HeBRZZYZoU6q6yxzgabbLHNDrvsFfjd54BDjjjmhFPOOOeCS6645oZbGgV+77jngUeeeOaFJq+88c4Hn3zxzc8f278tuBGp
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="30" height="75">
+  <data encoding="base64" compression="zlib">
+   eJztVl1vgzAM9F8dnxt07f7/0xop1q7Xc0pLw8MUSxaBEF/OvhjMttsK3oPXsJX8dPVv8dz34te9eI5zhis/Z8xXsRVm8vHqk93meMjP9/JWmOqea9xbnPtXeeIYXXH0tb1tw44wk0/5mua6qy/wrtrDifZSwi7xnDJeD1evq9cbsZEz1oCxFVfewwJrETPS2UScsQ5ujBHpahRzZ4qNuIPda28o5NjXpfElz3d5fszcPd9cU4wzCM6ea9ah7x/37RhpPGdfxHsL5YzzgGOFy/cz4Poe1HsYH/mxBgfxfII4F+KKue0ErudjImyFo/Y0QQzXMWp6sNszjBrrKGYUP8J0vshb5SCKG9UVzxjnyufmPHYNr/annxVwH52tLXxxbgBufLYi7XOfUFzVOsZ2bqg11uYIvLg/l/Qc1Rhz0IGPdt+LmFupp0bzXGd83/uW+t4yz4hrujfTuphM152/gx4LvxuKC2O6RdiqF6qe7HtQXCPMR9hc71I/fxazhM3/HUnTs933LaUjX7vFcH3E378VW/rCM1bCPpvO415MhR39B5Vqvccwzofp/7qU8883YrJ9mf7+JZ39vBkL7RHfWoZ8kfMRfPHcOPYRfDHPR9bX84y1PbK+yLXp+b3W9Nz0XMOanpuea1jTc9NzDWt6bnquYU3PTc81rOm56bmGNT3/bz03e91+AcDWqgY=
+  </data>
+ </layer>
+ <objectgroup name="areas" width="30" height="75">
+  <object name="chr" x="960" y="4614" width="60" height="72"/>
+  <object name="1" x="736" y="4016" width="448" height="72"/>
+  <object name="2" x="744" y="3368" width="456" height="96"/>
+  <object name="3" x="744" y="2664" width="456" height="104"/>
+  <object name="4" x="752" y="2072" width="432" height="104"/>
+  <object name="platformcenter" x="961" y="1537" width="45" height="49"/>
+  <object name="hans" x="966" y="926" width="62" height="70"/>
+  <object name="4" x="680" y="1748" width="552" height="140"/>
+ </objectgroup>
+ <objectgroup name="obstacles" width="30" height="75">
+  <object x="0" y="4784" width="1944" height="48"/>
+  <object x="664" y="1936" width="104" height="2672"/>
+  <object x="1155" y="1935" width="56" height="2672"/>
+  <object x="1156" y="4607" width="206" height="38"/>
+  <object x="1311" y="4638" width="90" height="31"/>
+  <object x="1371" y="4663" width="110" height="129"/>
+  <object x="479" y="4653" width="119" height="162"/>
+  <object x="559" y="4553" width="112" height="112"/>
+  <object x="310" y="1770" width="436" height="192"/>
+  <object x="112" y="1622" width="336" height="202"/>
+  <object x="-26" y="1358" width="174" height="312"/>
+  <object x="92" y="1464" width="178" height="204"/>
+  <object x="206" y="1550" width="132" height="114"/>
+  <object x="-50" y="716" width="78" height="648"/>
+  <object x="-24" y="436" width="106" height="278"/>
+  <object x="32" y="234" width="168" height="290"/>
+  <object x="174" y="112" width="150" height="226"/>
+  <object x="316" y="34" width="204" height="158"/>
+  <object x="508" y="2" width="936" height="72"/>
+  <object x="1366" y="36" width="240" height="166"/>
+  <object x="1534" y="158" width="214" height="200"/>
+  <object x="1646" y="316" width="244" height="214"/>
+  <object x="1834" y="484" width="98" height="274"/>
+  <object x="1896" y="728" width="84" height="618"/>
+  <object x="1830" y="1328" width="120" height="138"/>
+  <object x="1768" y="1398" width="110" height="148"/>
+  <object x="1688" y="1452" width="114" height="162"/>
+  <object x="1614" y="1512" width="108" height="162"/>
+  <object x="1556" y="1594" width="100" height="144"/>
+  <object x="1498" y="1650" width="146" height="186"/>
+  <object x="1432" y="1712" width="94" height="160"/>
+  <object x="1156" y="1790" width="332" height="164"/>
+ </objectgroup>
+ <objectgroup name="objects" width="30" height="75">
+  <object name="IALSwordsman" x="850" y="3672" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="1"/>
+   </properties>
+  </object>
+  <object name="IALSwordsman" x="1067" y="3674" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="1"/>
+   </properties>
+  </object>
+  <object name="IALSwordsman" x="959" y="3658" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="1"/>
+   </properties>
+  </object>
+  <object name="IALMachineGunner" x="827" y="2954" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="2"/>
+   </properties>
+  </object>
+  <object name="IALMachineGunner" x="967" y="2958" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="2"/>
+   </properties>
+  </object>
+  <object name="IALSwordsman" x="927" y="3094" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="2"/>
+   </properties>
+  </object>
+  <object name="IALSwordsman" x="818" y="3108" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="2"/>
+   </properties>
+  </object>
+  <object name="IALSwordsman" x="1036" y="3110" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="2"/>
+   </properties>
+  </object>
+  <object name="IALSwordsman" x="850" y="2478" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="3"/>
+   </properties>
+  </object>
+  <object name="IALSwordsman" x="1068" y="2480" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="3"/>
+   </properties>
+  </object>
+  <object name="IALMachineGunner" x="999" y="2328" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="3"/>
+   </properties>
+  </object>
+  <object name="IALSwordsman" x="959" y="2464" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="3"/>
+   </properties>
+  </object>
+  <object name="IALShotgunner" x="850" y="2344" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="3"/>
+   </properties>
+  </object>
+  <object name="IALShotgunner" x="903" y="2262" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="3"/>
+   </properties>
+  </object>
+  <object name="IALSwordsman" x="931" y="1226" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="4"/>
+   </properties>
+  </object>
+  <object name="IALMachineGunner" x="1503" y="974" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="4"/>
+   </properties>
+  </object>
+  <object name="IALSwordsman" x="731" y="1044" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="4"/>
+   </properties>
+  </object>
+  <object name="IALShotgunner" x="947" y="718" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="4"/>
+   </properties>
+  </object>
+  <object name="IALShotgunner" x="577" y="718" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="4"/>
+   </properties>
+  </object>
+  <object name="IALSwordsman" x="1137" y="1040" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="4"/>
+   </properties>
+  </object>
+  <object name="IALMachineGunner" x="361" y="954" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="4"/>
+   </properties>
+  </object>
+  <object name="IALShotgunner" x="1277" y="710" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="4"/>
+   </properties>
+  </object>
+  <object name="IALSwordsman" x="939" y="1056" width="74" height="60">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="4"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

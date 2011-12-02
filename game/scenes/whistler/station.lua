@@ -169,14 +169,6 @@ function KingEdStation:checkpoint1_loaded()
 	table.insert(captain.drops,StationKeycard())
 	map:addUnit(captain)
 	
-	self.exitTrigger = Trigger(function(self,event)
-		if (event.index == 'BuildingEntrance' or event.index == 'OfficeEntrance') and event.unit == GetCharacter() then
-			StealthSystem.lethalAttract()
-		end
-	end)
-	self.exitTrigger:registerEventType('add')
-	GetCharacter().skills.weaponskill:gotoState'interact'
-	
 	function utilitybox:interact(unit)
 		g1.ai:setSuspicious(self)
 		g2.ai:setSuspicious(self)
@@ -186,6 +178,9 @@ function KingEdStation:checkpoint1_loaded()
 		if event.index == 'exit' and event.unit == GetCharacter() then
 			print 'exiting'
 			map.update = map.exitToTrain
+		end
+		if (event.index == 'BuildingEntrance' or event.index == 'OfficeEntrance') and event.unit == GetCharacter() then
+			StealthSystem.lethalAttract()
 		end
 	end)
 		self.exitTrigger:registerEventType'add'

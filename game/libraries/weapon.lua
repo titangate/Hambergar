@@ -86,3 +86,48 @@ end
 function dws:exitState()
 	self.skill:gotoState()
 end
+
+
+UseItem = StatefulObject:subclass'UseItem'
+function UseItem:initialize(unit)
+	super.initialize(self)
+	assert(unit)
+	self.unit = unit
+	self.level = 1
+end
+
+function UseItem:setItem(item)
+--	assert(item)
+	self.item = item
+end
+
+function UseItem:getorderinfo()
+--	return self.skill:getorderinfo()
+end
+
+function UseItem:stop()
+--	return self.skill:stop()
+end
+
+function UseItem:active()
+	assert(self.item)
+	self.unit.inventory:useItem(self.item.name)
+end
+
+function UseItem:getLevel()
+	return self.level
+--	return self.skill:getLevel()
+end
+
+function UseItem:update(dt)
+--	return self.skill:update(dt)
+end
+
+function UseItem:startChannel()
+--	return self.skill:startChannel()
+end
+
+function UseItem:endChannel()
+--	return self.skill:endChannel()
+end
+

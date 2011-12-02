@@ -68,6 +68,12 @@ function Item:isEquipment()
 	return self.equipped
 end
 
+function Item:getCDPercent()
+	local groupname = self.groupname or self:className()
+	local cddt = self.unit:getCD(groupname) or 0
+	return cddt/self.cd
+end
+
 requireImage( 'assets/UI/slot.png','slotimg' )
 ItemSlot = Button:subclass('ItemSlot')
 function ItemSlot:initialize(group,x,y,w,h,id)

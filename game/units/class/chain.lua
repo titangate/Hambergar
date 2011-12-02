@@ -44,15 +44,15 @@ function ChainSegment:add(b,coll)
 	self.delegate.segmentCollide(b,coll,self)
 end
 
-function ChainSegment:createBody(world,x,y,r,prev)
+function ChainSegment:createBody(world,x,y,r,prev,cat,mask)
 	assert(world)
 	assert(prev)
 	self.body = love.physics.newBody(world,x,y,0.1,0.1)
 	self.shape = love.physics.newRectangleShape(self.body,0,0,10,5)
 	self.body:setAngle(r)
 	self.updatedata = true
-	self.shape:setCategory(cc.playermissile) -- it behaves like one
-	self.shape:setMask(cc.player,cc.playermissile,cc.enemymissile)
+	self.shape:setCategory(cat) -- it behaves like one
+	self.shape:setMask(unpack(mask))
 	-- connect with previous segment/unit
 	self.prev = prev
 	self.joint = love.physics.newRevoluteJoint(self.prev.body,self.body,self.prev.body:getPosition())
@@ -94,9 +94,26 @@ function ChainSegment:draw()
 	--love.graphics.draw(img.link,self.x,self.y,self.r,1,1,10,5)
 end
 
+function ChainSegment:setSensor(sensor)
+	self.shape:setSensor(sensor)
+end
 
 function ChainSegment:draw_blur()
 	self.delegate.style.draw_blur(self)
+end
+
+function ChainSegment:preremove()
+	self.shape:setMask(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
+    self.preremoved = true
+end
+
+function ChainSegment:destroy()
+	if self.preremoved then
+        if self.shape then self.shape:destroy() end
+        if self.body then self.body:destroy() end
+		self.shape = nil
+		self.body = nil
+    end
 end
 
 Chain = Object:subclass('Chain')
@@ -122,7 +139,15 @@ function Chain:initialize(unit,maxsegment,length)
 	p:setParticleLife(1)
 	p:start()
 	self.p = p
+	self.chainmask = {cc.player,cc.playermissile,cc.enemymissile}
+	self.cat = cc.playermissile
 --	self.blur = true
+end
+
+function Chain:setChainMask(mask,cat)
+	self.chainmask = mask
+	self.cat = cat
+--	self:setLength(self.length)
 end
 
 function Chain:setStyle(style)
@@ -137,10 +162,22 @@ function Chain:createBody(world)
 	for i,seg in ipairs(self.segs) do
 		-- chains start off with angle 0 (pointing right)
 		x = x + 20
-		seg:createBody(world,x,y,0,prev)
+		seg:createBody(world,x,y,0,prev,self.cat,self.chainmask)
 		prev = seg
 	end
 	self:setLength(#self.segs)
+end
+
+function Chain:preremove()
+	for i,v in ipairs(self.segs) do
+		v:preremove()
+	end
+end
+
+function Chain:destroy()
+	for i,v in ipairs(self.segs) do
+		v:destroy()
+	end
 end
 
 function Chain:update(dt)
@@ -233,7 +270,7 @@ function Chain:setLength(length)
 	self.length = length
 	for i=1,length do
 		local seg = self.segs[i]
-		seg.shape:setMask(cc.player,cc.playermissile,cc.enemymissile)
+		seg.shape:setMask(unpack(self.chainmask))
 		seg.isend = nil
 		seg:join()
 	end
@@ -246,6 +283,11 @@ function Chain:setLength(length)
 	self.segs[self.length].isend = true
 end
 
+function Chain:setSensor(...)
+	for i,v in ipairs(self.segs) do
+		v:setSensor(...)
+	end
+end
 
 function Chain:attach(b)
 	assert(b.body)

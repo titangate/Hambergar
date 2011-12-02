@@ -33,6 +33,8 @@ preloadlist(
 	whistler = {
 		'units.other.whistler',
 		'units.enemies.dungeon',
+		'units.other.switchplate',
+		'units.other.guardian',
 	}
 }
 )

@@ -9,7 +9,7 @@ function ControllerBase:setLockAvailability(state)
 end
 
 function ControllerBase:lock(u)
-	if u == GetCharacter() then return end
+	if u == GetCharacter() or u.ignorelock then return end
 	if self.lockstate then
 		if not self.lockunit or getdistance(GetCharacter(),u) <= self.lockdistance then
 			self.lockunit = u
@@ -215,20 +215,20 @@ function XBOX360Controller:GetRawOrderDirection()
 end
 function XBOX360Controller:GetOrderPoint()
 	if not self.orderpoint then
-	local x,y =  self.newmap['axe4'],self.newmap['axe3']
-	x,y = x*250,y*250
+	x,y = unpack(self.orderdirection)
 	self.orderpoint = {GetCharacter().x+x,GetCharacter().y+y}
 	end
 	return self.orderpoint
 end
 
 function XBOX360Controller:GetWalkDirection()
-for i=0,self.numaxis-1 do
+	for i=0,self.numaxis-1 do
 		k = 'axe'..i
 		self.newmap[k] = love.joystick.getAxis(self.index,i)
 	end
 	if not self.walkdirection then
 	local x,y =  self.newmap['axe0'],self.newmap['axe1']
+	if x==0 and y==0 then x= 1 end
 	self.walkdirection = {x,y,(x*x+y*y)>0.5}
 	end
 	return unpack(self.walkdirection)
@@ -259,7 +259,7 @@ function k:GetRawOrderDirection()
 	assert(map.camera)
 	x,y = map.camera:untransform(x,y)
 	if x==0 and y==0 then
-		return {1,0}
+		return self:GetOrderDirection()
 	end
 	return {normalize(x-GetCharacter().x,y-GetCharacter().y)}
 end
@@ -277,6 +277,7 @@ function k:GetWalkDirection()
 				x,y=x+v[1],y+v[2]
 			end
 		end
+		if x==0 and y==0 then x,y = unpack(self:GetOrderDirection()) end
 		return x,y,walk
 	end
 controller = k

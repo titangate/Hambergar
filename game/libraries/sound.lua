@@ -1,11 +1,13 @@
-music_playing = nil
+local music_playing = nil
 local music_name = nil
 
 function PlayMusic(string)
+	print (string,'is being played')
 	if music_name == string then
 		return
 	end
 	music_name = string
+	print (music_playing)
 	if music_playing then love.audio.stop(music_playing) end
 	music_playing = love.audio.newSource(string)
 	music_playing:setLooping(true)
@@ -20,7 +22,7 @@ function PauseMusic(state)
 	end
 end
 
-environment_playing = nil
+local environment_playing = nil
 local environment_name = nil
 
 function PlayEnvironmentSound(string)

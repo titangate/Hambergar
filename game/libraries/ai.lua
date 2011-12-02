@@ -394,3 +394,11 @@ function AI.ApproachAndAttack(t2,t,attackskill,range,firerange)
 	AIDemo.loop = true
 	return AIDemo
 end
+
+function AI.Attack(t2,attackskill,range,firerange)
+	AIDemo = Sequence:new()
+	AIDemo:push(OrderChannelSkill:new(attackskill,function()return {math.cos(t2.body:getAngle()),math.sin(t2.body:getAngle())},t2,attackskill end))
+	AIDemo:push(OrderWait(1))
+	AIDemo.loop = true
+	return AIDemo
+end

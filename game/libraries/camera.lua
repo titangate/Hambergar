@@ -64,6 +64,16 @@ function Camera:untransform(x,y)
 	return x,y
 end
 
+function Camera:getViewport()
+	local x,y = self:untransform(0,0)
+	return {
+		x = x,
+		y = y,
+		w = playable.width,
+		h = playable.height
+	}
+end
+
 function Camera:revert()
 --	for k=#self.transformations,1,-1 do
 --		self.transformations[k]:revert()
@@ -121,17 +131,17 @@ function FollowerCamera:apply(z)
 	super.apply(self,z)
 end
 
-ContainerCamera = Camera:subclass('ContainerCamera')
+ContainerCamera = Camera:subclass'ContainerCamera'
 function ContainerCamera:initialize(range,aabb,...)
 	super.initialize(self)
 	self.range = range
 	self.units = arg
 	self.aabb = aabb or
 	{
-		x1 = -1000,
-		y1 = -1000,
-		x2 = 1000,
-		y2 = 1000
+		x1 = -999999,
+		y1 = -999999,
+		x2 = 999999,
+		y2 = 999999
 	}
 end
 

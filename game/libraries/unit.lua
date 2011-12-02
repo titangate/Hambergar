@@ -405,8 +405,14 @@ function Character:setWeaponSkill(skill)
 	self.skills.weaponskill:setSkill(skill)
 end
 
-function Character:pickUp(item)
-	return self.inventory:addItem(item)
+function Character:setUseItem(item)
+	self.skills.useitem = self.skills.useitem or UseItem(item)
+	self.skills.useitem:setItem(item)
+	assert(self.skills.useitem)
+end
+
+function Character:pickUp(item,stack)
+	return self.inventory:addItem(item,stack)
 end
 
 function table.copy(t)

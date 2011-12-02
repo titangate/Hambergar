@@ -182,9 +182,7 @@ LightningChainEffect:addAction(function(point,caster,skill)
 	)
 	units[0] = caster
 	caster:playAnimation('active',0.5,false)
-	print (#units,units)
 	for i = 1,math.min(#units,skill.jumpcount) do
-		print (i)
 		Timer:new(0.2*i-0.2,1,function(t)
 			local l = Beam:new(units[i-1],units[i],1,1,{255,255,255})
 			map:addUpdatable(l)
@@ -298,10 +296,7 @@ BallDamageEffect:addAction(function (area,caster,skill)
 			if v.body and not v.immuneimpact then
 				v.body:applyImpulse(x,y)
 			end
-			print (v.hp,'before')
-			print (skill.damage)
 			v:damage('Electric',skill.damage,caster)
-			print (v.hp,'after')
 		end
 	end
 	TEsound.play('sound/thunderclap.wav')

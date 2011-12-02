@@ -1,5 +1,5 @@
 
-files = love.filesystem.enumerate('assets/swift/icon')
+local files = love.filesystem.enumerate('assets/swift/icon')
 for i,v in ipairs(files) do
 	if love.filesystem.isFile('assets/swift/icon/'..v) then
 		local f = v:gmatch("(%w+).(%w+)")

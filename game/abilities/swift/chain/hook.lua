@@ -78,14 +78,6 @@ function b_Hooked:start(unit)
 			self.add = false
 		end
 		assert(self.caster)
-		--[[
-		local c = self.caster
-		function unit.add(unit,b,coll)
-			if b:isKindOf(Unit) and b:isEnemyOf(c) then
-				b:damage('Bullet',self.skill.smashdamage,self.caster)
-				TEsound.play({'sound/thunderclap.wav'})
-			end
-		end]]
 	end
 end
 

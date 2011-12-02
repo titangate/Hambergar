@@ -18,7 +18,7 @@ end
 function goo.skillbutton:keypressed(k)
 	if not self.skill or self.skill.level<=0 then return end
 	if k==self.hotkey then
-		if self.skill:isKindOf(ActiveSkill) then
+		if self.skill.active then
 			self.skill:active()
 		else
 			GetCharacter():switchChannelSkill(self.skill)
@@ -30,7 +30,7 @@ end
 function goo.skillbutton:keyreleased(k)
 	if not self.skill or self.skill.level<=0 then return end
 	if k==self.hotkey then
-		if not self.skill:isKindOf(ActiveSkill) then
+		if not self.skill.active then
 			self.parent.count = math.max(0,self.parent.count - 1)
 --			print (self.visible)
 			if self.parent.count <= 0 then
@@ -98,6 +98,7 @@ function goo.bottompanel:fillPanel(data,pedal)
 		local b = goo.skillbutton:new(self)
 		b:setPos(self.style.xMargin+i*60,self.style.yMargin)
 		b:setSize(48,48)
+		print (v.skill.class)
 		b:setSkill(v.skill,v.face)
 		b:setHotkey(v.hotkey)
 		table.insert(self.buttons,b)

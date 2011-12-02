@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="80" height="100" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="stair" tilewidth="64" tileheight="64">
+  <image source="stair.png" width="512" height="128"/>
+ </tileset>
+ <tileset firstgid="17" name="indoortile" tilewidth="64" tileheight="64">
+  <image source="indoortile.png" width="480" height="320"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="80" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt12lOw0AMQOEQlpawlGtw/wvW+TGqNWCC5Fnd90kWoqpIYj2SdlmAsT3LvMicZFaZR5mnBq/P7k3mXeZD5lPmIrM1fH12rTqL1F+PziL116Mz+qO/hP586M+H/sqhPx/6G9O99FcL/fnQnw/9+UTqb+1wzEj9bR2OSX8+9OdDfz705xOtv7yD2qL1l3dQG/350J8P/ZXxoI6vGzw3PAevow5qelXH0cf+qnzcko7uQzXRn8899FfzOejpzzpv/bv1npJ6Pgc9/VnnrffVYn+z9mftb1V/03pPSdH6219P+4ve3+7bmCN6f9Y1/HZPjHT/25XYn3UN6Sf9/bQt9g6Peixp1v72HaVztPaVXxP93Vj7s66n1v4i9Pefe+Fpue2xpAj96V1Z++vx/B1Z/vzIP0OP8PlvZNbu9P9q7++/I/trf2lafH+btb9RzNrfKOjPh/4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC7As+IJqk=
+  </data>
+ </layer>
+ <objectgroup name="areas" width="80" height="100">
+  <object name="chr" x="488" y="408" width="172" height="144"/>
+  <object name="bridgeanchor" x="2208" y="2495" width="68" height="68"/>
+  <object name="eastquadenter" x="2924" y="2310" width="160" height="440"/>
+  <object name="entertemple" x="1159" y="409" width="105" height="263"/>
+ </objectgroup>
+ <objectgroup name="objects" width="80" height="100">
+  <object name="SwitchPlate" x="2117" y="562" width="66" height="66">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="id" value="doortrigger"/>
+   </properties>
+  </object>
+  <object name="Guardian" x="1116" y="426" width="66" height="66">
+   <properties>
+    <property name="angle" value="1.57"/>
+    <property name="controller" value="enemy"/>
+   </properties>
+  </object>
+  <object name="Guardian" x="1114" y="568" width="66" height="66">
+   <properties>
+    <property name="angle" value="-1.57"/>
+    <property name="controller" value="enemy"/>
+   </properties>
+  </object>
+  <object name="ArcherGuardian" x="1900" y="1380" width="39" height="37">
+   <properties>
+    <property name="angle" value="0"/>
+    <property name="controller" value="enemy"/>
+   </properties>
+  </object>
+  <object name="GrandDoor" x="2095" y="808" width="92" height="44">
+   <properties>
+    <property name="angle" value="0"/>
+    <property name="id" value="door1"/>
+   </properties>
+  </object>
+  <object name="GrandDoor" x="2097" y="1247" width="92" height="44">
+   <properties>
+    <property name="angle" value="0"/>
+    <property name="id" value="door2"/>
+   </properties>
+  </object>
+  <object name="ArcaneCircle" x="1526" y="503" width="172" height="144"/>
+  <object name="ArcherGuardian" x="1900" y="1434" width="39" height="37">
+   <properties>
+    <property name="angle" value="0"/>
+    <property name="controller" value="enemy"/>
+   </properties>
+  </object>
+  <object name="ArcherGuardian" x="1901" y="1487" width="39" height="37">
+   <properties>
+    <property name="angle" value="0"/>
+    <property name="controller" value="enemy"/>
+   </properties>
+  </object>
+  <object name="ArcherGuardian" x="1902" y="1543" width="39" height="37">
+   <properties>
+    <property name="angle" value="0"/>
+    <property name="controller" value="enemy"/>
+   </properties>
+  </object>
+  <object name="SwitchPlate" x="2175" y="1673" width="66" height="66">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="id" value="switch3"/>
+   </properties>
+  </object>
+  <object name="SwitchPlate" x="2267" y="1677" width="66" height="66">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="id" value="switch4"/>
+   </properties>
+  </object>
+  <object name="SwitchPlate" x="2081" y="1673" width="66" height="66">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="id" value="switch2"/>
+   </properties>
+  </object>
+  <object name="SwitchPlate" x="1989" y="1673" width="66" height="66">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="id" value="switch1"/>
+   </properties>
+  </object>
+  <object name="BookOfRisen" x="769" y="456" width="115" height="73"/>
+  <object name="SkeletonSwordsman" x="1904" y="307" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="entertemple"/>
+   </properties>
+  </object>
+  <object name="SkeletonSpearman" x="2025" y="416" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="entertemple"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="1902" y="512" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="entertemple"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="1723" y="413" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="entertemple"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="obstacles" width="80" height="100">
+  <object x="1133" y="585" width="27" height="251"/>
+  <object x="1132" y="123" width="27" height="325"/>
+  <object x="557" y="109" width="595" height="43"/>
+  <object x="449" y="147" width="140" height="76"/>
+  <object x="387" y="211" width="88" height="135"/>
+  <object x="235" y="291" width="159" height="61"/>
+  <object x="225" y="348" width="52" height="375"/>
+  <object x="260" y="689" width="203" height="69"/>
+  <object x="433" y="743" width="32" height="103"/>
+  <object x="451" y="815" width="688" height="35"/>
+  <object x="1144" y="815" width="912" height="36"/>
+  <object x="2184" y="813" width="269" height="32"/>
+  <object x="2434" y="276" width="24" height="564"/>
+  <object x="2186" y="1252" width="269" height="32"/>
+  <object x="1870" y="1250" width="160" height="36"/>
+  <object x="1980" y="1804" width="64" height="564"/>
+  <object x="2380" y="1804" width="48" height="560"/>
+  <object x="2372" y="2696" width="576" height="52"/>
+  <object x="2364" y="2308" width="584" height="56"/>
+  <object x="714" y="2696" width="1332" height="52"/>
+  <object x="682" y="2308" width="1364" height="56"/>
+  <object x="1980" y="2737" width="64" height="564"/>
+  <object x="2380" y="2731" width="48" height="560"/>
+  <object name="bridgebot" x="1984" y="2696" width="446" height="58"/>
+  <object name="bridgeleft" x="1982" y="2358" width="64" height="386"/>
+  <object name="bridgeright" x="2362" y="2308" width="64" height="440"/>
+  <object x="2886" y="2042" width="60" height="314"/>
+  <object x="2916" y="1982" width="1046" height="68"/>
+  <object x="3904" y="2028" width="72" height="956"/>
+  <object x="2902" y="2936" width="1002" height="72"/>
+  <object x="2874" y="2736" width="70" height="278"/>
+ </objectgroup>
+</map>

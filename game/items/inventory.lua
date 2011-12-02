@@ -12,10 +12,9 @@ function InventoryBase:initialize(unit)
 end
 
 function InventoryBase:addItem(item,stack)
-	print (item.name,item.stack)
 	local t=item.type
 	local n=item.name
-	local stack = stack or 1
+	stack = stack or 1
 	self.items[t]=self.items[t] or {}
 	if self.items[t][n] then
 		self.items[t][n].stack = self.items[t][n].stack+stack
@@ -60,8 +59,9 @@ function InventoryBase:useItem(item)
 	assert(self.unit)
 	for k,v in pairs(self.items) do
 		if v[item] then
-			v[item]:use(self.unit)
+			if v[item]:use(self.unit) then
 			self:removeItem(item,1)
+		end
 		end
 	end
 	self.updateInvUI()
@@ -138,10 +138,10 @@ function Inventory:getEquip(itemtype)
 	return self.equipments[itemtype]
 end
 
-function Inventory:interactItem(item,condition)
+function Inventory:interactItem(item,condition,button)
 	if item then
 		if condition == 'inventory' then
-			if item.use then
+			if item.use and button=='l' then
 				if not self.unit:getCD(item.groupname) then
 					self:useItem(item.name)
 				end

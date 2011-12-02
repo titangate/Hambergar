@@ -41,8 +41,8 @@ function goo.itembutton:mousepressed(x,y,button)
 		self.parent:mousepressed(x,y,button)
 	end
 	
-	if button == 'r' and self.item then
-		self.inv:interactItem(self.item,self.buttontype)
+	if self.item then
+		self.inv:interactItem(self.item,self.buttontype,button)
 	end
 end
 

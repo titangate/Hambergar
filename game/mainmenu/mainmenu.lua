@@ -41,7 +41,7 @@ b_startgame:setPos( 10, height )
 b_startgame:setText( 'Start Game' )
 b_startgame:sizeToText()
 b_startgame.onClick = function( self, button )
-	require 'scenes.tibet.tibet1'
+	require 'scenes.tibet.tibet'
 	local gs = require 'scenes.gamesystem'
 	require 'scenes.tibet.intro'
 	mainmenu:onClose()
@@ -49,7 +49,7 @@ b_startgame.onClick = function( self, button )
 	loadingscreen.finished = function ()
 		SetGameSystem(gs)
 		GetGameSystem():load()
-		GetGameSystem():runMap(Tibet1,'opening')
+		GetGameSystem():runMap(Tibet,'opening')
 		pushsystem(GetGameSystem())
 	end
 end

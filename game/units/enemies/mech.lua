@@ -160,8 +160,6 @@ end
 seekermissilelauncheffect = ShootMissileEffect:new()
 seekermissilelauncheffect:addAction(function (unit,caster,skill)
 	local x,y = displacement(caster.x,caster.y,caster.body:getAngle(),30)
-	print (x,y,'created')
-	print (caster.controller)
 	local missile = SeekerMissile:new(x,y,caster.controller)
 	missile:setTarget(unit)
 	map:addUnit(missile)

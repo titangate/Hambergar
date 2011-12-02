@@ -60,7 +60,7 @@ end
 
 function GameSystem:continue()
 --	local m = table.load(love.filesystem.read(checkpoint))
-	self:runMap(self.map,self.m.checkpoint)
+	self:runMap(self.map.class,self.m.checkpoint)
 end
 
 function GameSystem:loadobj(label)
@@ -76,11 +76,11 @@ function GameSystem:runMap(m,checkpoint)
 		map:destroy()
 	end
 	gamelistener = Listener:new()
-	if m:isKindOf(Map) then
-		map = m
-	else
+--	if m:isKindOf(Map) then
+--		map = m
+--	else
 		map = m()
-	end
+--	end
 	map:load()
 	if map.loadCheckpoint and checkpoint then
 		map:loadCheckpoint(checkpoint)

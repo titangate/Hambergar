@@ -48,6 +48,8 @@ function Map:initialize(w,h)
 	self.blood = {}
 	self.obstacles = {}
 	controller:setLockAvailability(options.aimassist)
+	self.unitdict = {}
+	
 end
 
 MapBlock = Object:subclass('MapBlock')
@@ -102,6 +104,7 @@ function Map:placeObstacle(x,y,w,h,b,name)
 	if name then
 		self.obstacles[name]=mb
 	end
+	print (name,'OBSTACLE NAME')
 	shape:setData(mb)
 	mb:registerListener(gamelistener)
 end
@@ -109,7 +112,7 @@ end
 function Map:setObstacleState(b,state)
 	local obs = self.obstacles[b]
 	assert(obs)
-	mb.shape:setSensor(not state)
+	obs.shape:setSensor(not state)
 end
 
 function Map:getBlock(x,y)
@@ -298,14 +301,13 @@ function Map:loadTiled(tmx)
 	local loader = require("AdvTiledLoader/Loader")
 	loader.path = "maps/"
 	local m = loader.load(tmx)
-	print ('map with problem,',map)
 	m.useSpriteBatch=true
 	m.drawObjects=false
 	local oj = m.objectLayers
 	for k,v in pairs(oj) do
 		if v.name == 'obstacles' then
 			for _,obj in pairs(v.objects) do
-				self:placeObstacle(obj.x-w/2,obj.y-h/2,obj.width,obj.height)
+				self:placeObstacle(obj.x-w/2,obj.y-h/2,obj.width,obj.height,nil,obj.name)
 			end
 		elseif v.name == 'areas' then
 			for _,obj in pairs(v.objects) do
@@ -315,8 +317,8 @@ function Map:loadTiled(tmx)
 			for _,obj in pairs(v.objects) do
 				if obj.properties.phrase then
 					local p = obj.properties.phrase
-					unitdict[p] = unitdict[p] or {}
-					table.insert(unitdict[p],obj)
+					self.unitdict[p] = self.unitdict[p] or {}
+					table.insert(self.unitdict[p],obj)
 				else
 					self:loadUnitFromTileObject(obj,w,h)
 				end

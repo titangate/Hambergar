@@ -161,7 +161,7 @@ function WaterlooSite:opening_load()
 		t:run()
 	end,true,true)
 	
-	local areaTrigger = Trigger:new(function(self,event)
+	local areaTrigger = Trigger(function(self,event)
 		
 		if event.index == 'computergridenter' and event.unit==GetCharacter() then	
 			self:close()	
@@ -174,7 +174,7 @@ function WaterlooSite:opening_load()
 			
 	end)
 	areaTrigger:registerEventType('add')
-	local hallwayTrigger = Trigger:new(function(self,event)
+	local hallwayTrigger = Trigger(function(self,event)
 		if event.index == 'Hallway1' and event.unit==GetCharacter() then
 			self:close()
 			wait(2)
@@ -186,7 +186,7 @@ function WaterlooSite:opening_load()
 			
 	end)
 	hallwayTrigger:registerEventType('add')
-	local roomTrigger = Trigger:new(function(self,event)
+	local roomTrigger = Trigger(function(self,event)
 		if event.index == 'engineeringroom' and event.unit==GetCharacter() then
 			self:close()
 			wait(2)
@@ -228,7 +228,6 @@ function WaterlooSite:boss_loaded()
 	local finishTrigger = Trigger:new(function(self,event)
 		if event.index == 'outside' and event.unit==GetCharacter() then
 			self:close()
-			print ('ABOUT TO CLOSE')
 			local finishscene = CutSceneSequence:new()
 			finishscene:push(FadeOut:new('fadeout',nil,{0,0,0},2),0)
 			finishscene:wait(2)

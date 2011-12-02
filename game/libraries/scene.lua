@@ -293,6 +293,10 @@ function Map:loadUnitFromTileObject(obj)
 		if obj.properties.id then
 			_G[obj.properties.id]=object
 		end
+		if obj.properties.drop then
+			table.insert(object.drops,loadstring('return '..obj.properties.drop..':new()')())
+		end
+		return object
 	end
 end
 
@@ -319,9 +323,11 @@ function Map:loadTiled(tmx)
 					local p = obj.properties.phrase
 					self.unitdict[p] = self.unitdict[p] or {}
 					table.insert(self.unitdict[p],obj)
+					
 				else
 					self:loadUnitFromTileObject(obj,w,h)
 				end
+				
 			end
 		end
 	end

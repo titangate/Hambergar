@@ -16,6 +16,9 @@
   <object name="bridgeanchor" x="2208" y="2495" width="68" height="68"/>
   <object name="eastquadenter" x="2924" y="2310" width="160" height="440"/>
   <object name="entertemple" x="1159" y="409" width="105" height="263"/>
+  <object name="eastsp1" x="3160" y="2237" width="73" height="60"/>
+  <object name="eastsp2" x="3607" y="2246" width="73" height="60"/>
+  <object name="eastsp3" x="3438" y="2755" width="73" height="60"/>
  </objectgroup>
  <objectgroup name="objects" width="80" height="100">
   <object name="SwitchPlate" x="2117" y="562" width="66" height="66">
@@ -97,7 +100,6 @@
     <property name="id" value="switch1"/>
    </properties>
   </object>
-  <object name="BookOfRisen" x="769" y="456" width="115" height="73"/>
   <object name="SkeletonSwordsman" x="1904" y="307" width="76" height="72">
    <properties>
     <property name="controller" value="enemy"/>
@@ -107,6 +109,7 @@
   <object name="SkeletonSpearman" x="2025" y="416" width="76" height="72">
    <properties>
     <property name="controller" value="enemy"/>
+    <property name="drop" value="BookOfRisen"/>
     <property name="phrase" value="entertemple"/>
    </properties>
   </object>
@@ -120,6 +123,31 @@
    <properties>
     <property name="controller" value="enemy"/>
     <property name="phrase" value="entertemple"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="3288" y="2524" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="eastquad1"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="3469" y="2417" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="eastquad2"/>
+   </properties>
+  </object>
+  <object name="SkeletonSpearman" x="3590" y="2527" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="drop" value="BookOfRisen"/>
+    <property name="phrase" value="eastquad3"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="3467" y="2623" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="eastquad3"/>
    </properties>
   </object>
  </objectgroup>

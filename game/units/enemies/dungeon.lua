@@ -2,6 +2,12 @@
 require 'units.class.chain'
 animation.skeletonsword = Animation(love.graphics.newImage('assets/dungeon/skeletonsword.png'),99,86,0.04,1,1,12,46)
 
+
+SkeletonSwordsmanMelee = Melee:subclass('IALSwordsmanMelee')
+function SkeletonSwordsmanMelee:initialize(unit)
+	super.initialize(self,unit)
+	self.damage = 50
+end
 SkeletonSwordsman = AnimatedUnit:subclass('SkeletonSwordsman')
 function SkeletonSwordsman:initialize(x,y,controller)
 	super.initialize(self,x,y,16,10)
@@ -11,7 +17,7 @@ function SkeletonSwordsman:initialize(x,y,controller)
 	self.mp = 500
 	self.maxmp = 500
 	self.skills = {
-		melee = IALSwordsmanMelee:new(self),
+		melee = SkeletonSwordsmanMelee:new(self),
 		tornado = SkeletonTornado(self),
 	}
 	self.animation = {

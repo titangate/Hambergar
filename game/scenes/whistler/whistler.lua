@@ -115,7 +115,7 @@ function Whistler:opening_load()
 	local leon = Assassin:new(x,y,32,10)
 	leon.direction = {0,-1}
 	leon.controller = 'player'
-	local save = [[return {{["map"]="Whistler",["character"]={2},["checkpoint"]="opening",["depends"]="	require 'scenes.Whistler.Whistler'\n	",["gamesystem"]="return require 'scenes.Whistler.Whistlergamesystem'",},{["movementspeedbuffpercent"]=1,["HPRegen"]=100,["timescale"]=1,["damagebuff"]={3},["hp"]=500,["speedlimit"]=20000,["damageamplify"]={4},["cd"]={5},["mp"]=500,["armor"]={6},["damagereduction"]={7},["spirit"]=1,["evade"]={8},["movingforce"]=500,["maxhp"]=500,["maxmp"]=500,["MPRegen"]=0,["critical"]={9},["movementspeedbuff"]=0,["skills"]={10},["spellspeedbuffpercent"]=1,["inventory"]={11},},{["Bullet"]=0,},{},{},{["Bullet"]=0,},{},{},{},{["stunbullet"]=0,["momentumbullet"]=0,["stim"]=2,["explosivebullet"]=0,["pistol"]=3,["invis"]=1,["dws"]=1,["snipe"]=2,["pistoldwsalt"]=6,["dash"]=1,["roundaboutshot"]=1,["mindripfield"]=1,["mind"]=1,},{["FiveSlash"]='equip',["Theravada"]="equip",},}--|]]
+	local save = [[return {{["map"]="Whistler",["character"]={2},["checkpoint"]="opening",["depends"]="	require 'scenes.Whistler.Whistler'\n	",["gamesystem"]="return require 'scenes.Whistler.Whistlergamesystem'",},{["movementspeedbuffpercent"]=1,["HPRegen"]=0,["timescale"]=1,["damagebuff"]={3},["hp"]=500,["speedlimit"]=20000,["damageamplify"]={4},["cd"]={5},["mp"]=500,["armor"]={6},["damagereduction"]={7},["spirit"]=1,["evade"]={8},["movingforce"]=500,["maxhp"]=500,["maxmp"]=500,["MPRegen"]=0,["critical"]={9},["movementspeedbuff"]=0,["skills"]={10},["spellspeedbuffpercent"]=1,["inventory"]={11},},{["Bullet"]=0,},{},{},{["Bullet"]=0,},{},{},{},{["stunbullet"]=0,["momentumbullet"]=0,["stim"]=2,["explosivebullet"]=0,["pistol"]=3,["invis"]=1,["dws"]=1,["snipe"]=2,["pistoldwsalt"]=6,["dash"]=1,["roundaboutshot"]=1,["mindripfield"]=1,["mind"]=1,},{["FiveSlash"]='equip',["Theravada"]="equip",},}--|]]
 	save = table.load(save)
 	leon:load(save.character)
 	SetCharacter(leon)
@@ -132,6 +132,17 @@ function Whistler:opening_load()
 	PlayEnvironmentSound'sound/windloop.ogg'
 	leon:pickUp(Bomb())
 	leon:pickUp(Bomb())
+	
+	local r1 = Trigger(function(trig,event)
+		if event.index == 'entertemple' and event.unit == GetCharacter() then
+			trig:close()
+			assert(self.unitdict)
+			for _,obj in ipairs(self.unitdict.entertemple) do
+				map:loadUnitFromTileObject(obj)
+			end
+		end
+	end)
+	r1:registerEventType'add'
 	
 	local t1=Trigger(function(trig,event)
 			if event.unit == doortrigger then
@@ -198,6 +209,41 @@ function Whistler:opening_load()
 		end
 	end)
 	bridgeTrigger:registerEventType'switch'
+	
+	local eastenter = Trigger(function(trig,event)
+		if event.index == 'eastquadenter' and event.unit == GetCharacter() then
+			trig:close()
+			self.wave = 1
+			self:eastQuadWave(1)
+		end
+	end)
+	eastenter:registerEventType'add'
+	local boss = Trigger(function(trig,event)
+			if event.unit == GetCharacter() then
+				self.update = function()
+					GetGameSystem():pushState'retry'
+				end
+			elseif self.eastquadenemy[event.unit] then
+				self.eastquadenemy[event.unit] = nil
+				if not next(self.eastquadenemy) then
+					self.wave = self.wave + 1
+					self:eastQuadWave(self.wave)
+				end
+			end
+	end)
+	boss:registerEventType'death'
+end
+
+function Whistler:eastQuadWave(wave)
+	if wave > 3 then return end
+	self.eastquadenemy = {}
+	local dict
+	if wave == 1 then dict = self.unitdict.eastquad1 end
+	if wave == 2 then dict = self.unitdict.eastquad2 end
+	if wave == 3 then dict = self.unitdict.eastquad3 end
+	for _,obj in ipairs(dict) do
+		self.eastquadenemy[map:loadUnitFromTileObject(obj)] = true
+	end
 end
 
 function Whistler:setBridgeDirection()

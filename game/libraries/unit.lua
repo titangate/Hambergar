@@ -349,6 +349,16 @@ function Unit:draw()
 	self:drawBuff()
 end
 
+function Unit:findUnitByType(type)
+	local sources = map:findUnitsWithCondition(
+		function(unit)
+			return unit:isKindOf(type)
+	end)
+	if #sources>=1 then
+		return sources[math.random(#sources)]
+	end
+end
+
 AnimatedUnit = Unit:subclass('AnimatedUnit')
 
 function AnimatedUnit:playAnimation(anim,speed,loop)

@@ -115,3 +115,107 @@ function ArcaneCircle:add(b,coll)
 		end
 	end
 end
+
+RotateCircle = Unit:subclass'RotateCircle'
+function RotateCircle:rotateDelta(da)
+	self.dt = 1
+	self.da = da
+end
+
+function RotateCircle:update(dt)
+	if self.dt then
+		self.dt = self.dt - dt
+		if self.dt <= 0 then
+			self.dt = nil
+		end
+		self.body:setAngle(self.body:getAngle()+self.da*dt)
+	end
+	
+end
+
+function RotateCircle:setAngle(r)
+	super.setAngle(self,r)
+end
+
+InnerCircle = RotateCircle:subclass'InnerCircle'
+function InnerCircle:initialize()
+	super.initialize(self,x,y,64,0)
+end
+
+function InnerCircle:createBody(world)
+	local b = love.physics.newBody(world,self.x,self.y)
+	self.shapes = {}
+	for i=-2,8 do
+		local angle = math.pi*2/12*i
+		local cosr,sinr = math.cos(angle),math.sin(angle)
+		local s = love.physics.newRectangleShape(b,100*cosr,100*sinr,30,30,angle)
+		table.insert(self.shapes,s)
+	end
+	self.body = b
+	if self.r then
+		self.body:setAngle(self.r)
+	end
+end
+
+requireImage'assets/whistler/innercircle.png'
+function InnerCircle:draw()
+	love.graphics.draw(img.innercircle,self.x,self.y,self.body:getAngle(),1,1,256,256)
+end
+
+
+MiddleCircle = RotateCircle:subclass'MiddleCircle'
+function MiddleCircle:initialize()
+	super.initialize(self,x,y,64,0)
+end
+
+function MiddleCircle:createBody(world)
+	local b = love.physics.newBody(world,self.x,self.y)
+	self.shapes = {}
+	for i=-2,8 do
+		local angle = math.pi*2/12*i
+		local cosr,sinr = math.cos(angle),math.sin(angle)
+		local s = love.physics.newRectangleShape(b,160*cosr,160*sinr,50,80,angle)
+		table.insert(self.shapes,s)
+	end
+	self.body = b
+	if self.r then
+		self.body:setAngle(self.r)
+	end
+end
+
+requireImage'assets/whistler/middlecircle.png'
+function MiddleCircle:draw()
+	love.graphics.draw(img.middlecircle,self.x,self.y,self.body:getAngle(),1,1,256,256)
+end
+
+
+OuterCircle = RotateCircle:subclass'OuterCircle'
+function OuterCircle:initialize()
+	super.initialize(self,x,y,64,0)
+end
+
+function OuterCircle:createBody(world)
+	local b = love.physics.newBody(world,self.x,self.y)
+	self.shapes = {}
+	for i=-1,7 do
+		local angle = math.pi*2/12*i
+		local cosr,sinr = math.cos(angle),math.sin(angle)
+		local s = love.physics.newRectangleShape(b,220*cosr,220*sinr,50,150,angle)
+		table.insert(self.shapes,s)
+	end
+	self.body = b
+	if self.r then
+		self.body:setAngle(self.r)
+	end
+end
+
+requireImage'assets/whistler/outercircle.png'
+function OuterCircle:draw()
+	love.graphics.draw(img.outercircle,self.x,self.y,self.body:getAngle(),1,1,256,256)
+	--[[
+	for i=-1,7 do
+		local angle = math.pi*2/12*i
+		local cosr,sinr = math.cos(angle),math.sin(angle)
+		love.graphics.draw(img.dot,self.x+220*cosr,220*sinr+self.y,angle,50,150,0.5,0.5)
+	end]]
+end

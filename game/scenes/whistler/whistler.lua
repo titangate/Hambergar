@@ -78,13 +78,15 @@ function Whistlerbackground:draw()
 end
 
 function Whistlerbackground:rotateTo(angle)
+	map.anim:easy(self,'bridgeangle',self.bridgeangle,angle,3,'linear')
+	--[[
 	if angle>self.bridgeangle then
 		self.turningangle = 0.5
 		self.dt = (angle-self.bridgeangle)/self.turningangle
 	elseif angle<self.bridgeangle then
 		self.turningangle = -0.5
 		self.dt = (angle-self.bridgeangle)/self.turningangle
-	end
+	end]]
 end
 
 Whistler = Map:subclass('Whistler')
@@ -144,26 +146,6 @@ function Whistler:opening_load()
 	end)
 	r1:registerEventType'add'
 	
-	local t1=Trigger(function(trig,event)
-			if event.unit == doortrigger then
-				if event.state == 'chik' then
-					door1:open()
-					door2:close()
-					event.unit:switch'chu'
-				elseif event.state == 'chu' then
-					door1:close()
-					door2:open()
-					event.unit:switch'chik'
-				end
-			end
-			for i,v in ipairs(self.switchplates) do
-				if v==event.unit then
-					local f= {'chik','nga','chu'}
-					event.unit:switch(f[math.random(3)])
-				end
-			end
-		end)
-	t1:registerEventType'switch'
 	
 	local keycombo = {
 		["nga chu nga chu "] = function()
@@ -191,24 +173,42 @@ function Whistler:opening_load()
 			self:setObstacleState('bridgebot',true)
 		end,
 	}
+	local t1=Trigger(function(trig,event)
+			if event.unit == doortrigger then
+				if event.state == 'chik' then
+					door1:open()
+					door2:close()
+					event.unit:switch'chu'
+				elseif event.state == 'chu' then
+					door1:close()
+					door2:open()
+					event.unit:switch'chik'
+				end
+			end
+			for i,v in ipairs(self.switchplates) do
+				if v==event.unit then
+					local f= {'chik','nga','chu'}
+					event.unit:switch(f[math.random(3)])
+				end
+			end
+			phrase = ''
+			for i,v in ipairs(self.switchplates) do
+				phrase = phrase..v.target..' '
+				print (v.target)
+			end
+			print (phrase)
+			if keycombo[phrase] then
+				keycombo[phrase]()
+			end
+		end)
+	t1:registerEventType'switch'
+	
 	self.switchplates = {}
 	table.insert(self.switchplates,switch1)
 	table.insert(self.switchplates,switch2)
 	table.insert(self.switchplates,switch3)
 	table.insert(self.switchplates,switch4)
 	
-	local bridgeTrigger = Trigger(function(trig,event)
-		phrase = ''
-		for i,v in ipairs(self.switchplates) do
-			phrase = phrase..v.target..' '
-			print (v.target)
-		end
-		print (phrase)
-		if keycombo[phrase] then
-			keycombo[phrase]()
-		end
-	end)
-	bridgeTrigger:registerEventType'switch'
 	
 	local eastenter = Trigger(function(trig,event)
 		if event.index == 'eastquadenter' and event.unit == GetCharacter() then
@@ -232,13 +232,43 @@ function Whistler:opening_load()
 			end
 	end)
 	boss:registerEventType'death'
+	
+	local pancake = Trigger(function(trig,event)
+		if event.unit == rotateswitch1 then
+			innercircle:rotateDelta(math.pi/2)
+			middlecircle:rotateDelta(-math.pi/2)
+		elseif event.unit == rotateswitch2 then
+			innercircle:rotateDelta(-math.pi/2)
+			middlecircle:rotateDelta(math.pi/2)
+			outercircle:rotateDelta(-math.pi/2)
+		elseif event.unit == rotateswitch3 then
+			outercircle:rotateDelta(math.pi/2)
+			middlecircle:rotateDelta(-math.pi/2)
+		end
+	end)
+	pancake:registerEventType'switch'
+	
+	
+	local pickupamulet = Trigger(function(trig,event)
+		if event.item == amulet then
+			innercircle:rotateDelta(math.pi)
+			middlecircle:rotateDelta(math.pi)
+			outercircle:rotateDelta(math.pi)
+		end
+	end)
+	pickupamulet:registerEventType'pickup'
 end
 
 function Whistler:eastQuadWave(wave)
 	if wave > 3 then return end
 	self.eastquadenemy = {}
 	local dict
-	if wave == 1 then dict = self.unitdict.eastquad1 end
+	if wave == 1 then 
+		for _,obj in ipairs(self.unitdict.eastquad0) do
+			map:loadUnitFromTileObject(obj)
+		end
+		dict = self.unitdict.eastquad1
+	end
 	if wave == 2 then dict = self.unitdict.eastquad2 end
 	if wave == 3 then dict = self.unitdict.eastquad3 end
 	for _,obj in ipairs(dict) do
@@ -302,6 +332,7 @@ function Whistler:update(dt)
 		self.cutscene = nil
 	end
 end
+
 function Whistler:draw()
 	super.draw(self)
 	if self.cutscene then self.cutscene:draw() end
@@ -311,6 +342,9 @@ function Whistler:destroy()
 	for i,v in ipairs(self.trigs) do
 		v:destroy()
 	end
+end
+
+function scenetest()
 end
 
 

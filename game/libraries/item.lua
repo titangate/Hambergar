@@ -29,6 +29,11 @@ function Item:add(b,coll)
 	if b:isKindOf(Character) then
 		b.inventory:addItem(self)
 		map:removeUnit(self)
+		gamelistener:notify{
+			type = 'pickup',
+			unit = b,
+			item = self,
+		}
 	end
 end
 

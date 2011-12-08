@@ -49,7 +49,7 @@ function Map:initialize(w,h)
 	self.obstacles = {}
 	controller:setLockAvailability(options.aimassist)
 	self.unitdict = {}
-	
+	self.anim = love.filesystem.load'anim/anim.lua'()
 end
 
 MapBlock = Object:subclass('MapBlock')
@@ -188,6 +188,7 @@ function Map:update(dt)
 	if self.timescale then
 		dt = self.timescale * dt
 	end
+	self.anim:update(dt)
 	collides = {}
 	self.world:update(dt)
 	--
@@ -334,7 +335,6 @@ function Map:loadTiled(tmx)
 	self.tiled = m
 	return m
 end
-
 
 function normalize(x,y)
 	local n = math.sqrt(x*x+y*y)

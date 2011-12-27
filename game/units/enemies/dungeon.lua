@@ -449,7 +449,6 @@ end
 
 requireImage'assets/whistler/guardian.png'
 local ox,oy = img.guardian:getWidth()/2,img.guardian:getHeight()/2
-
 Guardian = Unit:subclass'Guardian'
 function Guardian:initialize(x,y,controller)
 	super.initialize(self,x,y,16,0)

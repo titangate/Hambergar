@@ -342,10 +342,14 @@ end
 Trigger = Object:subclass('Trigger')
 -- Each Trigger run on its on coroutine
 function Trigger:initialize(action)
+	if map.trigs then
+		table.insert(map.trigs,self)
+	end
 	self.action=action
+	self.handlers = {}
 end
 function Trigger:registerEventType(type)
-	self.handlers = self.handlers or {}
+	
 	local handler = {
 		eventtype=type,
 		handle = function(handler,event)
@@ -425,4 +429,22 @@ function split(s,re)
 	append(ls,s:sub(i1,i2-1))
 	i1 = i3+1
 	end
+end
+
+function gradientcolor(start,finish,step)
+	assert(step>=2)
+	step = step - 1
+	local d = {}
+	local r = {start}
+	for i=1,#start do
+		table.insert(d,(finish[i]-start[i])/step)
+	end
+	for i=1,step do
+		local c = {}
+		for j=1,#start do
+			table.insert(c,start[j]+d[j]*i)
+		end
+		table.insert(r,c)
+	end
+	return r
 end

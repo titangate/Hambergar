@@ -154,6 +154,7 @@ end
 function Map:addUnit(...)
 	for k,unit in ipairs(arg) do
 		self.units[unit] = true
+		unit.map = self
 		if unit.createBody then unit:createBody(self.world) end
 		unit:registerListener(gamelistener)
 		local controller = unit.controller or 'default'
@@ -366,6 +367,11 @@ function getdistance(a,b)
 	return math.sqrt(x*x+y*y)
 end
 
+
+function anglebetween(b,a)
+	x,y=a.x-b.x,a.y-b.y
+	return math.atan2(y,x)
+end
 function displacement(x,y,angle,dis)
 	local cos,sin = math.cos(angle),math.sin(angle)
 	return x+dis*cos,y+dis*sin

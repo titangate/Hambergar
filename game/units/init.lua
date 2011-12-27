@@ -35,6 +35,8 @@ preloadlist(
 		'units.enemies.dungeon',
 		'units.other.switchplate',
 		'units.other.guardian',
+		'units.enemies.bossreaper',
+		'units.other.lightpuzzleunit'
 	}
 }
 )

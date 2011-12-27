@@ -1,342 +1,619 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="80" height="100" tilewidth="64" tileheight="64">
+<map version="1.0" orientation="orthogonal" width="80" height="120" tilewidth="64" tileheight="64">
  <tileset firstgid="1" name="stair" tilewidth="64" tileheight="64">
   <image source="stair.png" width="512" height="128"/>
  </tileset>
  <tileset firstgid="17" name="indoortile" tilewidth="64" tileheight="64">
   <image source="indoortile.png" width="480" height="320"/>
  </tileset>
- <layer name="Tile Layer 1" width="80" height="100">
+ <layer name="Tile Layer 1" width="80" height="120">
   <data encoding="base64" compression="zlib">
-   eJzt24tOgzAYhmHEwxSPt+H936Alplmt+4Hta+mB90ka47II/HkHLHPDANTt0a0nt05ujW7du/Www+Ote3Xrza13tz7c+nRr2vHx1u3VWU/9leisp/5KdEZ/9OfRn4b+NPSXDv1p6K9OR+kvF/rT0J+G/jQ99TcW2GZP/U0Ftkl/GvrT0J+G/jS99Rd3kFtv/cUd5EZ/GvrT0F8ad8H2wwafd9wH1VoHOb0E2wm3/ZV5uymtnYdyoj/NEfrLeR1U+rP2O/zdek5KJa+DSn/Wfofz2mN+rfZnzW8M/qb1nJR6629+3M+v9/5m38ZaE87POoZL58Sezn+zFPOzjsH/pL//psGe4VqPKbXa3zwjv4/WvOJjor8za37W8eSaXw/9bTkXnobzHFPqob9wVtb8Slx/axZfP+J76Bru/2pmzS58rZZ+/1uzpfn5tcf7t1b7q0Wr/dWC/jT0hyNJ9T2Ho4rPF9Z81r5ng1/MR8PrU0N/1+Naobn2O5n4i/409KehPw39aehPQ3/p+eZwG98cbkN/GvrT0N82a/8rxT3MMusexc+Le5hl9KfZ+vkH/V1GfxrOfxr603D+S4vXKwAAAAAAAAAAAADvByvHL5w=
+   eJzt3OluqzAURWGaDuncvkbf/wVrflixrBwMbOOJ9UnW1Y1QQ08XgdK00wQAAAAAGMWzWy9uXd26uPXo1lOBx3v34danW19ufbv149Z7wcd7V6qzkfqr0dlI/dXojP7oz6M/Df1p6C8f+tPQX5vO0t9R6E9Dfxr604zU36XCc47U33uF56Q/Df1p6E9Df5rR+os7ONpo/cUdHI3+NPSnob88HoLnDxt8LbgPPXubbr2FDf7W3KmO0J/mDP0deR5U+rPO3+H/rW1KOvI8qPRnnb/DebUwv1b7s+Z3CT6mtU1JcX/hPlnXbmsd0d/8uJ9fC/3Fwn2yvnfY4s9YKeH8rDnde02sPb+c/c1yzM9q0f/b0vxa6s+aYarHmlrp7xI8nzWveP9amF/u+ya552ftXyvzy33fJMf81rwWXqfbHGtqsb9wVtb8jjp/LPW0dfuS9+3i80d8DV3q+m+pp63bl7xvbM0uPFZLzK/n/qz5+VXi+7de+2tFr/21gv40W/tjfhqOX43aX67fc+iVOr+4X+vjpX7Pple5j9/R5pOS+/wx2vGZQn+aHP2d5VxxT47+tv5O5kjoT7PmXnnKmftbc688hf7oby///oiln3OlnLm/2TzD+POc19pWztyfF3+e6vvO/dcC+/ivBfahPw39aehvndR7pc5yDbOXdY3i53Wma5g96E+z9ucf9Hcf/Wl4/dPQn4bXv7w4XjUcrxr609Cfhv409NfG39ruefYt/K33no99+tPQn4b+NPSXD81paE5Dfxr602zpZmlb+kt3s7Qt/dHfHvSnoT8N/QEAAAAAMJ5/6fNFpg==
   </data>
  </layer>
- <objectgroup name="areas" width="80" height="100" opacity="0.62">
-  <object name="chr" x="488" y="408" width="172" height="144"/>
-  <object name="bridgeanchor" x="2208" y="2495" width="68" height="68"/>
-  <object name="eastquadenter" x="2924" y="2310" width="160" height="440"/>
-  <object name="entertemple" x="1159" y="409" width="105" height="263"/>
-  <object name="eastsp1" x="3160" y="2237" width="73" height="60"/>
-  <object name="eastsp2" x="3607" y="2246" width="73" height="60"/>
-  <object name="eastsp3" x="3438" y="2755" width="73" height="60"/>
-  <object name="entersouthquarter" x="2119" y="4391" width="221" height="88"/>
+ <objectgroup name="areas" width="80" height="120" opacity="0.62">
+  <object name="bridgeanchor" x="2208" y="3071" width="68" height="68"/>
+  <object name="eastquadenter" x="2924" y="2886" width="160" height="440"/>
+  <object name="entertemple" x="1159" y="985" width="105" height="263"/>
+  <object name="eastsp1" x="3160" y="2813" width="73" height="60"/>
+  <object name="eastsp2" x="3607" y="2822" width="73" height="60"/>
+  <object name="eastsp3" x="3438" y="3331" width="73" height="60"/>
+  <object name="entersouthquarter" x="2119" y="4967" width="221" height="88"/>
+  <object name="symbol" x="2243" y="5249" width="41" height="45"/>
+  <object name="enterroom" x="4001" y="1621" width="180" height="113"/>
+  <object name="exitroom" x="4003" y="1469" width="180" height="113"/>
+  <object name="exithall" x="994" y="2646" width="180" height="113"/>
+  <object name="enterhall" x="993" y="2807" width="180" height="113"/>
+  <object name="southquadenter" x="2022" y="5880" width="454" height="102"/>
+  <object name="fountainenter" x="720" y="4348" width="690" height="390"/>
+  <object name="chr" x="1015" y="3858" width="172" height="144"/>
  </objectgroup>
- <objectgroup name="objects" width="80" height="100">
-  <object name="SwitchPlate" x="2117" y="562" width="66" height="66">
+ <objectgroup name="objects" width="80" height="120">
+  <object name="SwitchPlate" x="2117" y="1138" width="66" height="66">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="id" value="doortrigger"/>
    </properties>
   </object>
-  <object name="Guardian" x="1116" y="426" width="66" height="66">
+  <object name="Guardian" x="1116" y="1002" width="66" height="66">
    <properties>
     <property name="angle" value="1.57"/>
     <property name="controller" value="enemy"/>
    </properties>
   </object>
-  <object name="Guardian" x="1114" y="568" width="66" height="66">
+  <object name="Guardian" x="1114" y="1144" width="66" height="66">
    <properties>
     <property name="angle" value="-1.57"/>
     <property name="controller" value="enemy"/>
    </properties>
   </object>
-  <object name="ArcherGuardian" x="1900" y="1380" width="39" height="37">
+  <object name="ArcherGuardian" x="1900" y="1956" width="39" height="37">
    <properties>
     <property name="angle" value="0"/>
     <property name="controller" value="enemy"/>
    </properties>
   </object>
-  <object name="GrandDoor" x="2095" y="808" width="92" height="44">
+  <object name="GrandDoor" x="2095" y="1384" width="92" height="44">
    <properties>
     <property name="angle" value="0"/>
     <property name="id" value="door1"/>
    </properties>
   </object>
-  <object name="GrandDoor" x="2097" y="1247" width="92" height="44">
+  <object name="GrandDoor" x="2097" y="1823" width="92" height="44">
    <properties>
     <property name="angle" value="0"/>
     <property name="id" value="door2"/>
    </properties>
   </object>
-  <object name="ArcaneCircle" x="1526" y="503" width="172" height="144"/>
-  <object name="ArcherGuardian" x="1900" y="1434" width="39" height="37">
+  <object name="ArcaneCircle" x="1526" y="1079" width="172" height="144"/>
+  <object name="ArcherGuardian" x="1900" y="2010" width="39" height="37">
    <properties>
     <property name="angle" value="0"/>
     <property name="controller" value="enemy"/>
    </properties>
   </object>
-  <object name="ArcherGuardian" x="1901" y="1487" width="39" height="37">
+  <object name="ArcherGuardian" x="1901" y="2063" width="39" height="37">
    <properties>
     <property name="angle" value="0"/>
     <property name="controller" value="enemy"/>
    </properties>
   </object>
-  <object name="ArcherGuardian" x="1902" y="1543" width="39" height="37">
+  <object name="ArcherGuardian" x="1902" y="2119" width="39" height="37">
    <properties>
     <property name="angle" value="0"/>
     <property name="controller" value="enemy"/>
    </properties>
   </object>
-  <object name="SwitchPlate" x="2175" y="1673" width="66" height="66">
+  <object name="SwitchPlate" x="2175" y="2249" width="66" height="66">
    <properties>
     <property name="angle" value="0"/>
     <property name="controller" value="enemy"/>
     <property name="id" value="switch3"/>
    </properties>
   </object>
-  <object name="SwitchPlate" x="2267" y="1677" width="66" height="66">
+  <object name="SwitchPlate" x="2267" y="2253" width="66" height="66">
    <properties>
     <property name="angle" value="0"/>
     <property name="controller" value="enemy"/>
     <property name="id" value="switch4"/>
    </properties>
   </object>
-  <object name="SwitchPlate" x="2081" y="1673" width="66" height="66">
+  <object name="SwitchPlate" x="2081" y="2249" width="66" height="66">
    <properties>
     <property name="angle" value="0"/>
     <property name="controller" value="enemy"/>
     <property name="id" value="switch2"/>
    </properties>
   </object>
-  <object name="SwitchPlate" x="1989" y="1673" width="66" height="66">
+  <object name="SwitchPlate" x="1989" y="2249" width="66" height="66">
    <properties>
     <property name="angle" value="0"/>
     <property name="controller" value="enemy"/>
     <property name="id" value="switch1"/>
    </properties>
   </object>
-  <object name="SkeletonSwordsman" x="1904" y="307" width="76" height="72">
+  <object name="SkeletonSwordsman" x="1904" y="883" width="76" height="72">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="phrase" value="entertemple"/>
    </properties>
   </object>
-  <object name="SkeletonSpearman" x="2025" y="416" width="76" height="72">
+  <object name="SkeletonSpearman" x="2025" y="992" width="76" height="72">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="drop" value="BookOfRisen"/>
     <property name="phrase" value="entertemple"/>
    </properties>
   </object>
-  <object name="SkeletonSwordsman" x="1902" y="512" width="76" height="72">
+  <object name="SkeletonSwordsman" x="1902" y="1088" width="76" height="72">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="phrase" value="entertemple"/>
    </properties>
   </object>
-  <object name="SkeletonSwordsman" x="1723" y="413" width="76" height="72">
+  <object name="SkeletonSwordsman" x="1723" y="989" width="76" height="72">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="phrase" value="entertemple"/>
    </properties>
   </object>
-  <object name="SkeletonSwordsman" x="3288" y="2524" width="76" height="72">
+  <object name="SkeletonSwordsman" x="3288" y="3100" width="76" height="72">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="phrase" value="eastquad1"/>
    </properties>
   </object>
-  <object name="SkeletonSwordsman" x="3469" y="2417" width="76" height="72">
+  <object name="SkeletonSwordsman" x="3469" y="2993" width="76" height="72">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="phrase" value="eastquad2"/>
    </properties>
   </object>
-  <object name="SkeletonSpearman" x="3590" y="2527" width="76" height="72">
+  <object name="SkeletonSpearman" x="3590" y="3103" width="76" height="72">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="drop" value="BookOfJester"/>
     <property name="phrase" value="eastquad3"/>
    </properties>
   </object>
-  <object name="SkeletonSwordsman" x="3467" y="2623" width="76" height="72">
+  <object name="SkeletonSwordsman" x="3467" y="3199" width="76" height="72">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="phrase" value="eastquad3"/>
    </properties>
   </object>
-  <object name="FlameGuardian" x="3444" y="2596" width="76" height="64">
+  <object name="FlameGuardian" x="3444" y="3172" width="76" height="64">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="phrase" value="eastquad0"/>
    </properties>
   </object>
-  <object name="MiddleCircle" x="2242" y="3774" width="100" height="96">
+  <object name="MiddleCircle" x="2242" y="4350" width="100" height="96">
    <properties>
     <property name="angle" value="1.57"/>
     <property name="id" value="middlecircle"/>
    </properties>
   </object>
-  <object name="OuterCircle" x="2242" y="3774" width="92" height="134">
+  <object name="OuterCircle" x="2242" y="4350" width="92" height="134">
    <properties>
     <property name="angle" value="1.57"/>
     <property name="id" value="outercircle"/>
    </properties>
   </object>
-  <object name="InnerCircle" x="2242" y="3775" width="49" height="62">
+  <object name="InnerCircle" x="2242" y="4351" width="49" height="62">
    <properties>
     <property name="angle" value="1.57"/>
     <property name="id" value="innercircle"/>
    </properties>
   </object>
-  <object name="SwitchPlate" x="1986" y="3325" width="66" height="66">
+  <object name="SwitchPlate" x="1986" y="3901" width="66" height="66">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="id" value="rotateswitch1"/>
    </properties>
   </object>
-  <object name="SwitchPlate" x="2500" y="3329" width="66" height="66">
+  <object name="SwitchPlate" x="2500" y="3905" width="66" height="66">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="id" value="rotateswitch3"/>
    </properties>
   </object>
-  <object name="SwitchPlate" x="2242" y="3329" width="66" height="66">
+  <object name="SwitchPlate" x="2242" y="3905" width="66" height="66">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="id" value="rotateswitch2"/>
    </properties>
   </object>
-  <object name="AmuletOfBalance" x="2237" y="3780" width="76" height="72">
+  <object name="AmuletOfBalance" x="2237" y="4356" width="76" height="72">
    <properties>
     <property name="id" value="amulet"/>
    </properties>
   </object>
-  <object name="AmuletOfBalance" x="890" y="339" width="76" height="72"/>
-  <object name="BlackWraith" x="3234" y="2666" width="76" height="72">
+  <object name="AmuletOfBalance" x="890" y="915" width="76" height="72"/>
+  <object name="BlackWraith" x="3234" y="3242" width="76" height="72">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="phrase" value="eastquad1"/>
    </properties>
   </object>
-  <object name="WhiteWraith" x="3363" y="2847" width="76" height="72">
+  <object name="WhiteWraith" x="3363" y="3423" width="76" height="72">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="phrase" value="eastquad1"/>
    </properties>
   </object>
-  <object name="BlackWraith" x="3200" y="2825" width="76" height="72">
+  <object name="BlackWraith" x="3200" y="3401" width="76" height="72">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="phrase" value="eastquad1"/>
    </properties>
   </object>
-  <object name="BlueWraith" x="3606" y="2759" width="76" height="72">
+  <object name="BlueWraith" x="3606" y="3335" width="76" height="72">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="phrase" value="eastquad2"/>
    </properties>
   </object>
-  <object name="BlackWraith" x="3762" y="2692" width="76" height="72">
+  <object name="BlackWraith" x="3762" y="3268" width="76" height="72">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="phrase" value="eastquad2"/>
    </properties>
   </object>
-  <object name="WhiteWraith" x="3716" y="2811" width="76" height="72">
+  <object name="WhiteWraith" x="3716" y="3387" width="76" height="72">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="phrase" value="eastquad3"/>
    </properties>
   </object>
-  <object name="WhiteWraith" x="3689" y="2714" width="76" height="72">
+  <object name="WhiteWraith" x="3689" y="3290" width="76" height="72">
    <properties>
     <property name="controller" value="enemy"/>
     <property name="phrase" value="eastquad3"/>
    </properties>
   </object>
-  <object name="BlackWraith" x="1991" y="4550" width="76" height="72">
+  <object name="StarPlate" x="1805" y="5357" width="80" height="71">
    <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="southquad"/>
+    <property name="id" value="star2"/>
    </properties>
   </object>
-  <object name="BlackWraith" x="2457" y="4544" width="76" height="72">
+  <object name="StarPlate" x="1819" y="5125" width="49" height="48">
    <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="southquad"/>
+    <property name="id" value="star1"/>
    </properties>
   </object>
-  <object name="BlueWraith" x="2264" y="4733" width="76" height="72">
+  <object name="StarPlate" x="2383" y="5455" width="52" height="43">
    <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="southquad"/>
+    <property name="id" value="star3"/>
    </properties>
   </object>
-  <object name="BlueWraith" x="2094" y="4731" width="76" height="72">
+  <object name="StarPlate" x="2487" y="5461" width="43" height="37">
    <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="southquad"/>
+    <property name="id" value="star4"/>
    </properties>
   </object>
-  <object name="BlueWraith" x="2391" y="4733" width="76" height="72">
+  <object name="StarPlate" x="2623" y="5400" width="43" height="37">
    <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="southquad"/>
+    <property name="id" value="star5"/>
    </properties>
   </object>
-  <object name="WhiteWraith" x="2110" y="4840" width="76" height="72">
+  <object name="StarPlate" x="2656" y="5135" width="47" height="51">
    <properties>
-    <property name="controller" value="enemy"/>
-    <property name="phrase" value="southquad"/>
+    <property name="id" value="star6"/>
    </properties>
   </object>
-  <object name="WhiteWraith" x="2273" y="4845" width="76" height="72">
+  <object name="GuardianPillar" x="2003" y="5159" width="71" height="52">
    <properties>
     <property name="controller" value="enemy"/>
-    <property name="phrase" value="southquad"/>
+    <property name="id" value="pillar1"/>
    </properties>
   </object>
-  <object name="SkeletonSwordsman" x="2218" y="4596" width="76" height="72">
+  <object name="GuardianPillar" x="2084" y="5266" width="71" height="52">
    <properties>
     <property name="controller" value="enemy"/>
-    <property name="phrase" value="southquad"/>
+    <property name="id" value="pillar2"/>
    </properties>
   </object>
-  <object name="SkeletonSwordsman" x="2276" y="4598" width="76" height="72">
+  <object name="GuardianPillar" x="2363" y="5197" width="71" height="52">
    <properties>
     <property name="controller" value="enemy"/>
-    <property name="phrase" value="southquad"/>
+    <property name="id" value="pillar3"/>
+   </properties>
+  </object>
+  <object name="GuardianPillar" x="2410" y="5318" width="71" height="52">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="id" value="pillar4"/>
+   </properties>
+  </object>
+  <object name="GuardianPillar" x="1990" y="5366" width="71" height="52">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="id" value="pillar5"/>
+   </properties>
+  </object>
+  <object name="GuardianPillar" x="2305" y="5327" width="71" height="52">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="id" value="pillar6"/>
+   </properties>
+  </object>
+  <object name="Coffin" x="1535" y="5952" width="113" height="96">
+   <properties>
+    <property name="id" value="coffin1"/>
+   </properties>
+  </object>
+  <object name="Coffin" x="2709" y="5953" width="113" height="96">
+   <properties>
+    <property name="id" value="coffin2"/>
+   </properties>
+  </object>
+  <object name="Coffin" x="3053" y="6395" width="113" height="96">
+   <properties>
+    <property name="id" value="coffin3"/>
+   </properties>
+  </object>
+  <object name="Coffin" x="2391" y="6785" width="113" height="96">
+   <properties>
+    <property name="id" value="coffin1"/>
+   </properties>
+  </object>
+  <object name="BossReaper" x="2415" y="6333" width="143" height="88">
+   <properties>
+    <property name="drop" value="AuroSkull"/>
+    <property name="id" value="bossreaper"/>
+   </properties>
+  </object>
+  <object name="WhiteWraith" x="1509" y="6091" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad1"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="2818" y="6213" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad3"/>
+   </properties>
+  </object>
+  <object name="WhiteWraith" x="2418" y="6698" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad3"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="2557" y="6633" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad3"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="2482" y="6610" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad2"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="2362" y="6640" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad1"/>
+   </properties>
+  </object>
+  <object name="BlueWraith" x="2278" y="6736" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad3"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="2530" y="6111" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad2"/>
+   </properties>
+  </object>
+  <object name="BlueWraith" x="1672" y="6186" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad3"/>
+   </properties>
+  </object>
+  <object name="WhiteWraith" x="1589" y="6090" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad1"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="2612" y="6561" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad3"/>
+   </properties>
+  </object>
+  <object name="WhiteWraith" x="2688" y="6209" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad3"/>
+   </properties>
+  </object>
+  <object name="WhiteWraith" x="1590" y="6248" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad3"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="2518" y="6656" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad2"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="2621" y="6178" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad2"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="1483" y="6179" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad3"/>
+   </properties>
+  </object>
+  <object name="SkeletonSpearman" x="2332" y="6681" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad1"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="1428" y="6251" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad3"/>
+   </properties>
+  </object>
+  <object name="BlueWraith" x="2548" y="6726" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad3"/>
+   </properties>
+  </object>
+  <object name="SkeletonSpearman" x="1550" y="6167" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad1"/>
+   </properties>
+  </object>
+  <object name="SkeletonSpearman" x="2717" y="6111" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad1"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="2427" y="6589" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad2"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="2763" y="6285" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad3"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="2747" y="6070" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad1"/>
+   </properties>
+  </object>
+  <object name="BlackWraith" x="1544" y="6053" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad1"/>
+   </properties>
+  </object>
+  <object name="SkeletonSwordsman" x="2585" y="6132" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad2"/>
+   </properties>
+  </object>
+  <object name="BlueWraith" x="2571" y="6228" width="76" height="72">
+   <properties>
+    <property name="controller" value="enemy"/>
+    <property name="phrase" value="southquad3"/>
+   </properties>
+  </object>
+  <object name="UFilter" x="1054" y="3335" width="43" height="32">
+   <properties>
+    <property name="id" value="filterbot"/>
+   </properties>
+  </object>
+  <object name="ULightSensor" x="1191" y="3513" width="51" height="43">
+   <properties>
+    <property name="id" value="lsensor1"/>
+   </properties>
+  </object>
+  <object name="UFilter" x="1056" y="3219" width="43" height="32">
+   <properties>
+    <property name="id" value="filtertop"/>
+   </properties>
+  </object>
+  <object name="UMirror" x="1062" y="3522" width="43" height="32">
+   <properties>
+    <property name="angle" value="0.7853"/>
+    <property name="id" value="mirror"/>
+   </properties>
+  </object>
+  <object name="ULightSensor" x="820" y="3516" width="51" height="43">
+   <properties>
+    <property name="id" value="lsensor2"/>
+   </properties>
+  </object>
+  <object name="UPortal" x="1058" y="3711" width="43" height="32">
+   <properties>
+    <property name="angle" value="-1.57"/>
+    <property name="id" value="portal1"/>
+   </properties>
+  </object>
+  <object name="UPortal" x="922" y="3710" width="43" height="32">
+   <properties>
+    <property name="angle" value="-1.57"/>
+    <property name="id" value="portal2"/>
+   </properties>
+  </object>
+  <object name="UPortal" x="1056" y="3134" width="43" height="32">
+   <properties>
+    <property name="angle" value="1.57"/>
+    <property name="id" value="portal3"/>
+   </properties>
+  </object>
+  <object name="UObstacle" x="1185" y="3517" width="37" height="54">
+   <properties>
+    <property name="id" value="obstacle1"/>
+   </properties>
+  </object>
+  <object name="AuroSkull" x="832" y="3201" width="35" height="40"/>
+  <object name="UObstacle" x="1146" y="3130" width="51" height="43">
+   <properties>
+    <property name="id" value="lsensor3"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="obstacles" width="80" height="100">
-  <object x="1133" y="585" width="27" height="251"/>
-  <object x="1132" y="123" width="27" height="325"/>
-  <object x="557" y="109" width="595" height="43"/>
-  <object x="449" y="147" width="140" height="76"/>
-  <object x="387" y="211" width="88" height="135"/>
-  <object x="235" y="291" width="159" height="61"/>
-  <object x="225" y="348" width="52" height="375"/>
-  <object x="260" y="689" width="203" height="69"/>
-  <object x="433" y="743" width="32" height="103"/>
-  <object x="451" y="815" width="688" height="35"/>
-  <object x="1144" y="815" width="912" height="36"/>
-  <object x="2184" y="813" width="269" height="32"/>
-  <object x="2434" y="276" width="24" height="564"/>
-  <object x="2186" y="1252" width="269" height="32"/>
-  <object x="1870" y="1250" width="160" height="36"/>
-  <object x="1980" y="1804" width="64" height="564"/>
-  <object x="2380" y="1804" width="48" height="560"/>
-  <object x="2372" y="2696" width="576" height="52"/>
-  <object x="2364" y="2308" width="584" height="56"/>
-  <object x="714" y="2696" width="1332" height="52"/>
-  <object x="682" y="2308" width="1364" height="56"/>
-  <object x="1980" y="2737" width="64" height="564"/>
-  <object x="2380" y="2731" width="48" height="560"/>
-  <object name="bridgebot" x="1984" y="2696" width="446" height="58"/>
-  <object name="bridgeleft" x="1982" y="2358" width="64" height="386"/>
-  <object name="bridgeright" x="2362" y="2308" width="64" height="440"/>
-  <object x="2886" y="2042" width="60" height="314"/>
-  <object x="2916" y="1982" width="1046" height="68"/>
-  <object x="3904" y="2028" width="72" height="956"/>
-  <object x="2902" y="2936" width="1002" height="72"/>
-  <object x="2874" y="2736" width="70" height="278"/>
-  <object x="1788" y="3387" width="261" height="233"/>
-  <object x="2435" y="3393" width="511" height="212"/>
-  <object x="2626" y="3604" width="320" height="502"/>
-  <object x="1664" y="3598" width="194" height="540"/>
-  <object x="1826" y="4094" width="348" height="314"/>
-  <object x="2308" y="4100" width="454" height="308"/>
+ <objectgroup name="obstacles" width="80" height="120">
+  <object x="1133" y="1161" width="27" height="251"/>
+  <object x="1132" y="699" width="27" height="325"/>
+  <object x="557" y="685" width="595" height="43"/>
+  <object x="449" y="723" width="140" height="76"/>
+  <object x="387" y="787" width="88" height="135"/>
+  <object x="235" y="867" width="159" height="61"/>
+  <object x="225" y="924" width="52" height="375"/>
+  <object x="260" y="1265" width="203" height="69"/>
+  <object x="433" y="1319" width="32" height="103"/>
+  <object x="451" y="1391" width="688" height="35"/>
+  <object x="1144" y="1391" width="912" height="36"/>
+  <object x="2184" y="1389" width="269" height="32"/>
+  <object x="2434" y="852" width="24" height="564"/>
+  <object x="2186" y="1828" width="269" height="32"/>
+  <object x="1870" y="1826" width="160" height="36"/>
+  <object x="1980" y="2380" width="64" height="564"/>
+  <object x="2380" y="2380" width="48" height="560"/>
+  <object x="2372" y="3272" width="576" height="52"/>
+  <object x="2364" y="2884" width="584" height="56"/>
+  <object x="1406" y="3271" width="577" height="57"/>
+  <object x="1980" y="3313" width="64" height="564"/>
+  <object x="2380" y="3307" width="48" height="560"/>
+  <object name="bridgebot" x="1984" y="3272" width="446" height="58"/>
+  <object name="bridgeleft" x="1982" y="2934" width="64" height="386"/>
+  <object name="bridgeright" x="2362" y="2884" width="64" height="440"/>
+  <object x="2886" y="2618" width="60" height="314"/>
+  <object x="2916" y="2558" width="1046" height="68"/>
+  <object x="3904" y="2604" width="72" height="956"/>
+  <object x="2902" y="3512" width="1002" height="72"/>
+  <object x="2874" y="3312" width="70" height="278"/>
+  <object x="1788" y="3963" width="261" height="233"/>
+  <object x="2435" y="3969" width="511" height="212"/>
+  <object x="2626" y="4180" width="320" height="502"/>
+  <object x="1664" y="4174" width="194" height="540"/>
+  <object x="1826" y="4670" width="348" height="314"/>
+  <object x="2308" y="4676" width="454" height="308"/>
+  <object x="711" y="2753" width="313" height="60"/>
+  <object x="1345" y="2815" width="65" height="129"/>
+  <object x="1405" y="2882" width="577" height="57"/>
+  <object x="1155" y="2755" width="255" height="60"/>
+  <object x="705" y="2813" width="60" height="1537"/>
+  <object x="3715" y="1064" width="706" height="58"/>
+  <object x="3714" y="1122" width="62" height="514"/>
+  <object x="4352" y="1116" width="66" height="516"/>
+  <object x="3772" y="1568" width="258" height="68"/>
+  <object x="4164" y="1572" width="188" height="60"/>
+  <object x="1264" y="6912" width="2018" height="52"/>
+  <object x="1104" y="5808" width="172" height="1140"/>
+  <object x="3208" y="5856" width="352" height="1104"/>
+  <object x="1176" y="5776" width="872" height="112"/>
+  <object x="2432" y="5768" width="1056" height="120"/>
+  <object x="1344" y="3266" width="62" height="1089"/>
  </objectgroup>
 </map>

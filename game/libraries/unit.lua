@@ -361,8 +361,9 @@ end
 
 AnimatedUnit = Unit:subclass('AnimatedUnit')
 
-function AnimatedUnit:playAnimation(anim,speed,loop)
+function AnimatedUnit:playAnimation(anim,speed,loop,interupt)
 	if self.animation[anim] then
+		if self.animation[anim] == self.anim and interupt then return end
 		if #(self.animation[anim]) > 0 then
 			self.anim = self.animation[anim][math.random(#self.animation[anim])]
 		else

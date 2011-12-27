@@ -139,7 +139,7 @@ function GameSystem:keypressed(k)
 		scenetest(k)
 	end
 	if k==' ' then
-		Lighteffect.lightOn(GetCharacter())
+		
 	end
 	if k=='escape' then
 		self:pushState('pause')

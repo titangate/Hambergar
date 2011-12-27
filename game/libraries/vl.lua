@@ -39,4 +39,8 @@ function Lighteffect.finish()
 	love.graphics.draw(buffer)
 	map.camera:apply()
 end
+
+function Lighteffect.isOn()
+	return Lighteffect.source ~= nil
+end
 return Lighteffect

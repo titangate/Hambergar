@@ -53,7 +53,7 @@ function KingEdStation:initialize()
 	self.savedata = {
 --		map = 'scenes.whistler.station',
 	}
-	assert (utilitybox)
+--	assert (utilitybox)
 	traily = map.waypoints.trail[2]
 	stationcount = stationcount + 1
 	assert(stationcount<2)

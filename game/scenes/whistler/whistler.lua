@@ -6,6 +6,8 @@ requireImage('maps/snowcliff.png','snowcliff')
 requireImage('maps/snowbg.png','snowbg')
 requireImage('maps/platformedge.png','platformedge')
 img.snowbg:setWrap('repeat','repeat')
+require 'cutscene.cutscene'
+require 'lightpuzzle.lighter'
 
 Whistlerbackground = {
 	cloudtime = 0,
@@ -60,12 +62,15 @@ function Whistlerbackground:draw()
 	for j = 1,2 do
 		love.graphics.pop()
 	end
+	
 	love.graphics.push()
 	love.graphics.translate(-map.w/2,-map.h/2)
 	self.m:draw()
 		
 		
+	
 	love.graphics.pop()
+	map.l:draw()
 	love.graphics.push()
 	assert(Whistlerbackground.bridgeposition[1])
 --		love.graphics.translate(100,500)
@@ -93,8 +98,10 @@ Whistler = Map:subclass('Whistler')
 
 function Whistler:initialize()
 	local w = 80*64
-	local h = 100*64
+	local h = 120*64
 	self.w,self.h=w,h
+	
+	self.l = Lighter()
 	super.initialize(self,w,h)
 	local m = self:loadTiled'whistler.tmx'
 	Whistlerbackground.m = m
@@ -105,6 +112,7 @@ function Whistler:initialize()
 	}
 	
 	self:setObstacleState('bridgeright',false)
+	self.trigs = {}
 end
 
 function Whistler:load()
@@ -134,6 +142,13 @@ function Whistler:opening_load()
 	PlayEnvironmentSound'sound/windloop.ogg'
 	leon:pickUp(Bomb())
 	leon:pickUp(Bomb())
+	
+	for i=1,6 do
+		local pillar = loadstring("return pillar"..tostring(i))()
+		local star = loadstring("return star"..tostring(i))()
+		pillar.color = {math.random(255),math.random(255),math.random(255),}
+		star.color = pillar.color
+	end
 	
 	local r1 = Trigger(function(trig,event)
 		if event.index == 'entertemple' and event.unit == GetCharacter() then
@@ -209,16 +224,7 @@ function Whistler:opening_load()
 	table.insert(self.switchplates,switch3)
 	table.insert(self.switchplates,switch4)
 	
-	
-	local eastenter = Trigger(function(trig,event)
-		if event.index == 'eastquadenter' and event.unit == GetCharacter() then
-			trig:close()
-			self.wave = 1
-			self:eastQuadWave(1)
-		end
-	end)
-	eastenter:registerEventType'add'
-	local boss = Trigger(function(trig,event)
+	local eastq = Trigger(function(trig,event)
 			if event.unit == GetCharacter() then
 				self.update = function()
 					GetGameSystem():pushState'retry'
@@ -231,7 +237,17 @@ function Whistler:opening_load()
 				end
 			end
 	end)
-	boss:registerEventType'death'
+	local eastenter = Trigger(function(trig,event)
+		if event.index == 'eastquadenter' and event.unit == GetCharacter() then
+			trig:close()
+			eastq:registerEventType'death'
+			self.wave = 1
+			self:eastQuadWave(1)
+		end
+	end)
+	eastenter:registerEventType'add'
+	
+	
 	
 	local pancake = Trigger(function(trig,event)
 		if event.unit == rotateswitch1 then
@@ -257,10 +273,112 @@ function Whistler:opening_load()
 		end
 	end)
 	pickupamulet:registerEventType'pickup'
+	
+	local pickupskull = Trigger(function(trig,event)
+		print (event.item,event.action)
+		if event.item.class == AuroSkull then
+			if event.action == 'equip' then
+				Lighteffect.lightOn(GetCharacter())
+				self.l:setGlobalLightsource(GetCharacter())
+			else
+				Lighteffect.stop()
+				self.l:setGlobalLightsource()
+			end
+		end
+	end)
+	pickupskull:registerEventType'equip'
+	
+	
+	local lightedstatue = Trigger(function(trig,event)
+		local success = true
+		for i=1,6 do
+			local star = loadstring("return star"..tostring(i))()
+			success = success and star.lighted
+		end
+		if success then
+			trig:close()
+			Lighteffect.stop()
+			for i=1,6 do
+				local pillar = loadstring("return pillar"..tostring(i))()
+				pillar:kill(pillar)
+			end
+			local x,y = unpack(self.waypoints.symbol)
+			local symbol = FloorSymbol(x,y)
+			map:addUnit(symbol)
+		end
+	end)
+	lightedstatue:registerEventType'lighted'
+	
+	local southq = Trigger(function(trig,event)
+			if event.unit == GetCharacter() then
+				self.update = function()
+					GetGameSystem():pushState'retry'
+				end
+			elseif self.southquadenemy[event.unit] then
+				self.southquadenemy[event.unit] = nil
+				if not next(self.southquadenemy) then
+					self.wave = self.wave + 1
+					self:southQuadWave(self.wave)
+				end
+			end
+	end)
+	local southenter = Trigger(function(trig,event)
+		if event.index == 'southquadenter' and event.unit == GetCharacter() then
+			trig:close()
+			southq:registerEventType'death'
+			self.wave = 1
+			self:southQuadWave(1)
+		end
+	end)
+	southenter:registerEventType'add'
+	local ending = Trigger(function(trig,event)
+		if event.index == 'fountainenter' and event.unit == GetCharacter() then
+			trig:close()
+			require 'scenes.whistler.discoverfountain'()
+		end
+	end)
+	ending:registerEventType'add'
+	
+	local lighter = Trigger(function(trig,event)
+		local color = event.beam.color
+		if event.object == lsensor3 then
+			if color[1]==0 and color[2]==255 and color[3]==0 then
+				portal2.l:link()
+				portal1.l:link(portal3.l)
+			end
+		end
+		if event.object == lsensor2 then 
+			if color[1]==255 and color[2]==0 and color[3]==0 then
+				obstacle1.l:enable(false)
+			end
+		end
+	end)
+	
+	lighter:registerEventType'lightcast'
+	
+	portal1.l:link(portal2.l)
+	obstacle1.l.r = 50
+	filtertop.l.color = {0,255,0}
+end
+
+function Whistler:finish()
+	anim:easy(GetGameSystem().fader,'opacity',0,255,1,'linear')
+	Timer(2,1,function()
+	self:destroy()
+	self.update = function()
+			self:destroy()
+			require 'scenes.whistler.dreamSequence'
+			map = DreamMaze()
+			map:load()
+			map:checkpoint1_enter()
+		end
+	end)
 end
 
 function Whistler:eastQuadWave(wave)
-	if wave > 3 then return end
+	if wave > 3 then
+		return
+	end
 	self.eastquadenemy = {}
 	local dict
 	if wave == 1 then 
@@ -275,6 +393,30 @@ function Whistler:eastQuadWave(wave)
 		self.eastquadenemy[map:loadUnitFromTileObject(obj)] = true
 	end
 end
+
+function Whistler:southQuadWave(wave)
+	if wave > 3 then
+		map.camera = ContainerCamera:new(200,nil,bossreaper,GetCharacter())
+		bossreaper:enableAI()
+		bossreaper.controller = 'enemy'
+		GetGameSystem():gotoState()
+		GetGameSystem().bottompanel:conversation()
+		GetGameSystem().bossbar = AssassinHPBar:new(function()return bossreaper:getHPPercent() end,screen.halfwidth-400,screen.height-100,800) 
+	 end
+	self.southquadenemy = {}
+	local dict
+	if wave == 1 then
+		dict = self.unitdict.southquad1
+		
+		PlayMusic'music/fight2.mp3'
+	end
+	if wave == 2 then dict = self.unitdict.southquad2 end
+	if wave == 3 then dict = self.unitdict.southquad3 end
+	for _,obj in ipairs(dict) do
+		self.southquadenemy[map:loadUnitFromTileObject(obj)] = true
+	end
+end
+
 
 function Whistler:setBridgeDirection()
 end
@@ -315,7 +457,6 @@ function Whistler:boss_load()
 end
 
 function Whistler:boss_loaded()
-	
 	self.savedata.checkpoint = 'boss'
 	GetGameSystem():saveAll()
 	GetGameSystem():gotoState()
@@ -331,6 +472,7 @@ function Whistler:update(dt)
 	if self.cutscene and self.cutscene:update(dt)==STATE_SUCCESS then
 		self.cutscene = nil
 	end
+	self.l:update(dt)
 end
 
 function Whistler:draw()
@@ -340,12 +482,9 @@ end
 
 function Whistler:destroy()
 	for i,v in ipairs(self.trigs) do
+		print (i,v)
 		v:destroy()
 	end
 end
-
-function scenetest()
-end
-
 
 return Whistler

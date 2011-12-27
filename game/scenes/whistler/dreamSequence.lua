@@ -93,12 +93,14 @@ end
 
 function DreamMaze:checkpoint1_enter()
 	local leon = GetCharacter()
---	leon.direction = {0,-1}
+	local x,y = unpack(map.waypoints.chr)
+	leon.x,leon.y = x,y
+	leon.direction = {0,-1}
 	leon.controller = 'player'
 --	leon.HPRegen = 1000
 	SetCharacter(leon)
 	leon:gotoState'stealth'
---	map:addUnit(leon)
+	map:addUnit(leon)
 	map.camera = FollowerCamera:new(leon,{
 		x1 = -self.w+screen.halfwidth,
 		y1 = -self.h+screen.halfheight,
@@ -148,6 +150,7 @@ function DreamMaze:checkpoint1_loaded()
 	lightsource:setShift(300,0)
 	self:spawnEnemies()
 	Lighteffect.lightOn(lightsource)
+	anim:easy(GetGameSystem().fader,'opacity',255,0,1,'linear')
 end
 
 function DreamMaze:update(dt)

@@ -49,6 +49,7 @@ anim = require "anim.anim"
 Blureffect = require 'libraries.blur'
 Lighteffect = require 'libraries.vl'
 require 'units.init'
+require 'cutscene.cutscene'
 
 local gametimers = {}
 screen = {

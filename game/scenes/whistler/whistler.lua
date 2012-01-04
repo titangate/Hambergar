@@ -6,7 +6,7 @@ requireImage('maps/snowcliff.png','snowcliff')
 requireImage('maps/snowbg.png','snowbg')
 requireImage('maps/platformedge.png','platformedge')
 img.snowbg:setWrap('repeat','repeat')
-require 'cutscene.cutscene'
+
 require 'lightpuzzle.lighter'
 
 Whistlerbackground = {
@@ -267,9 +267,9 @@ function Whistler:opening_load()
 	
 	local pickupamulet = Trigger(function(trig,event)
 		if event.item == amulet then
-			innercircle:rotateDelta(math.pi)
-			middlecircle:rotateDelta(math.pi)
-			outercircle:rotateDelta(math.pi)
+			innercircle:kill()
+			middlecircle:kill()
+			outercircle:kill()
 		end
 	end)
 	pickupamulet:registerEventType'pickup'
@@ -339,6 +339,14 @@ function Whistler:opening_load()
 	end)
 	ending:registerEventType'add'
 	
+	local enterhall = Trigger(function(trig,event)
+		if event.unit == GetCharacter() and event.index == 'enterhall' then
+			trig:close()
+			map.camera = ContainerCamera:new(200,nil,topleftplate,botrightplate,GetCharacter())
+		end
+	end)
+	enterhall:registerEventType'add'
+	
 	local lighter = Trigger(function(trig,event)
 		local color = event.beam.color
 		if event.object == lsensor3 then
@@ -350,6 +358,11 @@ function Whistler:opening_load()
 		if event.object == lsensor2 then 
 			if color[1]==255 and color[2]==0 and color[3]==0 then
 				obstacle1.l:enable(false)
+				pickupskull:close()
+				Lighteffect.stop()
+				self.l:setGlobalLightsource()
+				map.camera = FollowerCamera(leon)
+				lightdoor:open()
 			end
 		end
 	end)
@@ -359,20 +372,39 @@ function Whistler:opening_load()
 	portal1.l:link(portal2.l)
 	obstacle1.l.r = 50
 	filtertop.l.color = {0,255,0}
+	
+	local bosskill = Trigger(function(trig,event)
+		if event.unit == bossreaper then
+			map.camera = FollowerCamera:new(leon)
+			GetGameSystem().bossbar = nil
+			PauseMusic()
+		end
+	end)
+	bosskill:registerEventType'kill'
 end
 
 function Whistler:finish()
 	anim:easy(GetGameSystem().fader,'opacity',0,255,1,'linear')
+	Timer(1,1,function()
+	end)
 	Timer(2,1,function()
 	self:destroy()
 	self.update = function()
-			self:destroy()
+			
 			require 'scenes.whistler.dreamSequence'
 			map = DreamMaze()
 			map:load()
 			map:checkpoint1_enter()
+			PlayEnvironmentSound()
+			loadingscreen.finished = function ()
+			end
+			pushsystem(loadingscreen)
+			
 		end
 	end)
+end
+function scenetest()
+	map:finish()
 end
 
 function Whistler:eastQuadWave(wave)

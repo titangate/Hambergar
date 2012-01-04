@@ -10,9 +10,9 @@
   <image source="Cave_SquareTiles.jpg" width="256" height="256"/>
  </tileset>
  <tileset firstgid="49" name="station" tilewidth="64" tileheight="64">
-  <image source="station.png" width="256" height="256"/>
+  <image source="station.png" width="384" height="256"/>
  </tileset>
- <tileset firstgid="65" name="stationwall" tilewidth="64" tileheight="64">
+ <tileset firstgid="73" name="stationwall" tilewidth="64" tileheight="64">
   <image source="stationwall.png" width="256" height="192"/>
  </tileset>
  <layer name="Tile Layer 2" width="64" height="64">
@@ -156,7 +156,7 @@
   </object>
   <object x="1154" y="2774" width="106" height="190"/>
  </objectgroup>
- <objectgroup name="areas" width="64" height="64" visible="0">
+ <objectgroup name="areas" width="64" height="64">
   <object name="chr" x="1981" y="1419" width="122" height="122"/>
   <object name="g2" x="1192" y="2852" width="144" height="88"/>
   <object name="g1" x="1198" y="2802" width="144" height="88"/>
@@ -240,7 +240,7 @@
  </objectgroup>
  <layer name="Tile Layer 3" width="64" height="64">
   <data encoding="base64" compression="zlib">
-   eJzt2FEOgyAQRVG3Zo1p1P3vp/bDlBiGMggDyj0JHzWD9NUhtB0GAAAAAAAAAAAAAAAAALWN+3idrn1fTxXeSw2zcP2d6f7H5yuNKaLGN0ezRmh+6fzS/d11/tX45mjWCM2/Y/6ryP/Te/5lH6tnbJnWSs2vPZc09bmebYzU/Nq+1NS3lF87j/zX61vK33v/k99fswj10rmkOcfukL8k8ttx+9Ll9ueT88dkk/ZuqZHru22M1Ger+T2f+r+BBeveDrHs+0Pv+a33div7HgCAJ/oA80lDAA==
+   eJzt2E0OgjAQhmHOpC7UxJ+tEmPQ+9/FcUFsTEuZUkpp3yeZhc2U+kkBtWkAAAAAAAAA1OpUSCEPG6mt1M4zVqq91EHq6Bkr1VnqInX1jAEl4v7H/Y/7HwAglpvU/W/s+7pd4L0s4eEYf0Y6fv/5uqod0WObo1ljaP7c+V3HN9fx9djmaNYYmr/G/FOR/6f2/J3Uy1LvSGuF5tc+lzT9sc7tGKH5tftS059Tfu088k/vzyl/7fuf/PaeztHvei5pnmNryD8n8qdj7kuTuT9Lzj8mm+vanatifbcdI/Tcan7Ph/5vkELqvT0k5b7v1Z4/9bWdy3UPAECJPjZlXo4=
   </data>
  </layer>
 </map>

@@ -115,10 +115,10 @@ function FollowerCamera:initialize(t,aabb)
 	self.t = t
 	self.aabb = aabb or
 	{
-		x1 = -1000-playable.halfwidth,
-		y1 = -1000-playable.halfheight,
-		x2 = 1000-playable.halfwidth,
-		y2 = 1000-playable.halfheight
+		x1 = -map.w/2-playable.halfwidth,
+		y1 = -map.h/2-playable.halfheight,
+		x2 = map.w/2-playable.halfwidth,
+		y2 = map.h/2-playable.halfheight
 	}
 end
 

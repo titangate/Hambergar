@@ -23,10 +23,10 @@
   <object name="enterroom" x="4001" y="1621" width="180" height="113"/>
   <object name="exitroom" x="4003" y="1469" width="180" height="113"/>
   <object name="exithall" x="994" y="2646" width="180" height="113"/>
-  <object name="enterhall" x="993" y="2807" width="180" height="113"/>
+  <object name="enterhall" x="1269" y="2943" width="134" height="363"/>
   <object name="southquadenter" x="2022" y="5880" width="454" height="102"/>
   <object name="fountainenter" x="720" y="4348" width="690" height="390"/>
-  <object name="chr" x="1015" y="3858" width="172" height="144"/>
+  <object name="chr" x="934" y="3819" width="172" height="144"/>
  </objectgroup>
  <objectgroup name="objects" width="80" height="120">
   <object name="SwitchPlate" x="2117" y="1138" width="66" height="66">
@@ -561,6 +561,26 @@
     <property name="id" value="lsensor3"/>
    </properties>
   </object>
+  <object name="SwitchPlate" x="799" y="3111" width="66" height="66">
+   <properties>
+    <property name="angle" value="0"/>
+    <property name="controller" value="enemy"/>
+    <property name="id" value="topleftplate"/>
+   </properties>
+  </object>
+  <object name="SwitchPlate" x="1211" y="3711" width="66" height="66">
+   <properties>
+    <property name="angle" value="0"/>
+    <property name="controller" value="enemy"/>
+    <property name="id" value="botrightplate"/>
+   </properties>
+  </object>
+  <object name="GrandDoor" x="1015" y="4268" width="92" height="44">
+   <properties>
+    <property name="angle" value="0"/>
+    <property name="id" value="lightdoor"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="obstacles" width="80" height="120">
   <object x="1133" y="1161" width="27" height="251"/>
@@ -615,5 +635,7 @@
   <object x="1176" y="5776" width="872" height="112"/>
   <object x="2432" y="5768" width="1056" height="120"/>
   <object x="1344" y="3266" width="62" height="1089"/>
+  <object x="1104" y="4273" width="269" height="32"/>
+  <object x="526" y="4271" width="472" height="42"/>
  </objectgroup>
 </map>

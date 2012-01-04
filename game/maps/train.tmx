@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="64" height="64" tilewidth="64" tileheight="64">
- <tileset firstgid="1" name="station" tilewidth="64" tileheight="64">
-  <image source="station.png" width="256" height="256"/>
+ <tileset firstgid="1" name="skytrain" tilewidth="64" tileheight="64">
+  <image source="skytrain.png" width="512" height="512"/>
  </tileset>
+ <layer name="Tile Layer 2" width="64" height="64" opacity="0.8">
+  <data encoding="base64" compression="zlib">
+   eJzt0skKwjAUheE6VgQX4kZxU2e34tT3fzJPIYVySSHaZFP/Dw5JLzktgWYZAAAAAAD/baAMlZEyViZK3pKpW2cB3Xqeu3nMbkxzk0VAp3Drxszbus15l24K9v4h1spKWf7wvS7dFELv3NTH+2+/6BRutf9w6m4KO2WvHJSjclYubu97rs5eE3RPnvP2PXU3ppvyCMxLeSulp3s3Z6r90zOP0QUAAAAAAAAAAAAAAAAAAEC/fQAgeBII
+  </data>
+ </layer>
  <layer name="Tile Layer 1" width="64" height="64">
   <data encoding="base64" compression="zlib">
-   eJztzwENAAAIw7Dj3zQ6Dm0yAUsAAADgtzmSf//+/fsHAAAAAAAAAAAAgG4LLYIBLQ==
+   eJztz7ENADAIA0HqFOmz/6LZAZCguJPc+yMAAACACSe5bq/wo9KgX7/++f6b+HAbGrb0AwAAAAAAAAAAAMA2H7OUCQU=
   </data>
  </layer>
  <objectgroup name="areas" width="64" height="64" visible="0">
@@ -23,7 +28,7 @@
   <object x="3008" y="1306" width="610" height="42"/>
  </objectgroup>
  <objectgroup name="objects" width="64" height="64">
-  <object name="EmergencyStop" x="831" y="1012" width="38" height="38">
+  <object name="EmergencyStop" x="1061" y="1040" width="38" height="38">
    <properties>
     <property name="id" value="emergencystop"/>
    </properties>
@@ -34,7 +39,7 @@
     <property name="angle" value="0"/>
    </properties>
   </object>
-  <object name="Lily" x="3094" y="1025" width="45" height="46">
+  <object name="Lily" x="3084" y="1041" width="45" height="46">
    <properties>
     <property name="angle" value="1.57"/>
     <property name="id" value="lily"/>

@@ -1,8 +1,13 @@
 local ox,oy = 32,32
 LightpuzzleUnit = Unit:subclass'LightpuzzleUnit'
-function LightpuzzleUnit:initialize(...)
-	super.initialize(self,...)
+function LightpuzzleUnit:initialize(x,y,rad,mass)
+	super.initialize(self,x,y,rad,0)
+	self.m = mass
 --	assert(map.l)
+end
+
+function LightpuzzleUnit:setMass(m)
+	self.body:setMass(m)
 end
 
 function LightpuzzleUnit:setLighterObject(obj)

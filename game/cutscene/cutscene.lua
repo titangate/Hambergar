@@ -88,9 +88,13 @@ function CutscenePlayer:keypressed(k)
 	end
 end
 
-function CutscenePlayer:playConversation(conv,time,speaker)
+function CutscenePlayer:playConversation(conv,speaker,time)
 	self.speaker = speaker
-	self.conv = conv
+	if speaker then
+		self.conv = speaker..' : '..conv
+	else
+		self.conv = conv
+	end
 	if conv then
 		self.convtime = time or 10000
 	else

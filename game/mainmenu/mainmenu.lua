@@ -29,7 +29,7 @@ if love.filesystem.exists('checkpoint') then
 		GetGameSystem():prepareToContinue('checkpoint')
 		pushsystem(loadingscreen)
 		loadingscreen.finished = function ()
-		pushsystem(gs)
+			pushsystem(gs)
 			GetGameSystem():continue()
 		end
 	end

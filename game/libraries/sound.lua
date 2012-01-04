@@ -30,10 +30,12 @@ function PlayEnvironmentSound(string)
 		return
 	end
 	environment_name = string
-	if musci_playing then love.audio.stop(environment_playing) end
-	environment_playing = love.audio.newSource(string)
-	environment_playing:setLooping(true)
-	love.audio.play(environment_playing)
+	if environment_playing then love.audio.stop(environment_playing) end
+	if string then
+		environment_playing = love.audio.newSource(string)
+		environment_playing:setLooping(true)
+		love.audio.play(environment_playing)
+	end
 end
 
 sfx = {}

@@ -75,7 +75,7 @@ function Tibet:opening_load()
 	local leon = Assassin:new(x,y,32,10)
 	leon.direction = {0,-1}
 	leon.controller = 'player'
-	local save = [[return {{["map"]="Tibet",["character"]={2},["checkpoint"]="opening",["depends"]="	require 'scenes.tibet.tibet'\n	",["gamesystem"]="return require 'scenes.tibet.tibetgamesystem'",},{["movementspeedbuffpercent"]=1,["HPRegen"]=100,["timescale"]=1,["damagebuff"]={3},["hp"]=500,["speedlimit"]=20000,["damageamplify"]={4},["cd"]={5},["mp"]=500,["armor"]={6},["damagereduction"]={7},["spirit"]=1,["evade"]={8},["movingforce"]=500,["maxhp"]=500,["maxmp"]=500,["MPRegen"]=0,["critical"]={9},["movementspeedbuff"]=0,["skills"]={10},["spellspeedbuffpercent"]=1,["inventory"]={11},},{["Bullet"]=0,},{},{},{["Bullet"]=0,},{},{},{},{["stunbullet"]=0,["momentumbullet"]=0,["stim"]=2,["explosivebullet"]=0,["pistol"]=3,["invis"]=1,["dws"]=1,["snipe"]=2,["pistoldwsalt"]=6,["dash"]=1,["roundaboutshot"]=1,["mindripfield"]=1,["mind"]=1,},{["FiveSlash"]='equip',["Theravada"]="equip",},}--|]]
+	local save = [[return {{["map"]="Tibet",["character"]={2},["checkpoint"]="opening",["depends"]="	require 'scenes.tibet.tibet'\n	",["gamesystem"]="return require 'scenes.tibet.tibetgamesystem'",},{["movementspeedbuffpercent"]=1,["HPRegen"]=100,["timescale"]=1,["damagebuff"]={3},["hp"]=500,["speedlimit"]=20000,["damageamplify"]={4},["cd"]={5},["mp"]=500,["armor"]={6},["damagereduction"]={7},["spirit"]=1,["evade"]={8},["movingforce"]=500,["maxhp"]=500,["maxmp"]=500,["MPRegen"]=0,["critical"]={9},["movementspeedbuff"]=0,["skills"]={10},["spellspeedbuffpercent"]=1,["inventory"]={11},},{["Bullet"]=0,},{},{},{["Bullet"]=0,},{},{},{},{["stunbullet"]=0,["momentumbullet"]=0,["stim"]=2,["explosivebullet"]=0,["pistol"]=3,["invis"]=1,["dws"]=1,["snipe"]=2,["pistoldwsalt"]=6,["dash"]=1,["roundaboutshot"]=3,["mindripfield"]=1,["mind"]=1,},{["FiveSlash"]='equip',["Theravada"]="equip",},}--|]]
 	save = table.load(save)
 	leon:load(save.character)
 	SetCharacter(leon)
@@ -189,45 +189,23 @@ function Tibet:boss_load()
 	self:boss_loaded()
 end
 
+
+function scenetest()
+	map:boss_loaded()
+end
+
+
 function Tibet:boss_loaded()
-	local meethans = CutSceneSequence:new()
-	meethans:push(ExecFunction:new(function()
 		local x,y = unpack(self.waypoints.hans)
 		hans = BossHans:new(x,y,'enemy')
 		map:addUnit(hans)
 		hans:face(GetCharacter())
 		GetCharacter():face(hans)
-		meethans.camera,map.camera = map.camera,Camera:new(-GetCharacter().x,-GetCharacter().y)
-		map.camera:pan(hans,2)
-		hans:playAnimation('attack',0.5,false)
-		GetGameSystem():gotoState('cutscene')
-		GetGameSystem().bottompanel:conversation('HANS THE VOLCANO',"Looks like I have to deal with you myself.")
 		GetCharacter():stop()
-	end),0)
-	meethans:wait(5)
-	meethans:push(ExecFunction:new(function()
-		map.camera:pan(GetCharacter(),2)
-		GetGameSystem().bottompanel:conversation('RIVER',"And die in the end. Yes.")
-	end),0)
-
-	meethans:wait(4)
-	meethans:push(ExecFunction:new(function()
-		map.camera:pan(hans,20)
-		GetGameSystem().bottompanel:conversation('HANS THE VOLCANO',"May Maitreya bless your gun and my sword.")
-	end),0)
-	meethans:wait(5)
-	meethans:push(ExecFunction:new(function()
-		GetGameSystem().bottompanel:conversation('RIVER',"Amitabha.")
-	end),0)
-	meethans:wait(3)
-	meethans:push(ExecFunction:new(function()
 		map.camera = ContainerCamera:new(200,nil,hans,GetCharacter())
-		GetGameSystem():gotoState()
-		GetGameSystem().bottompanel:conversation()
 		PlayMusic'music/boss1.mp3'
 		hans:enableAI()
 		GetGameSystem().bossbar = AssassinHPBar:new(function()return hans:getHPPercent() end,screen.halfwidth-400,screen.height-100,800)
-	end),0)
 	self.tibet2listener = {}
 	function self.tibet2listener.handle(listener,event)
 		if event.type == 'death' then
@@ -313,16 +291,18 @@ function Tibet:boss_loaded()
 	end
 	local entered = {}
 	gamelistener:register(self.tibet2listener)
-	self:playCutscene(meethans)
 	self.savedata.checkpoint = 'boss'
 	GetGameSystem():saveAll()
 	GetGameSystem():gotoState()
+	
+	require 'scenes.tibet.meethans'()w
 end
 
 function Tibet:playCutscene(scene)
 	self.cutscene = scene
 	scene:reset()
 end
+
 function Tibet:update(dt)
 	super.update(self,dt)
 	if self.cutscene and self.cutscene:update(dt)==STATE_SUCCESS then

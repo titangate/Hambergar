@@ -138,6 +138,22 @@ function RotateCircle:setAngle(r)
 	super.setAngle(self,r)
 end
 
+function RotateCircle:preremove()
+	self.preremoved = true
+	for i,v in ipairs(self.shapes) do
+		v:setMask(unpack(cc.all))
+	end
+end
+
+function RotateCircle:destroy()
+	if self.preremoved then
+		for i,v in ipairs(self.shapes) do
+			v:destroy()
+		end
+		self.body:destroy()
+	end
+end
+
 InnerCircle = RotateCircle:subclass'InnerCircle'
 function InnerCircle:initialize()
 	super.initialize(self,x,y,64,0)
@@ -285,6 +301,7 @@ function GuardianPillar:initialize(x,y,controller)
 end
 
 function GuardianPillar:enableAI()
+	
 	local ai = Sequence()
 	local emitlight = Sequence()
 	emitlight:push(OrderChannelSkill(
@@ -300,7 +317,7 @@ function GuardianPillar:enableAI()
 		end
 	end)
 	ai:push(selector)
-	self.ai = ai
+--	self.ai = ai
 end
 
 function GuardianPillar:damage(type,amount,source)

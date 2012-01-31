@@ -63,7 +63,7 @@ function Assassin:getSkillpanelData()
 			{skill = self.skills.invis,hotkey='v',face=character[self.skills.invis.name]},
 			{skill = self.skills.snipe,hotkey='g',face=character[self.skills.pistol.name]},
 			{skill = self.skills.dws,hotkey='z',face=character.divide},
-			{skill = self.skills.useitem,hotkey='q',face=character.divide},
+--			{skill = self.skills.useitem,hotkey='q',face=character.divide},
 		}
 	}
 end

@@ -79,9 +79,6 @@ function Waterloo2:playCutscene(scene)
 	self.cutscene = scene
 end
 function Waterloo2:update(dt)
-	if self.cutscene then
-		self.cutscene:update(dt)
-	end
 	super.update(self,dt)
 	if next(adding) then
 		for k,v in ipairs(adding) do self:addUnit(v) end

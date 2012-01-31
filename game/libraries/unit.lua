@@ -576,7 +576,7 @@ function Character:load(save)
 	for k,v in pairs(save) do
 		if k == 'skills' then
 			for k2,v2 in pairs(v) do
-				self.skills[k2]:setLevel(v2)
+				if self.skills[k2].setLevel then self.skills[k2]:setLevel(v2) end
 			end
 		elseif k ~= 'inventory' then
 			self[k] = v

@@ -92,6 +92,42 @@ function ElectricianAbiTree:initialize(unit)
 	self.icarus:setSkill(unit.skills.icarus,icontable.icarus)
 	self.icarus.chip = pcb.transmitter2
 	
+	-- Ionic Pool
+	self.ionicpool = goo.learnbutton:new(self.container)
+	self.ionicpool:setPos(pcb.ionicpool.x*scale,pcb.ionicpool.y*scale)
+	self.ionicpool:setSize(pcb.ionicpool.w*scale,pcb.ionicpool.h*scale)
+	
+	self.ionicpool:setSkill(unit.skills.ionicpool,img.cpu)
+	self.ionicpool.chip = pcb.ionicpool
+	
+	
+	-- Ionic Shield
+	
+	self.ionicshield = goo.learnbutton:new(self.container)
+	self.ionicshield:setPos(pcb.ionicpool1.x*scale,pcb.ionicpool1.y*scale)
+	self.ionicshield:setSize(pcb.ionicpool1.w*scale,pcb.ionicpool1.h*scale)
+	
+	self.ionicshield:setSkill(unit.skills.ionicshield,icontable.icarus)
+	self.ionicshield.chip = pcb.ionicpool1
+	
+	-- Illumination
+	
+	self.illumination = goo.learnbutton:new(self.container)
+	self.illumination:setPos(pcb.ionicpool2.x*scale,pcb.ionicpool2.y*scale)
+	self.illumination:setSize(pcb.ionicpool2.w*scale,pcb.ionicpool2.h*scale)
+	
+	self.illumination:setSkill(unit.skills.illumination,icontable.icarus)
+	self.illumination.chip = pcb.ionicpool2
+	
+	-- EM-Weak field distortion
+	
+	self.thorn = goo.learnbutton:new(self.container)
+	self.thorn:setPos(pcb.ionicpool3.x*scale,pcb.ionicpool3.y*scale)
+	self.thorn:setSize(pcb.ionicpool3.w*scale,pcb.ionicpool3.h*scale)
+	
+	self.thorn:setSkill(unit.skills.thorn,icontable.icarus)
+	self.thorn.chip = pcb.ionicpool3
+	
 	local p = love.graphics.newParticleSystem(img.pulse,1024)
 	print ((pcb.battery.x+pcb.battery.w/2)*scale,(pcb.battery.y+pcb.battery.h/2)*scale,'battery')
 	p:setEmissionRate(100)

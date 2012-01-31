@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="10" height="5" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="seattle" tilewidth="64" tileheight="64">
+  <image source="seattle.png" width="640" height="640"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="10" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxjYGBgYAdiDiTMxoAd8ACxHRDbA7EDEAvgUCcGxB5A7AnEXkAshUOdAhArIWEVHOqIAQA22wK0
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="10" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAEjFjEQEAQiIWAWBiIRXCoAQFpIFYDYnUg1sCjDt0eXPYSAwBq3ADe
+  </data>
+ </layer>
+</map>

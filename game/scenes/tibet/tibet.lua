@@ -295,7 +295,7 @@ function Tibet:boss_loaded()
 	GetGameSystem():saveAll()
 	GetGameSystem():gotoState()
 	
-	require 'scenes.tibet.meethans'()w
+	require 'scenes.tibet.meethans'()
 end
 
 function Tibet:playCutscene(scene)
@@ -305,9 +305,6 @@ end
 
 function Tibet:update(dt)
 	super.update(self,dt)
-	if self.cutscene and self.cutscene:update(dt)==STATE_SUCCESS then
-		self.cutscene = nil
-	end
 end
 function Tibet:draw()
 	super.draw(self)

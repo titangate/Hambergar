@@ -1,7 +1,7 @@
 
 --local vancouver = require 'scenes.vancouver.vancouver'
 require 'cutscene.cutscene'
---preload('assassin','swift','commonenemies','tibet','vancouver')
+preload('assassin','electrician','commonenemies','tibet','vancouver')
 
 local Waterfallbg={}
 function Waterfallbg:update(dt)
@@ -25,14 +25,7 @@ function Waterfall:initialize()
 	local m = self:loadTiled'meditation.tmx'
 	Waterfallbg.m = m
 	self.background = Waterfallbg
-	self:addUnit(Mat(0,150,60,5))
-	self.exitTrigger = Trigger(function(self,event)
-		if event.index == 'exit' and event.unit == GetCharacter() then
-			pushsystem(vancouver)
-			vancouver:zoomOutCity('vancouver')
-		end
-	end)
-	self.exitTrigger:registerEventType('add')
+	
 end
 
 function Waterfall:destroy()
@@ -95,23 +88,52 @@ function Waterfall:enter_loaded()
 --			end
 --		end
 	end
+	self:addUnit(Mat(0,150,60,5))
+	
+	self.exitTrigger = Trigger(function(self,event)
+		if event.index == 'exit' and event.unit == GetCharacter() then
+			pushsystem(vancouver)
+			vancouver:zoomOutCity('vancouver')
+		end
+	end)
+	self.exitTrigger:registerEventType('add')
 end
 
 function Waterfall:wake_load()
-	local leon2 = GetGameSystem():loadobj 'Assassin'
+	local leon2 = GetGameSystem():loadobj 'Electrician'
 	leon2.x,leon2.y = 0,0
 	leon2.direction = {0,-1}
 	leon2.controller = 'player'
 	map:addUnit(leon2)
 	SetCharacter(leon2)
-	GetCharacter().skills.weaponskill:gotoState'interact'
+--	GetCharacter().skills.weaponskill:gotoState'interact'
 	self:wake_loaded()
+	map.camera = FollowerCamera:new(leon2,{
+		x1 = -600+screen.halfwidth,
+		y1 = -600+screen.halfheight,
+		x2 = 600-screen.halfwidth,
+		y2 = 600-screen.halfheight
+	})
+--	assert()
 end
 
 function Waterfall:wake_loaded()
+	self:addUnit(Mat(0,150,60,5))
 	
+	self.exitTrigger = Trigger(function(self,event)
+		if event.index == 'exit' and event.unit == GetCharacter() then
+			pushsystem(vancouver)
+			vancouver:zoomOutCity('vancouver')
+		end
+	end)
+	self.exitTrigger:registerEventType('add')
+	local u = IALSwordsman(0,0,'enemy')
+	u:enableAI()
+	map:addUnit(u)
 end
 
 function Waterfall:load(x,y,c)
-	
+	self:wake_load()
 end
+
+--return Waterfall()

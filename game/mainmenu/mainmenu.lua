@@ -38,7 +38,7 @@ end
 height = height + 50
 local b_startgame = goo.menuitem:new( mainmenu )
 b_startgame:setPos( 10, height )
-b_startgame:setText( 'Start Game' )
+b_startgame:setText( 'Demo 1' )
 b_startgame:sizeToText()
 b_startgame.onClick = function( self, button )
 	require 'scenes.tibet.tibet'
@@ -57,7 +57,7 @@ height = height + 50
 
 local b_grid = goo.menuitem:new( mainmenu )
 b_grid:setPos( 10, height )
-b_grid:setText( 'GRID' )
+b_grid:setText( 'Demo 2' )
 b_grid:sizeToText()
 b_grid.onClick = function( self, button )
 	
@@ -76,11 +76,9 @@ height = height + 50
 
 local b_test = goo.menuitem:new( mainmenu )
 b_test:setPos( 10, height )
-b_test:setText( 'swift test' )
+b_test:setText( 'vancouver test' )
 b_test:sizeToText()
 b_test.onClick = function( self, button )
---	local gs = loadstring(save.gamesystem)()
-
 	require 'scenes.vancouver.vancouver'
 	local gs = require 'scenes.gamesystem'
 	pushsystem(loadingscreen)
@@ -89,8 +87,7 @@ b_test.onClick = function( self, button )
 		gs:load()
 		pushsystem(gs)
 		mainmenu:onClose()
-		map = Waterfall()
-		map:opening_load()
+		GetGameSystem():runMap(Waterfall)
 	end
 end
 height = height + 50
@@ -108,7 +105,6 @@ b_option.onClick = function(self,button)
 	option:birth()
 end
 height = height + 50
-	--[[
 local b_editor = goo.menuitem:new ( mainmenu)
 b_editor:setPos(10,height)
 b_editor:setText('Editor')
@@ -117,7 +113,7 @@ b_editor.onClick = function(self,button)
 	mainmenu.closetime = 0.1
 	pushsystem(TileEditor)
 end
-	height = height + 50]]
+	height = height + 50
 local b_quit = goo.menuitem:new( mainmenu )
 b_quit:setPos( 10, height )
 b_quit:setText( "Quit Game" )
@@ -127,15 +123,6 @@ b_quit.onClick = function (self,button)
 end
 height = height + 50
 
-local b_test = goo.menuitem:new( mainmenu )
-b_test:setPos( 10, height )
-b_test:setText( "Test" )
-b_test:sizeToText()
-b_test.onClick = function (self,button)
-	require 'tests.test'
-	test()
-end
-height = height + 50
 if love.filesystem.exists('checkpoint') then
 	mainmenu:highlightitem(b_continue)
 else

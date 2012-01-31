@@ -163,6 +163,12 @@ function Map:addUnit(...)
 	end
 end
 
+
+function Map:playCutscene(scene)
+	self.cutscene = scene
+	scene:reset()
+end
+
 function Map:addUpdatable(...)
 	for k,unit in ipairs(arg) do
 		self.updatable[unit] = true
@@ -186,6 +192,10 @@ function Map:removeUnit(...)
 end
 
 function Map:update(dt)
+	
+	if self.cutscene and self.cutscene:update(dt)==STATE_SUCCESS then
+		self.cutscene = nil
+	end
 	if self.timescale then
 		dt = self.timescale * dt
 	end

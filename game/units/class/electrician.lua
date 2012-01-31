@@ -11,6 +11,76 @@ requireImage(GOO_SKINPATH..'electricianlevel.png','levelimg')
 animation.electrician = Animation:new(love.graphics.newImage('assets/electrician/electrician.png'),200,200,0.08,1,1,12,100)
 animation.weaponbolt = Animation:new(love.graphics.newImage('assets/electrician/weaponbolt.png'),200,200,0.08,1,1,12,100)
 animation.weaponsword = Animation:new(love.graphics.newImage('assets/electrician/weaponsword.png'),200,200,0.08,1,1,27,100,15,0)
+--[[
+--requireImage(GOO_SKINPATH..'fuzz.png','fuzz')
+local lowhealth = CutSceneSequence:new()
+local panel2 = goo.object:new()
+local fuzz = goo.image:new(panel2)
+fuzz:setPos(0,-100)
+fuzz:setImage(icontable.fuzz)
+local panel1 = goo.object:new()
+anim:easy(panel1,'y',-300,0,1,'quadInOut')
+anim:easy(panel2,'x',300,0,1,'quadInOut')
+local x,y = 100,screen.halfheight-50
+for c in text:gmatch"." do
+	lowhealth:push(ExecFunction:new(function()
+		local ib = goo.image:new(panel1)
+--		ib:setImage(img.)
+		ib:setPos(x,y)
+		local textscale = 2
+		x = x+ib.w*textscale
+		local animsx = anim:new({
+			table = ib,
+			key = 'xscale',
+			start = 5*textscale,
+			finish = 2*textscale,
+			time = 0.3,
+			style = anim.style.linear}
+		)
+		local animsy = anim:new({
+			table = ib,
+			key = 'yscale',
+			start = 5*textscale,
+			finish = 2*textscale,
+			time = 0.3,
+			style = anim.style.linear}
+		)
+		local animg = anim.group:new(animsx,animsy)
+		animg:play()
+		local animwx = anim:new({
+			table = ib,
+			key = 'xscale',
+			start = 2*textscale,
+			finish = 1*textscale,
+			time = 0.5,
+			style = 'elastic'
+		})
+		local animwy = anim:new({
+			table = ib,
+			key = 'yscale',
+			start = 2*textscale,
+			finish = 1*textscale,
+			time = 0.5,
+			style = 'elastic'
+		})
+		local animw = anim.group:new(animwx,animwy)
+		local animc = anim.chain:new(animg,animw)
+		animc:play()
+		TEsound.play('sound/thunderclap.wav')
+	end),0)
+	
+	lowhealth:wait(0.2)
+end	
+	lowhealth:wait(0.5)
+lowhealth:push(ExecFunction:new(function()
+anim:easy(panel1,'x',0,screen.width,2,'quadInOut')
+anim:easy(panel2,'x',0,-screen.width,2,'quadInOut')
+map.timescale = 1
+end),0)
+lowhealth:push(ExecFunction:new(function()
+panel1:destroy()
+panel2:destroy()
+end),2)]]
 
 Electrician = Character:subclass('Electrician')
 
@@ -31,7 +101,12 @@ function Electrician:initialize(x,y)
 		transmitter = Transmitter:new(self,1),
 		icarus = Icarus:new(self,1),
 		solarstorm = SolarStorm:new(self,1),
+		ionicshield = IonicShield(self,1),
+		ionicpool = IonicPool(self,1),
+		illumination = Illumination(self,1),
+		thorn = Thorn(self,1),
 	}
+	assert(self.skills.ionicshield)
 	self.animation = {
 		stand = animation.electrician:subSequence(1,4),
 		attack = animation.electrician:subSequence(5,10),
@@ -51,10 +126,13 @@ function Electrician:initialize(x,y)
 	-- TODO: do what?
 end
 
-function Electrician:damage(...)
-	super.damage(self,...)
+function Electrician:damage(t,amount,source)
+	super.damage(self,t,amount,source)
 	local b = BloodTrail:new(self)
 	map:addUpdatable(b)
+	if self.skills.thorn.level>0 then
+		self.skills.thorn.effect:effect(source,self,self.skills.thorn)
+	end
 end
 
 
@@ -72,6 +150,8 @@ function Electrician:getSkillpanelData()
 			{skill = self.skills.lightningball,hotkey='e',face=icontable.lightningball},
 			{skill = self.skills.icarus,hotkey='r',face=icontable.icarus},
 			{skill = self.skills.solarstorm,hotkey='z',face=icontable.solarstorm},
+			{skill = self.skills.ionicshield,hotkey='c',face=icontable.solarstorm},
+			{skill = self.skills.illumination,hotkey='v',face=icontable.solarstorm},
 		}
 	}
 end

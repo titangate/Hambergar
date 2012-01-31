@@ -494,10 +494,6 @@ function Whistler:boss_loaded()
 	GetGameSystem():gotoState()
 end
 
-function Whistler:playCutscene(scene)
-	self.cutscene = scene
-	scene:reset()
-end
 
 function Whistler:update(dt)
 	super.update(self,dt)

@@ -13,6 +13,7 @@ preloadlist(
 	},
 	electrician = {
 		'abilities.electrician.battery',
+		'abilities.electrician.ionicpool',
 		'abilities.electrician.cpu',
 		'abilities.electrician.common',
 		'abilities.electrician.transmitter',

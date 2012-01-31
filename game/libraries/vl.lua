@@ -3,6 +3,7 @@ local buffer = blurbuffer[1]
 local lightpic = love.graphics.newImage'light.png'
 function Lighteffect.lightOn(source)
 	Lighteffect.source = source
+	Lighteffect.brightness = 255
 end
 
 function Lighteffect.stop()
@@ -30,7 +31,7 @@ function Lighteffect.finish()
 	love.graphics.setRenderTarget()
 --	love.graphics.reset()
 
-	love.graphics.setColor(255,255,255,255)
+	love.graphics.setColor(255,255,255,Lighteffect.brightness)
 	love.graphics.setBlendMode('alpha')
 	
 --	map.camera:apply()
@@ -38,6 +39,8 @@ function Lighteffect.finish()
 	map.camera:revert()
 	love.graphics.draw(buffer)
 	map.camera:apply()
+	
+	love.graphics.setColor(255,255,255,255)
 end
 
 function Lighteffect.isOn()

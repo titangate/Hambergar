@@ -37,6 +37,9 @@ preloadlist(
 		'units.other.guardian',
 		'units.enemies.bossreaper',
 		'units.other.lightpuzzleunit'
+	},
+	seattle = {
+		'units.enemies.helicopter'
 	}
 }
 )

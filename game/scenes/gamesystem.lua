@@ -76,11 +76,7 @@ function GameSystem:runMap(m,checkpoint)
 		map:destroy()
 	end
 	gamelistener = Listener:new()
---	if m:isKindOf(Map) then
---		map = m
---	else
-		map = m()
---	end
+	map = m()
 	map:load()
 	if map.loadCheckpoint and checkpoint then
 		map:loadCheckpoint(checkpoint)
@@ -129,7 +125,7 @@ end
 
 function GameSystem:keypressed(k)
 	if k=='t' then
-		GetCharacter().manager.tree.learning = nil
+		GetCharacter().manager.tree.learning = true
 		GetCharacter().manager:start()
 		self.bottompanel.count=0
 		pushsystem(GetCharacter().manager)

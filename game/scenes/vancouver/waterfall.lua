@@ -16,7 +16,7 @@ function Waterfallbg:draw()
 	love.graphics.pop()
 end
 
-Waterfall = Map:subclass('Waterfall')
+Waterfall = Map:subclass'Waterfall'
 function Waterfall:initialize()
 	local w = 1200
 	local h = w
@@ -25,7 +25,6 @@ function Waterfall:initialize()
 	local m = self:loadTiled'meditation.tmx'
 	Waterfallbg.m = m
 	self.background = Waterfallbg
-	
 end
 
 function Waterfall:destroy()
@@ -82,18 +81,14 @@ function Waterfall:enter_loaded()
 		leon2.controller = 'player'
 		leon2:gotoState'npc'
 		map:addUnit(leon2)
---		if GetCharacter().class == Swift then
---			if story.daysbeforeinvasion == 1 then
-				leon2.interact = require 'scenes.vancouver.swift-visit-1'
---			end
---		end
+		leon2.interact = require 'scenes.vancouver.swift-visit-1'
 	end
 	self:addUnit(Mat(0,150,60,5))
 	
 	self.exitTrigger = Trigger(function(self,event)
 		if event.index == 'exit' and event.unit == GetCharacter() then
 			pushsystem(vancouver)
-			vancouver:zoomOutCity('vancouver')
+			vancouver:zoomOutCity'vancouver'
 		end
 	end)
 	self.exitTrigger:registerEventType('add')
@@ -106,7 +101,6 @@ function Waterfall:wake_load()
 	leon2.controller = 'player'
 	map:addUnit(leon2)
 	SetCharacter(leon2)
---	GetCharacter().skills.weaponskill:gotoState'interact'
 	self:wake_loaded()
 	map.camera = FollowerCamera:new(leon2,{
 		x1 = -600+screen.halfwidth,
@@ -114,7 +108,6 @@ function Waterfall:wake_load()
 		x2 = 600-screen.halfwidth,
 		y2 = 600-screen.halfheight
 	})
---	assert()
 end
 
 function Waterfall:wake_loaded()
@@ -123,7 +116,7 @@ function Waterfall:wake_loaded()
 	self.exitTrigger = Trigger(function(self,event)
 		if event.index == 'exit' and event.unit == GetCharacter() then
 			pushsystem(vancouver)
-			vancouver:zoomOutCity('vancouver')
+			vancouver:zoomOutCity'vancouver'
 		end
 	end)
 	self.exitTrigger:registerEventType('add')
@@ -135,5 +128,3 @@ end
 function Waterfall:load(x,y,c)
 	self:wake_load()
 end
-
---return Waterfall()

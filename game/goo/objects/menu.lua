@@ -119,7 +119,6 @@ function goo.menu:keypressed(k)
 			end
 		end
 	]]
-	print (k,'is pressed in menu')
 	if k=='return' then
 		print (self.highlighted.text,'onclicked')
 		self.highlighted:onClick(self.highlighted)

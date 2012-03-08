@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="10" height="5" tilewidth="64" tileheight="64">
+<map version="1.0" orientation="orthogonal" width="128" height="128" tilewidth="64" tileheight="64">
  <tileset firstgid="1" name="seattle" tilewidth="64" tileheight="64">
-  <image source="seattle.png" width="640" height="640"/>
+  <image source="seattle.png" width="704" height="640"/>
  </tileset>
- <layer name="Tile Layer 1" width="10" height="5">
+ <layer name="tile" width="128" height="128">
   <data encoding="base64" compression="zlib">
-   eJxjYGBgYAdiDiTMxoAd8ACxHRDbA7EDEAvgUCcGxB5A7AnEXkAshUOdAhArIWEVHOqIAQA22wK0
+   eJzt2TFqw0AURVGvwFvxImyIg5PGSRtn/7vwNAYRUghHk9HXOwce00pzQY12OwCA//HSdi601z7XEOva9lFon32uIZb+2fTPpn82/bPpn03/Gk4/zqXoX4P++k/Ppehfg/76T8+lfLXdCu174fevolf/Ki5tb23vox9kEP2z+6fTP5v+2fTPpn82/bPpn03/Pg6DN5f+fVTpTx9r7j/6X9Nv2xr99ddff/31119//fXXX3/99X9s/4fpv276b7P/ceb032b/ufTXf639ed4Wvv/0p382/bPpn03/bPpn0z+b/tn0zzanf88xlv7Z9M+mfzb9s+mfTf9s+mfTHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAR7q8hBmg=
   </data>
  </layer>
- <layer name="Tile Layer 2" width="10" height="5">
+ <layer name="edge" width="128" height="128">
   <data encoding="base64" compression="zlib">
-   eJxjYMAEjFjEQEAQiIWAWBiIRXCoAQFpIFYDYnUg1sCjDt0eXPYSAwBq3ADe
+   eJzt3NlKw1AUQNEg4oBPjvigUhFxwienj1D//3eMYKEE296EpCfkrAUHpE3TC5tWSm9aVQAAVbVVz/aK2YlbGhtwvub+w42sgij656Z/bvrnpn9u+ue2rv/FRlZBlJt6blfMXdzSAACAnu3Ws/83ewt//zfz+w9CVsoQLjs85rr3VRBF/9z0z03/3I46PEb/6fD6z23o/oufL6PG59XlXup5azkfLc5/3+diOzqLXkBi8/eX54Dnnj/nsv7Nve+f9XzV812t3hM/9Expz32X/y99W9Z/3d6XKFPac6V/e/r3S/84+renf7/0j6N/e/r3S/84+reXsf9xPScd5rTg3PrHKe1/1fH8s4Jj9I+jf3v6l5sVHKN/nDH3X3ftY9RM6ZrL0v1FEf0Z3phf/wxP/9z0z03/3PTPTf/c9M+ttP9DPY8d5qng3PrHGfP3vwxP/9z0z03/3PTPTf/c9M9tzNf/MjzX/+f2+/sSr415X3Jbc5rHlMx/52nzexUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAtPwASn0mtg==
+  </data>
+ </layer>
+ <layer name="doodad" width="128" height="128">
+  <data encoding="base64" compression="zlib">
+   eJzt3MsOwiAQBVD8K19d6f9/k7hwZ2ttYRjjOclsgBDSG/pIE0oBACjlsLN/i/uPtNNHtpzlHytbzvKPlS1n+cd6Xu/bm1pqbzXPN/PTR7Z9Lv9Y2XKWf6xsOf9z/nPf98dap4X+PVo+5+fGt2inj5H73PvfeNnu8/KPlS1n+cfKlrP8AQAAALY7j14Aq7z+923tBwCALC61rrWm0QsBAAAAAAAAAAAAAAAAgKTWniOxZpwzKQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIBPHg0sJj0=
   </data>
  </layer>
 </map>

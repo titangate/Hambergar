@@ -135,7 +135,6 @@ function Electrician:damage(t,amount,source)
 	end
 end
 
-
 function Electrician:getSkin()
 	return 'electrician'
 end

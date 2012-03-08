@@ -106,7 +106,7 @@ function Unit:damage(type,amount,source)
 		self.hp = self.hp - amount
 	end
 	if self.hp <= 0 then self:kill(source) end
-	self:notifyListeners({type='damage',damagetype=type,damage=amount,unit=self,source=source})
+	self:notifyListeners({type='damage',damagetype=type,damage=amount,unit=self,source=source,})
 
 end
 

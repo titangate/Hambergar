@@ -107,13 +107,21 @@ end
 height = height + 50
 local b_editor = goo.menuitem:new ( mainmenu)
 b_editor:setPos(10,height)
-b_editor:setText('Editor')
+b_editor:setText('SEATTLE')
 b_editor:sizeToText()
 b_editor.onClick = function(self,button)
-	mainmenu.closetime = 0.1
-	pushsystem(TileEditor)
+	require 'scenes.seattle.seattle'
+	local gs = require 'scenes.gamesystem'
+	pushsystem(loadingscreen)
+	mainmenu:onClose()
+	loadingscreen.finished = 	function ()
+		SetGameSystem(gs)
+		gs:load()
+		pushsystem(gs)
+		GetGameSystem():runMap(Seattle)
+	end
 end
-	height = height + 50
+height = height + 50
 local b_quit = goo.menuitem:new( mainmenu )
 b_quit:setPos( 10, height )
 b_quit:setText( "Quit Game" )

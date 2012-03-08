@@ -63,14 +63,16 @@ function b_IonicShield:start(u)
 			self.damageabsord = self.damageabsord - event.damage
 			u.hp = u.hp + event.damage
 			self:showeffect(u,event.source)
-			
+			if self.damageabsord<=0 then
+				u:removeBuff(self)
+			end
 		end
 	end)
 	t:registerEventType'damage'
+	self.t = t
 end
 
 function b_IonicShield:showeffect(unit,source)
-	print (source, 'PRESSING DAMAGE')
 	source = source or unit
 	self.sparkle[{
 		x=source.x,
@@ -92,7 +94,7 @@ function b_IonicShield:buff(unit,dt)
 end
 
 function b_IonicShield:stop(unit)
-	
+	self.t:destroy()
 end
 
 requireImage'assets/electrician/ionicshield.png'
@@ -226,14 +228,20 @@ end
 
 ThornEffect = UnitEffect:new()
 ThornEffect:addAction(function(unit,caster,skill)
-		local l = Beam:new(caster,unit,1,1,{255,255,255})
-		map:addUpdatable(l)
-		if unit.damage then
-			unit:damage('Electric',skill.damagereflect,caster)
-		end
-		local ip = LightningImpact:new(unit,10,0.1,0.05,1,{255,255,255},0.3)
-		map:addUpdatable(ip)
---		TEsound.play('sound/chainlightning.wav')
+	if unit:isKindOf(Missile) then
+		unit = unit.unit
+	end
+	if not caster:isEnemyOf(unit) then
+		return
+	end
+	local l = Beam:new(caster,unit,1,1,{255,255,255})
+	map:addUpdatable(l)
+	if unit.damage then
+		unit:damage('Electric',skill.damagereflect,caster)
+	end
+	local ip = LightningImpact:new(unit,10,0.1,0.05,1,{255,255,255},0.3)
+	map:addUpdatable(ip)
+--	end
 end)
 
 Thorn = Skill:subclass('Thorn')

@@ -24,6 +24,7 @@ end
 
 function Unit:initialize(x,y,rad,mass)
 	super.initialize(self)
+	x,y = x or 0,y or 0
 	self.x,self.y=x,y
 	self.rad = rad
 	self.mass = mass
@@ -345,7 +346,7 @@ function Unit:skilleffect(skill)
 end
 
 function Unit:draw()
---	love.graphics.circle('fill',self.x,self.y,self.rad,32)
+	love.graphics.circle('fill',self.x,self.y,self.rad,32)
 	self:drawBuff()
 end
 

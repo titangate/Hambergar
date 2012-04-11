@@ -51,6 +51,8 @@ end
 OrderMoveTowardsRange = AtomicGoal:subclass('OrderMoveTowardsRange')
 function OrderMoveTowardsRange:initialize(target,range)
 	self.target,self.range = target,range*range
+	
+	assert(target,'target not found')
 end
 
 function OrderMoveTowardsRange:process(dt,owner)
@@ -58,6 +60,7 @@ function OrderMoveTowardsRange:process(dt,owner)
 		owner.state = 'slide'
 		return STATE_FAIL,dt
 	end
+	assert(owner,'owner not found')
 	local dx,dy=self.target.x-owner.x,self.target.y-owner.y
 	local distance=dx*dx+dy*dy
 	if distance < self.range then

@@ -29,8 +29,10 @@ function Seattle:load()
 		x2 = self.h/2-screen.halfwidth,
 		y2 = self.h/2-screen.halfheight
 	})
-	local h = Helicopter()
+	local h = Tank()
+	h.controller = 'enemy'
 	map:addUnit(h)
+	h:enableAI()
 end
 
 function Seattle:enter_loaded()

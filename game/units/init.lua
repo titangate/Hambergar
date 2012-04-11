@@ -39,7 +39,8 @@ preloadlist(
 		'units.other.lightpuzzleunit'
 	},
 	seattle = {
-		'units.enemies.helicopter'
+		'units.enemies.helicopter',
+		'units.enemies.tank'
 	}
 }
 )

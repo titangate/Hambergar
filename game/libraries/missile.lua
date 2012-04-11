@@ -21,6 +21,9 @@ function Missile:createBody(world)
 	end	
 	self.shape:setData(self)
 end
+function Missile:kill()
+	map:removeUnit(self)
+end
 function Missile:preremove()
 	self.shape:setMask(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
     self.preremoved = true

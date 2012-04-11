@@ -3,6 +3,9 @@
  <tileset firstgid="1" name="seattle" tilewidth="64" tileheight="64">
   <image source="seattle.png" width="704" height="640"/>
  </tileset>
+ <tileset firstgid="111" name="seattleadditional" tilewidth="64" tileheight="64">
+  <image source="seattleadditional.png" width="640" height="640"/>
+ </tileset>
  <layer name="tile" width="128" height="128">
   <data encoding="base64" compression="zlib">
    eJzt2TFqw0AURVGvwFvxImyIg5PGSRtn/7vwNAYRUghHk9HXOwce00pzQY12OwCA//HSdi601z7XEOva9lFon32uIZb+2fTPpn82/bPpn03/Gk4/zqXoX4P++k/Ppehfg/76T8+lfLXdCu174fevolf/Ki5tb23vox9kEP2z+6fTP5v+2fTPpn82/bPpn03/Pg6DN5f+fVTpTx9r7j/6X9Nv2xr99ddff/31119//fXXX3/99X9s/4fpv276b7P/ceb032b/ufTXf639ed4Wvv/0p382/bPpn03/bPpn0z+b/tn0zzanf88xlv7Z9M+mfzb9s+mfTf9s+mfTHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAR7q8hBmg=
@@ -15,7 +18,7 @@
  </layer>
  <layer name="doodad" width="128" height="128">
   <data encoding="base64" compression="zlib">
-   eJzt3MsOwiAQBVD8K19d6f9/k7hwZ2ttYRjjOclsgBDSG/pIE0oBACjlsLN/i/uPtNNHtpzlHytbzvKPlS1n+cd6Xu/bm1pqbzXPN/PTR7Z9Lv9Y2XKWf6xsOf9z/nPf98dap4X+PVo+5+fGt2inj5H73PvfeNnu8/KPlS1n+cfKlrP8AQAAALY7j14Aq7z+923tBwCALC61rrWm0QsBAAAAAAAAAAAAAAAAgKTWniOxZpwzKQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIBPHg0sJj0=
+   eJzt3LlOw0AQBmDzVpwVvA9XxVVxdBwdkKdlEXJHIsfHztj5PmmaXcca5Zcdb1Zy0wAANM3ewPk+zmYyzjSy5Sz/urLlLP+6suUs/7p+v+/Tf2rT+Fjn2eb8TCPbdS7/urLlLP+6suW8y/mvW9/vlzrYMD/EmL/z644fY5xpRF7nnv/iZbvPy7+ubDnLv65sOcsfAAAAoL/D6AbopN3v6zuf1XV0AwCw485LXUQ3wSzdlrordd/js0eljkudjNoRY3mOboBJPUQ3AEAK7TrgstRVcC/Ud9MMe55n3h5LPTV/z/0vwb2wfB/RDRBqFd0A7LBt//+xZw+wXO7xAMtn/xcAgNZrqbdS79GNEOKz1Fep7+hGmIz1HwC12WfKpet7JLocN9d3UgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD1/ACQMDcs
   </data>
  </layer>
 </map>

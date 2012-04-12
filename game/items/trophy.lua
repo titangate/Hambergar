@@ -3,6 +3,6 @@ files = love.filesystem.enumerate('items/trophy/')
 for i,v in ipairs(files) do
 	local f = 'items/trophy/'..v
 	if love.filesystem.isFile(f) then
-		require (f)
+		love.filesystem.load (f)()
 	end
 end

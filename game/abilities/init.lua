@@ -33,7 +33,7 @@ preloadlist(
 		'abilities.swift.chain.ultimate1'
 	},
 })	
-require ('abilities.common.lua')
+require ('abilities.common')
 --[[
 require ('abilities.assassin.common.lua')
 require ('abilities.assassin.pistol.lua')

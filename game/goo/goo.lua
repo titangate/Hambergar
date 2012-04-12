@@ -318,7 +318,7 @@ function goo:load()
 	-- Load all objects
 	local object_list = love.filesystem.enumerate( 'goo/objects' )
 	for k,v in pairs( object_list ) do
-		goo.objects[v] = require( 'goo/objects/'..v )
+		goo.objects[v] = love.filesystem.load( 'goo/objects/'..v )()
 		if goo.objects[v] and goo.objects[v].setSkin then goo.objects[v]:setSkin() end
 	end
 end

@@ -1,7 +1,7 @@
 local Blureffect = {dt=0,time=0,on=false}
 blurbuffer = {}
 for i=1,5 do
-	table.insert(blurbuffer,love.graphics.newFramebuffer())
+	table.insert(blurbuffer,love.graphics.newCanvas())
 end
 
 local index = 1

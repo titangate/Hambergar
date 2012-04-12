@@ -12,6 +12,6 @@ files = love.filesystem.enumerate('items/consumable/')
 for i,v in ipairs(files) do
 	local f = 'items/consumable/'..v
 	if love.filesystem.isFile(f) then
-		require (f)
+		love.filesystem.load (f)()
 	end
 end

@@ -17,22 +17,22 @@ require 'libraries.system'
 require "libraries.mainmenu"
 require 'libraries.controller'
 require 'libraries.TEsound'
-require ('libraries/camera.lua')
-require ('libraries/scene.lua')
-require ('libraries/unit.lua')
+require ('libraries.camera')
+require ('libraries/scene')
+require ('libraries/unit')
 require 'libraries.animatedactor'
-require ('libraries/buff.lua')
-require ('libraries/ai.lua')
+require ('libraries/buff')
+require ('libraries/ai')
 require "libraries.tutorial"
-require ('libraries/skill.lua')
-require ('libraries/skilleffect.lua')
-require ('libraries/missile.lua')
-require ('libraries/button.lua')
-require ('libraries/particles.lua')
-require ('libraries/hud.lua')
-require ('abilities/init.lua')
-require ('units/init.lua')
-require ('libraries/timer.lua')
+require ('libraries/skill')
+require ('libraries/skilleffect')
+require ('libraries/missile')
+require ('libraries/button')
+require ('libraries/particles')
+require ('libraries/hud')
+require ('abilities/init')
+require ('units/init')
+require ('libraries/timer')
 require "libraries.uiitem"
 require "libraries.item"
 require 'libraries.weapon'
@@ -50,6 +50,7 @@ Blureffect = require 'libraries.blur'
 Lighteffect = require 'libraries.vl'
 require 'units.init'
 require 'cutscene.cutscene'
+require 'sampleshader'
 
 local gametimers = {}
 screen = {
@@ -153,6 +154,8 @@ function love.load()
 	if love.joystick.isOpen(0) then
 --		controller = XBOX360Controller:new(0)
 	end
+	
+	bloom = CreateBloomEffect(512,300)
 end
 
 function revertFont()
@@ -194,7 +197,10 @@ end
 function love.draw()
 	love.graphics.setColor(255,255,255)
 	revertFont()
+	bloom:predraw()
+	bloom:enabledrawtobloom()
 	currentsystem:draw()
+	bloom:postdraw()
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.setFont(fonts.oldsans24)
 	love.graphics.print(love.timer.getFPS(),screen.width-100,30)

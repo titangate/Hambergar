@@ -2,6 +2,7 @@ require 'MiddleClass'
 require 'ShaderEffect'
 require 'shader.shockwave'
 require 'shader.blackhole'
+require 'shader.zoomblur'
 function love.load()
 	img = love.graphics.newImage('demo.jpg')
 	s = ShockwaveEffect()
@@ -12,9 +13,12 @@ function love.load()
 	bh = BlackholeEffect()
 	bh:setParameter{
 		center = {0.5,0.5},
-		radius = 0.3,
+	--	radius = 0.3,
 	}
-	zb = Zoom
+	zb = ZoomblurEffect()
+	zb:setParameter{
+		center = {0.5,0.5},
+	}
 	shaders = {s,bh,zb}
 	id = 1
 end

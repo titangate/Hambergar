@@ -25,6 +25,7 @@ function ShockwaveEffect:initialize()
 		}
 	]]
 	
+	self.canvas = love.graphics.newCanvas(1024,1024)
 	self.xf = xf
 	self.time = 0
 end
@@ -42,9 +43,14 @@ function ShockwaveEffect:update(dt)
 end
 
 function ShockwaveEffect:predraw()
-	love.graphics.setPixelEffect(self.xf)
+	self.c = love.graphics.getCanvas()
+	love.graphics.setCanvas(self.canvas)
+	
 end
 
 function ShockwaveEffect:postdraw()
+	love.graphics.setCanvas(self.c)
+	love.graphics.setPixelEffect(self.xf)
+	love.graphics.draw(self.canvas)
 	love.graphics.setPixelEffect()
 end

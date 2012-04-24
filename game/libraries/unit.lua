@@ -171,14 +171,16 @@ function Unit:getMPPercent()
 end
 
 function Unit:createBody(world)
-	self.body = love.physics.newBody(world,self.x,self.y,self.mass,self.mass)
-	self.shape = love.physics.newCircleShape(self.body,0,0,self.rad)
+	local t = 'dynamic'
+	if self.mass <= 0 then t = 'static' end
+	self.body = love.physics.newBody(world,self.x,self.y,t)
+	self.shape = love.physics.newCircleShape(self.rad)
+	self.fixture = love.physics.newFixture(self.body,self.shape)
 	if self.controller then
 		category,masks = unpack(typeinfo[self.controller])
-		self.shape:setCategory(category)
-		self.shape:setMask(unpack(masks))
+		self.fixture:setCategory(category)
+		self.fixture:setMask(unpack(masks))
 	end
---	self.shape:setData(self)
 	self.updateShapeData = true -- a hack to fix the crash when set data in a coroutine
 	if self.r then
 		self.body:setAngle(self.r)
@@ -186,15 +188,18 @@ function Unit:createBody(world)
 end
 
 function Unit:preremove()
-	self.shape:setMask(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
+	self.fixture:setMask(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
+	
     self.preremoved = true
 end
 
 function Unit:destroy()
     if self.preremoved then
         if self.shape then self.shape:destroy() end
+        if self.fixture then self.fixture:destroy() end
         if self.body then self.body:destroy() end
 		self.shape = nil
+		self.fixture = nil
 		self.body = nil
     end
 end
@@ -236,7 +241,7 @@ end
 
 function Unit:update(dt)
 	if self.updateShapeData then
-		self.shape:setData(self)
+		self.fixture:setUserData(self)
 		self.updateShapeData = nil
 	end
 	if self.ai then
@@ -276,7 +281,6 @@ function Unit:update(dt)
 		self.skill:update(dt*self.spellspeedbuffpercent)
 	end
 	if self.body then
-		
 		if self.state == 'auto' then
 		elseif self.state == 'stop' then
 			self.body:setLinearVelocity(0,0)
@@ -489,83 +493,10 @@ function Character:getManager()
 	return self.manager
 end
 
-Probe = Object:subclass('Probe')
-function Probe:initialize(unit,start,direction,r)
-	self.unit = unit
-	self.start = start
-	self.direction = direction
-	self.controller = 'playerMissile'
-	self.life = 0.3
-	self.r = r or 64
-end
-
-function Probe:createBody(world)
-	local x,y = self.start.x,self.start.y
---	assert(math.abs(x)<map.w/2)
---	assert(math.abs(y)<map.h/2)
-	self.body = love.physics.newBody(world,x,y,0.0001,1)
-	self.shape = love.physics.newCircleShape(self.body,0,0,self.r)
-	self.body:setBullet(true)
-	self.shape:setSensor(true)
-	self.shape:setCategory(15)
-	self.shape:setMask(cc.playermissile,cc.enemymissile,cc.player)
-	--[[
-	if self.controller then
-		local category,masks = unpack(typeinfo[self.controller])
-		self.shape:setCategory(category)
-		self.shape:setMask(unpack(masks))
-	end]]
-	x,y = unpack(self.direction)
-	x,y = normalize(x,y)
-	self.body:setLinearVelocity(x*2000,y*2000)
-	self.shape:setData(self)
-end
-
-function Probe:update(dt)
-	self.life = self.life - dt
-	if self.life<= 0 then
-		self.add = nil
-		self.offline = true
-		map:removeUnit(self)
-	end
-end
-
-function Probe:preremove()
-	self.shape:setMask(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
-    self.preremoved = true
-end
-function Probe:destroy()
-    if self.preremoved then
-        if self.shape then self.shape:destroy() end
-        if self.body then self.body:destroy() end
-		self.shape = nil
-		self.body = nil
-    end
-end
-
---[[
-function Probe:draw()
-	love.graphics.circle('fill',self.body:getX(),self.body:getY(),16,10)
-end
-]]
-
-function Probe:add(b)
-	if not b:isKindOf(Unit) or b==GetCharacter() or self.offline then return end
-	self.add = nil
-	self.unit:lock(b)
-	self.offline = true
-	map:removeUnit(self)
---	end
-end
-
-
 function Character:update(dt)
 	super.update(self,dt)
 	self.probedt = self.probedt - dt
 	if self.probedt <= 0 then
-		self.probedt = self.probetime
-		local probe = Probe:new(controller,self,controller:GetRawOrderDirection())
-		map:addUnit(probe)
 	end
 end
 

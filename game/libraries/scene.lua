@@ -36,7 +36,7 @@ typeinfo = {
 }
 
 function Map:initialize(w,h)
-	self.world = love.physics.newWorld(-w/2,-h/2,w/2,h/2)
+	self.world = love.physics.newWorld()
 	self.world:setCallbacks(add,nil,persist)
 	self.units = {}
 	self.destroys = {}
@@ -53,12 +53,13 @@ function Map:initialize(w,h)
 end
 
 MapBlock = Object:subclass('MapBlock')
-function MapBlock:initialize(body,shape,index)
+function MapBlock:initialize(body,shape,fixture,index)
 	self.body,self.shape,self.index = body,shape,index
+	self.fixture = fixture
 end
 
 function MapBlock:preremove()
-	self.shape:setMask(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
+	self.fixture:setMask(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
 end
 
 function MapBlock:add(b,c)
@@ -70,22 +71,24 @@ end
 
 function MapBlock:destroy()
 	self.shape:destroy()
+	self.fixture:destroy()
 	self.body:destroy()
 end
 
 function Map:setBlock(x,y,b)
 	if b then
-		local body = love.physics.newBody(self.world,x,y)
-		local shape = love.physics.newRectangleShape(body,0,0,40,40)
-		shape:setCategory(8)
-		shape:setMask(5,6)
+		local body = love.physics.newBody(self.world,x,y,'static')
+		local shape = love.physics.newRectangleShape(40,40)
+		local fixture = love.physics.newFixture(body,shape)
+		fixture:setCategory(8)
+		fixture:setMask(5,6)
 		if b>0 then
-			shape:setSensor(true)
+			fixture:setSensor(true)
 			self.waypoints[b] = {x,y}
 		end
-		local mb = MapBlock:new(body,shape,b)
+		local mb = MapBlock:new(body,shape,fixture,b)
 --		self.aimap:setBlock(x,y,mb)
-		shape:setData(mb)
+		fixture:setUserData(mb)
 		mb:registerListener(gamelistener)
 	else
 	end	
@@ -93,19 +96,19 @@ end
 
 function Map:placeObstacle(x,y,w,h,b,name)
 	local body = love.physics.newBody(self.world,x+w/2,y+h/2)
-	local shape = love.physics.newRectangleShape(body,0,0,w,h)
-	shape:setCategory(8)
-	shape:setMask(5,6)
+	local shape = love.physics.newRectangleShape(w,h)
+	local fixture = love.physics.newFixture(body,shape)
+	fixture:setCategory(8)
+	fixture:setMask(5,6)
 	if b then
-		shape:setSensor(true)
+		fixture:setSensor(true)
 		self.waypoints[b] = {x,y}
 	end
-	local mb = MapBlock:new(body,shape,b)
+	local mb = MapBlock:new(body,shape,fixture,b)
 	if name then
 		self.obstacles[name]=mb
 	end
-	print (name,'OBSTACLE NAME')
-	shape:setData(mb)
+	fixture:setUserData(mb)
 	mb:registerListener(gamelistener)
 end
 

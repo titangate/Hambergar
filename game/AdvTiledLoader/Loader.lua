@@ -11,9 +11,9 @@ local cache = setmetatable({}, {__mode = "v"})
 local cache_imagesize = setmetatable({}, {__mode="k"})
 
 -- Decompresses gzip and zlib
-local decompress = require(TILED_LOADER_PATH .. "external/deflatelua.lua")
+local decompress = love.filesystem.load(TILED_LOADER_PATH .. "external/deflatelua.lua")()
 -- Parser than turns an XML file into a table
-local xml_to_table = require(TILED_LOADER_PATH .. "external/xml")
+local xml_to_table = love.filesystem.load(TILED_LOADER_PATH .. "external/xml.lua")()
 -- Base64 parser, Turns base64 strings into other data formats
 local base64 = require(TILED_LOADER_PATH .. "base64")
 

@@ -43,7 +43,7 @@ require "items.init"
 require "libraries.conversation"
 --require "editor.init"
 require 'libraries.TEsound'
-require 'libraries.stealth'
+--require 'libraries.stealth'
 goo=require "goo.goo"
 anim = require "anim.anim"
 Blureffect = require 'libraries.blur'
@@ -197,10 +197,10 @@ end
 function love.draw()
 	love.graphics.setColor(255,255,255)
 	revertFont()
-	bloom:predraw()
-	bloom:enabledrawtobloom()
+--	bloom:predraw()
+--	bloom:enabledrawtobloom()
 	currentsystem:draw()
-	bloom:postdraw()
+--	bloom:postdraw()
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.setFont(fonts.oldsans24)
 	love.graphics.print(love.timer.getFPS(),screen.width-100,30)

@@ -43,7 +43,6 @@ b_startgame:sizeToText()
 b_startgame.onClick = function( self, button )
 	require 'scenes.tibet.tibet'
 	local gs = require 'scenes.gamesystem'
-	require 'scenes.tibet.intro'
 	mainmenu:onClose()
 	pushsystem(loadingscreen)
 	loadingscreen.finished = function ()

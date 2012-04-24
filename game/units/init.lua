@@ -1,14 +1,14 @@
 preloadlist(
 {
 	assassin = {
-		'units.class.assassin.lua',
+		'units.class.assassin',
 	},
 	electrician = {
 		'units.class.electrician',
 		'units.other.drainable',
 	},
 	commonenemies = {
-		'units.enemies.box.lua',
+		'units.enemies.box',
 	},
 	tibet = {
 		'units.enemies.ial',

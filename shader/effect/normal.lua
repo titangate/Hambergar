@@ -3,13 +3,16 @@ function HeathazeEffect:initialize()
 	super.initialize(self)
 	local xf = love.graphics.newPixelEffect[[
 		extern Image normal;// Normal map
+		extern Image mask; // bluring mask
 		const int normalscale = 64;
 		extern vec2 offset;
+		const vec2 offsetfix = vec2(0.006,0.006);
 		vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 pixel_coords)
 		{
 			vec2 hazeoffset = vec2(int(pixel_coords.x) % normalscale,int(pixel_coords.y) % normalscale)/normalscale;
-			vec2 hazenormal = Texel(normal,hazeoffset+offset).rg/255;
-			return color * Texel(texture, texture_coords+hazenormal);
+			vec2 hazenormal = Texel(normal,hazeoffset+offset).rg/125-offsetfix;
+			vec4 texcolor = Texel(texture, texture_coords+hazenormal);
+			return color * vec4(texcolor.rgb,texcolor.a*Texel(mask, texture_coords).a);
 		}
 	]]
 	

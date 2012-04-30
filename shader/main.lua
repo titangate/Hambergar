@@ -3,7 +3,7 @@ require 'ShaderEffect'
 require 'effect.shockwave'
 require 'effect.blackhole'
 require 'effect.zoomblur'
-require 'effect.normal'
+--require 'effect.normal'
 require 'effect.edgeblur'
 function love.load()
 	img = love.graphics.newImage('demo.jpg')
@@ -25,13 +25,13 @@ function love.load()
 	
 	hazenormal = love.graphics.newImage'effect/heathaze.png'
 	hazenormal:setWrap('repeat','repeat')
+	--[[
 	mask = love.graphics.newImage'effect/oval.png'
 	hz = HeathazeEffect()
 	hz:setParameter{
 		normal = hazenormal,
 		mask = mask,
-	}
-	
+	}]]
 	eb = EdgeblurEffect()
 	eb:setParameter{
 		edge = edge,

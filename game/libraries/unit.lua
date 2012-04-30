@@ -240,6 +240,7 @@ function Unit:setBuffActive(state)
 end
 
 function Unit:update(dt)
+	assert(self.body)
 	if self.updateShapeData then
 		self.fixture:setUserData(self)
 		self.updateShapeData = nil

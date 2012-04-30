@@ -37,7 +37,10 @@ typeinfo = {
 
 function Map:initialize(w,h)
 	self.world = love.physics.newWorld()
-	self.world:setCallbacks(add,nil,persist)
+	self.world:setCallbacks(function(a,b,c)
+		table.insert(self.collisionhandle,{'add',a,b,c})
+	end
+	,nil,nil) --TODO: write persist callback
 	self.units = {}
 	self.destroys = {}
 	self.updatable = {}
@@ -50,6 +53,7 @@ function Map:initialize(w,h)
 	controller:setLockAvailability(options.aimassist)
 	self.unitdict = {}
 	self.anim = love.filesystem.load'anim/anim.lua'()
+	self.collisionhandle = {}
 end
 
 MapBlock = Object:subclass('MapBlock')
@@ -141,19 +145,6 @@ function persist(a,b,c)
 end
 
 
-function add(a,b,c)
---	if map.units[a] and map.units[b] then
-	if a and b then
-		if a.add then
-			a:add(b,c)
-		end
-		if b.add then
-			b:add(a,c)
-		end
-	end
---	end
-end
-
 function Map:addUnit(...)
 	for k,unit in ipairs(arg) do
 		self.units[unit] = true
@@ -224,7 +215,21 @@ function Map:update(dt)
 	if not self.disableBlur then
 		Blureffect.update(dt)
 	end
-	
+	for i,v in ipairs(self.collisionhandle) do
+		local t,a,b,c = unpack(v)
+		if t=='add' then
+			a,b = a:getUserData(),b:getUserData()
+			if a and b then
+				if a.add then
+					a:add(b,c)
+				end
+				if b.add then
+					b:add(a,c)
+				end
+			end
+		end
+	end
+	self.collisionhandle = {}
 end
 
 function Map:draw()

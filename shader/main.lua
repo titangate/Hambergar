@@ -3,8 +3,8 @@ require 'ShaderEffect'
 require 'effect.shockwave'
 require 'effect.blackhole'
 require 'effect.zoomblur'
---require 'effect.normal'
-require 'effect.edgeblur'
+require 'effect.normal'
+require 'effect.blowaway'
 function love.load()
 	img = love.graphics.newImage('demo.jpg')
 	s = ShockwaveEffect()
@@ -25,19 +25,20 @@ function love.load()
 	
 	hazenormal = love.graphics.newImage'effect/heathaze.png'
 	hazenormal:setWrap('repeat','repeat')
-	--[[
 	mask = love.graphics.newImage'effect/oval.png'
 	hz = HeathazeEffect()
 	hz:setParameter{
 		normal = hazenormal,
 		mask = mask,
-	}]]
-	eb = EdgeblurEffect()
+	}
+	
+	eb = SandEffect()
 	eb:setParameter{
-		edge = edge,
+		normal = hazenormal,
 	}
 	shaders = {s,bh,zb,hz,eb}
 	id = 1
+	love.graphics.setFont(love.graphics.newFont( 100 ))
 end
 
 function love.update(dt)
@@ -45,9 +46,10 @@ function love.update(dt)
 end
 
 function love.draw()
-love.graphics.draw(img)
+--love.graphics.draw(img)
 	shaders[id]:predraw()
 	love.graphics.draw(img)
+	love.graphics.print('img',0,0)
 	shaders[id]:postdraw()
 	
 	newfps = love.timer.getFPS()

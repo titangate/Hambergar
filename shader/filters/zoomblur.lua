@@ -1,5 +1,7 @@
-ZoomblurEffect = ShaderEffect:subclass'ZoomblurEffect'
-function ZoomblurEffect:initialize()
+
+Zoomblur = Filter:subclass'Zoomblur'
+
+function Zoomblur:initialize()
 	super.initialize(self)
 	local xf = love.graphics.newPixelEffect[[
 		extern vec2 center; // Center of blur
@@ -19,36 +21,28 @@ function ZoomblurEffect:initialize()
 			return color * vec4(tc, texcolor.a);
 		}
 	]]
+	self.xf = xf
 	
 	self.priority = 20
-	self.canvas = love.graphics.newCanvas(1024,1024)
-	self.xf = xf
 	self.time = 0
 end
 
-function ZoomblurEffect:setParameter(p)
-	for k,v in pairs(p) do
-		self.xf:send(k,v)
-	end
-end
-
-function ZoomblurEffect:update(dt)
+function Zoomblur:update(dt)
 	super.update(self,dt)
 	self.time = self.time + dt
 	local x,y = love.mouse.getPosition()
-	self.xf:send("center",{x/1024,1-y/1024})
---	self.xf:send("time",self.time)
+	self.xf:send("center",{x/screen.w,1-y/screen.w})
 end
 
-function ZoomblurEffect:predraw()
-	self.c = love.graphics.getCanvas()
-	love.graphics.setCanvas(self.canvas)
-	
-end
 
-function ZoomblurEffect:postdraw()
-	love.graphics.setCanvas(self.c)
+function Zoomblur:draw(c,requestfunc)
+	local length = math.max(screen.w,screen.h)
+	local result = requestfunc(length,length)
+	love.graphics.setCanvas(result)
 	love.graphics.setPixelEffect(self.xf)
-	love.graphics.draw(self.canvas)
+	love.graphics.draw(c)
 	love.graphics.setPixelEffect()
+	return result
 end
+
+return Zoomblur

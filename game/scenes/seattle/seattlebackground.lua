@@ -20,7 +20,6 @@ function TrafficMap:initialize(traffic)
 	self.traffic = traffic
 	for j,v1 in ipairs(traffic) do
 		for i,v2 in ipairs(v1) do
-			print (i,v2)
 			if v2==0 then
 			elseif roadquad[v2] then
 				self.batch:addq(roadquad[v2],j*64-2048,i*64-2048)

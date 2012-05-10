@@ -1,7 +1,4 @@
-local p=print
-function print(...)
-	p(...)
-end
+
 
 ImageLoader = Object:subclass('ImageLoader')
 function ImageLoader:initialize()
@@ -89,7 +86,6 @@ function Listener:register(handler)
 end
 
 function Listener:unregister(handler)
-	print ('marked',handler,'for destory')
 	if handler.eventtype then
 		self.classifiedhandlers[handler.eventtype][handler]=false
 	else

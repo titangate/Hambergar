@@ -78,7 +78,7 @@ b_test:setPos( 10, height )
 b_test:setText( 'vancouver test' )
 b_test:sizeToText()
 b_test.onClick = function( self, button )
-	require 'scenes.vancouver.vancouver'
+	require 'scenes.northvan.mansion'
 	local gs = require 'scenes.gamesystem'
 	pushsystem(loadingscreen)
 	loadingscreen.finished = 	function ()
@@ -86,7 +86,7 @@ b_test.onClick = function( self, button )
 		gs:load()
 		pushsystem(gs)
 		mainmenu:onClose()
-		GetGameSystem():runMap(Waterfall)
+		GetGameSystem():runMap(Mansion)
 	end
 end
 height = height + 50

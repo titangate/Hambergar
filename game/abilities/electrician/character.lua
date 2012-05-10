@@ -10,7 +10,6 @@ function ElectricianCharacterPanel:initInventory()
 	eq:setInventory(self.unit.inventory)
 	eq:setItemtype{'consumable','amplifier','trophy','artifact'}
 	function self.unit.inventory.updateInvUI()
-		print ('switch')
 		i:switchTab(i.currenttab)
 		eq:updateEquipment()
 	end

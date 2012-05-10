@@ -41,6 +41,8 @@ require "libraries.sound"
 require 'scenes.init'
 require "items.init"
 require "libraries.conversation"
+require "libraries.filter"
+require "libraries.filtermanager"
 --require "editor.init"
 require 'libraries.TEsound'
 --require 'libraries.stealth'
@@ -58,6 +60,8 @@ screen = {
 	height = love.graphics.getHeight(),
 	halfwidth = love.graphics.getWidth()/2,
 	halfheight = love.graphics.getHeight()/2,
+	w = love.graphics.getWidth(),
+	h = love.graphics.getHeight(),
 }
 
 playable = {
@@ -81,9 +85,28 @@ storydata = {
 	},
 }
 
+function DBGTABLE(t)
+	print ('Contents for t',t)
+	for k,v in pairs(t) do
+		print (k,v)
+	end
+end
+
+debugmessages = {}
+function DBGMSG(msg,time)
+	time = time or 0
+	debugmessages[msg] = time
+end
+function DBGMSG2(time,msg)
+	time = time or 1
+	debugmessages[msg] = time
+end
+local p=print
+function print(...)
+	p(...)
+end
 gamesystems = {}
 function pushsystem(system)
-	print (system,'is pushed')
 	if gamesystems[#gamesystems] and gamesystems[#gamesystems].poped then gamesystems[#gamesystems]:poped() end
 	table.insert(gamesystems,system)
 	if system.pushed then system:pushed() end
@@ -155,16 +178,36 @@ function love.load()
 --		controller = XBOX360Controller:new(0)
 	end
 	
-	bloom = CreateBloomEffect(512,300)
+	filtermanager = FilterManager()
+	
+	filtermanager:loadFilters('filters/')
+	filtermanager:setFilterArguments('Shockwave',{center = {0.5,0.3}})
+	filtermanager:setFilterArguments('Blackhole',{center = {0.5,0.6},radius = 0.2})
+	
+	hazenormal = love.graphics.newImage'heathaze.png'
+	hazenormal:setWrap('repeat','repeat')
+	mask = love.graphics.newImage'oval.png'
+	
+	filtermanager:setFilterArguments('Heathaze',{normal = hazenormal,mask = mask})
+	filtermanager:setFilterArguments('Gaussianblur',{mask = mask})
 end
 
 function revertFont()
 	love.graphics.setFont(f)
 end
 
+effects = {}
 function love.keypressed(k,unicode)
+	
 	if currentsystem.keypressed then currentsystem:keypressed(k) end
 	goo:keypressed(k,unicode)
+	k = tonumber(k)
+	if k then
+		na = filtermanager.filterindex[k]
+		filtermanager:reset()
+		effects[na] = not effects[na]
+		DBGMSG(na.." is "..tostring(effects[na]),1)
+	end
 end
 
 function love.keyreleased(k,unicode)
@@ -185,6 +228,22 @@ function love.mousereleased(x,y,k)
 end
 
 function love.update(dt)
+	for v,active in pairs(effects) do
+		if active then
+			filtermanager:requestFilter(v)
+		end
+	end
+	
+	for msg,time in pairs(debugmessages) do
+		
+		if time < 0 then
+			debugmessages[msg] = nil
+		else
+			
+			debugmessages[msg] = time - dt
+		end
+	end
+	filtermanager:update(dt)
 	if pausing then return end
 	controller:update(dt)
 	currentsystem:update(dt)
@@ -197,9 +256,20 @@ end
 function love.draw()
 	love.graphics.setColor(255,255,255)
 	revertFont()
-	currentsystem:draw()
+	
+	local d = function()
+		currentsystem:draw()
+	end
+	filtermanager:draw(d)
+	local height = 10
+	for msg,time in pairs(debugmessages) do
+		love.graphics.print(msg,10,height)
+		height = height + 15
+	end
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.setFont(fonts.oldsans24)
 	love.graphics.print(love.timer.getFPS(),screen.width-100,30)
 end
+
+
 

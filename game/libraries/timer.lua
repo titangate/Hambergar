@@ -13,7 +13,6 @@ function Timer:initialize(interval,count,func,start,selfdestruct)
 	self.time = 0
 	self.selfdestruct = selfdestruct or true
 	GetGameSystem():addGameTimer(self)
-	print (GetGameSystem().class)
 end
 
 function Timer:update(dt)

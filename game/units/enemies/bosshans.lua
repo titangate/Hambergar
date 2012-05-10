@@ -103,7 +103,6 @@ function AI.Hans2(hans,target)
 			end
 			return volcseq
 		end
---		print ('volcseq',count)
 		return volcseq
 	end)
 	local AIDemo = Sequence:new()

@@ -180,7 +180,7 @@ function Unit:createBody(world)
 		category,masks = unpack(typeinfo[self.controller])
 		self.fixture:setCategory(category)
 		self.fixture:setMask(unpack(masks))
-		self.fixture:setDensity(self.mass)
+		self.fixture:setDensity(self.mass/2)
 	end
 	self.updateShapeData = true -- a hack to fix the crash when set data in a coroutine
 	if self.r then
@@ -354,6 +354,21 @@ end
 function Unit:draw()
 	love.graphics.circle('fill',self.x,self.y,self.rad,32)
 	self:drawBuff()
+end
+
+-- Some additional function that makes abilities easier
+
+function Unit:dash(x,y)
+	assert(self.body)
+	local vx = 2*500*(x-self.x)
+	local vy = 2*500*(y-self.y)
+	DBGMSG(vx,4)
+	DBGMSG(vy,4)
+	vx = vx^0.5
+	vy = vy^0.5
+	DBGMSG(vx,4)
+	DBGMSG(vy,4)
+	self.body:applyLinearImpulse(vx,vy)
 end
 
 function Unit:findUnitByType(type)

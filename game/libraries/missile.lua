@@ -15,7 +15,7 @@ function Missile:createBody(world)
 	if self.controller then
 		category,masks = unpack(typeinfo[self.controller])
 		self.fixture:setCategory(category)
-		self.fixture:setDensity(self.mass/3)
+		self.fixture:setDensity(self.mass/5)
 		
 		self.fixture:setMask(unpack(masks))
 	end

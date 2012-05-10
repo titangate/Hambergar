@@ -120,3 +120,8 @@ end
 function Mansion:load(x,y,c)
 	self:wake_load()
 end
+
+
+function scenetest()
+	GetCharacter():dash(100,100)
+end

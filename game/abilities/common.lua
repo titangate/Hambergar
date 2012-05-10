@@ -11,8 +11,8 @@ function BloodTrail:initialize(b)
 	p:setEmissionRate(30)
 	p:setSpeed(100, 100)
 	p:setGravity(0)
-	p:setSize(0.5, 0.25)
-	p:setColor(255, 58, 58, 255, 140, 26, 26, 0)
+	p:setSizes(0.5, 0.25)
+	p:setColors(255, 58, 58, 255, 140, 26, 26, 0)
 	p:setPosition(400, 300)
 	p:setLifetime(0.5)
 	p:setParticleLife(0.25)
@@ -85,7 +85,7 @@ function MeleeMissile:add(unit,coll)
 			if self.effect then self.effect:effect(unit,self,self.skill) end
 			unit.bht[self] = true
 			self.draw = function() end
-			self.persist = function() end
+			self.add = function() end
 		end
 	end
 end
@@ -124,7 +124,7 @@ function MachineGunMissile:add(unit,coll)
 			if self.effect then self.effect:effect(unit,self,self.skill) end
 			unit.bht[self] = true
 			self.draw = function() end
-			self.persist = function() end
+			self.add = function() end
 		end
 	end
 end
@@ -170,7 +170,7 @@ function ShotgunMissile:add(unit,coll)
 			if self.effect then self.effect:effect(unit,self,self.skill) end
 			unit.bht[self] = true
 			self.draw = function() end
-			self.persist = function() end
+			self.add = function() end
 		end
 	end
 end
@@ -235,13 +235,13 @@ Bullet = Missile:subclass('Bullet')
 function Bullet:initialize(...)
 	super.initialize(self,...)
 end
-function Bullet:persist(unit,coll)
+function Bullet:add(unit,coll)
 	if (self.controller=='playerMissile' and unit.controller=='enemy') or (self.controller == 'enemyMissile' and unit.controller=='player') then
 		if not unit.bht[self] then
 			if self.effect then self.effect:effect(unit,self,self.skill) end
 			unit.bht[self] = true
 			self.draw = function() end
-			self.persist = function() end
+			self.add = function() end
 		end
 	end
 end

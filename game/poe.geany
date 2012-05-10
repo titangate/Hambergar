@@ -1,0 +1,33 @@
+
+[indentation]
+indent_width=4
+indent_type=1
+indent_hard_tab_width=8
+detect_indent=false
+detect_indent_width=false
+indent_mode=2
+
+[project]
+name=poe
+base_path=/home/hambergar/game/
+description=
+file_patterns=
+
+[long line marker]
+long_line_behaviour=1
+long_line_column=72
+
+[files]
+current_page=1
+FILE_NAME_0=207;Lua;0;16;1;1;0;/home/hambergar/game/abilities/abilitytemplates.lua;0;4
+FILE_NAME_1=7255;Lua;0;16;1;1;0;/home/hambergar/game/abilities/common.lua;0;4
+FILE_NAME_2=0;Lua;0;16;1;1;0;/home/hambergar/game/abilities/init.lua;0;4
+FILE_NAME_3=241;Lua;0;16;1;1;0;/home/hambergar/game/abilities/lizard.lua;0;4
+
+[VTE]
+last_dir=/home/s-jiang_leon
+
+[build-menu]
+EX_00_LB=_Execute
+EX_00_CM=love "%p"
+EX_00_WD=

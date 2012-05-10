@@ -40,7 +40,7 @@ function Map:initialize(w,h)
 	self.world:setCallbacks(function(a,b,c)
 		table.insert(self.collisionhandle,{'add',a,b,c})
 	end
-	,nil,nil) --TODO: write persist callback
+	,nil,nil) 
 	self.units = {}
 	self.destroys = {}
 	self.updatable = {}
@@ -217,17 +217,16 @@ function Map:update(dt)
 	end
 	for i,v in ipairs(self.collisionhandle) do
 		local t,a,b,c = unpack(v)
-		if t=='add' then
 			a,b = a:getUserData(),b:getUserData()
 			if a and b then
-				if a.add then
-					a:add(b,c)
+				if a[t] then
+					a[t](a,b,c)
 				end
-				if b.add then
-					b:add(a,c)
+				if b[t] then
+					b[t](b,a,c)
 				end
 			end
-		end
+		
 	end
 	self.collisionhandle = {}
 end

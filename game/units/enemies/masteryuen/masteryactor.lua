@@ -44,8 +44,40 @@ function MasterYuenActor:initialize()
 			myimg.fist.fist4,
 			myimg.fist.fist7,
 		},
+		pray = {
+			myimg.pray.pray
+		},
+		hold = {
+			myimg.hold.hold1,
+			myimg.hold.hold2,
+			myimg.hold.hold3,
+		},
+		kick = {
+		
+			myimg.fist.fist1,
+--			myimg.kick.kick2,
+			myimg.kick.kick3,
+			myimg.kick.kick3,
+			myimg.kick.kick3,
+		},
+		crane = {
+			myimg.fist.fist1,
+			myimg.kick.kick2,
+			myimg.kick.kick3,
+			myimg.kick.kick3,
+			myimg.kick.crane1,
+			myimg.kick.crane1,
+			myimg.kick.crane2,
+			myimg.kick.crane3,
+			myimg.kick.crane4,
+			myimg.kick.crane10,
+			myimg.kick.crane6,
+			myimg.kick.crane5,
+			myimg.kick.crane6,
+		}
+		
 	}
-	
+	self.shadow = {}
 	self.time = 0
 	self.speed = 1
 	self.loop = true
@@ -62,11 +94,13 @@ function MasterYuenActor:reset()
 	self:playAnimation(stand,1,true)
 end
 
-function MasterYuenActor:setEffect()
+function MasterYuenActor:setEffect(effect)
+	self.effect = effect
+	
 end
 
 function MasterYuenActor:update(dt)
-	self.time = self.time + dt
+	self.time = self.time + dt * self.speed
 	local frame = math.ceil(self.time / frametime)
 	if self.loop then
 		frame = frame % #self.anim[self.activeanim] + 1
@@ -78,5 +112,15 @@ function MasterYuenActor:update(dt)
 end
 
 function MasterYuenActor:draw(x,y,r)
-	love.graphics.draw(self.sprite,x,y,r,0.7,0.7,80,80)
+	if self.effect == 'glow' then
+		love.graphics.setColor(255,166,70,127)
+		love.graphics.setPixelEffect(pixeleffect.singcolor)
+		love.graphics.draw(self.sprite,x,y,r,0.8,0.8,80,80)
+		love.graphics.setColor(0,0,0,255)
+		love.graphics.draw(self.sprite,x,y,r,0.7,0.7,80,80)
+		love.graphics.setPixelEffect()
+	else
+		
+		love.graphics.draw(self.sprite,x,y,r,0.7,0.7,80,80)
+	end
 end

@@ -15,11 +15,15 @@ function Missile:createBody(world)
 	if self.controller then
 		category,masks = unpack(typeinfo[self.controller])
 		self.fixture:setCategory(category)
+		self.fixture:setDensity(self.mass/3)
+		
 		self.fixture:setMask(unpack(masks))
 	end
+	self.body:resetMassData()
 	self.body:setLinearVelocity(self.dx*self.vi,self.dy*self.vi)
 	self.body:setBullet(true)
 	self.body:setAngle(math.atan2(self.dy,self.dx))
+	self.fixture:setUserData(self)
 end
 function Missile:kill()
 	map:removeUnit(self)
@@ -34,7 +38,6 @@ end
 
 function Missile:destroy()
     if self.preremoved then
-        if self.shape then self.shape:destroy() end
         if self.fixture then self.fixture:destroy() end
         if self.body then self.body:destroy() end
 		self.shape = nil

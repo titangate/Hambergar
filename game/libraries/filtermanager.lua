@@ -76,6 +76,7 @@ function FilterManager:removeFilter(name)
 end
 
 function FilterManager:setFilterArguments(name,...)
+	if not self.filter[name] then return end
 	self.filter[name]:setArguments(...)
 end
 

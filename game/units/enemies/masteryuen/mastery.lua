@@ -4,7 +4,8 @@ function MasterYuen:initialize(x,y)
 	super.initialize(self,x,y,16,10)
 	self.actor = MasterYuenActor()
 	self.x,self.y = x,y
-	self.actor:playAnimation('kick',1,true)
+	self.actor:playAnimation('crane',1,true)
+	self.actor:setEffect'glow'
 end
 
 function MasterYuen:update(dt)

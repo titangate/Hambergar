@@ -180,6 +180,7 @@ function Unit:createBody(world)
 		category,masks = unpack(typeinfo[self.controller])
 		self.fixture:setCategory(category)
 		self.fixture:setMask(unpack(masks))
+		self.fixture:setDensity(self.mass)
 	end
 	self.updateShapeData = true -- a hack to fix the crash when set data in a coroutine
 	if self.r then
@@ -195,7 +196,7 @@ end
 
 function Unit:destroy()
     if self.preremoved then
-        if self.shape then self.shape:destroy() end
+--        if self.shape then self.shape:destroy() end
         if self.fixture then self.fixture:destroy() end
         if self.body then self.body:destroy() end
 		self.shape = nil

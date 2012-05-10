@@ -4,8 +4,8 @@ function SniperRoundTrail:initialize(b)
 	local p = love.graphics.newParticleSystem(img.part1, 1000)
 	p:setEmissionRate(500)
 	p:setSpeed(0, 0)
-	p:setSize(0.25, 1)
-	p:setColor(26,183,255,255,255,255,255,0)
+	p:setSizes(0.25, 1)
+	p:setColors(26,183,255,255,255,255,255,0)
 	p:setPosition(400, 300)
 	p:setLifetime(1)
 	p:setParticleLife(0.5)
@@ -29,13 +29,13 @@ function SniperRoundTrail:draw()
 	love.graphics.draw(self.p)
 end
 SniperRound = Missile:subclass('SniperRound')
-function SniperRound:persist(unit,coll)
+function SniperRound:add(unit,coll)
 	if (self.controller=='playerMissile' and unit.controller=='enemy') or (self.controller == 'enemyMissile' and unit.controller=='player') then
 		if not unit.bht[self] then
 			if self.effect then self.effect:effect(unit,self,self.skill) end
 			unit.bht[self] = true
 			self.draw = function() end
-			self.persist = function() end
+			self.add = function() end
 			self.trail.dt = 1
 		end
 	end
@@ -131,7 +131,7 @@ SnipeDWSEffect:addAction(
 		Missile.effect = skill.bulleteffect
 		Missile.skill = skill
 		Missile.unit = caster
-		Missile.trail.p:setColor(255, 125, 0, 255, 255, 0, 0, 0)
+		Missile.trail.p:setColors(255, 125, 0, 255, 255, 0, 0, 0)
 		map:addUnit(Missile)
 	end,
 	true,true)

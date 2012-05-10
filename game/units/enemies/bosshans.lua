@@ -35,13 +35,13 @@ function AI.Hans1(hans,target)
 		end
 		local d = getdistance(hans,target)
 		if math.random()<0.33 then
-			hans.p:setColor(255,0,0,255,255,0,0,0)
+			hans.p:setColors(255,0,0,255,255,0,0,0)
 			return spearseq
 		elseif math.random()>0.5 then
-			hans.p:setColor(0,0,0,255,0,0,0,0)
+			hans.p:setColors(0,0,0,255,0,0,0,0)
 			return danceseq
 		else
-			hans.p:setColor(255,255,0,255,255,255,0,0)
+			hans.p:setColors(255,255,0,255,255,255,0,0)
 			return meleeseq
 		end
 	end)
@@ -137,8 +137,8 @@ function FlamingSpearTrail:initialize(b)
 	p:setEmissionRate(100)
 	p:setSpeed(100, 100)
 	p:setGravity(0)
-	p:setSize(2, 1)
-	p:setColor(255, 128, 58, 255, 255, 170, 96, 0)
+	p:setSizes(2, 1)
+	p:setColors(255, 128, 58, 255, 255, 170, 96, 0)
 	p:setPosition(400, 300)
 	p:setLifetime(1)
 	p:setParticleLife(1)
@@ -183,7 +183,7 @@ function FlamingSpearMissile:add(unit,coll)
 			if self.effect then self.effect:effect(unit,self,self.skill) end
 			unit.bht[self] = true
 			self.draw = function() end
-			self.persist = function() end
+			self.add = function() end
 		end
 	end
 end
@@ -226,8 +226,8 @@ function VolcanoActor:initialize(x,y)
 	p:setEmissionRate(300)
 	p:setSpeed(100, 200)
 	p:setGravity(0)
-	p:setSize(2, 1)
-	p:setColor(255, 220, 58, 255, 255, 185, 26, 0)
+	p:setSizes(2, 1)
+	p:setColors(255, 220, 58, 255, 255, 185, 26, 0)
 	p:setPosition(self.x, self.y)
 	p:setLifetime(1)
 	p:setParticleLife(1)
@@ -247,7 +247,7 @@ function VolcanoActor:update(dt)
 		map:removeUnit(self)
 	end
 	if self.dt>1 then
-		self.p:setColor(255, 58, 58, 255, 255, 26, 26, 0)
+		self.p:setColors(255, 58, 58, 255, 255, 26, 26, 0)
 	end
 	if self.dt<2 then
 		self.p:start()
@@ -256,9 +256,9 @@ function VolcanoActor:update(dt)
 end
 
 function VolcanoActor:draw()
-	love.graphics.setColor(255,255,255,math.min(3-self.dt,1)*255)
+	love.graphics.setColors(255,255,255,math.min(3-self.dt,1)*255)
 	love.graphics.draw(img.volcano,self.x,self.y,self.r,1,1,128,128)
-	love.graphics.setColor(255,255,255,255)
+	love.graphics.setColors(255,255,255,255)
 	love.graphics.draw(self.p)
 end
 
@@ -423,8 +423,8 @@ function StompActor:initialize(x,y)
 	p:setEmissionRate(500)
 	p:setSpeed(300, 400)
 	p:setGravity(0)
-	p:setSize(1, 0.5)
-	p:setColor(0, 0, 0, 0, 255, 0, 0, 0)
+	p:setSizes(1, 0.5)
+	p:setColors(0, 0, 0, 0, 255, 0, 0, 0)
 	p:setPosition(self.x,self.y)
 	p:setLifetime(0.5)
 	p:setParticleLife(0.5)
@@ -464,9 +464,9 @@ function StompActor:draw()
 	if not self.visible then return end
 	love.graphics.draw(self.system,0,0)
 	local scale = self.dt/self.time
-	love.graphics.setColor(0,0,0,255*(1-scale))
+	love.graphics.setColors(0,0,0,255*(1-scale))
 	love.graphics.draw(img.ripcircle,self.x,self.y,0,scale*2,scale*2,128,128)
-	love.graphics.setColor(255,255,255,255)
+	love.graphics.setColors(255,255,255,255)
 end
 
 StompEffect = CircleAoEEffect:new(100)
@@ -486,7 +486,7 @@ StompEffect:addAction(function (area,caster,skill)
 			x,y=x*impact,y*impact
 			if buff then v.buffs[buff:new()] = true end
 			if v.body and not v.immuneimpact then
-				v.body:applyImpulse(x,y)
+				v.body:applyLinearImpulse(x,y)
 			end
 		end
 	end
@@ -558,8 +558,8 @@ function BossHans:initialize(x,y,controller)
 	local p = love.graphics.newParticleSystem(img.part1, 1000)
 	p:setEmissionRate(200)
 	p:setSpeed(300, 250)
-	p:setSize(0.25, 1)
-	p:setColor(220, 105, 20, 255, 194, 30, 18, 0)
+	p:setSizes(0.25, 1)
+	p:setColors(220, 105, 20, 255, 194, 30, 18, 0)
 	p:setPosition(400, 300)
 	p:setLifetime(0.5)
 	p:setParticleLife(0.5)

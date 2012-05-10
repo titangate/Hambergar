@@ -20,6 +20,7 @@ function ZoomblurEffect:initialize()
 		}
 	]]
 	
+	self.priority = 20
 	self.canvas = love.graphics.newCanvas(1024,1024)
 	self.xf = xf
 	self.time = 0

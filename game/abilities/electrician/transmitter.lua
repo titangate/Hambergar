@@ -33,7 +33,6 @@ function Transmitter:getPanelData()
 end
 
 function Transmitter:setLevel(lvl)
-	print (lvl)
 	self.level = lvl
 	if lvl>1 then
 		return {
@@ -123,14 +122,11 @@ function Ionicform:startChannel()
 end
 
 function Ionicform:endChannel()
-	print 'end'
 	if self.buff then
 		for k,v in pairs(self.unit.buffs) do
-			print (k,v,'before')
 		end
 		self.unit:removeBuff(self.buff)
 		for k,v in pairs(self.unit.buffs) do
-			print (k,v,'after')
 		end
 	end
 	self.unit:resetAnimation()

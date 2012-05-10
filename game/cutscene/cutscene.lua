@@ -100,7 +100,6 @@ function CutscenePlayer:playConversation(conv,speaker,time)
 	else
 		self.convtime = 0.1
 	end
-	print (self.conv,self.convtime)
 end
 
 function CutscenePlayer:draw()

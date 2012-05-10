@@ -1,72 +1,77 @@
 require 'MiddleClass'
-require 'ShaderEffect'
-require 'effect.shockwave'
-require 'effect.blackhole'
-require 'effect.zoomblur'
---require 'effect.normal'
-require 'effect.edgeblur'
+require 'effect.filter'
+require 'effect.filtermanager'
+screen = {
+	w = love.graphics.getWidth(),
+	h = love.graphics.getHeight(),
+	quad = love.graphics.newQuad(0,0,love.graphics.getWidth(),love.graphics.getHeight(),math.max(
+	love.graphics.getWidth(),love.graphics.getHeight()),math.max(
+	love.graphics.getWidth(),love.graphics.getHeight()))
+}
+debugmessages = {}
+function DBGMSG(msg,time)
+	time = time or 0
+	debugmessages[msg] = time
+end
 function love.load()
-	img = love.graphics.newImage('demo.jpg')
-	s = ShockwaveEffect()
-	s:setParameter{
-		center = {0.5,0.5},
-		shockParams = {10,0.8,0.1},
-	}
-	bh = BlackholeEffect()
-	bh:setParameter{
-		center = {0.5,0.5},
-		radius = 0.3,
-	--	radius = 0.3,
-	}
-	zb = ZoomblurEffect()
-	zb:setParameter{
-		center = {0.5,0.5},
-	}
+	filtermanager = FilterManager()
+	
+	img = love.graphics.newImage('dream.png')
+	filtermanager:loadFilters('filters/')
+	filtermanager:setFilterArguments('Shockwave',{center = {0.5,0.3}})
+	filtermanager:setFilterArguments('Blackhole',{center = {0.5,0.6},radius = 0.2})
 	
 	hazenormal = love.graphics.newImage'effect/heathaze.png'
 	hazenormal:setWrap('repeat','repeat')
-	--[[
 	mask = love.graphics.newImage'effect/oval.png'
-	hz = HeathazeEffect()
-	hz:setParameter{
-		normal = hazenormal,
-		mask = mask,
-	}]]
-	eb = EdgeblurEffect()
-	eb:setParameter{
-		edge = edge,
-	}
-	shaders = {s,bh,zb,hz,eb}
-	id = 1
+	
+	filtermanager:setFilterArguments('Heathaze',{normal = hazenormal,mask = mask})
+	filtermanager:setFilterArguments('Gaussianblur',{mask = mask})
 end
+
+effects = {}
 
 function love.update(dt)
-	shaders[id]:update(dt)
-end
-
-function love.draw()
-love.graphics.draw(img)
-	shaders[id]:predraw()
-	love.graphics.draw(img)
-	shaders[id]:postdraw()
-	
-	newfps = love.timer.getFPS()
-	if newfps ~= fps then
-		fps = newfps
-		love.graphics.setCaption(string.format("frame time: %.2fms (%d fps). Blur %s", 1000/fps, fps, blur and "ON" or "OFF"))
+--if hz then filtermanager:requestFilter('Heathaze') end
+--	filtermanager:requestFilter('Shockwave')
+--	filtermanager:requestFilter'Zoomblur'
+	for v,active in pairs(effects) do
+		if active then
+			filtermanager:requestFilter(v)
+		end
 	end
-end
-
-function love.mousepressed(x,y)
-	shaders[id].time = 0
-	shaders[id]:setParameter{
-		center = {x/1024,1-y/1024}
-	}
+	
+	for msg,time in pairs(debugmessages) do
+		
+		if time < 0 then
+			debugmessages[msg] = nil
+		else
+			
+			debugmessages[msg] = time - dt
+		end
+	end
+	filtermanager:update(dt)
 end
 
 function love.keypressed(b)
 	b = tonumber(b)
-	if shaders[b] then
-		id = b
+	if b then
+		na = filtermanager.filterindex[b]
+		filtermanager:reset()
+		effects[na] = not effects[na]
+		DBGMSG(na.." is "..tostring(effects[na]),1)
 	end
 end
+
+function love.draw()
+	local d = function()
+		love.graphics.draw(img)
+		local height = 10
+		for msg,time in pairs(debugmessages) do
+			love.graphics.print(msg,10,height)
+			height = height + 15
+		end
+	end
+	filtermanager:draw(d)
+end
+

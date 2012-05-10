@@ -41,6 +41,10 @@ preloadlist(
 	seattle = {
 		'units.enemies.helicopter',
 		'units.enemies.tank'
+	},
+	masteryuen = {
+		'units.enemies.masteryuen.masteryactor',
+		'units.enemies.masteryuen.mastery'
 	}
 }
 )

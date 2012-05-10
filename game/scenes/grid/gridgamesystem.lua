@@ -36,7 +36,6 @@ function GridGameSystem:save()
 		depends = self.checkpoint_depends,
 	}
 	love.filesystem.write('lastsave.sav',table.save(self.savedata))
-	print ('attempt to save')
 end
 
 function GridGameSystem:runMap(m,checkpoint)

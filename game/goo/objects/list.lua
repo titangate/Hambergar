@@ -97,7 +97,6 @@ function goo.list:reposition()
 end
 function goo.list:addItem(item,key)
 	key = key or #self.items
-	print (item,key)
 	self.items[key+1]=item
 	item:setPos(item.x,self.h)
 	self:setSize(self.w,self.h + item.h + self.style.vertSpacing)

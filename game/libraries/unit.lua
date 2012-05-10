@@ -417,7 +417,6 @@ function Character:initialize(x,y,rad,mass)
 end
 
 function Character:setWeaponSkill(skill)
-	print (skill)
 	self.skills.weaponskill = self.skills.weaponskill or FireWeapon(self)
 	self.skills.weaponskill:setSkill(skill)
 end
@@ -447,7 +446,6 @@ function Character:save()
 	
 	if self.inventory then
 		self.inventory:setEquipmentActive(false)
-		print ('disabled')
 	end
 	--self.inventory:setEquipmentActive(false)
 	self:setBuffActive(false)

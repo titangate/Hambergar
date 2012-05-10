@@ -114,8 +114,6 @@ function Waterloo2:opening_load()
 	GetGameSystem().bottompanel:fillPanel(GetCharacter():getSkillpanelData())
 	GetGameSystem().bottompanel:setPos(screen.halfwidth-512,screen.height - 140)
 	self:opening_loaded()
-	
-	print ('character spawn at',x,y)
 end
 
 function Waterloo2:opening_enter()

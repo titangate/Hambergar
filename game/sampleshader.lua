@@ -172,7 +172,6 @@ function CreateBloomEffect(xsize, ysize)
          scene = love.graphics.newCanvas(self.po2xres, self.po2yres),
          bloomscene = love.graphics.newCanvas(self.po2xres, self.po2yres),
       }
-            
       for k,v in pairs(self.canvas) do
          v:clear()
       end

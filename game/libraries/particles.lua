@@ -96,6 +96,91 @@ p:stop()
 table.insert(systems, p)
 
 requireImage( 'assets/pulse.png','pulse' )
+
+requireImage('assets/mastery/missile/birdmissile.png','crane')
+particlemanager = {
+	goldensparkle = function()
+	local p = love.graphics.newParticleSystem(img.sparkle, 1000)
+		p:setEmissionRate(150)
+		p:setGravity(0,0)
+		p:setSpeed(-100, 100)
+		p:setSizes(0.5, 0.5)
+		p:setColors(255, 255, 255, 255, 255, 255, 255, 0)
+		--p:setPosition(400, 300)
+		p:setLifetime(1)
+		p:setParticleLife(1)
+		p:setDirection(0)
+		p:setSpread(360)
+		p:setTangentialAcceleration(0)
+		p:setRadialAcceleration(0)
+		p:stop()
+		return p
+	end,
+	cranes = function()
+		local p = love.graphics.newParticleSystem(img.part1, 1000)
+		p:setEmissionRate(150)
+		p:setGravity(0,0)
+		p:setSpeed(-300, 300)
+		p:setSizes(2, 2)
+		p:setColors(255, 255, 255, 255, 255, 255, 255, 0)
+		p:setLifetime(1)
+		p:setParticleLife(1)
+		p:setDirection(0)
+		p:setSpread(360)
+		p:setTangentialAcceleration(-1000)
+		p:setRadialAcceleration(360)
+		p:stop()
+		return p
+	end,
+	meteor = function()
+		local p = love.graphics.newParticleSystem(img.sparkle,1000)
+		p:setEmissionRate(150)
+		p:setGravity(0,0)
+		p:setSpeed(-50, 50)
+		p:setSizes(0.4, 0.2)
+		p:setColors(255, 255, 255, 255, 255, 255, 255, 0)
+		p:setLifetime(5)
+		p:setParticleLife(1)
+		p:setDirection(0)
+		p:setSpread(360)
+		p:setTangentialAcceleration(-100)
+		p:setRadialAcceleration(100)
+		p:stop()
+		return p
+	end,
+}
+function particlemanager.getsystem(name)
+	assert(particlemanager[name])
+	return particlemanager[name]()
+end
+
+UnitTrail = Object:subclass('UnitTrail')
+function UnitTrail:initialize(b,name,time,decay)
+	self.bullet = b
+	self.p = particlemanager.getsystem(name)
+	self.dt = 0
+	self.time = time
+	self.p:setLifetime(time-decay)
+--	self.p:setParticleLife(time-decay)
+	self.p:start()
+end
+
+function UnitTrail:update(dt)
+	self.dt = self.dt + dt
+	self.p:setPosition(self.bullet.x,self.bullet.y)
+	if self.bullet.getAngle then
+		self.p:setDirection(self.bullet:getAngle())
+	end
+	if self.dt>self.time then
+		map:removeUpdatable(self)
+	end
+	self.p:update(dt)
+end
+
+function UnitTrail:draw()
+	love.graphics.draw(self.p)
+end
+
 Trail = Object:subclass('Trail')
 function Trail:initialize(x,y,sx,sy)
 	self.x,self.y = x,y
@@ -114,7 +199,6 @@ function Trail:initialize(x,y,sx,sy)
 	self.system=p
 	self.xcoord = 0
 end
-
 function Trail:update(dt)
 	local x,y = self:getPosition(dt)
 	self.system:setPosition(x,y)

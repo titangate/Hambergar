@@ -4,7 +4,7 @@ BulletEffect:addAction(function (unit,caster,skill)
 	unit:damage('Bullet',caster.unit:getDamageDealing(skill.damage,'Bullet'),caster)
 --	print ('ttb dmg')
 end)
-BloodTrail = Object:subclass('FlamingSpearTrail')
+BloodTrail = Object:subclass('BloodTrail')
 function BloodTrail:initialize(b)
 	self.bullet = b
 	local p = love.graphics.newParticleSystem(img.part1, 1000)

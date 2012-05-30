@@ -68,6 +68,11 @@ function MindRipFieldActor:initialize(x,y)
 	self.dt = 0
 	self.time = 1
 	self.visible = true
+	x,y = map.camera:transform(x,y)
+	x,y = x/screen.w+0.5,1-(y+300)/screen.w
+	filtermanager:setFilterArguments('Shockwave',{center = {x,y}})
+	
+	filtermanager.filter.Shockwave:reset()
 end
 
 
@@ -98,6 +103,7 @@ function MindRipFieldActor:draw()
 	love.graphics.setColor(255,255*(1-scale),255*(1-scale),255*(1-scale))
 	love.graphics.draw(img.ripcircle,self.x,self.y,0,scale*2,scale*2,128,128)
 	love.graphics.setColor(255,255,255,255)
+	filtermanager:requestFilter('Shockwave')
 end
 
 MindDrainActor=Object:subclass('MindDrainActor')

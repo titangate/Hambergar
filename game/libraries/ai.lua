@@ -405,3 +405,104 @@ function AI.Attack(t2,attackskill,range,firerange)
 	AIDemo.loop = true
 	return AIDemo
 end
+
+-- new AI, PROAI
+ProAI = Object:subclass'ProAI'
+function ProAI:initialize(unit)
+	self.unit = unit
+	self.time = 0
+end
+
+function ProAI:reset()
+	self.time = 0
+end
+
+function ProAI:process(dt)
+	self.time = self.time + dt
+	if self.terminate then
+		if self:terminate() then
+			self:reset()
+			self.unit.ai = self.next
+		end
+	end
+end
+
+function ProAI:setTerminate(terminate)
+	self.terminate = terminate
+end
+
+ProAI_Walkto = ProAI:subclass'ProAI_Walkto'
+function ProAI_Walkto:initialize(unit,destination,range)
+	super.initialize(self,unit)
+	self.des = destination
+	self.range = range
+end
+
+function ProAI_Walkto:reset()
+	super.reset(self)
+	self.unit.state = 'slide'
+end
+
+function ProAI_Walkto:terminate()
+	return getdistance(self.unit,self.des) <= self.range
+end
+
+function ProAI_Walkto:setTarget(t)
+	self.des = t
+end
+
+function ProAI_Walkto:process(dt)
+	self.unit.state = 'move'
+	local dx,dy = self.des.x-self.unit.x,self.des.y-self.unit.y
+	self.unit.direction = {normalize(dx,dy)}
+	self.unit.body:setAngle(math.atan2(dy,dx))
+	super.process(self,dt)
+end
+
+ProAI_Wait = ProAI:subclass'ProAI_Wait'
+function ProAI_Wait:initialize(unit,time)
+	super.initialize(self,unit)
+	self.waittime = time
+end
+
+function ProAI_Wait:terminate()
+	assert(self.time)
+	return self.time > self.waittime
+end
+
+ProAI_Attack = ProAI:subclass'ProAI_Attack'
+function ProAI_Attack:initialize(unit,target,range,skill)
+	super.initialize(self,unit)
+	self.target = target
+	self.range = range
+	self.skill = skill
+	local t,t2 = target,unit
+	self.skill.getorderinfo = function()
+			return {normalize(t.x-t2.x,t.y-t2.y)},t2,skill 
+	end
+end
+
+function ProAI_Attack:process(dt)
+	self.unit:face(self.target)
+	self.unit:switchChannelSkill(self.skill)
+	super.process(self,dt)
+end
+
+function ProAI_Attack:terminate()
+	return getdistance(self.unit,self.target) > self.range
+end
+
+ProAI_Exec = ProAI:subclass'ProAI_Attack'
+function ProAI_Exec:initialize(unit,func)
+	super.initialize(self,unit)
+	self.func = func
+end
+
+function ProAI_Exec:process(dt)
+	self:func()
+	super.process(self,dt)
+end
+
+function ProAI_Exec:terminate()
+	return true
+end

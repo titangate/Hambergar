@@ -13,7 +13,7 @@ function Missile:createBody(world)
 	self.shape = love.physics.newCircleShape(self.size)
 	self.fixture = love.physics.newFixture(self.body,self.shape)
 	if self.controller then
-		category,masks = unpack(typeinfo[self.controller])
+		local category,masks = unpack(typeinfo[self.controller])
 		self.fixture:setCategory(category)
 		self.fixture:setDensity(self.mass/5)
 		

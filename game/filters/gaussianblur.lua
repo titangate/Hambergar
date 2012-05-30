@@ -64,6 +64,10 @@ function Gaussianblur:setArguments(tab)
 	end
 end
 
+function Gaussianblur:setMask(mask)
+	self.xf2:send('mask',mask)
+end
+
 function Gaussianblur:update(dt)
 	super.update(self,dt)
 	self.time = self.time + dt

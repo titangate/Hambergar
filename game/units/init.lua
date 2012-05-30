@@ -44,7 +44,12 @@ preloadlist(
 	},
 	masteryuen = {
 		'units.enemies.masteryuen.masteryactor',
-		'units.enemies.masteryuen.mastery'
+		'units.enemies.masteryuen.mastery',
+		'units.enemies.masteryuen.masteryeffect',
+		'units.enemies.masteryuen.masteryfist',
+		'units.enemies.masteryuen.masterykick',
+		'units.enemies.masteryuen.masterycrane',
+		
 	}
 }
 )

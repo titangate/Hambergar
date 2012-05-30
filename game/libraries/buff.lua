@@ -42,6 +42,12 @@ function b_Stim:stop(unit)
 	unit.spellspeedbuffpercent = unit.spellspeedbuffpercent - self.spellspeedbuffpercent
 end
 
+function b_Stim:draw()
+	
+	filtermanager:requestFilter('Bloom')
+	filtermanager:requestFilter('Gaussianblur')
+end
+
 b_Summon = Buff:subclass('b_Summon')
 function b_Summon:initialize(priority,actor)
 self.r = 0

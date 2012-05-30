@@ -31,7 +31,7 @@ function Unit:initialize(x,y,rad,mass)
 	self.state = 'slide'
 	self.order = 'stop'
 	self.direction = {1,0}
-	self.movingforce = self.mass*50
+	self.movingforce = self.mass*100
 	self.speedlimit = 20000
 	self.buffs={}
 	self.maxhp=100
@@ -112,8 +112,10 @@ function Unit:damage(type,amount,source)
 end
 
 function Unit:isEnemyOf(another)
-	return (self.controller == 'player' and another.controller == 'enemy') or
-	(self.controller == 'enemy' and another.controller == 'player')
+return (self.controller == 'player' and another.controller == 'enemy') or
+(self.controller == 'enemy' and another.controller == 'player') or
+(self.controller == 'player' and another.controller == 'enemyMissile') or
+(self.controller == 'enemy' and another.controller == 'playerMissile') 
 end
 
 function Unit:setAngle(angle)
@@ -122,6 +124,13 @@ function Unit:setAngle(angle)
 	end
 end
 
+function Unit:setPosition(x,y)
+	if self.body and not self.preremoved then
+		self.body:setPosition(x,y)
+		
+	end
+	self.x,self.y = x,y
+end
 
 function Unit:getAngle()
 	if self.body and not self.preremoved then
@@ -248,9 +257,9 @@ function Unit:update(dt)
 	end
 	if self.ai then
 		local status = self.ai:process(dt,self)
-		if status == STATE_FINISH then
-			self.ai = nil
-		end
+--		if status == STATE_FINISH then
+--			self.ai = nil
+--		end
 	end
 	self.allowmovement = true
 	self.allowskill = true
@@ -381,11 +390,15 @@ function Unit:findUnitByType(type)
 	end
 end
 
-AnimatedUnit = Unit:subclass('AnimatedUnit')
+function Unit:getPosition()
+	return self.x,self.y
+end
 
-function AnimatedUnit:playAnimation(anim,speed,loop,interupt)
+AnimatedUnit = Unit:subclass'AnimatedUnit'
+
+function AnimatedUnit:playAnimation(anim,speed,loop,interrupt)
 	if self.animation[anim] then
-		if self.animation[anim] == self.anim and interupt then return end
+		if self.animation[anim] == self.anim and interrupt then return end
 		if #(self.animation[anim]) > 0 then
 			self.anim = self.animation[anim][math.random(#self.animation[anim])]
 		else

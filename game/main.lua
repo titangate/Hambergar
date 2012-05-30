@@ -186,10 +186,10 @@ function love.load()
 	
 	hazenormal = love.graphics.newImage'heathaze.png'
 	hazenormal:setWrap('repeat','repeat')
-	mask = love.graphics.newImage'oval.png'
+	gbmask = love.graphics.newImage'oval.png'
 	
-	filtermanager:setFilterArguments('Heathaze',{normal = hazenormal,mask = mask})
-	filtermanager:setFilterArguments('Gaussianblur',{mask = mask})
+	filtermanager:setFilterArguments('Heathaze',{normal = hazenormal})
+	filtermanager:setFilterArguments('Gaussianblur',{mask = gbmask})
 end
 
 function revertFont()

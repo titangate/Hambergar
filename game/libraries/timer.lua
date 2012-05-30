@@ -15,6 +15,10 @@ function Timer:initialize(interval,count,func,start,selfdestruct)
 	GetGameSystem():addGameTimer(self)
 end
 
+function Timer:kill()
+	GetGameSystem():removeGameTimer(self)
+end
+
 function Timer:update(dt)
 	if self.start and (self.count > 0 or self.count == -1) then
 		self.time = self.time + dt

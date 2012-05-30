@@ -40,9 +40,9 @@ function Camera:apply(z)
 	love.graphics.scale(self.sx,self.sy)
 	love.graphics.rotate(self.r)
 	love.graphics.translate((self.ox+screen.halfwidth)/self.sx,(self.oy+screen.halfheight)/self.sy)
-	for k,v in pairs(self.transformations) do
-		v:apply()
-	end
+--	for k,v in pairs(self.transformations) do
+--		v:apply()
+--	end
 --	print (self.x,self.y)
 --	love.graphics.translate(self.ox-playable.halfwidth,self.oy-playable.halfheight)
 end

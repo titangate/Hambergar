@@ -54,6 +54,7 @@ function Map:initialize(w,h)
 	self.unitdict = {}
 	self.anim = love.filesystem.load'anim/anim.lua'()
 	self.collisionhandle = {}
+	--self:loadDefaultCamera()
 end
 
 MapBlock = Object:subclass('MapBlock')
@@ -352,6 +353,24 @@ function Map:loadTiled(tmx)
 	end
 	self.tiled = m
 	return m
+end
+
+function Map:loadDefaultCamera(leon)
+	self.camera = FollowerCamera(leon,
+	{
+		x1 = -self.w/2 + screen.halfwidth,
+		y1 = -self.h/2 + screen.halfheight,
+		x2 = self.w/2 + screen.halfwidth,
+		y2 = self.h/2 + screen.halfheight,
+	})
+end
+
+function Map:changeOwner(unit,owner)
+	self.count[unit.controller] = self.count[unit.controller] - 1
+	unit.controller = owner
+	self.count[unit.controller] = self.count[unit.controller] or 0
+	self.count[unit.controller] = self.count[unit.controller] + 1
+	
 end
 
 function normalize(x,y)

@@ -87,12 +87,12 @@ function FilterManager:requestFilter(name,maskfunction)
 		if self.filterrequest[name] == nil then
 			self.filterrequest[name] = {}
 		end
-		table.insert(self.filterrequest,maskfunction)
+		table.insert(self.filterrequest[name],maskfunction)
 	end
 end
 
 function FilterManager:update(dt)
-	
+	love.graphics.setBackgroundColor(255,255,255,255)
 	for c,status in pairs(self.canvas) do
 		c[1]:clear()
 	end
@@ -111,21 +111,47 @@ function FilterManager:reset()
 end
 
 
+local mask = love.graphics.newCanvas(1024,1024)
+
 function FilterManager:draw(drawfunc)
+--	print (#self.filterrequest)
+--[[	if #self.filterrequest == 0 then
+		drawfunc()
+		return
+	end]]
 	local length = math.max(screen.w,screen.h)
 	local c = self:requestCanvas(length,length)
 	love.graphics.setCanvas(c)
 	drawfunc()
+	local stencilfunc
 	for _,name in ipairs(self.filterindex) do
 		local request = self.filterrequest[name]
 		if request == true then
 			c = self.filter[name]:draw(c,function(w,h) return self:requestCanvas(w,h) end)
-		-- TODO: masked
+		elseif type(request)=='table' then
+			
+			love.graphics.setCanvas(mask)
+			love.graphics.setBackgroundColor(0,0,0,0)
+			love.graphics.clear()
+--			map.camera.sx,map.camera.sy = map.camera.sx/2,map.camera.sy/2 -- scale down mask
+			map.camera:apply()
+--			love.graphics.scale(0.5)
+--			Camera.apply(map.camera)
+			for i,v in ipairs(request) do
+				v()
+			end
+			map.camera:revert()
+--			map.camera.sx,map.camera.sy = map.camera.sx*2,map.camera.sy*2
+			love.graphics.setCanvas(c)
+			self.filter[name]:setMask(mask)
+			c = self.filter[name]:draw(c,function(w,h) return self:requestCanvas(w,h) end)
 		end
 		self:releaseCanvasExcept(c)
 	end
 	love.graphics.setCanvas()
+	love.graphics.setStencil(stencilfunc)
 	love.graphics.draw(c)
 	self:releaseCanvasExcept()
 	self.filterrequest = {}
+	love.graphics.setStencil()
 end

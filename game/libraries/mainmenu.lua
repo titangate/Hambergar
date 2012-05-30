@@ -24,6 +24,8 @@ function MainMenu:refreshWithImage(image)
 end
 
 function MainMenu:draw()
+	love.graphics.setBackgroundColor(0,0,0)
+	love.graphics.clear()
 	if self.refreshdt > 0 then
 		if self.oldimage then love.graphics.draw(self.oldimage,80,150,0,0.5,0.5) end
 		local progresspc = 1 - self.refreshdt / self.refreshtime

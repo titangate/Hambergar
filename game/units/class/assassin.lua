@@ -70,11 +70,16 @@ end
 
 requireImage('assets/assassin/assassinpose copy.png','assassinpose')
 function Assassin:draw()
-	if self.invisible then
-		love.graphics.setColor(255,255,255,100)
-	end
 	local facing = GetOrderDirection()
 	facing = math.atan2(facing[2],facing[1])
+	if self.invisible then
+		love.graphics.setColor(255,255,255,100)
+		filtermanager:requestFilter('Heathaze',function()
+		
+		love.graphics.draw(img.assassinpose,self.x,self.y,facing,1,1,20,32)
+		end)
+	end
+	
 	love.graphics.draw(img.assassinpose,self.x,self.y,facing,1,1,20,32)
 	local weapon = self.inventory:getEquip('weapon')
 	if weapon then

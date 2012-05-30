@@ -4,11 +4,11 @@ function SniperRoundTrail:initialize(b)
 	local p = love.graphics.newParticleSystem(img.part1, 1000)
 	p:setEmissionRate(500)
 	p:setSpeed(0, 0)
-	p:setSizes(0.25, 1)
+	p:setSizes(2, 4)
 	p:setColors(26,183,255,255,255,255,255,0)
 	p:setPosition(400, 300)
 	p:setLifetime(1)
-	p:setParticleLife(0.5)
+	p:setParticleLife(1)
 	self.p = p
 	self.dt = 0
 end
@@ -26,7 +26,10 @@ function SniperRoundTrail:update(dt)
 end
 
 function SniperRoundTrail:draw()
+--	love.graphics.draw(self.p)
+	filtermanager:requestFilter('Heathaze',function()
 	love.graphics.draw(self.p)
+	end)
 end
 SniperRound = Missile:subclass('SniperRound')
 function SniperRound:add(unit,coll)

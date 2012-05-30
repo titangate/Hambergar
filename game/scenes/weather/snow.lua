@@ -27,6 +27,7 @@ function snow:birth(x,y)
 end
 requireImage('assets/part1.png','part1')
 function snow:draw()
+--	love.graphics.setBackgroundColor(255,255,255)
 	for v,_ in pairs(self.particles) do
 		love.graphics.setColor(255,255,255,255-255*v.life)
 		love.graphics.draw(img.part1,v.x,v.y,v.angle,v.life*2,nil)

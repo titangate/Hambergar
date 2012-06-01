@@ -116,7 +116,7 @@ CrackEffect:addAction(function(point,caster,skill)
 	map:addUnit(Missile)
 end)
 
-CrackDamageEffect = CircleAoEEffect(300)
+CrackDamageEffect = CircleAoEEffect(200)
 CrackDamageEffect:addAction(function (area,caster,skill)
 	local units = map:findUnitsInArea(area)
 	for k,v in pairs(units) do

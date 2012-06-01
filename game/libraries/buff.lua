@@ -44,7 +44,7 @@ end
 
 function b_Stim:draw()
 	
-	filtermanager:requestFilter('Bloom')
+--	filtermanager:requestFilter('Bloom')
 	filtermanager:requestFilter('Gaussianblur')
 end
 

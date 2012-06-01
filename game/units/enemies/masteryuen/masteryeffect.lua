@@ -7,7 +7,7 @@ function b_pray:initialize(hpregen)
 end
 function b_pray:start(unit)
 	unit.HPRegen = unit.HPRegen + self.hpregen
-	unit.damagereduction.Bullet = unit.damagereduction.Bullet or 5
+	unit.damagereduction.Bullet = unit.damagereduction.Bullet or 1
 	unit.damagereduction.Bullet = unit.damagereduction.Bullet + 5
 end
 function b_pray:stop(unit)

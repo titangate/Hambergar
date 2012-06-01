@@ -417,7 +417,12 @@ function ProAI:reset()
 	self.time = 0
 end
 
+function ProAI:pause(state)
+	self.paused = state
+end
+
 function ProAI:process(dt)
+	if self.paused then return end
 	self.time = self.time + dt
 	if self.terminate then
 		if self:terminate() then
@@ -444,6 +449,7 @@ function ProAI_Walkto:reset()
 end
 
 function ProAI_Walkto:terminate()
+--	print (self.range,getdistance(self.unit,self.des))
 	return getdistance(self.unit,self.des) <= self.range
 end
 

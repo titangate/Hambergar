@@ -169,7 +169,7 @@ function UnitTrail:update(dt)
 	self.dt = self.dt + dt
 	self.p:setPosition(self.bullet.x,self.bullet.y)
 	if self.bullet.getAngle then
-		self.p:setDirection(self.bullet:getAngle())
+		self.p:setDirection(self.bullet:getAngle() or 0)
 	end
 	if self.dt>self.time then
 		map:removeUpdatable(self)

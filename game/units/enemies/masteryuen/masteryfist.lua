@@ -1,6 +1,7 @@
 
-FistMissileP3 = Missile:subclass('FistMissileP3')
-function FistMissileP3:draw()
+
+FistMissileP1 = Missile:subclass('FistMissileP1')
+function FistMissileP1:draw()
 	if self.dt < 0.3 then
 		love.graphics.setColor(255,160,40,self.dt/0.3*255)
 	elseif self.dt > 0.7 then
@@ -10,10 +11,10 @@ function FistMissileP3:draw()
 	end
 --	love.graphics.setColor(255,255,255)
 	love.graphics.circle('fill',self.x,self.y,self.body:getAngle(),100)
-	love.graphics.draw(myimg.missile.FistMissileP3,self.x,self.y,self.body:getAngle(),0.6,0.6,200,100)
+	love.graphics.draw(myimg.missile.fistmissile,self.x,self.y,self.body:getAngle(),0.6,0.6,200,100)
 	love.graphics.setColor(255,255,255)
 end
-function FistMissileP3:add(unit,coll)
+function FistMissileP1:add(unit,coll)
 	if (self.controller=='playerMissile' and unit.controller=='enemy') or (self.controller == 'enemyMissile' and unit.controller=='player') then
 		if not unit.bht[self] then
 			if self.effect then self.effect:effect(unit,self,self.skill) end
@@ -24,7 +25,7 @@ function FistMissileP3:add(unit,coll)
 	end
 end
 
-function FistMissileP3:createBody(world)
+function FistMissileP1:createBody(world)
 	self.body = love.physics.newBody(world,self.x,self.y,'dynamic')
 	self.shape = love.physics.newRectangleShape(50,300)
 	self.fixture = love.physics.newFixture(self.body,self.shape)
@@ -42,7 +43,6 @@ function FistMissileP3:createBody(world)
 	self.fixture:setUserData(self)
 end
 
-
 FistP1MEffect = UnitEffect:new()
 FistP1MEffect:addAction(function (unit,caster,skill)
 	unit:damage('Bullet',caster.unit:getDamageDealing(skill.damage,'Bullet'),caster.unit)
@@ -51,7 +51,7 @@ end)
 
 FistP1Effect = ShootMissileEffect:new()
 FistP1Effect:addAction(function(point,caster,skill)
-	local Missile = FistMissileP3:new(1,skill.bulletmass,skill.range/1,caster.x,caster.y,unpack(point))
+	local Missile = FistMissileP1:new(1,skill.bulletmass,skill.range/1,caster.x,caster.y,unpack(point))
 	Missile.controller = caster.controller..'Missile'
 	Missile.effect = FistP1MEffect
 	Missile.skill = skill
@@ -86,7 +86,7 @@ end)
 
 FistP2Effect = ShootMissileEffect:new()
 FistP2Effect:addAction(function(point,caster,skill)
-	local Missile = FistMissileP3:new(1,skill.bulletmass,skill.range/1,caster.x,caster.y,unpack(point))
+	local Missile = FistMissileP1:new(1,skill.bulletmass,skill.range/1,caster.x,caster.y,unpack(point))
 	Missile.controller = caster.controller..'Missile'
 	Missile.effect = FistP1MEffect
 	Missile.skill = skill
@@ -224,12 +224,14 @@ function FistP3:initialize(unit)
 	self.bullettype = FistP3MEffect
 	self.name = 'FistP3'
 	self.effecttime = 0.1
-	self.damage = 200
+	self.damage = 20
 	self.effect = FistMEffect
 	self.manacost = 20
 	self.cd=1
 	self.cdtime = 0
 	self.impact = 300
+	self.bulletmass = 0.2
+	self.range = 1000
 end
 
 function FistP3:active()

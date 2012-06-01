@@ -108,7 +108,7 @@ function Unit:damage(type,amount,source)
 	end
 	if self.hp <= 0 then self:kill(source) end
 	self:notifyListeners({type='damage',damagetype=type,damage=amount,unit=self,source=source,})
-
+	return amount
 end
 
 function Unit:isEnemyOf(another)

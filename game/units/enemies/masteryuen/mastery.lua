@@ -56,7 +56,7 @@ function MasterYuen:initialize(x,y)
 	super.initialize(self,x,y,16,10)
 	self.actor = MasterYuenActor()
 	self.x,self.y = x,y
-	self.hp,self.maxhp = 50000,50000
+	self.hp,self.maxhp = 40000,40000
 	self.HPRegen = 0
 --	self.actor:playAnimation('crane',1,true)
 --	self.actor:setEffect'glow'
@@ -78,6 +78,8 @@ function MasterYuen:initialize(x,y)
 	}
 		self.time = 0
 	self:setImmunity(true)
+	
+	self.displaymaxhp = self.maxhp
 end
 
 function MasterYuen:update(dt)
@@ -148,8 +150,8 @@ function MasterYuen:dashStrikep2(action,distance,pause)
 	self.actor:playAnimation(action,1,false)
 	map:addUpdatable(UnitTrail(self,'goldensparkle',2,0.5))
 	if action == 'fist' then 
-		
-		Timer(pause,3,function()
+		--self.ai:pause(true)
+		Timer(pause,3,function(timer)
 			self:face(GetCharacter())
 			TEsound.play'sound/shout3.mp3'
 			self.skills.fistp2.effect:effect({math.cos(self.body:getAngle()),math.sin(self.body:getAngle())},self,self.skills.fistp1)
@@ -159,9 +161,11 @@ function MasterYuen:dashStrikep2(action,distance,pause)
 			local cosr,sinr = math.cos(r),math.sin(r)
 			assert(self.body)
 			self.body:applyLinearImpulse(cosr*distance,sinr*distance)
+			if timer.count == 3 then
+			--	self.ai:pause(false)
+			end
 		end)
 	elseif action == 'kick' then
-		
 			TEsound.play'sound/shout2.mp3'
 		Timer(pause,1,function()
 			self:face(GetCharacter())
@@ -178,19 +182,43 @@ function MasterYuen:dashStrikep2(action,distance,pause)
 	end
 end
 
+
+function MasterYuen:dashStrikep3(action,distance,pause)
+	self.actor:playAnimation(action,1,false)
+	map:addUpdatable(UnitTrail(self,'goldensparkle',2,0.5))
+	Timer(pause,1,function()
+		if action == 'fist' then 
+				TEsound.play'sound/shout3.mp3'
+				self.skills.fistp3.effect:effect({GetCharacter():getPosition()},self,self.skills.fistp3) 
+			elseif action == 'kick' then 
+				TEsound.play'sound/shout2.mp3'
+				self.skills.kickp3.effect:effect({math.cos(self.body:getAngle()),math.sin(self.body:getAngle())},self,self.skills.kickp3)
+			elseif action == 'crane' then 
+				TEsound.play'sound/shout1.mp3'
+				map:addUpdatable(CraneCircleP3(GetCharacter(),my))
+				--self.skills.cranep3.effect:effect({math.cos(self.body:getAngle()),math.sin(self.body:getAngle())},self,self.skills.cranep3)
+		end
+		self.actor:setEffect()
+		local r = self.body:getAngle()
+		local cosr,sinr = math.cos(r),math.sin(r)
+		assert(self.body)
+		self.body:applyLinearImpulse(cosr*distance,sinr*distance)
+	end)
+end
+
+
 function MasterYuen:pray()
 	Trigger(function()
 		self.actor:playAnimation('pray')
 		wait(0.5)
-		self.actor:setEffect'invis'
+--		self.actor:setEffect'invis'
+		TEsound.play{'sound/masteryuenchant/iwillreturn.mp3','sound/masteryuenchant/cycle.mp3'}
 		wait(0.5)
 		self.body:setPosition(0,0)
 		self:addBuff(b_pray(1000),3)
 		self.actor:setEffect()
 	end):run()
 end
-
-
 
 function MasterYuen:prayp2()
 	for i=1,3 do
@@ -201,6 +229,20 @@ function MasterYuen:prayp2()
 		img:enableAI()
 	end
 	self:pray()
+end
+
+
+function MasterYuen:entermantra()
+	Trigger(function()
+		self.actor:playAnimation('pray')
+		wait(0.5)
+		self.actor:setEffect'invis'
+		wait(0.5)
+		self.body:setPosition(0,0)
+		self.actor:setEffect()
+		map:enterMantra()
+		wait(3)
+	end):run()
 end
 
 
@@ -234,8 +276,9 @@ function MasterYuen:enableAI()
 	end)
 	local prayswitch = ProAI_Exec(self,function(ai)
 --		print (self:getHPPercent())
-		if self:getHPPercent() < 0.5 then
+		if self:getHPPercent() < 0.6 then
 			ai.next = self:phase2()
+			return
 		elseif self:getHPPercent() < 0.8 and math.random()< 0.5 then
 			ai.next = praywait
 		else
@@ -277,7 +320,9 @@ function MasterYuen:phase2()
 		self:prayp2()
 	end)
 	local prayswitch = ProAI_Exec(self,function(ai)
-		if math.random()< 0.5 then
+		if self:getHPPercent() < 0.2 then
+			ai.next = self:phase3()
+		elseif math.random()< 0.5 then
 			ai.next = praywait
 		else
 			ai.next = wait
@@ -294,7 +339,66 @@ function MasterYuen:phase2()
 	--self.ai = approach
 end
 
+function MasterYuen:getHPPercent()
+	return self.hp/self.displaymaxhp
+end
+
 function MasterYuen:phase3()
-	map:enterMantra()
+	self:entermantra()
+	self.hp = self.maxhp
 	self:setImmunity()
+	self.accumulatedmg = 0
+--	self.movementspeedbuffpercent = self.movementspeedbuffpercent + 1
+	local approach = ProAI_Walkto(self,GetCharacter(),200)
+	local fist1 = ProAI_Exec(self,function()
+	local c = math.random(3)
+--		self:setImmunity(false)
+		if c==1 then
+			self:dashStrikep3('crane',2000,0.5)
+		elseif c==2 then
+			self:dashStrikep3('kick',2000,0.5)
+		else
+			self:dashStrikep3('fist',2500,0.5)
+		end
+	end)
+	local reset = ProAI_Exec(self,function() self.actor:reset() end)
+	local wait = ProAI_Wait(self,4)
+	local restoreimmue = ProAI_Exec(self,function() 
+--		self:setImmunity(true)
+	end)
+	
+	approach.next = fist1
+	fist1.next = wait
+	wait.next = reset
+	reset.next = restoreimmue
+	restoreimmue.next = approach
+	local failing = ProAI_Exec(self,function()
+		self.fail = true
+		self.actor:playAnimation'kneel'
+		map:exitMantra()
+		self:stop()
+	end)
+	local failingwait = ProAI_Wait(self,10)
+	local restore = ProAI_Exec(self,function()
+		self:entermantra()
+		self.accumulatedmg = 0
+		self.fail = false
+	end)
+	failing.next = failingwait
+	failingwait.next = restore
+	restore.next = wait
+	self.failing = failing
+	self.maxallowdmg = self.maxhp / 5
+	self.damage = function(self,...)
+		local dmg = Unit.damage(self,...)
+		if self.fail then
+			self.maxhp = self.maxhp - dmg
+		else
+			self.accumulatedmg = self.accumulatedmg + dmg
+			if self.accumulatedmg > self.maxallowdmg then
+				self.ai = failing
+			end
+		end
+	end
+	return wait
 end

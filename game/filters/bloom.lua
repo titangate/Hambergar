@@ -69,7 +69,7 @@ function Bloom:initialize()
       ]]
 	self.combine = love.graphics.newPixelEffect[[
          extern Image bloomtex;
-		extern Image mask;
+		 extern Image mask;
 
          extern number basesaturation = 1.0;
          extern number bloomsaturation = 1.0;
@@ -104,8 +104,13 @@ function Bloom:initialize()
 end
 
 function Bloom:setArguments(tab)
+	
 	for k,v in pairs(tab) do
-		self.xf:send(k,v)
+		if k==mask then
+			self.xf:send(k,v)
+		else
+			self.combine:send(k,v)
+		end
 	end
 end
 

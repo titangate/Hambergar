@@ -116,7 +116,7 @@ function CraneMissileSuicide:initialize(unit)
 	super.initialize(self,unit)
 	self.unit = unit
 	self.effect = cranemissilesuicideeffect
-	self.damage = 80
+	self.damage = 150
 	self.impact = 50
 end
 
@@ -168,7 +168,7 @@ function CraneMissileP2:setTarget(t)
 end
 
 function CraneMissileP2:update(dt)
-	self:damage('Bullet',dt*self.maxhp/5)
+	self:damage('Bullet',dt*self.maxhp/4)
 	super.update(self,dt)
 end
 
@@ -248,12 +248,14 @@ function CraneCircleP3:initialize(unit,my)
 	end)
 	my.actor:playAnimation'pray'
 	my.actor:setEffect'invis'
+	my.ai:pause(true)
 end
 
 function CraneCircleP3:update(dt)
 	for i,v in ipairs(self.image) do
 		v.actor:update(dt)
 	end
+	self.my:setPosition(self.unit)
 end
 
 function CraneCircleP3:draw()
@@ -298,4 +300,5 @@ function CraneCircleP3:strike()
 		map:removeUpdatable(self)
 --		table.remove(self.image,i)
 	end):run()
+	self.my.ai:pause(false)
 end

@@ -166,6 +166,9 @@ function MasterYuenActor:initialize()
 			myimg.kick.crane6,
 			myimg.kick.crane5,
 			myimg.kick.crane6,
+		},
+		kneel = {
+			myimg.pray.kneel
 		}
 		
 	}
@@ -226,6 +229,7 @@ function MasterYuenActor:draw(x,y,r)
 		
 		love.graphics.draw(self.sprite,x,y,r,0.7,0.7,80,80)
 	end
+	love.graphics.setColor(255,255,255)
 end
 
 MantraActor = Object:subclass'MantraActor'
@@ -259,5 +263,6 @@ function MantraActor:draw(x,y)
 				love.graphics.draw(img.mantra2,x,y,-self.time,1,1,256,256)
 			end
 		end
+		love.graphics.setColor(255,255,255)
 	end
 end

@@ -6,6 +6,26 @@ local Mansionbg={}
 function Mansionbg:update(dt)
 end
 
+local transition = {intensity = 1}
+function transition:update(dt)
+	self.intensity = self.intensity - dt
+	if self.intensity < 0 then
+		map:removeUpdatable(self)
+	end
+end
+
+function transition:reset()
+	self.intensity = 1
+end
+
+function transition:draw()
+	filtermanager:requestFilter('Bloom')
+	filtermanager:setFilterArguments('Bloom',{
+		bloomintensity = self.intensity*5 ,
+		bloomsaturation = self.intensity*5 ,
+	})
+end
+
 requireImage('assets/vancouver/waterfall.png','waterfall')
 function Mansionbg:draw()
 --	love.graphics.draw(img.waterfall,0,300,0,2,2,300,150)
@@ -17,6 +37,7 @@ end
 
 local mantrabg = {
 	time = 0,
+	intensity = 1,
 }
 function mantrabg:update(dt)
 	self.time = self.time + dt
@@ -41,7 +62,7 @@ function mantrabg:draw()
 		love.graphics.pop()
 	end
 	love.graphics.draw(img.dot,0,0,0,100000,100000,0.5,0.5)
-	love.graphics.setColor(255,255,255,math.min(255,self.time*255/3))
+	love.graphics.setColor(125,125,125,math.min(255,self.time*255/3))
 	love.graphics.draw(img.hellspinarm,0,0,self.time,2,2,256,256)
 	love.graphics.draw(img.hellspinarm,0,0,-self.time,2,2,256,256)
 	love.graphics.draw(img.hellup,0,0,self.time/3,2,2,256,256)
@@ -51,6 +72,12 @@ function mantrabg:draw()
 	love.graphics.draw(img.mantra2,0,0,-self.time,2,2,256,256)
 	love.graphics.draw(img.mantra3,0,0,self.time,2,2,256,256)
 	love.graphics.pop()
+	filtermanager:requestFilter('Bloom')
+	filtermanager:setFilterArguments('Bloom',{
+		bloomintensity = self.intensity,
+		bloomsaturation = self.intensity,
+	}
+	)
 end
 
 Mansion = Map:subclass'Mansion'
@@ -88,8 +115,6 @@ function Mansion:opening_load()
 	map:addUnit(leon2)
 	self:loadDefaultCamera(leon2)
 	leon2.interact = require 'scenes.vancouver.swift-visit-1'
-	
-	
 end
 
 function Mansion:enter_load(character)
@@ -103,6 +128,23 @@ end
 
 function Mansion:enterMantra()
 	self.background = mantrabg
+	mantrabg.time = 0
+	TEsound.play'sound/entermantra.wav'
+	TEsound.play'sound/masteryuenchant/immortality.mp3'
+--	map.anim:easy(self,'intensity',5,1,3)
+end
+
+function Mansion:exitMantra()
+--	map.anim:easy(self,'intensity',10,1,3)
+	Trigger(function()
+--		wait(3)
+		self.background = Mansionbg
+		TEsound.play'sound/exitmantra.wav'
+		TEsound.play'sound/groan.mp3'
+		transition:reset()
+		map:addUpdatable(transition)
+	end):run()
+	
 end
 
 function Mansion:enter_loaded()
@@ -159,13 +201,15 @@ end
 
 function scenetest()
 --	testimg()
---	map.camera = ContainerCamera:new(200,nil,my,GetCharacter())
+	map.camera = ContainerCamera:new(200,nil,my,GetCharacter())
+	PlayMusic'music/berserker.mp3'
 	GetGameSystem().bossbar = AssassinHPBar:new(function()return my:getHPPercent() end,screen.halfwidth-400,screen.height-100,800)
 	local self = my
 
-	map:addUpdatable(CraneCircleP3(GetCharacter(),my))
+--	map:addUpdatable(CraneCircleP3(GetCharacter(),my))
+--	my.ai = my:phase3()
 --	self.skills.fistp3.effect:effect({math.cos(self.body:getAngle()),math.sin(self.body:getAngle())},self,self.skills.fistp1)
-	--my:enableAI()
+	my:enableAI()
 --	my.ai = my:phase2()
 --	my:phase3()
 --	my.mantra.level = 2

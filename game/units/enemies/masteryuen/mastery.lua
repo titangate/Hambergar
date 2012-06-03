@@ -1,4 +1,3 @@
-preload'electrician'
 
 MasterYuenAura = Object:subclass'MasterYuenAura'
 function MasterYuenAura:initialize(unit)

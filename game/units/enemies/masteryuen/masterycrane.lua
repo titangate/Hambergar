@@ -249,13 +249,16 @@ function CraneCircleP3:initialize(unit,my)
 	my.actor:playAnimation'pray'
 	my.actor:setEffect'invis'
 	my.ai:pause(true)
+	self.camera = map.camera
+	map.camera = FollowerCamera(unit)
+--	my.fixture:setSensor(true)
 end
 
 function CraneCircleP3:update(dt)
 	for i,v in ipairs(self.image) do
 		v.actor:update(dt)
 	end
-	self.my:setPosition(self.unit)
+--	self.my:setPosition(self.unit.x,self.unit.y)
 end
 
 function CraneCircleP3:draw()
@@ -287,6 +290,7 @@ function CraneCircleP3:strike()
 	local a = am[math.random(3)]
 	my.actor:setEffect()
 	my:setPosition(v.x+self.unit.x,v.y+self.unit.y)
+--	my.fixture:setSensor(false)
 	my:face(self.unit)
 	my:dashStrike(a,2300,0.7)
 	table.remove(self.image,i)
@@ -298,6 +302,7 @@ function CraneCircleP3:strike()
 --		map.anim:easy(v,'opacity',255,0,0.3)
 		wait(0.7)
 		map:removeUpdatable(self)
+		map.camera = self.camera
 --		table.remove(self.image,i)
 	end):run()
 	self.my.ai:pause(false)

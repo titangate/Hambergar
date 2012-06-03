@@ -90,9 +90,9 @@ function AssassinCharacterPanel:initialize(unit)
 		title = 'RIVER',
 		type = 'Assassin',
 		attributes = {
-			{image = icontable.life,text='Hit Point',data=function()return self.unit:getHP()..'/'..self.unit:getMaxHP() end},
+			{image = icontable.life,text='Hit Point',data=function()return string.format('%.1f',self.unit:getHP())..'/'..self.unit:getMaxHP() end},
 			{image = icontable.life,text='HP Regeneration',data=function()return self.unit.HPRegen end},
-			{image = icontable.life,text='Energy Point',data=function()return self.unit:getMP()..'/'..self.unit:getMaxMP() end},
+			{image = icontable.life,text='Energy Point',data=function()return string.format('%.1f',self.unit:getMP())..'/'..self.unit:getMaxMP() end},
 			{image = icontable.life,text='Energy Regeneration',data=function()return self.unit.MPRegen end},
 			{image = icontable.weapon,text='Weapon Damage Bonus',data=
 			function()
@@ -153,9 +153,9 @@ function AssassinCharacterPanel:initialize(unit)
 			
 			{image = nil,text='Critical Hit',data=
 			function()
+				self.unit.critical.Bullet = self.unit.critical.Bullet or {2,0}
 				local d = self.unit.critical.Bullet
-				d = d or {0,2}
-				local chance,amplify = unpack(d)
+				local amplify,chance = unpack(d)
 				return string.format('%.1f',chance*100).."% chance deal "..amplify.." times damage"
 			end},
 			

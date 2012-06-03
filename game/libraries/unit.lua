@@ -81,7 +81,7 @@ function Unit:getDamageDealing(amount,type)
 		amount = amount * self.damageamplify[type]
 	end
 	if self.critical[type] then
-		local chance,amplifier = unpack(self.criticalrate[type])
+		local amplifier,chance = unpack(self.critical[type])
 		if math.random()<chance then
 			amount = amount * amplifier
 			self:notifyListeners({type='critical',unit = self})
@@ -125,9 +125,9 @@ function Unit:setAngle(angle)
 end
 
 function Unit:setPosition(x,y)
+	
 	if self.body and not self.preremoved then
 		self.body:setPosition(x,y)
-		
 	end
 	self.x,self.y = x,y
 end
@@ -215,17 +215,30 @@ function Unit:destroy()
 end
 
 function Unit:addBuff(buff,duration)
+	local v = self:hasBuff(buff.class)
+	if v then
+		self.buffs[v] = math.max(self.buffs[v],duration)
+		return
+	end
 	self.buffs[buff] = duration
 	if buff.start then buff:start(self) end
 end
 
 function Unit:removeBuff(buff)
+	if buff:isKindOf(Buff) then
+		self:_removeBuff(buff)
+		return
+	end
 	for v,_ in pairs(self.buffs) do
 		if v.class == buff then
-			self:removeBuff(v)
+			self:_removeBuff(v)
 			return
 		end
 	end
+	
+end
+
+function Unit:_removeBuff(buff)
 	self.buffs[buff] = nil
 	if buff.stop then buff:stop(self) end
 end
@@ -233,7 +246,7 @@ end
 function Unit:hasBuff(c)
 	for v,_ in pairs(self.buffs) do
 		if v.class == c then
-			return true
+			return v
 		end
 	end
 	return false
@@ -251,6 +264,9 @@ end
 
 function Unit:update(dt)
 	assert(self.body)
+	if self.timescale then
+		dt = dt * self.timescale
+	end
 	if self.updateShapeData then
 		self.fixture:setUserData(self)
 		self.updateShapeData = nil
@@ -551,6 +567,28 @@ function Character:register()
 end
 
 function Character:unregister()
+end
+
+function Character:addBuff(buff,duration)
+	super.addBuff(self,buff,duration)
+	if buff.getPanelData then
+		GetGameSystem():fillBuffPanel(buff.genre,buff:getPanelData())
+	end
+end
+
+
+function Character:drawBuff()
+	if not self.buffs then return end
+	for k,v in pairs(self.buffs) do
+		if k.draw then
+			k:draw(self)
+			
+		end
+		if k.getPanelData then
+			--GetGameSystem():indicateBuff(k)
+		end
+	end
+	
 end
 
 local npc = Character:addState'npc'

@@ -1,6 +1,11 @@
 
 b_DWS = Buff:subclass('b_DWS')
-
+function b_DWS:initialize(...)
+	super.initialize(self,...)
+	
+	self.icon = requireImage('assets/icon/dws.png',icontable)
+	self.genre = 'buff'
+end
 function b_DWS:stop(unit,dt)
 	unit:morphEnd()
 	unit:stop()
@@ -8,6 +13,14 @@ end
 function b_DWS:start(unit)
 	unit:gotoState'DWS'
 	unit:switchChannelSkill(GetCharacter().skills.pistoldwsalt)
+end
+function b_DWS:getPanelData()
+	return {
+		title = 'Divided We Stand',
+		type = 'Buff',
+		attributes = {
+			{text = 'The power of your abilities has drastically increased.'}}
+	}
 end
 DWSEffect = UnitEffect:new()
 DWSEffect:addAction(function (unit,caster,skill)
@@ -104,10 +117,9 @@ function DWS:active()
 	if self:isCD() then
 		return false,'Ability Cooldown'
 	end
-	if self.unit:getMPPercent()<1 then
+	if self.unit:getMPPercent()<1 and (not self.unit.pusheen) then
 		return false,'Not enough MP'
 	end
-	
 	super.active(self)
 	self.effect:effect(self:getorderinfo())
 	return true

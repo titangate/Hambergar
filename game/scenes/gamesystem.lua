@@ -25,6 +25,19 @@ function GameSystem:initialize()
 	self.fader:setImage(img.dot)
 	self.fader:fill(screen.width,screen.height)
 	self.fader.opacity = 0
+	local dp = goo.itempanel()
+	dp:setSize(200,100)
+	dp:setPos(30,170)
+	dp:setTitle('NO ITEM')
+	dp:setVisible(false)
+	self.buffpanel = dp
+	
+end
+
+function GameSystem:fillBuffPanel(genre,buff)
+	self.buffpanel:setVisible(true)
+	self.buffpanel:fadeOutIn(1)
+	self.buffpanel:fillPanel(buff)
 end
 
 function GameSystem:setCharacter(c)
@@ -89,7 +102,40 @@ function GameSystem:setCheckpoint(m,c,depends)
 	self:save()
 end
 
+function GameSystem:drawBuffs(buffs)
+	local length = 36
+	local startx = 30+24
+	local y = 110
+	for v,duration in pairs(buffs) do
+		if v.icon then
+			local rw,rh = v.icon:getWidth(),v.icon:getHeight()
+			love.graphics.setColor(0,0,0,125)
+			love.graphics.circle('fill',startx,y,length/2)
+			if v.genre == 'buff' then
+				
+				love.graphics.setColor(0,255,0,255)
+			elseif v.genre == 'debuff' then
+				
+				love.graphics.setColor(255,0,0,255)
+			elseif v.genre == 'special' then
+				
+				love.graphics.setColor(255,255,255,255)
+			else
+				
+				love.graphics.setColor(0,0,0,255)
+			end
+			
+			love.graphics.circle('line',startx,y,length/2)
+			love.graphics.setColor(255,255,255,255)
+			love.graphics.draw(v.icon,startx,y,0,length/rw,length/rh,rw/2,rh/2)
+			love.graphics.printf(string.format("%.1f",duration),startx-length/2,y+15,36,'center')
+			startx = startx + 36
+		end
+	end
+end
+
 function GameSystem:update(dt)
+	self.buffs = {}
 	local x,y,walk = controller:GetWalkDirection()
 	GetCharacter().direction = {normalize(x,y)}
 	if walk then
@@ -105,11 +151,14 @@ end
 
 requireImage('assets/UI/pointer.png','cursor')
 function GameSystem:draw()
-	map:draw()
+	filtermanager:draw(function()map:draw()end)
 	self.hpbar:draw()
 	self.mpbar:draw()
 	if self.bossbar then self.bossbar:draw() end
 	goo:draw()
+	if GetCharacter() then
+		self:drawBuffs(GetCharacter().buffs)
+	end
 	love.graphics.setColor(255,255,255)
 end
 

@@ -159,8 +159,21 @@ end
 local nothing = MindListener:addState('nothing')
 function nothing:handle() end
 
-assassinkilllistener = MindListener:new()
-assassinkilllistener:gotoState('nothing')
+--assassinkilllistener = MindListener:new()
+--assassinkilllistener:gotoState('nothing')
+
+
+b_Mind = Buff:subclass('b_Mind')
+function b_Mind:initialize(MPRegen)
+	self.MPRegen = MPRegen
+end
+function b_Mind:start(unit)
+	unit.MPRegen = unit.MPRegen + self.MPRegen
+end
+function b_Mind:stop(unit)
+	unit.MPRegen = unit.MPRegen - self.MPRegen
+end
+
 
 Mind = Skill:subclass('Mind')
 function Mind:initialize(unit,level)
@@ -172,7 +185,12 @@ function Mind:initialize(unit,level)
 end
 
 function Mind:setLevel(lvl)
-	self.manaregen = 25*lvl
+	self.level = self.level or 0
+	if self.unit:hasBuff(b_Mind) then
+		self.unit:removeBuff(b_Mind)
+	end
+	self.unit:addBuff(b_Mind(5*lvl),true)
+--	self.unit.MPRegen = self.unit.MPRegen + 5*(lvl-self.level)
 	self.level = lvl
 end
 
@@ -189,9 +207,9 @@ end
 
 local MindDWS = Mind:addState('DWS')
 function MindDWS:enterState()
-	assassinkilllistener:gotoState('DWS')
+--	assassinkilllistener:gotoState('DWS')
 end
 
 function MindDWS:exitState()
-	assassinkilllistener:gotoState()
+--	assassinkilllistener:gotoState()
 end

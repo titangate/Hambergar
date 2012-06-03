@@ -49,6 +49,7 @@ function requireImage(path,label,t)
 	label = label or file
 	t = t or img
 	t[label]=love.graphics.newImage(path)
+	return t[label]
 end
 
 Listener = Object:subclass('Listener')

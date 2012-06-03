@@ -250,6 +250,13 @@ function DashDWS:exitState()
 end
 
 b_Invis = Buff:subclass('b_Invis')
+function b_Invis:initialize(...)
+	super.initialize(self,...)
+	
+	
+	self.icon = requireImage('assets/icon/invis.png',icontable)
+	self.genre = 'buff'
+end
 function b_Invis:start(unit)
 	unit.invisible = true
 	self.inviscancellistener = {}
@@ -267,6 +274,15 @@ function b_Invis:stop(unit)
 	gamelistener:unregister(self.inviscancellistener)
 end
 
+
+function b_Invis:getPanelData()
+	return {
+		title = 'Invisibility',
+		type = 'Buff',
+		attributes = {
+			{text = "You have vanished from enemys' sights."}}
+	}
+end
 
 InvisEffect = UnitEffect:new()
 InvisEffect:addAction(function (unit,caster,skill)

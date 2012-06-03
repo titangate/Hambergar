@@ -207,9 +207,9 @@ function scenetest()
 	local self = my
 
 --	map:addUpdatable(CraneCircleP3(GetCharacter(),my))
---	my.ai = my:phase3()
+	my.ai = my:phase3()
 --	self.skills.fistp3.effect:effect({math.cos(self.body:getAngle()),math.sin(self.body:getAngle())},self,self.skills.fistp1)
-	my:enableAI()
+--	my:enableAI()
 --	my.ai = my:phase2()
 --	my:phase3()
 --	my.mantra.level = 2

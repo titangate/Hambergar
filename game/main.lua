@@ -257,10 +257,10 @@ function love.draw()
 	love.graphics.setColor(255,255,255)
 	revertFont()
 	
-	local d = function()
+--	local d = function()
 		currentsystem:draw()
-	end
-	filtermanager:draw(d)
+--	end
+--	filtermanager:draw(d)
 	local height = 10
 	for msg,time in pairs(debugmessages) do
 		love.graphics.print(msg,10,height)

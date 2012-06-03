@@ -227,6 +227,7 @@ function goo.itempanel:initialize(parent)
 	super.initialize(self,parent)
 	self.elements = {}
 	self.attributes={}
+	self.fadetime = -1
 end
 local function getstring(n)
 	if type(n)=='function' then
@@ -235,8 +236,21 @@ local function getstring(n)
 		return tostring(n)
 	end
 end
-
+function goo.itempanel:fadeOutIn(time)
+--	anim:easy(self,'opacity',0,255,0.5)
+--	anim:easy(self,'xscale',2,1,0.5)
+--	anim:easy(self,'yscale',2,1,0.5)
+	self.opacity = 255
+	self.fadetime = time
+end
 function goo.itempanel:update(dt)
+	if self.fadetime == -1 then
+	elseif self.fadetime> 0 then
+		self.fadetime = self.fadetime - dt
+	else
+		anim:easy(self,'opacity',255,0,1)
+		self.fadetime = -1
+	end
 	super.update(self,dt)
 	if self.follow then
 		local x,y = love.mouse.getPosition()

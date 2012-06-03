@@ -30,14 +30,91 @@ function Assassin:initialize(x,y)
 	self.manager = AssassinPanelManager:new(self)
 end
 
+function Assassin:berserker(state)
+	if state then
+		self.beforeberserker = {
+			stim = self.skills.stim.cd,
+			snipe = self.skills.snipe.cd,
+			roundaboutshot = self.skills.roundaboutshot.cd,
+		}
+		self.skills.stim.cd = 0
+		self.skills.roundaboutshot.cd = 0
+		self.skills.snipe.cd = 0
+	else
+		assert(self.beforeberserker)
+		self.skills.stim.cd = self.beforeberserker.stim
+		self.skills.roundaboutshot.cd = self.beforeberserker.roundaboutshot
+		self.skills.snipe.cd = self.beforeberserker.snipe
+	end
+end
+
+function Assassin:tome(state)
+	if state then
+		self.pusheen = self.skills.dws.cd
+		self.skills.dws.cd = self.pusheen/2
+	else
+		assert(self.pusheen)
+		self.skills.dws.cd = self.pusheen
+		self.pusheen = nil
+	end
+end
+
+function Assassin:beads(state)
+	if state then
+		self.beadsCD = self.skills.dash.cd
+		self.beadsMP = self.skills.dash.manacost
+		self.skills.dash.cd = self.beadsCD/2
+		self.skills.dash.manacost = self.beadsMP/2
+	else
+		assert(self.beadsMP)
+		assert(self.beadsCD)
+		self.skills.dash.manacost = self.beadsMP
+		self.skills.dash.cd = self.beadsCD
+		self.beadsCD = nil
+		self.beadsMP = nil
+	end
+end
+
+function Assassin:lotus(hp,mp,buff,cd)
+	if not hp then
+		self.lotusOn = nil
+	else
+		self.lotusOn = {
+			hp = hp,
+			mp = mp,
+			buff = buff,
+			cd = cd,
+		}
+	end
+		
+end
+
+
+function Assassin:kill(killer)
+	if self.lotusOn and not self:hasBuff(b_Lotus) then
+		self.hp = self.hp + self.lotusOn.hp*self.maxhp
+		self.mp = self.mp + self.lotusOn.mp*self.maxmp
+		self:addBuff(b_Lotus(),self.lotusOn.cd)
+		return
+	end
+	super.kill(self,killer)
+end
+
+function Assassin:addBuff(buff,duration)
+	if self.cloak and buff.genre == 'debuff' and type(duration) == 'number' then
+		duration = duration/2
+	end
+	super.addBuff(self,buff,duration)
+end
+
 function Assassin:getSkin()
 	return 'default'
 end
 
 -- please refer to abilities.assassin.mind
 function Assassin:register()
-	gamelistener:register(assassinkilllistener)
-	assassinkilllistener:gotoState()
+--	gamelistener:register(assassinkilllistener)
+--	assassinkilllistener:gotoState()
 end
 
 function Assassin:unregister()

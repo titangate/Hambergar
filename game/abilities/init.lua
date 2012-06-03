@@ -32,6 +32,13 @@ preloadlist(
 		'abilities.swift.chain.tornado',
 		'abilities.swift.chain.ultimate1'
 	},
+	masteryuen = {
+		'abilities.electrician.ionicpool',
+		'abilities.electrician.cpu',
+--		'abilities.electrician.common',
+--		'abilities.electrician.transmitter',
+		'abilities.electrician.lightning',
+	}
 })	
 require ('abilities.common')
 --[[

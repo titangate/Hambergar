@@ -14,11 +14,11 @@ function AssassinAttributeItem:draw()
 	if self.part1.color then
 		love.graphics.setColor(self.part1.color())
 	end
-	love.graphics.printf(self.part1.text(),self.x,self.y,self.w,"left")
+	pfn(self.part1.text(),self.x,self.y,self.w,"left")
 	if self.part2.color then
 		love.graphics.setColor(self.part2.color())
 	end
-	love.graphics.printf(self.part2.text(),self.x+100,self.y,self.w,"right")
+	pfn(self.part2.text(),self.x+100,self.y,self.w,"right")
 	love.graphics.setColor(255,255,255,255)
 end
 

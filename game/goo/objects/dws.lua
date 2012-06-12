@@ -14,7 +14,7 @@ end
 function goo.DWSText:draw()
 	super.draw(self)
 	self:setColor(self.style.textColor)
-	love.graphics.setFont(self.style.textFont)
+	sfn(self.style.textFont)
 	love.graphics.print(self.text,-self.ox,-self.oy)
 end
 

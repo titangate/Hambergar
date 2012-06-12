@@ -34,9 +34,9 @@ end
 function goo.textinput:draw(x,y)
 	local x,y = self:getAbsolutePos()
 	if self.style.textFont then
-		love.graphics.setFont( self.style.textFont )
+		sfn( self.style.textFont )
 	else
-		love.graphics.setFont( 12 )
+		sfn( 12 )
 	end
 	self.font = love.graphics.getFont()
 	self.fontH = self.font:getHeight()

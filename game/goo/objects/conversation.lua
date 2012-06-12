@@ -47,10 +47,10 @@ function goo.conversationpanel:draw()
 		textoffset = textoffset+self.portrait:getWidth()
 		love.graphics.draw(self.portrait,10,40)
 	end
-	love.graphics.setFont(self.style.speakerFont)
-	love.graphics.printf(self.speaker,50,30,400,'center')
-	love.graphics.setFont(self.style.textFont)
-	love.graphics.printf(self.text,textoffset,60,350-textoffset,'left')
+	sfn(self.style.speakerFont)
+	pfn(self.speaker,50,30,400,'center')
+	sfn(self.style.textFont)
+	pfn(self.text,textoffset,60,350-textoffset,'left')
 	love.graphics.setScissor()
 end
 

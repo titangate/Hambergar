@@ -13,9 +13,9 @@ function goo.text:draw(x,y)
 	x,y = x or 0,y or 0
 	love.graphics.setColor( unpack(self.color) )
 	if self.align then
-		love.graphics.printf( self.text, x, y,self.w,self.align )
+		pfn( self.text, x, y,self.w,self.align )
 	else
-		love.graphics.printf(self.text,x,y)
+		pfn(self.text,x,y)
 	end
 end
 function goo.text:setText( text )

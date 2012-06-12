@@ -33,11 +33,11 @@ function goo.imagelabel:draw( x, y )
 	end
 	local c = self.textcolor or self.style.textColor
 	self:setColor( c )
-	love.graphics.setFont(self.font or self.style.textFont)
+	sfn(self.font or self.style.textFont)
 	if self.image then
-		love.graphics.printf( self.text, x+self.image:getWidth(), y,self.w,self.align)
+		pfn( self.text, x+self.image:getWidth(), y,self.w,self.align)
 	else
-		love.graphics.printf(self.text,x,y,self.w,self.align)
+		pfn(self.text,x,y,self.w,self.align)
 	end
 end
 

@@ -21,7 +21,7 @@ end
 function goo.flag:draw()
 	love.graphics.draw(goo.flag.image.star,0,0,0,1,1,32,32)
 	self:setColor( self.textColor )
-	love.graphics.setFont( self.style.textFont )
+	sfn( self.style.textFont )
 	local fontW, fontH = self.style.textFont:getWidth(self.text or ''), self.style.textFont:getHeight()
 	local ypos = 0
 	local xpos = ((self.w - fontW)/2)

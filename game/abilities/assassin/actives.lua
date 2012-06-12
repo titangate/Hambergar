@@ -292,10 +292,10 @@ end
 
 function b_Invis:getPanelData()
 	return {
-		title = 'Invisibility',
-		type = 'Buff',
+		title = LocalizedString'Invisibility',
+		type = LocalizedString'Buff',
 		attributes = {
-			{text = "You have vanished from enemys' sights."}}
+			{text = LocalizedString"You have vanished from enemys' sights."}}
 	}
 end
 
@@ -344,11 +344,11 @@ end
 
 function Invis:getPanelData()
 	return{
-		title = 'INVISIBILITY',
-		type = 'ACTIVE',
+		title = LocalizedString'INVISIBILITY',
+		type = LocalizedString'ACTIVE',
 		attributes = {
-			{text = 'Use mindpower to generate a spiritual mist, hallucinate enemies and grant yourself invisibility. Using any skill or item will cancel your invisibility. The first strike you fire with invisibility will be a garanteed critical strike'},
-			{text = 'Duration',data = function()return self.invistime end}
+			{text = LocalizedString'Use mindpower to generate a spiritual mist, hallucinate enemies and grant yourself invisibility. Using any skill or item will cancel your invisibility. The first strike you fire with invisibility will be a garanteed critical strike.'},
+			{text = LocalizedString'Duration',data = function()return self.invistime end}
 		}
 	}
 end

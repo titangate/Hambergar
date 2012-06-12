@@ -371,7 +371,7 @@ function goo:debugdraw()
 	if mx > love.graphics.getWidth()-120 then offx = -(offx+100) end
 	if my > love.graphics.getHeight()-65 then offy = -(offy+65) end
 	
-	love.graphics.setFont(style.textFont)
+	sfn(style.textFont)
 	love.graphics.setColor(unpack(style.backgroundColor))
 	love.graphics.rectangle( 'fill', mx+offx-5, my+offy-15, 118,80)
 	love.graphics.setColor(unpack(style.textColor))

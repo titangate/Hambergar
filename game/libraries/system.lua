@@ -26,7 +26,7 @@ function Loadscreen:draw()
 	love.graphics.clear()
 	MainMenu:draw()
 	love.graphics.setColor(0,0,0)
-	love.graphics.printf(self.name)
+	pfn(self.name)
 end
 loadable = {}
 function ImageLoader:loaddata(name)

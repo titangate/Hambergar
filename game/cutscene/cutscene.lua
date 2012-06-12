@@ -119,10 +119,10 @@ function CutscenePlayer:draw()
 			local w,h = font:getWidth(v)+10,select(2,font:getWrap(v,624))*font:getHeight()+10
 			love.graphics.rectangle('fill',screen.halfwidth - w/2,screen.height - 105 ,w,h)
 			love.graphics.setColor(255,255,255,225)
-			love.graphics.printf(v,200,screen.height - 100,624,'center')
+			pfn(v,200,screen.height - 100,624,'center')
 		end
 --	end
-	love.graphics.setFont(fonts.oldsans12)
+	sfn(fonts.oldsans12)
 	for i,v in ipairs(self.options) do
 		v:draw()
 	end
@@ -341,5 +341,5 @@ function DialogOption:draw()
 	love.graphics.setColor(self.color)
 	love.graphics.draw(img.dot,self.x,self.y,math.pi/4,self.sx,self.sy,0.5,0.5)
 	love.graphics.setColor(255,255,255,self.color[4])
-	love.graphics.printf(self.text,self.x-50,self.y-6,100,'center')
+	pfn(self.text,self.x-50,self.y-6,100,'center')
 end

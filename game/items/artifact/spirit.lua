@@ -1,6 +1,5 @@
 
 Spirit = Item:subclass('Spirit')
-requireImage( 'assets/item/spirit.png','Spirit' )
 
 function Spirit:initialize(x,y)
 	super.initialize(self,'artifact',x,y)
@@ -37,5 +36,5 @@ end
 
 function Spirit:draw(x,y)
 	if not x then x,y = self.body:getPosition() end
-	love.graphics.draw(img.Spirit,x,y,0,0.1875,0.1875,128,128)
+	love.graphics.draw(requireImage'assets/item/spirit.png',x,y,0,0.1875,0.1875,128,128)
 end

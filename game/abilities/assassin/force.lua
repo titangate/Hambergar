@@ -2,7 +2,7 @@ SniperRoundTrail = Object:subclass('SniperRoundTrail')
 function SniperRoundTrail:initialize(b)
 	self.bullet = b
 	local p = love.graphics.newParticleSystem(img.part1, 1000)
-	p:setEmissionRate(500)
+	p:setEmissionRate(options.particlerate*500)
 	p:setSpeed(0, 0)
 	p:setSizes(2, 4)
 	p:setColors(26,183,255,255,255,255,255,0)
@@ -31,6 +31,7 @@ function SniperRoundTrail:draw()
 	love.graphics.draw(self.p)
 	end)
 end
+
 SniperRound = Missile:subclass('SniperRound')
 function SniperRound:add(unit,coll)
 	if (self.controller=='playerMissile' and unit.controller=='enemy') or (self.controller == 'enemyMissile' and unit.controller=='player') then
@@ -57,8 +58,8 @@ end
 SnipeBulletEffect = UnitEffect:new()
 SnipeBulletEffect:addAction(function (unit,caster,skill)
 	unit:damage('Bullet',caster.unit:getDamageDealing(skill.damage,'Bullet'),caster.unit)
-	
 end)
+
 SnipeEffect = ShootMissileEffect:new()
 SnipeEffect:addAction(function(point,caster,skill)
 	local Missile = skill.bullettype:new(1,3,1000,caster.x,caster.y,unpack(point))
@@ -68,6 +69,7 @@ SnipeEffect:addAction(function(point,caster,skill)
 	Missile.unit = caster
 	map:addUnit(Missile)
 end)
+
 Snipe = ActiveSkill:subclass('Snipe')
 function Snipe:initialize(unit,level)
 	level = level or 0
@@ -80,14 +82,17 @@ function Snipe:initialize(unit,level)
 	self.bullettype = SniperRound
 	self.cd = 2
 	self.cdtime = 0
-	self.damage = 300
+	self.damageamplify = 3
 	self.available = true
 	self:setLevel(level)
 	self.manacost = 50
 end
 
 function Snipe:active()
-
+	-- todo: make better detect
+	if not self.unit.skills.weaponskill.damage then
+		return false,'Not allowed to snipe without weapon'
+	end
 	if self:isCD() then
 		return false,'Ability Cooldown'
 	end
@@ -97,7 +102,7 @@ function Snipe:active()
 	end
 	self.unit.mp = self.unit.mp - self.manacost
 	super.active(self)
-	self.effect:effect(self:getorderinfo())
+	self.unit.skills.weaponskill.effect:effect(GetOrderDirection(),self.unit,self.unit.skills.weaponskill,self)
 	return true
 end
 
@@ -109,12 +114,13 @@ function Snipe:getPanelData()
 		type = 'ACTIVE',
 		attributes = {
 			{text = 'Fire a devastating shot.'},
-			{text = 'Damage',data = function()return self.damage end,image = icontable.weapon},
+			{text = 'Damage',data = function()return string.format("%1.f",self.damageamplify*100)..'% weapon damage' end,image = icontable.weapon},
 		}
 	}
 end
+
 function Snipe:geteffectinfo()
-	return GetOrderDirection(),self.unit,self
+	return GetOrderDirection(),self.unit,self.unit.skills.weaponskill,self
 end
 
 function Snipe:stop()
@@ -123,7 +129,7 @@ end
 
 function Snipe:setLevel(lvl)
 	self.level = lvl
-	self.damage = 300+lvl*100
+	self.damageamplify = 2+lvl*1
 end
 
 SnipeDWSEffect = ShootMissileEffect:new()

@@ -10,6 +10,7 @@ local sounddata = {}
 
 -- Play a (potentially random) sound (with optional tag(s), volume, pitch, and on-finished function)
 function TEsound.play(sound, tags, volume, pitch, func)
+--	if true then return end
 	if not sound or (type(sound) ~= "string" and type(sound) ~= "table") then return nil, "You must use a valid sound source (a string that's a filepath to a sound, or a list of them)."
 	elseif type(sound) == "table" and #sound < 1 then return nil, "The list of sounds must have at least one filepath."
 	end

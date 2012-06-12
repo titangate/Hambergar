@@ -22,7 +22,6 @@ function AI.Reaper1(boss,target)
 	demoselector:push(function ()
 		count = count + 1
 		local choice = math.random(3)
-		print ('choice is', choice)
 		if choice == 1 then
 			return meleeseq
 		elseif choice == 2 then
@@ -122,7 +121,7 @@ ReaperMissileDead = Object:subclass('ReaperMissileDead')
 function ReaperMissileDead:initialize(x,y)
 	self.x,self.y=x,y
 	local p = love.graphics.newParticleSystem(img.part1, 1000)
-	p:setEmissionRate(200)
+	p:setEmissionRate(options.particlerate*200)
 	p:setSpeed(300, 400)
 	p:setSize(1, 2)
 	p:setColor(255, 255, 255, 255, 255, 128, 128, 0)
@@ -139,7 +138,6 @@ function ReaperMissileDead:initialize(x,y)
 	self.time = 1
 	self.visible = true
 	print 'REAPERDEAD INITED'
-	print (self.x,self.y)
 end
 
 
@@ -283,7 +281,7 @@ b_Vanish = b_Stim:subclass'b_Vanish'
 function b_Vanish:initialize(...)
 	super.initialize(self,...)
 	local p = love.graphics.newParticleSystem(img.cloud2, 1000)
-	p:setEmissionRate(100)
+	p:setEmissionRate(options.particlerate*100)
 	p:setSpeed(200, 250)
 	p:setGravity(100, 200)
 	p:setSize(1, 1)

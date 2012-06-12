@@ -2,7 +2,7 @@
 setfenv(1,{Object=Object,math=math,love=love,table=table,ipairs=ipairs,next=next,pairs=pairs,type=type,pulse=pulse,unpack=unpack,img=img})
 function getPulse()
 	local p = love.graphics.newParticleSystem(img.pulse,1024)
-	p:setEmissionRate(100)
+	p:setEmissionRate(options.particlerate*100)
 	p:setGravity(0)
 	p:setSize(0.25, 0.05)
 	p:setColor(0, 255, 0, 255, 0, 255, 0, 0)

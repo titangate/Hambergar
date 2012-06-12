@@ -13,7 +13,7 @@ function getExplosionAction(impact,buff,filter)
 				x,y=x*impact,y*impact
 				if buff then v.buffs[buff:new()] = true end
 				if v.body and not v.immuneimpact then
-					v.body:applyImpulse(x,y)
+					v.body:applyLinearImpulse(x,y)
 				end
 			end
 		end
@@ -25,8 +25,7 @@ PANEL_ASSASSIN_CHAR = 1
 
 AssassinPanelManager = Object:subclass('PanelManager')
 function AssassinPanelManager:initialize(unit)
-	self.tree = AssassinAbiTree:new(unit)
-	self.character = AssassinCharacterPanel:new(unit)
+	self.unit = unit
 	self.currentsystem = self.tree
 	self.dt = 0
 end
@@ -41,6 +40,13 @@ function AssassinPanelManager:start(system)
 end
 
 function AssassinPanelManager:shift(system)
+	if type(system)=='string' then
+		if system == 'skill' then
+			system = self.tree
+		elseif system == 'inventory' then
+			system = self.character
+		end
+	end
 	if system == self.currentsystem then
 		return
 	end
@@ -88,6 +94,10 @@ function AssassinPanelManager:mousereleased(x,y,k)
 end
 
 function AssassinPanelManager:show()
+	self.tree = self.tree or AssassinAbiTree(self.unit)
+	self.character = self.character or AssassinCharacterPanel:new(self.unit)
+	self.tree:loadAvailableSkill()
+	self.currentsystem = self.character
 	self.time = 100
 	self.dt = 0
 	self.folddt = 100
@@ -97,7 +107,7 @@ function AssassinPanelManager:show()
 	if self.currentsystem.show then
 		self.currentsystem:show()
 	end
-	gamelistener:notify({type = 'openpanel'})
+	gamelistener:notify{type = 'openpanel'}
 end
 function AssassinPanelManager:fold()
 	self.folddt = 0

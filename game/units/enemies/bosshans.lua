@@ -134,7 +134,7 @@ FlamingSpearTrail = Object:subclass('FlamingSpearTrail')
 function FlamingSpearTrail:initialize(b)
 	self.bullet = b
 	local p = love.graphics.newParticleSystem(img.part1, 1000)
-	p:setEmissionRate(100)
+	p:setEmissionRate(options.particlerate*100)
 	p:setSpeed(100, 100)
 	p:setGravity(0)
 	p:setSizes(2, 1)
@@ -184,6 +184,7 @@ function FlamingSpearMissile:add(unit,coll)
 			unit.bht[self] = true
 			self.draw = function() end
 			self.add = function() end
+			self.body:setLinearVelocity(0,0)
 		end
 	end
 end
@@ -223,7 +224,7 @@ VolcanoActor = Object:subclass('FlamingSpearTrail')
 function VolcanoActor:initialize(x,y)
 	self.x,self.y = x,y
 	local p = love.graphics.newParticleSystem(img.pulse, 1000)
-	p:setEmissionRate(300)
+	p:setEmissionRate(options.particlerate*300)
 	p:setSpeed(100, 200)
 	p:setGravity(0)
 	p:setSizes(2, 1)
@@ -420,7 +421,7 @@ StompActor = Object:subclass('StompActor')
 function StompActor:initialize(x,y)
 	self.x,self.y=x,y
 	local p = love.graphics.newParticleSystem(img.rip, 1000)
-	p:setEmissionRate(500)
+	p:setEmissionRate(options.particlerate*500)
 	p:setSpeed(300, 400)
 	p:setGravity(0)
 	p:setSizes(1, 0.5)
@@ -556,7 +557,7 @@ function BossHans:initialize(x,y,controller)
 	self:resetAnimation()
 	self.controller = controller
 	local p = love.graphics.newParticleSystem(img.part1, 1000)
-	p:setEmissionRate(200)
+	p:setEmissionRate(options.particlerate*200)
 	p:setSpeed(300, 250)
 	p:setSizes(0.25, 1)
 	p:setColors(220, 105, 20, 255, 194, 30, 18, 0)

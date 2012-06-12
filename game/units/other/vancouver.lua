@@ -14,7 +14,7 @@ end
 
 function Mat:createBody(world)
 	super.createBody(self,world)
-	self.shape:setSensor(true)
+	self.fixture:setSensor(true)
 end
 
 requireImage('assets/vancouver/mat.png','mat')

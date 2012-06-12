@@ -5,10 +5,19 @@ function Weapon:initialize(char,x,y)
 end
 
 function Weapon:equip(unit)
-	unit:setWeaponSkill(self.skill(unit,1))
+	super.equip(self,unit)
+	self.skillinst = self.skillinst or self.skill(unit)
+	unit:setWeaponSkill(self.skillinst,unit:getWeaponLevel())
+--	if GetGameSystem().reloadBottompanel then
+--		GetGameSystem():reloadBottompanel()
+--	end
+--	if self.char == 'Assassin' or self.char == 'KingOfDragons' then
+		self.skill:setMomentumBullet(unit.skills.momentumbullet:getLevel()>0)
+--	end
 end
 
 function Weapon:unequip(unit)
+	super.unequip(self,unit)
 	unit:setWeaponSkill()
 end
 
@@ -28,6 +37,7 @@ function Weapon:getSkill()
 	return self.skill
 end
 
+--[[
 FireWeapon = StatefulObject:subclass('FireWeapon')
 function FireWeapon:initialize(unit)
 	super.initialize(self)
@@ -36,12 +46,12 @@ function FireWeapon:initialize(unit)
 end
 
 function FireWeapon:setSkill(skill)
+	if skill then print (skill.class) end
 	self.skill = skill or Skill()
-	if skill then
-		self.level = skill.level
-	else
-		self.level = 1
-	end
+end
+
+function FireWeapon:getSkill()
+	return self.skill
 end
 
 function FireWeapon:getorderinfo()
@@ -86,7 +96,7 @@ end
 function dws:exitState()
 	self.skill:gotoState()
 end
-
+]]
 
 UseItem = StatefulObject:subclass'UseItem'
 function UseItem:initialize(unit)
@@ -112,10 +122,21 @@ end
 function UseItem:active()
 	assert(self.item)
 	self.unit.inventory:useItem(self.item.name)
+	if not self.unit.inventory:hasItem(self.item.name) then
+		self.item = nil
+	end
+end
+
+function UseItem:getIcon()
+	if self.item then
+		return self.item.icon
+	else
+		return 
+	end
 end
 
 function UseItem:getLevel()
-	return self.level
+	if self.item then return 1 else return 0 end
 --	return self.skill:getLevel()
 end
 
@@ -131,3 +152,6 @@ function UseItem:endChannel()
 --	return self.skill:endChannel()
 end
 
+function UseItem:getCDPercent()
+	return self.item:getCDPercent(self.unit)
+end

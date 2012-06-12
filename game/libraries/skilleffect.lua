@@ -12,18 +12,18 @@ end
 
 UnitEffect = Effect:subclass('UnitEffect')
 
-function UnitEffect:effect(unit,caster,skill)
+function UnitEffect:effect(...)
 	for k,v in pairs(self.actions) do
-		v(unit,caster,skill)
+		v(...)
 	end
 end
 
 MissileEffect = Effect:subclass('MissileEffect')
 ShootMissileEffect = MissileEffect:subclass('ShootMissileEffect')
 
-function ShootMissileEffect:effect(point,caster,skill)
+function ShootMissileEffect:effect(...)
 	for k,v in pairs(self.actions) do
-		v(point,caster,skill)
+		v(...)
 	end
 end
 

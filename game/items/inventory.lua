@@ -6,7 +6,6 @@ function InventoryBase:initialize(unit)
 	self.unit=unit
 	self.equipments={}
 	self.updateInvUI=function()
-		print ('attempt to update UI')
 	end
 	-- item is stored as a 2-d array, indexed (itemtype,itemname)
 end
@@ -39,7 +38,6 @@ function InventoryBase:removeItem(itemtype,count)
 	for k,v in pairs(self.items) do
 		if v[itemtype] then
 			local item=v[itemtype]
-			print (item.stack, 'STACK LEFT',count)
 			item.stack = item.stack - count
 			if item.stack==0 then
 				v[itemtype]=nil
@@ -116,9 +114,9 @@ function Inventory:gain(m)
 end
 
 function Inventory:equipItem(item)
-	if item.type == 'weapon' and item.char ~= self.unit:className() then
-		return 
-	end
+--	if item.type == 'weapon' and item.char ~= self.unit:className() then
+--		return
+--	end
 	local i = self.equipments[item.type]
 	if i then
 		i:unequip(self.unit)

@@ -18,41 +18,70 @@ requireImage('assets/spirit.png','spirit')
 function AssassinAbiTree:initialize(unit)
 	self.unit = unit
 	self.container = goo.object:new()
+	self.learning = true
+	local sp = goo.itempanel:new(self.container)
+	sp:setSize(500,100)
+	sp:setPos(screen.halfwidth-sp.w/2,screen.height - 150)
+	
+	local function coord(x,y)
+		local dx = screen.width/6
+		local dy = screen.height/5
+		return {x*dx-48,y*dy-48}
+	end
 	local t = {
-		{face = character[unit.skills.pistol.name],
+		{face = requireImage'assets/icon/weaponmastery.png',
 		skill = unit.skills.pistol,
-		pos = {75,75}},
-		{face = character[unit.skills.stunbullet.name],
+		pos = coord(1,1)},
+		{face = requireImage'assets/icon/stunbullet.png',
 		skill = unit.skills.stunbullet,
-		pos = {175,75}},
-		{face = character[unit.skills.explosivebullet.name],
+		pos = coord(2,1)},
+		{face = requireImage'assets/icon/explosivebullet.png',
 		skill = unit.skills.explosivebullet,
-		pos = {275,75}},
-		{face = character[unit.skills.momentumbullet.name],
+		pos = coord(3,1)},
+		{face = requireImage'assets/icon/momentumbullet.png',
 		skill = unit.skills.momentumbullet,
-		pos = {375,75}},
-		{face = character[unit.skills.dash.name],
+		pos = coord(4,1)},
+		{face = requireImage'assets/icon/snipe.png',
+		skill = unit.skills.snipe,
+		pos = coord(4,2)},
+		{face = requireImage'assets/icon/dash.png',
 		skill = unit.skills.dash,
-		pos = {75,175}},
-		{face = character[unit.skills.roundaboutshot.name],
+		pos = coord(1,2)},
+		{face = requireImage'assets/icon/spiral.png',
 		skill = unit.skills.roundaboutshot,
-		pos = {175,175}},
-		{face = character[unit.skills.stim.name],
+		pos = coord(2,2)},
+		{face = requireImage'assets/icon/stim.png',
 		skill = unit.skills.stim,
-		pos = {275,175}},
-		{face = character[unit.skills.invis.name],
+		pos = coord(3,2)},
+		{face = requireImage'assets/icon/invis.png',
 		skill = unit.skills.invis,
-		pos = {375,175}},
-		{face = character[unit.skills.mind.name],
+		pos = coord(3,3)},
+		{face = requireImage'assets/icon/mind.png',
 		skill = unit.skills.mind,
-		pos = {475,75}},
-		{face = character.divide,
+		pos = coord(1,3)},
+		{face = requireImage'assets/icon/rip.png',
+		skill = unit.skills.mindripfield,
+		pos = coord(2,3)},
+		{face = requireImage'assets/icon/innerair.png',
+		skill = unit.skills.mysteriousqi,
+		pos = coord(4,3)},
+		{face = requireImage'assets/icon/dws.png',
 		skill = unit.skills.dws,
-		pos = {675,325}},
+		pos = coord(5,2)},
 	}
+	if unit:isKindOf(KingOfDragons) then
+		table.insert(t,
+		{face = requireImage'assets/icon/mantrashield.png',
+		skill = unit.skills.mantrashield,
+		pos = coord(5,1)})
+		table.insert(t,
+		{face = requireImage'assets/icon/summon.png',
+		skill = unit.skills.dragoneye,
+		pos = coord(5,3)})
+	end
 	self.buttongroup = {}
 	for k,v in ipairs(t) do
-		local b = goo.learnbutton:new(self.container)
+		local b = goo.learnbutton(self.container)
 		b:setPos(unpack(v.pos))
 		b:setSize(64,64)
 		b:setSkill(v.skill,v.face)
@@ -92,10 +121,6 @@ function AssassinAbiTree:initialize(unit)
 			love.mousepressed(x,y,'l')
 		end
 	end
-	local sp = goo.itempanel:new(self.container)
-	sp:setSize(500,100)
-	sp:setPos(screen.halfwidth-sp.w/2,screen.height - 150)
-	
 	local lb = goo.imagelabel:new(sp)
 	lb:setSize(500,50)
 	lb:setFont(fonts.oldsans32)
@@ -103,7 +128,35 @@ function AssassinAbiTree:initialize(unit)
 	lb:setPos(0,35)
 	self.sp = sp
 	self.spiritlabel = lb
-	self.container.learn = function(skill) self:learn(skill) end
+	self.container.learn = function(skill) 
+		self:learn(skill)
+	end
+	
+	self.switchToInventory = goo.button(self.container)
+	function self.switchToInventory:onClick()
+		GetGameSystem():shift'inventory'
+	end
+	self.switchToInventory:setPos(screen.width - 200,screen.height - 100)
+	self.switchToInventory:setSize(150,30)
+	self.switchToInventory:setText'Switch to Inventory'
+end
+
+function AssassinAbiTree:loadAvailableSkill()
+	for skill,b in pairs(self.buttongroup) do
+		if skill:getLevel()<=0 then b:setVisible(false) end
+	end
+	local baseskill = {
+		self.unit.skills.pistol,
+		self.unit.skills.mind,
+		self.unit.skills.dash,
+--	self.unit.skills.dws,
+	}
+	for _,skill in ipairs(baseskill) do
+		self.buttongroup[skill]:setVisible(true)
+		for i,v in ipairs(skill:getEnabled()) do
+			self.buttongroup[v]:setVisible(true)
+		end
+	end
 end
 
 function AssassinAbiTree:enableabi(originalskill,targetskill)
@@ -135,9 +188,10 @@ function AssassinAbiTree:update(dt)
 end
 
 function AssassinAbiTree:show()
+	--[[
 	for k,v in pairs(self.buttongroup) do
-		if v.skill.level<0 then v:setVisible(false) end
-	end
+		if v.skill:getLevel()<0 then v:setVisible(false) end
+	end]]
 	local t
 	if self.learning then
 		t = 'ACQUIRE HAMBER SPIRIT TO UPGRADE YOUR ABILITIES'
@@ -163,9 +217,9 @@ function AssassinAbiTree:learn(skill)
 		return 
 	end
 	local maxlevel = skill.maxlevel or 999
-	if skill.level<maxlevel then
+	if skill:getLevel()<maxlevel then
 		if self.unit.spirit>=1 then
-			local s = skill:setLevel(skill.level+1)
+			local s = skill:setLevel(skill:getLevel()+1)
 			self.unit.spirit = self.unit.spirit - 1
 			if s and s[1] then
 				self:enableabi(skill,s[1])

@@ -17,7 +17,7 @@ requireImage(GOO_SKINPATH..'conversationbg.png','conversationbg')
 function drawSkillLevel(x,y,level,maxlevel)
 	love.graphics.setFont(fonts.midfont)
 	love.graphics.setColor(0,0,0,255)
-	love.graphics.printf('LEVEL'..level,0,48,64,'center')
+	love.graphics.printf('LEVEL'..level,0,60,64,'center')
 	love.graphics.setColor(255,255,255,255)
 end
 
@@ -55,11 +55,13 @@ style['goo skillbutton'] = {
 	textColor = {0,0,0},
 	yMargin = -20,
 	textFont = fonts.midfont,
+	iconColor = {0,0,0},
 }
 style['goo learnbutton'] = {
 	textColor = {0,0,0},
 	yMargin = -20,
 	textFont = fonts.midfont,
+	iconColor = {0,0,0}
 }
 style['goo bottompanel'] = {
 	xMargin = 50,

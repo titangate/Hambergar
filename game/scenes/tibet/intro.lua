@@ -12,7 +12,7 @@ drawintroflow.flows = {}
 drawintroflow.spawntime = 0
 local p = love.graphics.newParticleSystem(img.part1, 1000)
 p:setPosition(0,0)
-p:setEmissionRate(50)
+p:setEmissionRate(options.particlerate*50)
 p:setGravity(0,0)
 p:setSpeed(-50,50)
 p:setSizes(1, 1)
@@ -57,7 +57,7 @@ function DrawIntroText:initialize(time,string)
 	x,y = love.graphics.getWidth(),love.graphics.getHeight()/2
 	local p = love.graphics.newParticleSystem(img.part1, 1000)
 	p:setPosition(x,y)
-	p:setEmissionRate(50)
+	p:setEmissionRate(options.particlerate*50)
 	p:setGravity(0,0)
 	p:setSpeed(-50,50)
 	p:setSize(3, 1)

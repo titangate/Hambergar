@@ -84,7 +84,7 @@ SmallRocketTrail = Object:subclass('SniperRoundTrail')
 function SmallRocketTrail:initialize(b)
 	self.bullet = b
 	local p = love.graphics.newParticleSystem(img.part1, 1000)
-	p:setEmissionRate(500)
+	p:setEmissionRate(options.particlerate*500)
 	p:setSpeed(50, 80)
 	p:setSize(0.25, 0.5)
 	p:setColor(255,255,255,255,188,188,188,0)

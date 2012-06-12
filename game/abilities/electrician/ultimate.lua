@@ -1,7 +1,6 @@
 SolarStormEffect = CircleAoEEffect:new(100)
 
 SolarStormEffect:addAction(function (area,caster,skill)
-print (caster:getMP(),skill.manacost)
 	if caster:getMP()<skill.manacost then return end
 	local units = map:findUnitsInArea(area)
 	for k,v in pairs(units) do

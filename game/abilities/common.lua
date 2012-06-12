@@ -1,14 +1,17 @@
 
 BulletEffect = UnitEffect:new()
-BulletEffect:addAction(function (unit,caster,skill)
-	unit:damage('Bullet',caster.unit:getDamageDealing(skill.damage,'Bullet'),caster)
---	print ('ttb dmg')
+BulletEffect:addAction(function (unit,caster,skill,snipe)
+	if snipe then
+		unit:damage('Bullet',caster.unit:getDamageDealing(skill.damage*snipe.damageamplify,'Bullet'),caster)
+	else
+		unit:damage('Bullet',caster.unit:getDamageDealing(skill.damage,'Bullet'),caster)
+	end
 end)
 BloodTrail = Object:subclass('BloodTrail')
 function BloodTrail:initialize(b)
 	self.bullet = b
 	local p = love.graphics.newParticleSystem(img.part1, 1000)
-	p:setEmissionRate(30)
+	p:setEmissionRate(options.particlerate*30)
 	p:setSpeed(100, 100)
 	p:setGravity(0)
 	p:setSizes(0.5, 0.25)
@@ -40,7 +43,6 @@ function BloodTrail:draw()
 	love.graphics.draw(self.p)
 end
 
-requireImage('assets/bloodstain.png','bloodstain')
 local bloodstainquad = love.graphics.newQuad(0,0,64,64,128,128)
 BloodStain = Object:subclass('BloodStain')
 function BloodStain:initialize(x,y)
@@ -60,7 +62,8 @@ end
 function BloodStain:draw()
 	bloodstainquad:setViewport(self.ox,self.oy,64,64,128,128)
 	love.graphics.setColor(255,255,255,math.min(255,self.hp*255))
-	love.graphics.drawq(img.bloodstain,bloodstainquad,self.x,self.y,self.r,1,1,32,32)
+	love.graphics.drawq(
+	requireImage('assets/bloodstain.png'),bloodstainquad,self.x,self.y,self.r,1,1,32,32)
 	love.graphics.setColor(255,255,255,255)
 end
 
@@ -84,6 +87,7 @@ function MeleeMissile:add(unit,coll)
 		if not unit.bht[self] then
 			if self.effect then self.effect:effect(unit,self,self.skill) end
 			unit.bht[self] = true
+			self.body:setLinearVelocity(0,0)
 			self.draw = function() end
 			self.add = function() end
 		end
@@ -111,11 +115,10 @@ function Melee:stop()
 	self.time = 0
 end
 
-requireImage('assets/assassin/bullet.png','bullet')
 MachineGunMissile = Missile:subclass('MachineGunMissile')
 function MachineGunMissile:draw()
 	love.graphics.setColor(255,169,142,255)
-	love.graphics.draw(img.bullet,self.x,self.y,self.body:getAngle(),1,1,16,16)
+	love.graphics.draw(requireImage('assets/assassin/bullet.png'),self.x,self.y,self.body:getAngle(),1,1,16,16)
 	love.graphics.setColor(255,255,255,255)
 end
 function MachineGunMissile:add(unit,coll)
@@ -125,13 +128,14 @@ function MachineGunMissile:add(unit,coll)
 			unit.bht[self] = true
 			self.draw = function() end
 			self.add = function() end
+			self.body:setLinearVelocity(0,0)
 		end
 	end
 end
 
 MachineGunEffect = ShootMissileEffect:new()
 MachineGunEffect:addAction(function(point,caster,skill)
-	local Missile = MachineGunMissile:new(5,0.2,2000,caster.x,caster.y,unpack(point))
+	local Missile = MachineGunMissile:new(0.5,0.2,2000,caster.x,caster.y,unpack(point))
 	Missile.controller = caster.controller..'Missile'
 	Missile.effect = BulletEffect
 	Missile.skill = skill
@@ -171,6 +175,7 @@ function ShotgunMissile:add(unit,coll)
 			unit.bht[self] = true
 			self.draw = function() end
 			self.add = function() end
+			self.body:setLinearVelocity(0,0)
 		end
 	end
 end
@@ -216,19 +221,7 @@ end
 function ThreewayShotgun:stop()
 	self.time = 0
 end
-
-PistolEffect = ShootMissileEffect:new()
-PistolEffect:addAction(function(point,caster,skill)
-	assert(skill)
-	assert(skill.bullettype)
-	local Missile = skill.bullettype(1,1,1000,caster.x,caster.y,unpack(point))
-	Missile.controller = caster.controller..'Missile'
-	Missile.effect = skill.bulleteffect
-	Missile.skill = skill
-	Missile.unit = caster
-	map:addUnit(Missile)
-	TEsound.play('sound/shoot4.wav')
-end)
+requireImage('assets/assassin/bullet.png','bullet')
 
 
 Bullet = Missile:subclass('Bullet')
@@ -238,14 +231,38 @@ end
 function Bullet:add(unit,coll)
 	if (self.controller=='playerMissile' and unit.controller=='enemy') or (self.controller == 'enemyMissile' and unit.controller=='player') then
 		if not unit.bht[self] then
-			if self.effect then self.effect:effect(unit,self,self.skill) end
+			if self.effect then self.effect:effect(unit,self,self.skill,self.snipe) end
 			unit.bht[self] = true
-			self.draw = function() end
-			self.add = function() end
+--			self.draw = function() end
+--			self.add = function() end
+--			self.body:setLinearVelocity(0,0)
+			self:kill()
 		end
 	end
 end
 
 function Bullet:draw()
 	love.graphics.draw(img.bullet,self.x,self.y,self.body:getAngle(),1,1,16,16)
+end
+
+
+MomentumBullet = Missile:subclass('MomentumBullet')
+function MomentumBullet:createBody(world)
+	super.createBody(self,world)
+	self.fixture:setSensor(true)
+end
+
+function MomentumBullet:add(unit,coll)
+	if (self.controller=='playerMissile' and unit.controller=='enemy') or (self.controller == 'enemyMissile' and unit.controller=='player') then
+		if not unit.bht[self] then
+			if self.effect then self.effect:effect(unit,self,self.skill,self.snipe) end
+			unit.bht[self] = true
+		end
+	end
+end
+
+function MomentumBullet:draw()
+	love.graphics.setColor(80,234,255,255)
+	love.graphics.draw(img.bullet,self.x,self.y,self.body:getAngle(),1,1,16,16)
+	love.graphics.setColor(255,255,255,255)
 end

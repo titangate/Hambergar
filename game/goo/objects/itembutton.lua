@@ -27,6 +27,9 @@ function goo.itembutton:draw()
 	love.graphics.draw(img.slotimg)
 	if self.item then
 		self.item:draw(32,32)
+		if self.item.getCDPercent then
+			DrawCD(32,32,self.item:getCDPercent(GetCharacter()))
+		end
 		love.graphics.setFont(self.style.titleFont)
 		love.graphics.print(self.item.name,80,10)
 		love.graphics.setFont(self.style.descriptionFont)

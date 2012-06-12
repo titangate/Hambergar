@@ -3,7 +3,6 @@ local GOO_SKINPATH = 'goo/skins/electrician/'
 requireImage(GOO_SKINPATH..'attritubebackground.png','attritubebackground')
 requireImage(GOO_SKINPATH..'conversationbg.png','conversationbg')
 
-
 requireImage(GOO_SKINPATH .. 'battery.png','batteryimg')
 requireImage(GOO_SKINPATH .. 'cpu.png','cpu')
 

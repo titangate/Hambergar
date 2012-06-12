@@ -2,7 +2,15 @@
 --Object = objectlua.Object
 require 'MiddleClass'
 require 'MindState'
+require 'libraries.localization'
 
+
+options = {
+	aimassist = true,
+	usecontroller = false, -- unimplemented
+	blureffect = true, -- unimplemented
+	particlerate = 1,
+}
 
 fonts = {}
 fonts.default24 = love.graphics.newFont(24)
@@ -71,11 +79,6 @@ playable = {
 	halfheight = screen.height/2 - 50,
 }
 
-options = {
-	aimassist = true,
-	usecontroller = false, -- unimplemented
-	blureffect = true, -- unimplemented
-}
 
 -- This stores conversation data.
 storydata = {

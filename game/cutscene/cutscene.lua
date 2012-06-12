@@ -89,7 +89,11 @@ function CutscenePlayer:keypressed(k)
 end
 
 function CutscenePlayer:playConversation(conv,speaker,time)
+	if type(speaker) == 'number' then
+		time,speaker = speaker,time
+	end
 	self.speaker = speaker
+	
 	if speaker then
 		self.conv = speaker..' : '..conv
 	else

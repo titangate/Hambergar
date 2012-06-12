@@ -9,7 +9,7 @@ MindRipfieldEffect:addAction(function (area,caster,skill)
 	for k,v in pairs(units) do
 		if v:isKindOf(Unit) then
 			v:addBuff(b_Stun:new(100,nil),1)
-			v:damage('Mind',caster:getDamageDealing(50,'Mind'),caster)
+			v:damage('Mind',caster:getDamageDealing(skill.damage,'Mind'),caster)
 		end
 	end
 end)
@@ -26,6 +26,7 @@ function MindRipfield:initialize(unit,level)
 	self.effect = MindRipfieldEffect
 	self:setLevel(level)
 	self.manacost = 20
+	self.damage = 50
 end
 
 function MindRipfield:stop()
@@ -34,6 +35,7 @@ end
 
 function MindRipfield:setLevel(lvl)
 	self.level = lvl
+	self.damage = 50*lvl
 end
 
 function MindRipfield:startChannel()
@@ -45,13 +47,21 @@ function MindRipfield:geteffectinfo()
 	return self.point,self.unit,self
 end
 
-requireImage('assets/rip.png','rip')
-requireImage('assets/ripcircle.png','ripcircle')
+function MindRipfield:getPanelData()
+	return{
+		title = 'Mind Rip Field',
+		type = 'Active Channel',
+		attributes = {
+			{text = "Creates a vortex of concentrated mind power, damage and stun enemies caught."},
+			{text = "Damage",data = function() return self.damage end}
+		}
+	}
+end
 MindRipFieldActor = Object:subclass('MindRipFieldActor')
 function MindRipFieldActor:initialize(x,y)
 	self.x,self.y=x,y
-	local p = love.graphics.newParticleSystem(img.rip, 1000)
-	p:setEmissionRate(500)
+	local p = love.graphics.newParticleSystem(requireImage'assets/rip.png', 1000)
+	p:setEmissionRate(options.particlerate*500)
 	p:setSpeed(300, 400)
 	p:setGravity(0)
 	p:setSizes(1, 0.5)
@@ -101,7 +111,7 @@ function MindRipFieldActor:draw()
 	love.graphics.draw(self.system,0,0)
 	local scale = self.dt/self.time
 	love.graphics.setColor(255,255*(1-scale),255*(1-scale),255*(1-scale))
-	love.graphics.draw(img.ripcircle,self.x,self.y,0,scale*2,scale*2,128,128)
+	love.graphics.draw(requireImage'assets/ripcircle.png',self.x,self.y,0,scale*2,scale*2,128,128)
 	love.graphics.setColor(255,255,255,255)
 	filtermanager:requestFilter('Shockwave')
 end
@@ -111,7 +121,7 @@ function MindDrainActor:initialize(unit,x,y)
 	self.unit = unit
 	self.x,self.y=x,y
 	local p = love.graphics.newParticleSystem(img.pulse,1000)
-	p:setEmissionRate(20)
+	p:setEmissionRate(options.particlerate*20)
 	p:setSpeed(0, 0)
 	p:setGravity(0)
 	p:setSizes(0.4,0.4)
@@ -159,10 +169,6 @@ end
 local nothing = MindListener:addState('nothing')
 function nothing:handle() end
 
---assassinkilllistener = MindListener:new()
---assassinkilllistener:gotoState('nothing')
-
-
 b_Mind = Buff:subclass('b_Mind')
 function b_Mind:initialize(MPRegen)
 	self.MPRegen = MPRegen
@@ -192,15 +198,42 @@ function Mind:setLevel(lvl)
 	self.unit:addBuff(b_Mind(5*lvl),true)
 --	self.unit.MPRegen = self.unit.MPRegen + 5*(lvl-self.level)
 	self.level = lvl
+	if lvl == 2 then
+		if self.unit.skills.mindripfield then
+			return {self.unit.skills.mindripfield}
+		end
+	elseif lvl == 4 then
+		if self.unit.skills.invis then
+			return {self.unit.skills.invis}
+		end
+	elseif lvl == 6 then
+		if self.unit.skills.mysteriousqi then
+			return {self.unit.skills.mysteriousqi}
+		end
+	end
+end
+
+function Mind:getEnabled()
+	local enabled = {}
+	if self.level>=2 then
+		table.insert(enabled,self.unit.skills.mindripfield)
+		if self.level>=4 then
+			table.insert(enabled,self.unit.skills.invis)
+			if self.level>=6 then
+				table.insert(enabled,self.unit.skills.mysteriousqi)
+			end
+		end
+	end
+	return enabled
 end
 
 function Mind:getPanelData()
 	return{
 		title = 'MIND POWER',
-		type = 'ACTIVE',
+		type = 'Passive',
 		attributes = {
 			{text = "Assassin's source of power. Everytime assassin kills an enemy, he drains the victim's neural energy and supply it as his own."},
-			{text = 'Regen per kill',image = icontable.mind,data = function()return self.manaregen end}
+			{text = 'Energy Regen',image = icontable.mind,data = function()return 5*self.level end}
 		}
 	}
 end
@@ -212,4 +245,59 @@ end
 
 function MindDWS:exitState()
 --	assassinkilllistener:gotoState()
+end
+
+b_Qi = Buff:subclass('b_Qi')
+function b_Qi:initialize(evade)
+	self.evade = evade
+	self.genre = 'buff'
+	self.icon = requireImage'assets/icon/innerair.png'
+end
+
+function b_Qi:start(unit)
+	local t = 1 - unit.evade
+	t = t * (1-self.evade)
+	unit.evade = getdodgerate(unit.evade,self.evade)
+end
+
+function b_Qi:stop(unit)
+	unit.evade = getdodgerate(unit.evade,-self.evade)
+end
+
+function b_Qi:getPanelData()
+	return {
+		title = 'Mysterious Qi',
+		type = 'Buff',
+		attributes = {
+			{text = 'Temperarily increase evade chance.'}}
+	}
+end
+
+MysteriousQi = Skill:subclass'MysteriousQi'
+function MysteriousQi:initialize(unit,level)
+	level = level or 0
+	super.initialize(self)
+	self.unit = unit
+	self:setLevel(level)
+	self.chance = 1
+	self.time = 3
+end
+
+
+function MysteriousQi:setLevel(lvl)
+	self.level = lvl or 0
+	self.evade = 0.1 + lvl * 0.1
+end
+
+function MysteriousQi:getPanelData()
+	return{
+		title = 'MYSTERIOUS QI',
+		type = 'Passive',
+		attributes = {
+			{text = "An inner power aligning breath, movement, and awareness for exercise, healing, and meditation."},
+			{text = "Temperarily increase evade chance after executing a critical hit."},
+			{text = 'Duration',data = self.time },
+			{text = 'Evade',data = string.format("%.1f",self.evade*100).."%" },
+		}
+	}
 end

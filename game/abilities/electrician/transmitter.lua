@@ -151,7 +151,7 @@ IcarusActor = Object:subclass('IcarusActor')
 function IcarusActor:initialize(x,y)
 	self.x,self.y=x,y
 	local p = love.graphics.newParticleSystem(img.pulse, 1000)
-	p:setEmissionRate(300)
+	p:setEmissionRate(options.particlerate*300)
 	p:setSpeed(100, 200)
 	p:setGravity(0)
 	p:setSize(1, 0.5)

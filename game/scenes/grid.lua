@@ -110,7 +110,7 @@ end
 function Grid:generateFlow(x,y,direction)
 	local p = love.graphics.newParticleSystem(img.sparkle, 1000)
 	p:setPosition(x,y)
-	p:setEmissionRate(50)
+	p:setEmissionRate(options.particlerate*50)
 	p:setGravity(0,0)
 	p:setSpeed(-50,50)
 	p:setSize(1, 1)

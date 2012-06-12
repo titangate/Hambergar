@@ -54,6 +54,13 @@ function AssassinCharacterPanel:initInventory()
 	self.container.highlighted = i
 	self.inventory = i
 	self.eq = eq
+	self.switchToSkill = goo.button(self.container)
+	function self.switchToSkill:onClick()
+		GetGameSystem():shift'skill'
+	end
+	self.switchToSkill:setPos(screen.width - 200,screen.height - 100)
+	self.switchToSkill:setSize(150,30)
+	self.switchToSkill:setText'Switch to Skill'
 end
 function AssassinCharacterPanel:initialize(unit)
 	self.dt = 0
@@ -71,7 +78,6 @@ function AssassinCharacterPanel:initialize(unit)
 		if responds[k] then
 			local x,y = controller:GetWalkDirection()
 			local newlockon = self:direct(self.highlighted,{x,y},function(obj)
-				print (obj.class)
 				return obj == p.inventory or obj == p.eq -- and newlockon:isKindOf(goo.itembutton) -- not obj:isKindOf(goo.imagelabel)
 			end)
 			if newlockon then
@@ -153,15 +159,15 @@ function AssassinCharacterPanel:initialize(unit)
 			
 			{image = nil,text='Critical Hit',data=
 			function()
-				self.unit.critical.Bullet = self.unit.critical.Bullet or {2,0}
-				local d = self.unit.critical.Bullet
+				self.unit.critical = self.unit.critical or {2,0}
+				local d = self.unit.critical
 				local amplify,chance = unpack(d)
 				return string.format('%.1f',chance*100).."% chance deal "..amplify.." times damage"
 			end},
 			
 			{image = nil,text='Evade',data=
 			function()
-				local percent = self.unit.evade.Bullet
+				local percent = self.unit.evade
 				percent = percent or 0
 				return string.format('%.1f',percent*100).."%"
 			end},

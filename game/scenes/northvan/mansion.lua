@@ -1,15 +1,21 @@
 
 require 'cutscene.cutscene'
-preload('assassin','commonenemies','tibet','masteryuen')
+preload('assassin','commonenemies','tibet','masteryuen','kingofdragons')
 
 local Mansionbg={}
 function Mansionbg:update(dt)
 end
 
-local transition = {intensity = 1}
+local transition = 
+{intensity = 1,
+factor = -1,
+}
+function transition:terminate()
+	return self.intensity<0
+end
 function transition:update(dt)
-	self.intensity = self.intensity - dt
-	if self.intensity < 0 then
+	self.intensity = self.intensity + dt*self.factor
+	if self:terminate() then
 		map:removeUpdatable(self)
 	end
 end
@@ -80,6 +86,8 @@ function mantrabg:draw()
 	)
 end
 
+
+
 Mansion = Map:subclass'Mansion'
 function Mansion:initialize()
 	local w = 1440
@@ -92,8 +100,12 @@ function Mansion:initialize()
 	self.background = Mansionbg
 end
 
+function Mansion:draw()
+	if GetCharacter():isKindOf(KingOfDragons) then dragongate.predraw() end
+	super.draw(self)
+end
 function Mansion:destroy()
-	self.exitTrigger:destroy()
+--	self.exitTrigger:destroy()
 end
 
 function Mansion:opening_load()
@@ -182,6 +194,16 @@ function Mansion:wake_load()
 	self:loadDefaultCamera(leon2)
 end
 
+function Mansion:bloomout()
+	transition.intensity = 0
+	transition.factor = 0.2
+	
+	function transition:terminate()
+		return self.intensity > 2
+	end
+	map:addUpdatable(transition)
+end
+
 function Mansion:wake_loaded()
 	my=MasterYuen()
 	my.controller = 'enemy'
@@ -199,33 +221,140 @@ function testimg()
 	img:enableAI()
 end
 
+function Mansion:finish()
+	
+	map:enterMantra()
+	map:bloomout()
+	Trigger(function()
+		wait(5)
+		self:phase5()
+	end):run()
+end
+
+function Mansion:phase5()
+	map:exitMantra()
+	my:setImmunity(false)
+	GetCharacter():removeBuff(b_Stun)
+	local KoD = KingOfDragons(GetCharacter():getPosition())
+	KoD.controller = 'player'
+	KoD:loadFromAssassin(GetCharacter())
+	map:removeUnit(GetCharacter())
+	map:addUnit(KoD)
+	SetCharacter(KoD)
+	map.camera = FollowerCamera(KoD)
+--	require 'scenes.northvan.riverrevives'()
+	
+	PlayMusic'music/riverrise.mp3'
+	
+	local epic = {
+		rise1 = 28,
+		rise2 = 67,
+		rise3cut = 60+33,
+		rise3 = 60+57,
+		rise4 = 120+38,
+		rise5 = 180+13,
+		finishmy = 180+56,
+	}
+	Timer(epic.rise1,1,function()self:rise1() end)
+	Timer(epic.rise2,1,function()self:rise2() end)
+	Timer(epic.rise3cut,1,function()self:rise3cut() end)
+	Timer(epic.rise3,1,function()self:rise3() end)
+	Timer(epic.rise4,1,function()self:rise4() end)
+	Timer(epic.rise5,1,function()self:rise5() end)
+	Timer(epic.finishmy,1,function()self:finishmy() end)
+end
+
+function Mansion:rise1()
+	local spawnpoints = {
+		self.waypoints.spawn1,
+		self.waypoints.spawn2,
+		
+		self.waypoints.spawn3,
+		self.waypoints.spawn4,
+	}
+	self.maxspawn = 20
+	local armywave = Trigger(function(trig,event)
+			if event.unit == GetCharacter() then
+				self.update = function()
+					GetGameSystem():pushState'retry'
+				end
+			else
+				if self.count.enemy <= self.maxspawn then
+					for i,v in ipairs(spawnpoints) do
+						local x,y = unpack(v)
+						local u = self.spawnunittype(x,y,'enemy')
+						u.hp = u.hp/2
+						u:enableAI()
+						map:addUnit(u)
+					end
+				end
+			end
+	end)
+	self.spawnunittype = IALSwordsman
+	armywave:registerEventType'death'
+	armywave:run({})
+	self.armywave = armywave
+	GetCharacter().HPRegen = 1000
+end
+
+function Mansion:rise2()
+	self:splashText('Mantra Shield',requireImage'assets/assassin/gate.png')
+	GetCharacter().skills.mantrashield:active()
+	self.spawnunittype = IALMachineGunner
+end
+
+function Mansion:rise3cut()
+	Trigger(function()
+		local k = KoDPowerUpActor(GetCharacter())
+		map:addUpdatable(k)
+		wait(10.5)
+		map:removeUpdatable(k)
+	end):run()
+end
+
+function Mansion:rise3()
+	self:splashText("Phoniex's Grace",requireImage'assets/assassin/gate.png')
+	GetCharacter().skills.dragoneye:active()
+	self.maxspawn = 10
+end
+
+function Mansion:rise4()
+	GetCharacter():resetCD()
+	GetCharacter().mp = 10000
+	GetCharacter().skills.dws:active()
+end
+
+function Mansion:rise5()
+	my.actor:setEffect()
+	self.armywave:destroy()
+	my.hp = my.maxhp/2
+	my.ai = my:rise()
+end
+
+function Mansion:finishmy()
+	
+	map:bloomout()
+	Trigger(function()
+		wait(5)
+		require 'scenes.northvan.finishmy'()
+		StopMusic()
+	end):run()
+end
+
+
+
 function scenetest()
 --	testimg()
 	map.camera = ContainerCamera:new(200,nil,my,GetCharacter())
 	PlayMusic'music/berserker.mp3'
 	GetGameSystem().bossbar = AssassinHPBar:new(function()return my:getHPPercent() end,screen.halfwidth-400,screen.height-100,800)
 	local self = my
-
---	map:addUpdatable(CraneCircleP3(GetCharacter(),my))
-	my.ai = my:phase3()
---	self.skills.fistp3.effect:effect({math.cos(self.body:getAngle()),math.sin(self.body:getAngle())},self,self.skills.fistp1)
---	my:enableAI()
---	my.ai = my:phase2()
---	my:phase3()
---	my.mantra.level = 2
---	my:setImmunity'reflect'
---	local target,hans = GetCharacter(),my
---	my.skills.kickp3.effect:effect({normalize(target.x-hans.x,target.y-hans.y)},hans,hans.skills.kickp3)
-	--my:face(GetCharacter())
-	--[[
-	local c = math.random(3)
-	if c==1 then
-	my:dashStrike('crane',2000,0.3)
-elseif c==2 then
-	my:dashStrike('kick',2000,0.25)
-else
-	my:dashStrike('fist',2500,0.5)
-end]]
---	GetCharacter():dash(100,100)
+	map:addUnit(TempestWeapon(100,0))
+	my:enableAI()
+--	my.ai = my:phase4()
+	--map:phase4()
+	--map:rise5()
+	
+	
 
 end

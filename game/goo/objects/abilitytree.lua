@@ -4,7 +4,7 @@ function goo.learnbutton:initialize(parent)
 	super.initialize(self,parent)
 end
 function goo.learnbutton:setSkill(skill,face)
-	assert(skill)
+	assert(skill,'skill needed')
 	assert(face)
 	self.skill = skill
 	self.face = face
@@ -30,14 +30,22 @@ end
 function goo.learnbutton:onClick()
 	if self.parent.learn then
 		self.parent.learn(self.skill,self)
+		self:enterHover()
 	end
 end
 
 function goo.learnbutton:draw()
 	super.draw(self)
-	self:setColor({255,255,255})
-	if self.face then love.graphics.draw(self.face,0,0,0,self.drawscale) end
-	drawSkillLevel(0,0,self.skill.level,self.skill.maxlevel)
+	local length = self.h
+	local rw,rh = self.face:getWidth(),self.face:getHeight()
+	local startx,y = 32,32
+	love.graphics.setColor(0,0,0,125)
+	love.graphics.circle('fill',startx,y,length/2)
+	love.graphics.setColor(255,255,255,255)
+	love.graphics.circle('line',startx,y,length/2)
+	love.graphics.draw(self.face,startx,y,0,length/rw,length/rh,rw/2,rh/2)
+--	if self.face then love.graphics.draw(self.face,0,0,0,self.drawscale) end
+	drawSkillLevel(0,0,self.skill:getLevel(),self.skill.maxlevel)
 end
 
 return goo.learnbutton

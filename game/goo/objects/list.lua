@@ -55,7 +55,6 @@ function goo.list:keypressed(k)
 		end
 		if k=='return' then
 			local x,y = love.mouse.getPosition()
-			print (x,y)
 			love.mousepressed(x,y,'r')
 		end
 	end

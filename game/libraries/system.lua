@@ -21,6 +21,11 @@ function Loadscreen:update(dt)
 	end
 end
 function Loadscreen:draw()
+	print "BOOM"
+	love.graphics.setBackgroundColor(0,0,0)
+	love.graphics.clear()
+	MainMenu:draw()
+	love.graphics.setColor(0,0,0)
 	love.graphics.printf(self.name)
 end
 loadable = {}
@@ -41,6 +46,7 @@ end
 
 img={}
 function requireImage(path,label,t)
+	
 	local v = split(path,'/')
 	v = v[#v]
 	local f = v:gmatch("(%w+).(%w+)")
@@ -48,7 +54,9 @@ function requireImage(path,label,t)
 	
 	label = label or file
 	t = t or img
-	t[label]=love.graphics.newImage(path)
+	if not t[label] then
+		t[label]=love.graphics.newImage(path)
+	end
 	return t[label]
 end
 
@@ -304,7 +312,7 @@ function loadingscreen:update(dt)
 	if #loads>0 then
 		self.loadingfile = table.remove(loads)
 		require (self.loadingfile)
-	else
+	elseif self.continue then
 		popsystem()
 		if self.finished then
 			self.finished()
@@ -312,8 +320,32 @@ function loadingscreen:update(dt)
 	end
 end
 
+function loadingscreen:mousepressed()
+	if #loads==0 then
+		self.continue = true
+	end
+end
+
+function loadingscreen:keypressed()
+	if #loads==0 then
+		self.continue = true
+	end
+end
+
 function loadingscreen:draw()
-	love.graphics.print(self.loadingfile,screen.halfwidth,screen.halfheight)
+	love.graphics.setBackgroundColor(0,0,0)
+	love.graphics.clear()
+	love.graphics.draw(MainMenu.oldimage,80,150,0,0.5,0.5)
+	
+	love.graphics.draw(img.credits,screen.width-img.credits:getWidth()-10,screen.height-img.credits:getHeight()-10)
+	love.graphics.draw(img.menutop,screen.width-img.menutop:getWidth()-10,80)
+--	MainMenu:draw()
+--	love.graphics.setColor(0,0,0)
+	if #loads==0 then
+		love.graphics.print('PRESS ANY KEY TO CONTINUE',screen.halfwidth,screen.halfheight)
+	else
+		love.graphics.print(self.loadingfile,screen.halfwidth,screen.halfheight)
+	end
 end
 
 local preloadlists = {}
@@ -378,7 +410,7 @@ end
 function wait(time)
 	local co=coroutine.running ()
 	Timer:new(time,1,function()
-		coroutine.resume(co)
+		print (coroutine.resume(co))
 	end,true,true)
 	coroutine.yield()
 end
@@ -444,4 +476,16 @@ function gradientcolor(start,finish,step)
 		table.insert(r,c)
 	end
 	return r
+end
+
+function getdodgerate(ori,d)
+	local m = d>0
+	d = math.abs(d)
+	local t = 1 - ori
+	if m then
+		t = t * (1-d)
+	else
+		t = t / (1-d)
+	end
+	return 1-t
 end

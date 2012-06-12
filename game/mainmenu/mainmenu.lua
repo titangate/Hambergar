@@ -91,6 +91,25 @@ b_test.onClick = function( self, button )
 end
 height = height + 50
 
+
+local b_test = goo.menuitem( mainmenu )
+b_test:setPos( 10, height )
+b_test:setText( 'King of dragons' )
+b_test:sizeToText()
+b_test.onClick = function( self, button )
+	require 'scenes.vancouver.waterfall'
+	local gs = require 'scenes.gamesystem'
+	pushsystem(loadingscreen)
+	loadingscreen.finished = 	function ()
+		SetGameSystem(gs)
+		gs:load()
+		pushsystem(gs)
+		mainmenu:onClose()
+		GetGameSystem():runMap(Waterfall)
+	end
+end
+height = height + 50
+
 local b_option = goo.menuitem:new( mainmenu )
 b_option:setPos( 10, height )
 b_option:setText( 'Options' )

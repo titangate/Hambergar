@@ -38,6 +38,9 @@ preloadlist(
 --		'abilities.electrician.common',
 --		'abilities.electrician.transmitter',
 		'abilities.electrician.lightning',
+	},
+	kingofdragons = {
+		'abilities.assassin.kingofdragons',
 	}
 })	
 require ('abilities.common')

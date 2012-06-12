@@ -7,27 +7,47 @@ function Assassin:initialize(x,y)
 	self.mp = 500
 	self.maxmp = 500
 	self.skills = {
-		pistoldwsalt = PistolDWSAlt:new(self,1),
-		pistol = Pistol:new(self,1),
-		stunbullet = StunBullet:new(self,-1),
-		explosivebullet = ExplosiveBullet:new(self,-1),
-		momentumbullet = AbsoluteMomentum:new(self,-1),
-		stim = Stim:new(self,-1),
-		roundaboutshot = RoundaboutShot:new(self,-1),
+		pistoldwsalt = PistolDWSAlt(self,1),
+		pistol = WeaponMastery(self,1),
+		stunbullet = StunBullet:new(self,0),
+		explosivebullet = ExplosiveBullet:new(self,0),
+		momentumbullet = AbsoluteMomentum:new(self,0),
+		stim = Stim:new(self,0),
+		roundaboutshot = RoundaboutShot:new(self,0),
 		dash = Dash:new(self,1),
 		mindripfield = MindRipfield:new(self,1),
 		mind = Mind:new(self,1),
 		invis = Invis:new(self,1),
 		snipe = Snipe:new(self,1),
-		dws = DWS:new(self,0),
+		dws = DWS:new(self,1),
 		takedown = Takedown(self,1),
 		changeoutfit = ChangeOutfit(self,1),
 		useitem = UseItem(self,0),
+		mysteriousqi = MysteriousQi(self,1),
 	}
 	self:setWeaponSkill()
 	self:setUseItem()
 	self.spirit = 10
-	self.manager = AssassinPanelManager:new(self)
+	self.manager = AssassinPanelManager(self)
+	self.assassincritlistener = {
+		eventtype = 'crit'
+	}
+	function self.assassincritlistener.handle(handler,event)
+		if event.unit == self then
+			if math.random()<self.skills.mysteriousqi.chance then
+				self:addBuff(b_Qi(self.skills.mysteriousqi.evade),self.skills.mysteriousqi.time)
+			end
+		end
+	end
+end
+
+function Assassin:load(...)
+	super.load(self,...)
+--	self.manager.tree:loadAvailableSkill()
+end
+
+function Assassin:getWeaponLevel()
+	return self.skills.pistol:getLevel()
 end
 
 function Assassin:berserker(state)
@@ -111,15 +131,19 @@ function Assassin:getSkin()
 	return 'default'
 end
 
+
+
+
 -- please refer to abilities.assassin.mind
+
+
 function Assassin:register()
---	gamelistener:register(assassinkilllistener)
+	gamelistener:register(self.assassincritlistener)
 --	assassinkilllistener:gotoState()
 end
 
 function Assassin:unregister()
-	
-	gamelistener:unregister(assassinkilllistener)
+	gamelistener:unregister(self.assassincritlistener)
 end
 
 function Assassin:damage(...)
@@ -132,15 +156,15 @@ function Assassin:getSkillpanelData()
 	assert(self.skills.useitem)
 	return {
 		buttons = {
-			{skill = self.skills.dash,hotkey='b',face=character[self.skills.dash.name]},
-			{skill = self.skills.roundaboutshot,hotkey='r',face=character[self.skills.roundaboutshot.name]},
-			{skill = self.skills.stim,hotkey='e',face=character[self.skills.stim.name]},
-			{skill = self.skills.mindripfield,hotkey='f',face=character[self.skills.mindripfield.name]},
-			{skill = self.skills.weaponskill,hotkey='lb',face=character[self.skills.pistol.name]},
-			{skill = self.skills.invis,hotkey='v',face=character[self.skills.invis.name]},
-			{skill = self.skills.snipe,hotkey='g',face=character[self.skills.pistol.name]},
-			{skill = self.skills.dws,hotkey='z',face=character.divide},
---			{skill = self.skills.useitem,hotkey='q',face=character.divide},
+			{skill = self.skills.dash,hotkey='b',face=requireImage'assets/icon/dash.png'},
+			{skill = self.skills.roundaboutshot,hotkey='r',face=requireImage'assets/icon/spiral.png'},
+			{skill = self.skills.stim,hotkey='e',face=requireImage'assets/icon/stim.png'},
+			{skill = self.skills.mindripfield,hotkey='f',face=requireImage'assets/icon/rip.png'},
+			{skill = self.skills.weaponskill,hotkey='lb',face=self.skills.weaponskill.icon},
+			{skill = self.skills.invis,hotkey='v',face=requireImage'assets/icon/invis.png'},
+			{skill = self.skills.snipe,hotkey='g',face=requireImage'assets/icon/snipe.png'},
+			{skill = self.skills.dws,hotkey='z',face=requireImage'assets/icon/dws.png'},
+			{skill = self.skills.useitem,hotkey='q',face=self.skills.useitem:getIcon()},
 		}
 	}
 end
@@ -223,7 +247,7 @@ end
 function StealthAssassin:getSkillpanelData()
 	return {
 		buttons = {
-			{skill = self.skills.dash,hotkey='b',face=character[self.skills.dash.name]},
+			{skill = self.skills.dash,hotkey='b',face=requireImage'assets/icon/dash.png'},
 			{skill = self.skills.roundaboutshot,hotkey='r',face=character[self.skills.roundaboutshot.name]},
 			{skill = self.skills.stim,hotkey='e',face=character[self.skills.stim.name]},
 			{skill = self.skills.mindripfield,hotkey='f',face=character[self.skills.mindripfield.name]},
@@ -253,7 +277,7 @@ function DWSAssassin:enterState()
 	if not self.particles then
 		self.particles = {}
 		local p = love.graphics.newParticleSystem(img.part1, 1000)
-		p:setEmissionRate(200)
+		p:setEmissionRate(options.particlerate*200)
 		p:setSpeed(30, 40)
 		p:setSizes(0.25, 0.5)
 		p:setColors(220, 105, 20, 255, 194, 30, 18, 0)
@@ -267,7 +291,7 @@ function DWSAssassin:enterState()
 		p:stop()
 		table.insert(self.particles, p)
 		local p = love.graphics.newParticleSystem(img.part1, 1000)
-		p:setEmissionRate(200)
+		p:setEmissionRate(options.particlerate*200)
 		p:setSpeed(30, 40)
 		p:setSizes(0.25, 0.5)
 		p:setColors(20, 105, 220, 255, 18, 30, 194, 0)
@@ -281,7 +305,7 @@ function DWSAssassin:enterState()
 		p:stop()
 		table.insert(self.particles, p)
 		local p = love.graphics.newParticleSystem(img.part1, 1000)
-		p:setEmissionRate(200)
+		p:setEmissionRate(options.particlerate*200)
 		p:setSpeed(30, 40)
 		p:setSizes(0.25, 0.5)
 		p:setColors(220, 220, 20, 255, 194, 194, 18, 0)
@@ -305,7 +329,7 @@ function DWSAssassin:exitState()
 		end
 	end
 end
-
+--[[
 function DWSAssassin:update(dt)
 	Assassin.update(self,dt)
 	local x,y = self.x,self.y
@@ -324,7 +348,7 @@ function DWSAssassin:draw()
 		love.graphics.draw(v)
 	end
 end
-
+]]
 function DWSAssassin:switchChannelSkill(skill)
 	skill = skill or self.skills.pistoldwsalt
 	Assassin.switchChannelSkill(self,skill)

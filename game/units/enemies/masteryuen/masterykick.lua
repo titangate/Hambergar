@@ -41,7 +41,8 @@ function KickMissile:createBody(world)
 	self.body:setLinearVelocity(self.dx*self.vi,self.dy*self.vi)
 	self.body:setBullet(true)
 	self.body:setAngle(math.atan2(self.dy,self.dx))
-	self.fixture:setUserData(self)
+	self.updateShapeData = true
+--	self.fixture:setUserData(self)
 end
 
 

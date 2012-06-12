@@ -246,7 +246,7 @@ IceBoltTrail = Object:subclass('IceBoltTrail')
 function IceBoltTrail:initialize(b)
 	self.bullet = b
 	local p = love.graphics.newParticleSystem(img.pulse, 1000)
-	p:setEmissionRate(20)
+	p:setEmissionRate(options.particlerate*20)
 	p:setSpeed(50, 100)
 	p:setGravity(0)
 	p:setSize(0.25, 0.15)
@@ -576,7 +576,7 @@ function FlameGuardian:initialize()
 	}
 	
 	local p = love.graphics.newParticleSystem(img.square, 1000)
-	p:setEmissionRate(60)
+	p:setEmissionRate(options.particlerate*60)
 	p:setSpeed(200, 200)
 	p:setGravity(100, 0)
 	p:setSize(1, 2)

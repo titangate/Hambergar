@@ -355,6 +355,79 @@ function Map:loadTiled(tmx)
 	return m
 end
 
+function Map:splashText(text,img)
+	local dws = CutSceneSequence:new()
+	self.timescale = 0.25
+	local panel2 = goo.object:new()
+	local divide = goo.image:new(panel2)
+	divide:setPos(screen.width-200,screen.halfheight)
+	divide:setImage(img)
+	local panel1 = goo.object:new()
+	anim:easy(panel1,'x',-300,0,1,'quadInOut')
+	anim:easy(panel2,'x',300,0,1,'quadInOut')
+	local x,y = 100,screen.halfheight-50
+	for c in text:gmatch"." do
+		dws:push(ExecFunction:new(function()
+			local ib = goo.DWSText:new(panel1)
+			ib:setText(c)
+			ib:setPos(x,y)
+			local textscale = 2
+			x = x+ib.w*textscale
+			local animsx = anim:new({
+				table = ib,
+				key = 'xscale',
+				start = 5*textscale,
+				finish = 2*textscale,
+				time = 0.3,
+				style = anim.style.linear}
+			)
+			local animsy = anim:new({
+				table = ib,
+				key = 'yscale',
+				start = 5*textscale,
+				finish = 2*textscale,
+				time = 0.3,
+				style = anim.style.linear}
+			)
+			local animg = anim.group:new(animsx,animsy)
+			animg:play()
+			local animwx = anim:new({
+				table = ib,
+				key = 'xscale',
+				start = 2*textscale,
+				finish = 1*textscale,
+				time = 0.5,
+				style = 'elastic'
+			})
+			local animwy = anim:new({
+				table = ib,
+				key = 'yscale',
+				start = 2*textscale,
+				finish = 1*textscale,
+				time = 0.5,
+				style = 'elastic'
+			})
+			local animw = anim.group:new(animwx,animwy)
+			local animc = anim.chain:new(animg,animw)
+			animc:play()
+			TEsound.play('sound/thunderclap.wav')
+		end),0)
+		
+		dws:wait(0.1)
+	end	
+		dws:wait(0.5)
+	dws:push(ExecFunction:new(function()
+	anim:easy(panel1,'x',0,screen.width,2,'quadInOut')
+	anim:easy(panel2,'x',0,-screen.width,2,'quadInOut')
+	self.timescale = 1
+	end),0)
+	dws:push(ExecFunction:new(function()
+	panel1:destroy()
+	panel2:destroy()
+	end),2)
+	self:playCutscene(dws)
+end
+
 function Map:loadDefaultCamera(leon)
 	self.camera = FollowerCamera(leon,
 	{

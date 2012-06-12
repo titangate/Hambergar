@@ -55,7 +55,7 @@ BoltTrail = Object:subclass('BoltTrail')
 function BoltTrail:initialize(b)
 	self.bullet = b
 	local p = love.graphics.newParticleSystem(img.pulse, 1000)
-	p:setEmissionRate(200)
+	p:setEmissionRate(options.particlerate*200)
 	p:setSpeed(50, 100)
 	p:setGravity(0)
 	p:setSize(0.25, 0.15)

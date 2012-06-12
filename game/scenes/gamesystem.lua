@@ -31,8 +31,37 @@ function GameSystem:initialize()
 	dp:setTitle('NO ITEM')
 	dp:setVisible(false)
 	self.buffpanel = dp
+	self.critlistener = {
+	handle = function(self,event)
+		local t = goo.imagelabel()
+		t:setTextColor({250,209,68})
+		local x,y = map.camera:transform(event.target:getPosition())
+		t:setFont(fonts.oldsans20)
+		t:setPos(x+screen.halfwidth,y+screen.halfheight)
+		t:setText(string.format("%d",event.damage))
+		anim:easy(t,'opacity',255,0,0.5)
+		Timer(2,1,function()t:destroy()end)
+	end,
+	eventtype = 'crit'}
+	gamelistener:register(self.critlistener)
 	
+	
+	self.evadelistener = {
+	handle = function(self,event)
+		print 'evade'
+		local t = goo.imagelabel()
+		t:setTextColor({255,255,255})
+		local x,y = map.camera:transform(event.unit:getPosition())
+		t:setFont(fonts.oldsans20)
+		t:setPos(x+screen.halfwidth,y+screen.halfheight)
+		t:setText('Evade!')
+		anim:easy(t,'opacity',255,0,0.5)
+		Timer(2,1,function()t:destroy()end)
+	end,
+	eventtype = 'evade'}
+	gamelistener:register(self.evadelistener)
 end
+
 
 function GameSystem:fillBuffPanel(genre,buff)
 	self.buffpanel:setVisible(true)
@@ -40,11 +69,19 @@ function GameSystem:fillBuffPanel(genre,buff)
 	self.buffpanel:fillPanel(buff)
 end
 
+function GameSystem:reloadBottompanel()
+--	assert(self.character,'needs a character')
+	if not self.character then return end
+	self.bottompanel:fillPanel(self.character:getSkillpanelData())
+end
+
 function GameSystem:setCharacter(c)
+--	c.evade = 0
+--	c.critical = {2,0}
 	self:save(GetCharacter(),GetCharacter():className())
 	self.character = c
 	goo:setSkinAllObjects(c:getSkin())
-	GetGameSystem().bottompanel:fillPanel(GetCharacter():getSkillpanelData())
+	self:reloadBottompanel()
 	GetGameSystem().bottompanel:setPos(screen.halfwidth-512,screen.height - 150)
 end
 
@@ -89,6 +126,8 @@ function GameSystem:runMap(m,checkpoint)
 		map:destroy()
 	end
 	gamelistener = Listener:new()
+	gamelistener:register(self.critlistener)
+	gamelistener:register(self.evadelistener)
 	map = m()
 	map:load()
 	if map.loadCheckpoint and checkpoint then
@@ -128,6 +167,8 @@ function GameSystem:drawBuffs(buffs)
 			love.graphics.circle('line',startx,y,length/2)
 			love.graphics.setColor(255,255,255,255)
 			love.graphics.draw(v.icon,startx,y,0,length/rw,length/rh,rw/2,rh/2)
+			love.graphics.setColor(0,0,0,255)
+			love.graphics.setFont(fonts.oldsans12)
 			love.graphics.printf(string.format("%.1f",duration),startx-length/2,y+15,36,'center')
 			startx = startx + 36
 		end
@@ -164,6 +205,7 @@ end
 
 function GameSystem:pushed()
 	love.mouse.setVisible(false)
+	self:reloadBottompanel()
 	self.bottompanel:setVisible(true)
 end
 
@@ -174,7 +216,7 @@ end
 
 function GameSystem:keypressed(k)
 	if k=='t' then
-		GetCharacter().manager.tree.learning = true
+--		GetCharacter().manager.tree.learning = true
 		GetCharacter().manager:start()
 		self.bottompanel.count=0
 		pushsystem(GetCharacter().manager)

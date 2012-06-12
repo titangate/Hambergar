@@ -75,9 +75,9 @@ function Tibet:opening_load()
 	local leon = Assassin:new(x,y,32,10)
 	leon.direction = {0,-1}
 	leon.controller = 'player'
-	local save = [[return {{["map"]="Tibet",["character"]={2},["checkpoint"]="opening",["depends"]="	require 'scenes.tibet.tibet'\n	",["gamesystem"]="return require 'scenes.tibet.tibetgamesystem'",},{["movementspeedbuffpercent"]=1,["HPRegen"]=100,["timescale"]=1,["damagebuff"]={3},["hp"]=500,["speedlimit"]=20000,["damageamplify"]={4},["cd"]={5},["mp"]=500,["armor"]={6},["damagereduction"]={7},["spirit"]=1,["evade"]={8},["movingforce"]=500,["maxhp"]=500,["maxmp"]=500,["MPRegen"]=0,["critical"]={9},["movementspeedbuff"]=0,["skills"]={10},["spellspeedbuffpercent"]=1,["inventory"]={11},},{["Bullet"]=0,},{},{},{["Bullet"]=0,},{},{},{},{["stunbullet"]=0,["momentumbullet"]=0,["stim"]=2,["explosivebullet"]=0,["pistol"]=3,["invis"]=1,["dws"]=1,["snipe"]=2,["pistoldwsalt"]=6,["dash"]=1,["roundaboutshot"]=3,["mindripfield"]=1,["mind"]=1,},{["FiveSlash"]='equip',["Theravada"]="equip",},}--|]]
-	save = table.load(save)
-	leon:load(save.character)
+--	local save = [[return {{["map"]="Tibet",["character"]={2},["checkpoint"]="opening",["depends"]="	require 'scenes.tibet.tibet'\n	",["gamesystem"]="return require 'scenes.tibet.tibetgamesystem'",},{["movementspeedbuffpercent"]=1,["HPRegen"]=100,["timescale"]=1,["damagebuff"]={3},["hp"]=500,["speedlimit"]=20000,["damageamplify"]={4},["cd"]={5},["mp"]=500,["armor"]={6},["damagereduction"]={7},["spirit"]=10,["evade"]={8},["movingforce"]=500,["maxhp"]=500,["maxmp"]=500,["MPRegen"]=0,["critical"]={9},["movementspeedbuff"]=0,["skills"]={10},["spellspeedbuffpercent"]=1,["inventory"]={11},},{["Bullet"]=0,},{},{},{["Bullet"]=0,},{},{},{},{["stunbullet"]=0,["momentumbullet"]=0,["stim"]=2,["explosivebullet"]=0,["pistol"]=6,["invis"]=1,["dws"]=1,["snipe"]=2,["pistoldwsalt"]=6,["dash"]=1,["roundaboutshot"]=3,["mindripfield"]=1,["mind"]=1,},{["FiveSlash"]='equip',["Theravada"]="equip",["Bagua"]=0},}--|]]
+--	save = table.load(save)
+	leon:load(table.load[[return {{["data"]={2},["class"]="Assassin",},{["movementspeedbuffpercent"]=1,["HPRegen"]=100,["timescale"]=1,["damagebuff"]={3},["hp"]=500,["speedlimit"]=20000,["damageamplify"]={4},["cd"]={5},["mp"]=500,["armor"]={6},["damagereduction"]={7},["spirit"]=10,["evade"]=0,["movingforce"]=500,["maxhp"]=500,["maxmp"]=500,["MPRegen"]=0,["critical"]={8},["movementspeedbuff"]=0,["skills"]={9},["spellspeedbuffpercent"]=1,["inventory"]={10},},{["Bullet"]=0,},{},{},{["Bullet"]=0,},{},{2,0,},{["stunbullet"]=0,["takedown"]=1,["changeoutfit"]=1,["momentumbullet"]=0,["useitem"]=1,["invis"]=1,["roundaboutshot"]=3,["stim"]=2,["pistol"]=6,["explosivebullet"]=0,["dws"]=1,["snipe"]=2,["pistoldwsalt"]=6,["dash"]=1,["mysteriousqi"]=1,["mindripfield"]=1,["mind"]=1,},{["Theravada"]="equip",["Bagua"]=0,["FiveSlash"]="equip",},}--|]].data)
 	SetCharacter(leon)
 	map:addUnit(leon)
 	map.camera = FollowerCamera:new(leon,{
@@ -306,6 +306,7 @@ end
 function Tibet:update(dt)
 	super.update(self,dt)
 end
+
 function Tibet:draw()
 	super.draw(self)
 	if self.cutscene then self.cutscene:draw() end

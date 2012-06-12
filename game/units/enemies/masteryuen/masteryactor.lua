@@ -266,3 +266,31 @@ function MantraActor:draw(x,y)
 		love.graphics.setColor(255,255,255)
 	end
 end
+
+FireChainActor = Object:subclass'FireChainActor'
+function FireChainActor:initialize(x,y,vx,vy,time)
+	self.sx,self.sy = x,y
+	self.vx,self.vy = vx,vy
+	self.r = math.atan2(vy,vx)
+	self.dt = 0
+	self.time = time
+	self.p = particlemanager.getsystem'fire'
+	self.p:setLifetime(5)
+	self.p:start()
+end
+
+function FireChainActor:update(dt)
+	if self.dt>self.time then return end
+	self.dt = self.dt + dt
+	self.p:setPosition(self.sx+self.vx*self.dt,self.sy+self.vy*self.dt)
+	self.p:update(dt)
+	
+end
+
+function FireChainActor:draw()
+	local g = requireImage('assets/swift/link.png')
+	for i=1,math.ceil(self.dt/0.02) do
+		love.graphics.draw(g,self.sx+self.vx*i*0.02,self.sy+self.vy*i*0.02,self.r,1,1,g:getWidth()/2,g:getHeight()/2)
+	end
+	love.graphics.draw(self.p)
+end

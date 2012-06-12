@@ -455,7 +455,6 @@ function goo.object:direct(highlight,direction,filter)
 			if angle<1.5 then
 				local dis = x2*x2+y2*y2
 				objdict[dis] = child
-				print (dis)
 				table.insert(distarray,dis)
 			end
 		end

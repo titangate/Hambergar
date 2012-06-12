@@ -1,7 +1,7 @@
 
 --local vancouver = require 'scenes.vancouver.vancouver'
 require 'cutscene.cutscene'
-preload('assassin','electrician','commonenemies','tibet','vancouver')
+preload('assassin','commonenemies','tibet','vancouver','kingofdragons')
 
 local Waterfallbg={}
 function Waterfallbg:update(dt)
@@ -29,6 +29,11 @@ end
 
 function Waterfall:destroy()
 	self.exitTrigger:destroy()
+end
+
+function Waterfall:draw()
+	dragongate.predraw()
+	super.draw(self)
 end
 
 function Waterfall:opening_load()
@@ -75,7 +80,7 @@ function Waterfall:enter_loaded()
 	if GetCharacter().class == Assassin then
 		self:wake_loaded()
 	else
-		local leon2 = GetGameSystem():loadobj 'Assassin'
+		local leon2 = KingOfDragons()--GetGameSystem():loadobj 'Assassin'
 		leon2.x,leon2.y = 0,0
 		leon2.direction = {0,-1}
 		leon2.controller = 'player'
@@ -95,7 +100,7 @@ function Waterfall:enter_loaded()
 end
 
 function Waterfall:wake_load()
-	local leon2 = GetGameSystem():loadobj 'Electrician'
+	local leon2 = KingOfDragons()--GetGameSystem():loadobj 'Assassin'
 	leon2.x,leon2.y = 0,0
 	leon2.direction = {0,-1}
 	leon2.controller = 'player'
@@ -108,6 +113,8 @@ function Waterfall:wake_load()
 		x2 = 600-screen.halfwidth,
 		y2 = 600-screen.halfheight
 	})
+	leon2.inventory:addItem(Theravada(100,100))
+	leon2.inventory:addItem(Cloak(100,100))
 end
 
 function Waterfall:wake_loaded()
@@ -122,9 +129,31 @@ function Waterfall:wake_loaded()
 	self.exitTrigger:registerEventType('add')
 	local u = IALSwordsman(0,0,'enemy')
 	u:enableAI()
-	map:addUnit(u)
 end
 
 function Waterfall:load(x,y,c)
 	self:wake_load()
+end
+
+function scenetest()
+	local u = HealthPotion(100,0)
+	map:addUnit(u)
+	u = EnergyPotion(0,100)
+	map:addUnit(u)
+	u = Catalyst(100,100)
+	map:addUnit(u)
+	u = MistyCloud(-100,100)
+	map:addUnit(u)
+	u = TrollPotion(-100,-100)
+	map:addUnit(u)
+	u = FinalRadiance(100,-100)
+	map:addUnit(u)
+	u = TempestWeapon(-300,0)
+	map:addUnit(u)
+	u = CVolcanoWeapon(-200,0)
+	map:addUnit(u)
+	u = MournWeapon(-100,0)
+	map:addUnit(u)
+	u = IALSwordsman(0,-300,'enemy')
+	map:addUnit(u)
 end

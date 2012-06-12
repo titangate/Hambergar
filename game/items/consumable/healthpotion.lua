@@ -2,6 +2,8 @@
 b_HealthPotion = Buff:subclass('b_HealthPotion')
 function b_HealthPotion:initialize(hpregen)
 	self.hpregen = hpregen
+	self.icon = requireImage'assets/item/potionred.png'
+	self.genre = 'buff'
 end
 function b_HealthPotion:start(unit)
 	unit.HPRegen = unit.HPRegen + self.hpregen
@@ -9,24 +11,20 @@ end
 function b_HealthPotion:stop(unit)
 	unit.HPRegen = unit.HPRegen - self.hpregen
 end
+
 HealthPotion = Consumable:subclass('HealthPotion')
-requireImage( 'assets/item/healthpotion.png','healthpotion' )
 function HealthPotion:initialize(x,y)
 	super.initialize(self,'consumable',x,y)
 	self.name = "HEALTH POTION"
 	self.stack = 1
 	self.maxstack = 1
 	self.time = 5
-	self.hpregen = 10
+	self.hpregen = 20
 	self.cd = 10
 	self.groupname = 'HealthPotion'
+	self.icon = requireImage'assets/item/potionred.png'
 end
 
-function HealthPotion:getCDPercent()
-	local groupname = self.groupname or self:className()
-	local cddt = self.unit:getCD(groupname) or 0
-	return cddt/self.cd
-end
 
 function HealthPotion:use(unit)
 	if unit:getCD(self.groupname) then return end
@@ -83,9 +81,9 @@ end
 
 function HealthPotion:draw(x,y)
 	if not x then x,y = self.body:getPosition() end
-	love.graphics.draw(img.healthpotion,x,y,0,1,1,24,24)
+	love.graphics.draw(requireImage'assets/item/potionred.png',x,y,0,0.375,0.375,64,64)
 end
-
+--[[
 BigHealthPotion = HealthPotion:subclass('BigHealthPotion')
 function BigHealthPotion:initialize(x,y)
 	super.initialize(self,x,y)
@@ -93,3 +91,4 @@ function BigHealthPotion:initialize(x,y)
 	self.hpregen = 20
 	self.value = 10
 end
+]]

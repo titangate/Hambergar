@@ -3,7 +3,7 @@ b_DWS = Buff:subclass('b_DWS')
 function b_DWS:initialize(...)
 	super.initialize(self,...)
 	
-	self.icon = requireImage('assets/icon/dws.png',icontable)
+	self.icon = requireImage'assets/icon/dws.png'
 	self.genre = 'buff'
 end
 function b_DWS:stop(unit,dt)

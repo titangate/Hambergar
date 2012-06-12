@@ -21,6 +21,9 @@ end
 function goo.imagelabel:setAlignMode(mode)
 	self.align = mode
 end
+function goo.imagelabel:setTextColor(color)
+	self.textcolor = color
+end
 function goo.imagelabel:draw( x, y )
 	super.draw(self)
 	x,y = x or 0,y or 0

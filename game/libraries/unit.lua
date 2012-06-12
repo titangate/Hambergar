@@ -14,8 +14,16 @@ function Unit:switchChannelSkill(skill)
 	self:notifyListeners({type='channel',skill = skill})
 end
 
+function Unit:missileSpawnPoint()
+	return self.x,self.y
+end
+
 function Unit:startCD(group,cd)
 	self.cd[group]=cd
+end
+
+function Unit:resetCD()
+	self.cd = {}
 end
 
 function Unit:getCD(group)
@@ -31,7 +39,7 @@ function Unit:initialize(x,y,rad,mass)
 	self.state = 'slide'
 	self.order = 'stop'
 	self.direction = {1,0}
-	self.movingforce = self.mass*100
+	self.movingforce = self.mass*200
 	self.speedlimit = 20000
 	self.buffs={}
 	self.maxhp=100
@@ -44,8 +52,8 @@ function Unit:initialize(x,y,rad,mass)
 	self.damagereduction = {}
 	self.damagebuff = {}
 	self.damageamplify = {}
-	self.critical = {}
-	self.evade = {}
+	self.critical = {2,0}
+	self.evade = 0
 	self.allowmovement = true
 	self.allowskill = true
 	self.allowmelee = true
@@ -57,10 +65,11 @@ function Unit:initialize(x,y,rad,mass)
 	self.controllable = true
 	self.bht = {}
 	self.cd = {}
-	self.invisible = false
-	self.invulnerable = false
+--	self.invisible = false
+--	self.invulnerable = false
 	self.immue = {}
 	self.drops = {}
+--	self.preventdeath = {}
 	setmetatable(self.bht,bufftable)
 end
 
@@ -80,34 +89,52 @@ function Unit:getDamageDealing(amount,type)
 	if self.damageamplify[type] then
 		amount = amount * self.damageamplify[type]
 	end
-	if self.critical[type] then
-		local amplifier,chance = unpack(self.critical[type])
-		if math.random()<chance then
-			amount = amount * amplifier
-			self:notifyListeners({type='critical',unit = self})
+	if self.critical then
+		local amplifier,chance = unpack(self.critical)
+		local r = math.random()
+		if r<chance then
+--			amount = amount * amplifier
+			
+--			print ('critical hit')
+			return {amount,amount*amplifier}
 		end
 	end
 	return amount
 end
 
-function Unit:damage(type,amount,source)
-	if self.evade[type] then
-		if math.random()<self.dodgerate[type] then
-			self:notifyListeners({type='dodge'})
+function Unit:damage(t,amount,source)
+	if self.invulerable then return end
+	if self.evade and source~=self then
+		if math.random()<self.evade then
+			self:notifyListeners({type='evade',unit = self,source = source})
 			return
 		end
 	end
+	local crit
+	if type(amount)=='table' and source~=self then
+		amount,crit = unpack(amount)
+	end
 	if self.hp then
-		if self.armor[type] then
-			amount = math.max(1,amount-self.armor[type])
+		if self.armor[t] then
+			amount = math.max(1,amount-self.armor[t])
 		end
-		if self.damagereduction[type] then
-			amount = amount * self.damagereduction[type]
+		if self.damagereduction[t] then
+			amount = amount * self.damagereduction[t]
 		end
 		self.hp = self.hp - amount
 	end
-	if self.hp <= 0 then self:kill(source) end
-	self:notifyListeners({type='damage',damagetype=type,damage=amount,unit=self,source=source,})
+	if self.hp <= 0 and not self.preventdeath then 
+		self:kill(source) 
+	else
+		self.hp = math.max(self.hp,1)
+	end
+	self:notifyListeners({type='damage',damagetype=t,damage=amount,unit=self,source=source,})
+	if crit then
+		self:notifyListeners({type='crit',
+		unit = source,
+		damage = crit,
+		target = self,})
+	end
 	return amount
 end
 
@@ -407,7 +434,7 @@ function Unit:findUnitByType(type)
 end
 
 function Unit:getPosition()
-	return self.x,self.y
+	return self.body:getPosition()
 end
 
 AnimatedUnit = Unit:subclass'AnimatedUnit'
@@ -461,9 +488,9 @@ function Character:initialize(x,y,rad,mass)
 	self.inventory = Inventory:new(self)
 end
 
-function Character:setWeaponSkill(skill)
-	self.skills.weaponskill = self.skills.weaponskill or FireWeapon(self)
-	self.skills.weaponskill:setSkill(skill)
+function Character:setWeaponSkill(skill,lvl)
+	self.skills.weaponskill = skill or Skill()
+	self.skills.weaponskill:setLevel(lvl or 0)
 end
 
 function Character:setUseItem(item)
@@ -485,6 +512,15 @@ function table.copy(t)
 	end
   end
   return t2
+end
+
+function Character:reequip()
+	if self.inventory then
+		self.inventory:setEquipmentActive(false)
+	end
+	if self.inventory then
+		self.inventory:setEquipmentActive(true)
+	end
 end
 
 function Character:save()
@@ -545,6 +581,7 @@ function Character:update(dt)
 end
 
 function Character:load(save)
+	assert(save)
 	self.buffs = {}
 	if self.inventory then
 		self.inventory:clear()
@@ -571,7 +608,7 @@ end
 
 function Character:addBuff(buff,duration)
 	super.addBuff(self,buff,duration)
-	if buff.getPanelData then
+	if buff.getPanelData and GetGameSystem().fillBuffPanel then
 		GetGameSystem():fillBuffPanel(buff.genre,buff:getPanelData())
 	end
 end

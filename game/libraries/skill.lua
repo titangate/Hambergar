@@ -16,9 +16,11 @@ function Skill:stop()
 	self.time = 0
 end
 
+function Skill:setLevel(lvl)
+end
 
 function Skill:getLevel()
-	if self.level then return self.level end
+	return self.level or 0
 end
 
 function Skill:update(dt)

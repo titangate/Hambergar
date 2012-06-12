@@ -5,6 +5,7 @@ function MasterYuenAura:initialize(unit)
 	self.bullet = {}
 end
 function MasterYuenAura:add(b,coll)
+--	if type(b)=='function' then print (b) end
 	if self.unit.immuebullet and b:isKindOf(Missile) then
 		if self.unit:isEnemyOf(b) then
 			map:changeOwner(b,'enemyMissile')
@@ -79,6 +80,7 @@ function MasterYuen:initialize(x,y)
 	self:setImmunity(true)
 	
 	self.displaymaxhp = self.maxhp
+	self.preventdeath = true
 end
 
 function MasterYuen:update(dt)
@@ -378,10 +380,14 @@ function MasterYuen:phase3()
 		self:stop()
 	end)
 	local failingwait = ProAI_Wait(self,10)
-	local restore = ProAI_Exec(self,function()
+	local restore 
+	restore = ProAI_Exec(self,function()
 		self:entermantra()
 		self.accumulatedmg = 0
 		self.fail = false
+		if self:getHPPercent()<=0.15 then
+			restore.next = self:phase4()
+		end
 	end)
 	failing.next = failingwait
 	failingwait.next = restore
@@ -400,4 +406,93 @@ function MasterYuen:phase3()
 		end
 	end
 	return wait
+end
+
+function MasterYuen:phase4()
+	self.actor:setEffect'invis'
+	self.actor:playAnimation'pray'
+	local b = GetCharacter()
+	Trigger(function()
+	
+		wait(0.5)
+		map.camera = FollowerCamera(GetCharacter())
+		GetCharacter():addBuff(b_Stun(),-1)
+		Timer(0.35,10,function()
+			local cx,cy = GetCharacter():getPosition()
+			local x,y = displacement(0,0,math.random()*math.pi*2,1200)
+			local a = FireChainActor(cx-x,cy-y,x,y,2)
+			map:addUpdatable(a)
+			Timer(5,1,function()map:removeUpdatable(a)end)
+		end)
+		wait(1)
+		Timer:new(0.15,20,function(timer)
+			if b.invisible or (not b.body) then
+				timer.count = 1
+			end
+			local angle = math.random()*math.pi*2
+			local x,y = math.cos(angle)*30,math.sin(angle)*30
+--			caster.body:setPosition(b.x-x,b.y-y)
+--			caster.x,caster.y = b.x-x,b.y-y
+--				caster.skills.kickp1.effect:effect({normalize(x,y)},caster,caster.skills.kickp1)
+--			caster:skilleffect(caster.skills.melee)
+			self:setAngle(angle)
+			if timer.count <= 1 then
+	--			caster.skills.melee.casttime = oricasttime
+			end
+			map:addUpdatable(SevenSidedStrikeActor(b,myimg.shades[tostring(timer.count%5+1)],angle))
+		end)
+	end):run()
+	map:finish()
+	return ProAI_Wait(self,3600)
+end
+
+function MasterYuen:rise()
+	local failing = ProAI_Exec(self,function()
+		self.fail = true
+		self.actor:playAnimation'kneel'
+		map:exitMantra()
+		self:stop()
+	end)
+	self:setImmunity(false)
+	local approach = ProAI_Walkto(self,GetCharacter(),200)
+	local fist1 = ProAI_Exec(self,function()
+	local c = math.random(3)
+		
+		if c==1 then
+			self:dashStrikep2('crane',2000,0.2)
+		elseif c==2 then
+			self:dashStrikep2('kick',2000,0.2)
+		else
+			self:dashStrikep2('fist',2500,1)
+		end
+	end)
+	local reset = ProAI_Exec(self,function() self.actor:reset() end)
+	local wait = ProAI_Wait(self,4)
+	local restoreimmue = ProAI_Exec(self,function() 
+--		self.mantra.level = 2
+--		self:setImmunity'reflect'
+	end)
+	local praywait = ProAI_Wait(self,1.5)
+	
+	local pray = ProAI_Exec(self,function()
+--		self:prayp2()
+	end)
+	local prayswitch = ProAI_Exec(self,function(ai)
+		if self:getHPPercent() < 0.2 then
+			ai.next = failing
+		elseif math.random()< 0.5 then
+			ai.next = praywait
+		else
+			ai.next = wait
+		end
+	end)
+	
+	approach.next = fist1
+	fist1.next = prayswitch
+	praywait.next = pray
+	pray.next = wait
+	wait.next = reset
+	reset.next = restoreimmue
+	restoreimmue.next = approach
+	return approach
 end

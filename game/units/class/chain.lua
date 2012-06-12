@@ -129,7 +129,7 @@ function Chain:initialize(unit,maxsegment,length)
 	end
 	self:setStyle('default')
 	local p = love.graphics.newParticleSystem(img.pulse,1000)
-	p:setEmissionRate(200)
+	p:setEmissionRate(options.particlerate*200)
 	p:setSpeed(0, 0)
 	p:setGravity(0)
 	p:setSize(0.2,0.1)

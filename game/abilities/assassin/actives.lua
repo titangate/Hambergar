@@ -63,7 +63,7 @@ RoundaboutShotEffect:addAction(function(unit,caster,skill)
 	local shots = skill.shots
 	function fire(timer)
 		local cosx,sinx = math.cos(math.pi/shots*timer.count*2),math.sin(math.pi/shots*timer.count*2)
-		PistolEffect:effect({cosx,sinx},caster,unit.skills.pistol)
+		unit.skills.weaponskill.effect:effect({cosx,sinx},caster,unit.skills.weaponskill)
 	end
 	local t = Timer:new(0.05,shots,fire,true)
 	t.selfdestruct = true
@@ -86,6 +86,7 @@ function RoundaboutShot:initialize(unit,level)
 end
 
 function RoundaboutShot:active()
+	if not self.unit.skills.weaponskill.effect then return end
 	if self:isCD() then
 		return false,'Ability Cooldown'
 	end
@@ -130,10 +131,10 @@ RoundaboutShotDWSEffect:addAction(function(unit,caster,skill)
 	local shots = skill.shots
 	function fire(timer)
 		local cosx,sinx = math.cos(math.pi/shots*timer.count*2),math.sin(math.pi/shots*timer.count*2)
-		PistolEffect:effect({cosx,sinx},caster,unit.skills.pistol)
+		unit.skills.weaponskill.effect:effect({cosx,sinx},caster,unit.skills.weaponskill)
 	end
-	local t = Timer:new(0.05,shots*3,fire,true)
-	t.selfdestruct = true
+	local t = Timer:new(0.05,shots,fire)
+--	t.selfdestruct = true
 end)
 
 RoundaboutShotDWS = RoundaboutShot:addState('DWS')
@@ -191,6 +192,20 @@ function Dash:getPanelData()
 	}
 end
 
+function Dash:getEnabled()
+	local enabled = {}
+	if self.level>=2 then
+		table.insert(enabled,self.unit.skills.spiral)
+		if self.level>=4 then
+			table.insert(enabled,self.unit.skills.stim)
+			if self.level>=6 then
+				table.insert(enabled,self.unit.skills.snipe)
+			end
+		end
+	end
+	return enabled
+end
+
 function Dash:geteffectinfo()
 	return GetCharacter().direction,self.unit,self
 end
@@ -210,8 +225,8 @@ function Dash:setLevel(lvl)
 			return {self.unit.skills.stim}
 		end
 	elseif lvl == 6 then
-		if self.unit.skill.invis then
-			return {self.unit.skills.invis}
+		if self.unit.skills.snipe then
+			return {self.unit.skills.snipe}
 		end
 	end
 end
@@ -254,7 +269,7 @@ function b_Invis:initialize(...)
 	super.initialize(self,...)
 	
 	
-	self.icon = requireImage('assets/icon/invis.png',icontable)
+	self.icon = requireImage'assets/icon/invis.png'
 	self.genre = 'buff'
 end
 function b_Invis:start(unit)

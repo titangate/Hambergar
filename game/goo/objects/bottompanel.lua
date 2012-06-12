@@ -3,12 +3,12 @@ function goo.skillbutton:initialize(parent)
 	super.initialize(self,parent)
 end
 function goo.skillbutton:setSkill(skill,face)
-	assert(skill)
-	assert(face)
-	assert(skill.level)
+	assert(skill,'SKILL NEEDED')
+--	print (skill.class)
+--	assert(face,'FACE NEEDED')
 	self.skill = skill
 	self.face = face
-	self.drawscale = 48/face:getHeight()
+--	self.drawscale = 48/face:getHeight()
 end
 
 function goo.skillbutton:setHotkey(hotkey)
@@ -16,7 +16,7 @@ function goo.skillbutton:setHotkey(hotkey)
 end
 
 function goo.skillbutton:keypressed(k)
-	if not self.skill or self.skill.level<=0 then return end
+	if not self.skill or self.skill:getLevel()<=0 then return end
 	if k==self.hotkey then
 		if self.skill.active then
 			
@@ -29,7 +29,7 @@ function goo.skillbutton:keypressed(k)
 end
 
 function goo.skillbutton:keyreleased(k)
-	if not self.skill or self.skill.level<=0 then return end
+	if not self.skill or self.skill:getLevel()<=0 then return end
 	if k==self.hotkey then
 		if not self.skill.active then
 			self.parent.count = math.max(0,self.parent.count - 1)
@@ -43,14 +43,23 @@ end
 
 function goo.skillbutton:draw()
 	super.draw(self)
-	self:setColor({255,255,255})
-	if not self.skill or self.skill.level<= 0 then return end
-	if self.face then love.graphics.draw(self.face,0,0,0,self.drawscale) end
+	if not self.skill or not self.face or self.skill:getLevel()<= 0 then return end
+--	self:setColor(self.style.iconColor)
+	local length = 48
+	local rw,rh = self.face:getWidth(),self.face:getHeight()
+	local startx,y = 24,24
+	love.graphics.setColor(0,0,0,125)
+	love.graphics.circle('fill',startx,y,length/2)
+	love.graphics.setColor(255,255,255,255)
+	love.graphics.circle('line',startx,y,length/2)
+	love.graphics.draw(self.face,startx,y,0,length/rw,length/rh,rw/2,rh/2)
+--	if self.face then love.graphics.draw(self.face,0,0,0,self.drawscale) end
 	if self.hotkey then
 		love.graphics.setFont(self.style.textFont)
 		self:setColor(self.style.textColor)
 		love.graphics.printf(string.upper(self.hotkey),0,self.style.yMargin,48,'center')
 	end
+		self:setColor({255,255,255})
 	if self.skill.getCDPercent then
 		DrawCD(24,24,self.skill:getCDPercent())
 	end
@@ -86,7 +95,7 @@ end
 function goo.bottompanel:draw()
 	super.draw(self)
 	self:setColor(255,255,255)
-	love.graphics.draw(goo.bottompanel.image)
+--	love.graphics.draw(goo.bottompanel.image)
 end
 
 function goo.bottompanel:fillPanel(data,pedal)
@@ -96,8 +105,8 @@ function goo.bottompanel:fillPanel(data,pedal)
 	end
 	self.buttons = {}
 	for i,v in ipairs(data.buttons) do
-		local b = goo.skillbutton:new(self)
-		b:setPos(self.style.xMargin+i*60,self.style.yMargin)
+		local b = goo.skillbutton(self)
+		b:setPos(screen.halfwidth-#data.buttons/2*60-60+i*60,self.style.yMargin)
 		b:setSize(48,48)
 		b:setSkill(v.skill,v.face)
 		b:setHotkey(v.hotkey)

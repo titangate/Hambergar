@@ -130,7 +130,7 @@ function ElectricianAbiTree:initialize(unit)
 	
 	local p = love.graphics.newParticleSystem(img.pulse,1024)
 	print ((pcb.battery.x+pcb.battery.w/2)*scale,(pcb.battery.y+pcb.battery.h/2)*scale,'battery')
-	p:setEmissionRate(100)
+	p:setEmissionRate(options.particlerate*100)
 	p:setSpeed(200, 100)
 	p:setColor(255, 255, 255, 255, 58, 128, 255, 0)
 	p:setSize(0.5, 0.25)
@@ -143,7 +143,7 @@ function ElectricianAbiTree:initialize(unit)
 	self.batterpos=p
 	
 	local p = love.graphics.newParticleSystem(img.pulse,1024)
-	p:setEmissionRate(100)
+	p:setEmissionRate(options.particlerate*100)
 	p:setSpeed(200, 100)
 	p:setColor(255, 0, 255, 255, 32, 32, 255, 0)
 	p:setSize(0.5, 0.25)

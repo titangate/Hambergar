@@ -10,7 +10,7 @@ function join(di,t)
 	return w
 end
 
-Item = Object:subclass('Item')
+Item = Object:subclass'Item'
 function Item:initialize(type,x,y)
 	self.type = type
 	self.x,self.y = x,y
@@ -19,13 +19,15 @@ end
 
 function Item:createBody(world)
 	self.body = love.physics.newBody(world,self.x,self.y)
-	self.shape = love.physics.newCircleShape(self.body,0,0,16)
+	local shape = love.physics.newCircleShape(0,0,16)
+	self.shape = love.physics.newFixture(self.body,shape)
 	self.shape:setSensor(true)
 	self.shape:setMask(1,2,4,5,6,7,8,9,10,11,12,13,14,15,16)
-	self.shape:setData(self)
+	self.shape:setUserData(self)
 end
 
 function Item:add(b,coll)
+	print (b.class)
 	if b:isKindOf(Character) then
 		b.inventory:addItem(self)
 		map:removeUnit(self)
@@ -62,34 +64,36 @@ function Item:allow(item)
 end
 
 function Item:equip(unit)
-	self.equipped = true
+--[[	self.equipped = true
 	gamelistener:notify{
 		type = 'equip',
 		item = self,
 		unit = unit,
 		action = 'equip',
-	}
+	}]]
 end
 
 function Item:unequip(unit)
-	self.equipped = false
+--[[	self.equipped = false
 	
 	gamelistener:notify{
 		type = 'equip',
 		item = self,
 		unit = unit,
 		action = 'unequip',
-	}
+	}]]
 end
 
 function Item:isEquipment()
 	return self.equipped
 end
 
-function Item:getCDPercent()
-	local groupname = self.groupname or self:className()
-	local cddt = self.unit:getCD(groupname) or 0
-	return cddt/self.cd
+
+function Item:draw(x,y)
+	local c = self.icon
+	if not c then return end
+	if not x then x,y = self.body:getPosition() end
+	love.graphics.draw(c,x,y,0,48/c:getWidth(),48/c:getHeight(),c:getWidth()/2,c:getHeight()/2)
 end
 
 requireImage( 'assets/UI/slot.png','slotimg' )

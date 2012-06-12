@@ -11,7 +11,7 @@ IALMachineGun = MachineGun:subclass('IALMachineGun')
 function IALMachineGun:initialize(unit)
 	super.initialize(self,unit)
 	self.damage = 20
-	self.casttime = 0.25
+	self.casttime = 0.5
 end
 
 IALThreewayShotgun = ThreewayShotgun:subclass('IALThreewayShotgun')

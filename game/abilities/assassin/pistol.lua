@@ -1,73 +1,45 @@
-requireImage('assets/assassin/bullet.png','bullet')
 
-MomentumBullet = Missile:subclass('MomentumBullet')
-function MomentumBullet:createBody(world)
-	super.createBody(self,world)
-	self.shape:setSensor(true)
-end
-
-function MomentumBullet:persist(unit,coll)
-	if (self.controller=='playerMissile' and unit.controller=='enemy') or (self.controller == 'enemyMissile' and unit.controller=='player') then
-		if not unit.bht[self] then
-			if self.effect then self.effect:effect(unit,self,self.skill) end
-			unit.bht[self] = true
-		end
-	end
-end
-
-function MomentumBullet:draw()
-	love.graphics.setColor(80,234,255,255)
-	love.graphics.draw(img.bullet,self.x,self.y,self.body:getAngle(),1,1,16,16)
-	love.graphics.setColor(255,255,255,255)
-end
-
-explosiveBulletEffect = CircleAoEEffect:new(50)
-StunBulletEffect = UnitEffect:new()
-StunBulletEffect:addAction(function (unit,caster,skill,Missile)
-	unit:damage('Bullet',caster.unit:getDamageDealing(skill.damage,'Bullet'),caster.unit)
-	if caster.unit.skills.stunbullet and math.random()< caster.unit.skills.stunbullet.stunchance then
-		unit:addBuff(b_Stun:new(100,nil),0.5)
-	end
-	if caster.unit.skills.explosivebullet and math.random()< caster.unit.skills.explosivebullet.explosivechance then
-		explosiveBulletEffect:effect({caster.x,caster.y},caster,skill)
-	end
-end)
-
-
-Pistol = Skill:subclass('Pistol')
-function Pistol:initialize(unit,level)
+WeaponMastery = Skill:subclass('WeaponMastery')
+function WeaponMastery:initialize(unit,level)
 	level = level or 0
 	super.initialize(self)
 	self.unit = unit
 	self.bullettype = Bullet
-	self.name = 'Pistol'
+	self.name = 'WeaponMastery'
 	self.effecttime = 0.1
 	self.damage = 50
-	self.effect = PistolEffect
+	self.effect = WeaponMasteryEffect
 	self.bulleteffect = StunBulletEffect
 	self.bullettype = Bullet
 	self:setLevel(level)
 end
 
-function Pistol:getPanelData()
+function WeaponMastery:getPanelData()
 	return{
-		title = 'PISTOL',
+		title = 'Weapon Mastery',
 		type = 'PRIMARY WEAPON',
 		attributes = {
-			{text = "Purely awesome weapon."},
-			{text = 'Firerate (per second)',data = function()return  string.format('%.1f',1/self.casttime) end},
-			{text = 'Damage',data = function()return  self.damage end},
+			{text = "Increase the effect of your weapon."},
+			--{text = 'Firerate (per second)',data = function()return  string.format('%.1f',1/self.casttime) end},
+			{text = 'DPS',data = function()
+				local s = self.unit.skills.weaponskill
+				if s.damage then
+					return  string.format("%.2f",s.damage/s.casttime) 
+				else
+					return 'N/A'
+				end
+			end},
 		}
 	}
 end
 
-function Pistol:geteffectinfo()
+function WeaponMastery:geteffectinfo()
 	return GetOrderDirection(),self.unit,self
 end
 
-function Pistol:setLevel(lvl)
-	self.casttime = 0.7/(1+lvl*0.2) -- inversely proportional
+function WeaponMastery:setLevel(lvl)
 	self.level = lvl
+	self.unit:reequip()
 	if lvl == 2 then
 		if self.unit.skills.stunbullet then
 			return {self.unit.skills.stunbullet}
@@ -81,82 +53,36 @@ function Pistol:setLevel(lvl)
 			return {self.unit.skills.momentumbullet}
 		end
 	end
-	if self.unit.skills then self.unit.skills.pistoldwsalt:setLevel(lvl) end
+--	if self.unit.skills then self.unit.skills.pistoldwsalt:setLevel(lvl) end
 end
 
-PistolDWSEffect = ShootMissileEffect:new()
-PistolDWSEffect:addAction(function(point,caster,skill)
-	Timer:new(0.1,3,function ()
-			local Missile = skill.bullettype:new(1,1,1000,caster.x,caster.y,unpack(point))
-			Missile.controller = caster.controller..'Missile'
-			Missile.effect = skill.bulleteffect
-			Missile.skill = skill
-			Missile.unit = caster
-			map:addUnit(Missile)
-			TEsound.play('sound/shoot4.wav')
-		end,
-		true,true)
-end)
-
-local PistolDWS = Pistol:addState('DWS')
-function PistolDWS:enterState()
-	self.originaleffect = self.effect
-	self.effect = PistolDWSEffect
+function WeaponMastery:getEnabled()
+	local enabled = {}
+	if self.level>=2 then
+		table.insert(enabled,self.unit.skills.stunbullet)
+		if self.level>=4 then
+			table.insert(enabled,self.unit.skills.explosivebullet)
+			if self.level>=6 then
+				table.insert(enabled,self.unit.skills.momentumbullet)
+			end
+		end
+	end
+	return enabled
 end
 
-function PistolDWS:exitState()
-	self.effect = self.originaleffect
+Assassin.weaponbulleteffect = function (unit,caster,skill)
+	unit:damage('Bullet',caster.unit:getDamageDealing(skill.damage,'Bullet'),caster.unit)
+	if caster.unit.skills.stunbullet and math.random()< caster.unit.skills.stunbullet.stunchance then
+		unit:addBuff(b_Stun:new(100,nil),0.5)
+	end
+	if caster.unit.skills.explosivebullet and math.random()< caster.unit.skills.explosivebullet.explosivechance then
+		explosiveBulletEffect:effect({caster.x,caster.y},caster,skill)
+	end
 end
 
-PistolDWSAltEffect = ShootMissileEffect:new()
-PistolDWSAltEffect:addAction(function(point,caster,skill)
-	local Missile = skill.bullettype:new(1,1,1000,caster.x,caster.y,0,-1)
-	Missile.controller = caster.controller..'Missile'
-	Missile.effect = skill.bulleteffect
-	Missile.skill = skill
-	Missile.unit = caster
-	map:addUnit(Missile)
-	local Missile = skill.bullettype:new(1,1,1000,caster.x,caster.y,0.866,0.5)
-	Missile.controller = caster.controller..'Missile'
-	Missile.effect = skill.bulleteffect
-	Missile.skill = skill
-	Missile.unit = caster
-	map:addUnit(Missile)
-	local Missile = skill.bullettype:new(1,1,1000,caster.x,caster.y,-0.866,0.5)
-	Missile.controller = caster.controller..'Missile'
-	Missile.effect = skill.bulleteffect
-	Missile.skill = skill
-	Missile.unit = caster
-	map:addUnit(Missile)
-	TEsound.play('sound/shoot4.wav')
-end)
-
-PistolDWSAlt = Skill:subclass('PistolDWSAlt')
-function PistolDWSAlt:initialize(unit,level)
-	level = level or 0
-	super.initialize(self)
-	self.unit = unit
-	self.bullettype = Bullet
-	self.name = 'PistolDWSAlt'
-	self.effecttime = 0.1
-	self.damage = 50
-	self.effect = PistolDWSAltEffect
-	self.bulleteffect = StunBulletEffect
-	self.bullettype = Bullet
-	self:setLevel(level)
-end
-
-function PistolDWSAlt:geteffectinfo()
-	return GetOrderDirection(),self.unit,self
-end
-
-function PistolDWSAlt:stop()
-	self.time = 0
-end
-function PistolDWSAlt:setLevel(lvl)
-	self.casttime = 0.7/(1+lvl*0.2) -- inversely proportional
-	self.level = lvl
-end
+explosiveBulletEffect = CircleAoEEffect:new(50)
+StunBulletEffect = UnitEffect:new()
+StunBulletEffect:addAction(Assassin.weaponbulleteffect)
 
 StunBullet = Skill:subclass('StunBullet')
 function StunBullet:initialize(unit,level)
@@ -169,10 +95,13 @@ function StunBullet:initialize(unit,level)
 end
 
 function StunBullet:setLevel(lvl)
+	if lvl <= 0 then
+		self.stunchance = 0
+		return
+	end
 	self.stunchance = 0.1+0.04*lvl
 	self.level = lvl
 end
-
 
 function StunBullet:getPanelData()
 	return{
@@ -198,7 +127,7 @@ end
 function ExplosiveBullet:setLevel(lvl)
 	if lvl>0 then
 		self.explosivechance = 0.1+0.04*lvl
-		self.impactforce = 30+lvl*10
+		self.impactforce = 100+lvl*100
 		explosiveBulletEffect.actions={}
 		explosiveBulletEffect:addAction(getExplosionAction(self.impactforce,nil,function(unit)return not unit:isKindOf(Missile) end))
 	end
@@ -216,15 +145,6 @@ function ExplosiveBullet:getPanelData()
 			{text = 'Impact Force',data = function()return  self.impactforce end},
 		}
 	}
-end
-
-function ExplosiveBullet:getdescription()
-	a='Explosive Bullet\nAssassin tweaks his ammo, make them possible to create a small area impact in target area.(massive units are unaffected)\nChance:\nImpact Force:\nCurrent Level:'
-	return a
-end
-
-function ExplosiveBullet:getdescriptiondata()
-	return '\n\n\n'..string.format('%.1f',self.explosivechance*100)..' % chance to stun enemy\n'..self.impactforce..' Impact force\n'..self.level
 end
 
 function ExplosiveBullet:fillAttPanel(panel)
@@ -253,6 +173,7 @@ function ExplosiveBullet:fillAttPanel(panel)
 		return "Current Level" end,
 		nil,panel.w))
 end
+
 AbsoluteMomentum = Skill:subclass('AbsoluteMomentum')
 
 function AbsoluteMomentum:initialize(unit,level)
@@ -265,7 +186,7 @@ end
 
 function AbsoluteMomentum:setLevel(lvl)
 	if lvl>0 then
-		self.unit.skills.pistol.bullettype = MomentumBullet
+		self.unit.skills.weaponskill:setMomentumBullet(true)
 	end
 	self.level = lvl
 end
@@ -276,7 +197,19 @@ function AbsoluteMomentum:getPanelData()
 		title = 'ABSOLUTE MOMENTUM',
 		type = 'PASSIVE',
 		attributes = {
-			{text = "Every bullet you fire will possess absolute momentum, penetrating your enemies unstopping."},
+			{text = "Every bullet you fire will possess absolute momentum, penetrating your enemies non-stopping."},
 		}
 	}
 end
+
+
+--- other bullets
+
+CVolcanoMissileEffect = UnitEffect:new()
+CVolcanoMissileEffect:addAction(Assassin.weaponbulleteffect)
+
+
+
+CVolcanoMissileEffect:addAction(function(unit,caster,skill)
+	unit:addBuff(b_Burn(skill.damage,caster),skill.duration)
+end)

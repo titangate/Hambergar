@@ -50,6 +50,10 @@ preloadlist(
 		'units.enemies.masteryuen.masterykick',
 		'units.enemies.masteryuen.masterycrane',
 		
+	},
+	kingofdragons = {
+		'units.class.dragongate',
+		'units.class.kingofdragons'
 	}
 }
 )

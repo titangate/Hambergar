@@ -12,7 +12,7 @@ end
 b_Stun = Buff:subclass('b_Stun')
 function b_Stun:initialize(priority,actor)
 	self.r = 0
-	self.icon = requireImage('assets/icon/stun.png',icontable)
+	self.icon = requireImage'assets/icon/stun.png'
 	self.genre = 'debuff'
 end
 
@@ -20,6 +20,7 @@ requireImage( 'assets/buff/stun.png','stunimg' )
 function b_Stun:buff(unit,dt)
  	unit.state = 'slide'
 	unit.allowskill = false
+	unit.allowactive = false
 	self.r = self.r+3.14*dt
 end
 function b_Stun:draw(unit)

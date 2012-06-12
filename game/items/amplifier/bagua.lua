@@ -14,15 +14,15 @@ end
 
 function Bagua:equip(unit)
 	super.equip(self,unit)
-	unit.critical.Bullet = unit.critical.Bullet or {2,0}
-	unit.critical.Bullet[1] = unit.critical.Bullet[1] + self.critdmg
-	unit.critical.Bullet[2] = unit.critical.Bullet[2] + self.critchance
+	unit.critical = unit.critical or {2,0}
+	unit.critical[1] = unit.critical[1] + self.critdmg
+	unit.critical[2] = unit.critical[2] + self.critchance
 end
 
 function Bagua:unequip(unit)
 	super.unequip(self,unit)
-	unit.critical.Bullet[1] = unit.critical.Bullet[1] - self.critdmg
-	unit.critical.Bullet[2] = unit.critical.Bullet[2] - self.critchance
+	unit.critical[1] = unit.critical[1] - self.critdmg
+	unit.critical[2] = unit.critical[2] - self.critchance
 end
 
 function Bagua:getPanelData()
@@ -36,6 +36,7 @@ function Bagua:getPanelData()
 		}
 	}
 end
+
 function Bagua:update(dt)
 end
 

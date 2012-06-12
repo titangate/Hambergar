@@ -196,7 +196,7 @@ function StatefulObject:subclass(name)
   classDict.__index = function(instance, methodName)
     -- If the method isn't on the 'ignoredMethods' list, look through the stack to see if it is defined
     if(ignoredMethods[methodName]~=1) then
-	  
+	  assert(private[instance],instance.class.name..' does not have a state stack.')
       local stack = private[instance].stateStack
       local method
       for i = #stack,1,-1 do -- reversal loop

@@ -116,7 +116,7 @@ function CutscenePlayer:draw()
 		if v and self.convtime then
 			local font = love.graphics.getFont()
 			love.graphics.setColor(0,0,0,220)
-			local w,h = font:getWidth(v)+10,select(2,font:getWrap(v,624))*font:getHeight()+10
+			local w,h = font:getWidth(v)+10,select(2,fontGetWrap(font,v,624))*font:getHeight()+10
 			love.graphics.rectangle('fill',screen.halfwidth - w/2,screen.height - 105 ,w,h)
 			love.graphics.setColor(255,255,255,225)
 			pfn(v,200,screen.height - 100,624,'center')

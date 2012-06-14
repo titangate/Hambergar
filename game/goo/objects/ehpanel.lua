@@ -62,7 +62,7 @@ function goo.ehpanel:mousereleased(x,y,button)
 end
 function goo.ehpanel:setTitle( title )
 	self.title = title
-	self.titleHeight = self.style.titleFont:getHeight()*select(2, self.style.titleFont:getWrap(self.title,self.w))
+	self.titleHeight = self.style.titleFont:getHeight()*select(2, fontGetWrap(self.style.titleFont,self.title,self.w))
 end
 function goo.ehpanel:setPos( x, y )
 	super.setPos(self, x, y)

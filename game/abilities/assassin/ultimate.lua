@@ -16,10 +16,10 @@ function b_DWS:start(unit)
 end
 function b_DWS:getPanelData()
 	return {
-		title = 'Divided We Stand',
-		type = 'Buff',
+		title = LocalizedString'Divided We Stand',
+		type = LocalizedString'Buff',
 		attributes = {
-			{text = 'The power of your abilities has drastically increased.'}}
+			{text = LocalizedString'The power of your abilities has drastically increased.'}}
 	}
 end
 DWSEffect = UnitEffect:new()
@@ -103,7 +103,7 @@ function DWS:initialize(unit,level)
 	level = level or 0
 	super.initialize(self)
 	self.unit = unit
-	self.name = 'Divided We Stand'
+	self.name = LocalizedString'Divided We Stand'
 	self.effecttime = -1
 	self.effect = DWSEffect
 	self.cd = 180
@@ -127,15 +127,15 @@ end
 
 function DWS:getPanelData()
 	return{
-		title = 'Divided We Stand',
-		type = 'Ultimate',
+		title = LocalizedString'Divided We Stand',
+		type = LocalizedString'Ultimate',
 		attributes = {
-			{text = "Assassin's ultimate. Can only be initiated with 100% of remaining energy."},
-			{text = "Attack: you will automatically fire at three direction while not issuing attack command. When issuing attack command, you will continuously fire 3 time at given direction"},
-			{text = "Dash: you will deal damage upon landing with Dash."},
-			{text = "Spiral: you will fire 3 rounds of spiral."},
-			{text = "Snipe: you will fire 3 sniper rounds."},
-			{text = "Mind: you will gain HP instead of Mindpower when enemy is killed"}
+			{text = LocalizedString"Assassin's ultimate. Can only be initiated with 100% of remaining energy."},
+			{text = LocalizedString"Attack: you will automatically fire at three direction while not issuing attack command. When issuing attack command, you will continuously fire 3 time at given direction"},
+			{text = LocalizedString"Dash: you will deal damage upon landing with Dash."},
+			{text = LocalizedString"Spiral: you will fire 3 rounds of spiral."},
+			{text = LocalizedString"Snipe: you will fire 3 sniper rounds."},
+			{text = LocalizedString"Mind: you will gain HP instead of Mindpower when enemy is killed"}
 		}
 	}
 end

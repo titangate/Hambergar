@@ -53,15 +53,17 @@ function Catalyst:use(unit)
 end
 function Catalyst:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="Temperarily increase the effect of critial strikes."},
-			{image=nil,text="Critical Hit Chance",data=string.format('%.1f',self.critchance*100)},
-			{image=nil,text="Critical Hit Damage",data=self.critdmg},
+			{text=LocalizedString"Temperarily increase the effect of critial strikes."},
+			{image=nil,text=LocalizedString"Critical Hit Chance",data=string.format('%.1f',self.critchance*100)},
+			{image=nil,text=LocalizedString"Critical Hit Damage",data=self.critdmg},
 		}
 	}
 end
 
 function Catalyst:update(dt)
 end
+
+return Catalyst

@@ -138,7 +138,7 @@ function AssassinAbiTree:initialize(unit)
 	end
 	self.switchToInventory:setPos(screen.width - 200,screen.height - 100)
 	self.switchToInventory:setSize(150,30)
-	self.switchToInventory:setText'Switch to Inventory'
+	self.switchToInventory:setText(LocalizedString'Switch to Inventory')
 end
 
 function AssassinAbiTree:loadAvailableSkill()
@@ -194,12 +194,12 @@ function AssassinAbiTree:show()
 	end]]
 	local t
 	if self.learning then
-		t = 'ACQUIRE HAMBER SPIRIT TO UPGRADE YOUR ABILITIES'
+		t = LocalizedString'ACQUIRE HAMBER SPIRIT TO UPGRADE YOUR ABILITIES'
 	else
-		t = 'MEDITATE TO DISTRIBUTE HAMBER SPIRIT'
+		t = LocalizedString'MEDITATE TO DISTRIBUTE HAMBER SPIRIT'
 	end
 	self.sp:fillPanel({
-		title = 'HAMBER SPIRIT',
+		title = LocalizedString'HAMBER SPIRIT',
 		type = t,
 		attributes = {
 	--		{image = spirit,text ='BLAH'}

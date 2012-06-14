@@ -28,7 +28,7 @@ height = height + 50
 
 local b_continue = goo.menuitem:new( pausemenu )
 b_continue:setPos( 10, height )
-b_continue:setText( 'Restart From Last Checkpoint' )
+b_continue:setText( LocalizedString'Restart From Last Checkpoint' )
 b_continue:sizeToText()
 b_continue.onClick = function(self,button)
 	GetGameSystem():popState()
@@ -40,7 +40,7 @@ height = height + 50
 
 local b_quit = goo.menuitem:new( pausemenu )
 b_quit:setPos( 10, height )
-b_quit:setText( 'Quit to Main Menu' )
+b_quit:setText( LocalizedString'Quit to Main Menu' )
 b_quit:sizeToText()
 b_quit.onClick = function(self,button)
 	GetGameSystem():popState()

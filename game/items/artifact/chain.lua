@@ -21,11 +21,11 @@ end
 
 function PrayerBeads:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="A jug fills drop by drop.",image = icontable.quote},
-			{text="Decrease Dash cooldown and cost by half."},
+			{text=LocalizedString"A jug fills drop by drop.",image = icontable.quote},
+			{text=LocalizedString"Decrease Dash cooldown and cost by half."},
 		}
 	}
 end
@@ -37,3 +37,5 @@ function PrayerBeads:draw(x,y)
 	if not x then x,y = self.body:getPosition() end
 	love.graphics.draw(img.PrayerBeads,x,y,0,0.1875,0.1875,128,128)
 end
+
+return PrayerBeads

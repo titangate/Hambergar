@@ -31,11 +31,11 @@ end
 ]]
 function PortalOfMisery:getPanelData()
 	return{
-		title = 'Portal Of Misery',
-		type = 'PRIMARY WEAPON',
+		title = LocalizedString'Portal Of Misery',
+		type = LocalizedString'PRIMARY WEAPON',
 		attributes = {
-			{text = "Summon countless bullets from the portal to damage enemy"},
-			{text = 'Firerate (per second)',data = function()return  string.format('%.1f',1/self.casttime) end},
+			{text = LocalizedString"Summon countless bullets from the portal to damage enemy"},
+			{text = LocalizedString'Firerate (per second)',data = function()return  string.format('%.1f',1/self.casttime) end},
 		}
 	}
 end
@@ -257,12 +257,12 @@ end
 
 function DragonEye:getPanelData()
 	return{
-		title = "Phoenix's grace",
-		type = 'ACTIVE',
+		title = LocalizedString"Phoenix's grace",
+		type = LocalizedString'ACTIVE',
 		attributes = {
-			{text = "Summon a phoniex, spreads light beams all around itself."},
-			{text = 'Damage',data = function()return self.damage end},
-			{text = 'Shots',data = function()return self.shots end},
+			{text = LocalizedString"Summon a phoniex, spreads light beams all around itself."},
+			{text = LocalizedString'Damage',data = function()return self.damage end},
+			{text = LocalizedString'Shots',data = function()return self.shots end},
 		}
 	}
 end
@@ -351,11 +351,11 @@ end
 
 function MantraShield:getPanelData()
 	return{
-		title = "Mantra Shield",
-		type = 'ACTIVE',
+		title = LocalizedString"Mantra Shield",
+		type = LocalizedString'ACTIVE',
 		attributes = {
-			{text = "Creates a shield on the ground, reflects enemies' projectiles back to the enemies."},
-			{text = "Duration",data = self.duration},
+			{text = LocalizedString"Creates a shield on the ground, reflects enemies' projectiles back to the enemies."},
+			{text = LocalizedString"Duration",data = self.duration},
 		}
 	}
 end

@@ -29,10 +29,10 @@ end
 
 function b_Lotus:getPanelData()
 	return {
-		title = 'Lotus Revived',
-		type = 'Debuff',
+		title = LocalizedString'Lotus Revived',
+		type = LocalizedString'Debuff',
 		attributes = {
-			{text = 'You have revived.'}}
+			{text = LocalizedString'You have revived.'}}
 	}
 end
 function Lotus:initialize(x,y)
@@ -58,14 +58,14 @@ end
 
 function Lotus:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="Release inner serenity."},
-			{text="Upon receiving a deadly hit, restore life and energy"},
-			{data=self.cd,image=nil,text="Cooldown"},
-			{data=string.format("%.2f",self.hprestore*100)..'%',image=nil,text="HP Restoration"},
-			{data=string.format("%.2f",self.mprestore*100)..'%',image=nil,text="MP Restoration"},
+			{text=LocalizedString"Release inner serenity."},
+			{text=LocalizedString"Upon receiving a deadly hit, restore life and energy"},
+			{data=self.cd,image=nil,text=LocalizedString"Cooldown"},
+			{data=string.format("%.2f",self.hprestore*100)..'%',image=nil,text=LocalizedString"HP Restoration"},
+			{data=string.format("%.2f",self.mprestore*100)..'%',image=nil,text=LocalizedString"MP Restoration"},
 		--	{image=nil,text="Armor",data=self.armor},
 		}
 	}

@@ -27,12 +27,12 @@ AssassinCharacterPanel = Object:subclass('AssassinCharacterPanel')
 function AssassinCharacterPanel:initInventory()
 	local i = goo.inventory:new(self.container)
 	i:setPos(20,0)
-	i:setItemtype{'all','consumable','amplifier','trophy','artifact','weapon'}
+	i:setItemtype{LocalizedString'all',LocalizedString'consumable',LocalizedString'amplifier',LocalizedString'trophy',LocalizedString'artifact',LocalizedString'weapon'}
 	i:setInventory(self.unit.inventory)
 	local eq = goo.equipment:new(self.container)
 	eq:setPos(350,50)
 	eq:setInventory(self.unit.inventory)
-	eq:setItemtype{'consumable','amplifier','trophy','artifact','weapon'}
+	eq:setItemtype{LocalizedString'consumable',LocalizedString'amplifier',LocalizedString'trophy',LocalizedString'artifact',LocalizedString'weapon'}
 	local dp = goo.itempanel(self.container)
 	dp:setSize(230,200)
 	dp:setPos(screen.width-250,50)
@@ -60,7 +60,7 @@ function AssassinCharacterPanel:initInventory()
 	end
 	self.switchToSkill:setPos(screen.width - 200,screen.height - 100)
 	self.switchToSkill:setSize(150,30)
-	self.switchToSkill:setText'Switch to Skill'
+	self.switchToSkill:setText(LocalizedString'Switch to Skill')
 end
 function AssassinCharacterPanel:initialize(unit)
 	self.dt = 0
@@ -93,49 +93,49 @@ function AssassinCharacterPanel:initialize(unit)
 	self.attpanel:setPos(680,75)
 	self.attpanel:setSize(300)
 	self.attpanel:fillPanel({
-		title = 'RIVER',
-		type = 'Assassin',
+		title = LocalizedString'RIVER',
+		type = LocalizedString'Assassin',
 		attributes = {
-			{image = icontable.life,text='Hit Point',data=function()return string.format('%.1f',self.unit:getHP())..'/'..self.unit:getMaxHP() end},
-			{image = icontable.life,text='HP Regeneration',data=function()return self.unit.HPRegen end},
-			{image = icontable.life,text='Energy Point',data=function()return string.format('%.1f',self.unit:getMP())..'/'..self.unit:getMaxMP() end},
-			{image = icontable.life,text='Energy Regeneration',data=function()return self.unit.MPRegen end},
-			{image = icontable.weapon,text='Weapon Damage Bonus',data=
+			{image = icontable.life,text=LocalizedString'Hit Point',data=function()return string.format('%.1f',self.unit:getHP())..'/'..self.unit:getMaxHP() end},
+			{image = icontable.life,text=LocalizedString'HP Regeneration',data=function()return self.unit.HPRegen end},
+			{image = icontable.life,text=LocalizedString'Energy Point',data=function()return string.format('%.1f',self.unit:getMP())..'/'..self.unit:getMaxMP() end},
+			{image = icontable.life,text=LocalizedString'Energy Regeneration',data=function()return self.unit.MPRegen end},
+			{image = icontable.weapon,text=LocalizedString'Weapon Damage Bonus',data=
 			function()
 				local percent = self.unit.damageamplify.Bullet
 				percent = percent or 1
 				local bonus = self.unit.damagebuff.Bullet or 0
 				return '+'..bonus..'/'..string.format('%.1f',percent*100).."%" 
 			end},
-			{image = icontable.weapon,text='Mind Power Bonus',data=
+			{image = icontable.weapon,text=LocalizedString'Mind Power Bonus',data=
 			function()
 				local percent = self.unit.damageamplify.Mind
 				percent = percent or 1
 				local bonus = self.unit.damagebuff.Mind or 0
 				return '+'..bonus..'/'..string.format('%.1f',percent*100).."%" 
 			end},
-			{image = nil,text='Armor',data=
+			{image = nil,text=LocalizedString'Armor',data=
 			function()
 				local percent = self.unit.damagereduction.Bullet
 				percent = percent or 1
 				local bonus = self.unit.armor.Bullet or 0
 				return bonus..'/'..string.format('%.1f',percent*100).."%"
 			end},
-			{image = nil,text='Electric Resistance',data=
+			{image = nil,text=LocalizedString'Electric Resistance',data=
 			function()
 				local percent = self.unit.damagereduction.Electric
 				percent = percent or 1
 				local bonus = self.unit.armor.Electric or 0
 				return bonus..'/'..string.format('%.1f',percent*100).."%"
 			end},
-			{image = nil,text='Fire Resistance',data=
+			{image = nil,text=LocalizedString'Fire Resistance',data=
 			function()
 				local percent = self.unit.damagereduction.Fire
 				percent = percent or 1
 				local bonus = self.unit.armor.Fire or 0
 				return bonus..'/'..string.format('%.1f',percent*100).."%"
 			end},
-			{image = nil,text='Mind Power Resistance',data=
+			{image = nil,text=LocalizedString'Mind Power Resistance',data=
 			function()
 				local percent = self.unit.damagereduction.Mind
 				percent = percent or 1
@@ -143,7 +143,7 @@ function AssassinCharacterPanel:initialize(unit)
 				return bonus..'/'..string.format('%.1f',percent*100).."%"
 			end},
 			
-			{image = nil,text='Wave Resistance',data=
+			{image = nil,text=LocalizedString'Wave Resistance',data=
 			function()
 				local percent = self.unit.damagereduction.Wave
 				percent = percent or 1
@@ -151,13 +151,13 @@ function AssassinCharacterPanel:initialize(unit)
 				return bonus..'/'..string.format('%.1f',percent*100).."%"
 			end},
 			
-			{image = nil,text='Stability',data=
+			{image = nil,text=LocalizedString'Stability',data=
 			function()
 				local bonus = self.unit.mass or 0
 				return bonus
 			end},
 			
-			{image = nil,text='Critical Hit',data=
+			{image = nil,text=LocalizedString'Critical Hit',data=
 			function()
 				self.unit.critical = self.unit.critical or {2,0}
 				local d = self.unit.critical
@@ -165,7 +165,7 @@ function AssassinCharacterPanel:initialize(unit)
 				return string.format('%.1f',chance*100).."% chance deal "..amplify.." times damage"
 			end},
 			
-			{image = nil,text='Evade',data=
+			{image = nil,text=LocalizedString'Evade',data=
 			function()
 				local percent = self.unit.evade
 				percent = percent or 0

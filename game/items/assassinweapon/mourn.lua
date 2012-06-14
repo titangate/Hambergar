@@ -12,11 +12,11 @@ end
 
 function MournWeapon:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="M1911, The original Assassin weapon."},
-			{text = 'Basic Damage',data = function()
+			{text=LocalizedString"M1911, The original Assassin weapon."},
+			{text = LocalizedString'Basic Damage',data = function()
 				return 100
 			end}
 		}
@@ -152,3 +152,5 @@ function MomentumMournDWSMissile:draw()
 	love.graphics.draw(requireImage'assets/assassin/mornemissile.png',self.x,self.y,self.dt*10,0.5,0.5,48,48)
 	love.graphics.setColor(255,255,255,255)
 end
+
+return MournWeapon

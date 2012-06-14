@@ -12,11 +12,11 @@ end
 
 function TempestWeapon:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="M1911, The original Assassin weapon."},
-			{text = 'Basic Damage',data = function()
+			{text=LocalizedString"A weapon of fear and destruction"},
+			{text = LocalizedString'Basic Damage',data = function()
 				return 100
 			end}
 		}
@@ -33,7 +33,6 @@ end
 
 TempestEffect = ShootMissileEffect()
 TempestEffect:addAction(function(point,caster,skill,snipe)
---	print (caster,skill)
 	assert(skill)
 	assert(skill.bullettype)
 	local sx,sy
@@ -73,7 +72,6 @@ function Tempest:initialize(unit,level)
 end
 
 function Tempest:setMomentumBullet(state)
---	print ("Momentum",state)
 	if state then
 		self.bullettype = MomentumTempestMissile
 	else
@@ -83,12 +81,12 @@ end
 
 function Tempest:getPanelData()
 	return{
-		title = 'PISTOL',
-		type = 'PRIMARY WEAPON',
+		title = LocalizedString'PISTOL',
+		type = LocalizedString'PRIMARY WEAPON',
 		attributes = {
-			{text = "Purely awesome weapon."},
-			{text = 'Firerate (per second)',data = function()return  string.format('%.1f',1/self.casttime) end},
-			{text = 'Damage',data = function()return  self.damage end},
+			{text = LocalizedString"A weapon of fear and destruction."},
+			{text = LocalizedString'Firerate (per second)',data = function()return  string.format('%.1f',1/self.casttime) end},
+			{text = LocalizedString'Damage',data = function()return  self.damage end},
 		}
 	}
 end
@@ -192,7 +190,6 @@ function TempestMissile:draw()
 	love.graphics.setColor(255,255,255,255)
 end
 
-
 MomentumTempestMissile = MomentumBullet:subclass('MomentumTempestMissile')
 function MomentumTempestMissile:draw()
 	love.graphics.setColor(80,234,255,255)
@@ -200,3 +197,5 @@ function MomentumTempestMissile:draw()
 	love.graphics.draw(requireImage'assets/assassin/tempestflare.png',self.x,self.y,0,1,1,64,32)
 	love.graphics.setColor(255,255,255,255)
 end
+
+return TempestWeapon

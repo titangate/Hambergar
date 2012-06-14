@@ -34,14 +34,14 @@ end
 
 function FiveSlash:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="A symbol of courage and power."},
-			{data=self.HPregen,image=icontable.life,text="HP Regeneration"},
-			{data=self.MPregen,image=icontable.mind,text="Energy Regeneration"},
-			{image=nil,text="Damage Bonus",data=self.damage},
-			{image=nil,text="Armor",data=self.armor},
+			{text=LocalizedString"A symbol of courage and power."},
+			{data=self.HPregen,image=icontable.life,text=LocalizedString"HP Regeneration"},
+			{data=self.MPregen,image=icontable.mind,text=LocalizedString"Energy Regeneration"},
+			{image=nil,text=LocalizedString"Damage Bonus",data=self.damage},
+			{image=nil,text=LocalizedString"Armor",data=self.armor},
 		}
 	}
 end

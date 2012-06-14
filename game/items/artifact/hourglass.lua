@@ -22,11 +22,11 @@ end
 
 function Hourglass:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="A mystical hourglass that accelerate the time of its bearer."},
-			{data=self.timescale,image=nil,text="Increase bearer timescale"},
+			{text=LocalizedString"A mystical hourglass that accelerate the time of its bearer."},
+			{data=self.timescale,image=nil,text=LocalizedString"Increase bearer timescale"},
 		--	{image=nil,text="Armor",data=self.armor},
 		}
 	}
@@ -39,3 +39,5 @@ function Hourglass:draw(x,y)
 	if not x then x,y = self.body:getPosition() end
 	love.graphics.draw(img.hourglass,x,y,0,0.1875,0.1875,128,128)
 end
+
+return Hourglass

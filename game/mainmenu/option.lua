@@ -32,9 +32,9 @@ end
 height = height + 50
 local f_aimassist = function()
 	if options.aimassist then
-		return 'Disable aimassist'
+		return LocalizedString'Disable aimassist'
 	else
-		return 'Enable aimassist'
+		return LocalizedString'Enable aimassist'
 	end
 end
 
@@ -52,9 +52,9 @@ option:highlightitem(b_aimassist)
 height = height + 50
 local f_blureffect = function()
 	if options.blureffect then
-		return 'Disable blur effect'
+		return LocalizedString'Disable blur effect'
 	else
-		return 'Enable blur effect'
+		return LocalizedString'Enable blur effect'
 	end
 end
 

@@ -48,11 +48,13 @@ function FinalRadiance:use(unit)
 end
 function FinalRadiance:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="prevent deadly damage."},
-			{image=nil,text="Duration",data=self.time},
+			{text=LocalizedString"prevent deadly damage."},
+			{image=nil,text=LocalizedString"Duration",data=self.time},
 		}
 	}
 end
+
+return FinalRadiance

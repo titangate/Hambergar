@@ -59,7 +59,7 @@ function goo.imagelabel:textToSize()
 		imagew,imageh = self.image:getWidth(),self.image:getHeight()
 	end
 	local _font = self.font or self.style.textFont or love.graphics.getFont()
-	self.h = math.max(imageh,_font:getHeight()*select(2,_font:getWrap(self.text,self.w)))
+	self.h = math.max(imageh,_font:getHeight()*select(2,fontGetWrap(_font,self.text,self.w)))
 end
 
 return goo.imagelabel

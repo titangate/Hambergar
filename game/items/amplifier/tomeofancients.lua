@@ -22,11 +22,11 @@ end
 
 function TomeOfAncients:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="PUSHEEN IS AWESOME",image=icontable.quote},
-			{text="Decrease the ultimate cooldown by half. Ignore ultimate launch requirement."},
+			{text=LocalizedString"PUSHEEN IS AWESOME",image=icontable.quote},
+			{text=LocalizedString"Decrease the ultimate cooldown by half. Ignore ultimate launch requirement."},
 		}
 	}
 end

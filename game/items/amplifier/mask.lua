@@ -24,13 +24,13 @@ end
 
 function MaskOfBerserker:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="RRRRRAAAAAAAAHHHHHHHHH",image=icontable.quote},
-			{text="Removes offensive skills' cooldowns."},
-			{image=nil,text="Critical Hit Chance",data=string.format('%.1f',self.critchance*100)},
-			{image=nil,text="Critical Hit Damage",data=self.critdmg},
+			{text=LocalizedString"RRRRRAAAAAAAAHHHHHHHHH",image=icontable.quote},
+			{text=LocalizedString"Removes offensive skills' cooldowns."},
+			{image=nil,text=LocalizedString"Critical Hit Chance",data=string.format('%.1f',self.critchance*100)},
+			{image=nil,text=LocalizedString"Critical Hit Damage",data=self.critdmg},
 		}
 	}
 end

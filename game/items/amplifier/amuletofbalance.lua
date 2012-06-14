@@ -34,8 +34,8 @@ end
 
 function AmuletOfBalance:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
 			{text="Homage to infinite light."},
 			{data=self.HPregen,image=icontable.life,text="HP Regeneration"},

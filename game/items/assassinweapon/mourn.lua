@@ -152,3 +152,5 @@ function MomentumMournDWSMissile:draw()
 	love.graphics.draw(requireImage'assets/assassin/mornemissile.png',self.x,self.y,self.dt*10,0.5,0.5,48,48)
 	love.graphics.setColor(255,255,255,255)
 end
+
+return MournWeapon

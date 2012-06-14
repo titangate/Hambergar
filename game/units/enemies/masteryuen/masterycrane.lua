@@ -218,6 +218,19 @@ function CraneP2:geteffectinfo()
 	return GetOrderUnit(),self,self
 end
 
+
+b_craneinstant = Buff:subclass('b_InstantKill')
+function b_craneinstant:initialize()
+end
+function b_craneinstant:start(unit)
+	unit.damagereduction.Bullet = unit.damagereduction.Bullet or 1
+	unit.damagereduction.Bullet = unit.damagereduction.Bullet + 5
+end
+function b_craneinstant:stop(unit)
+	unit.damagereduction.Bullet = unit.damagereduction.Bullet - 5
+end
+
+
 CraneCircleP3 = Object:subclass'CraneCircleP3'
 
 function CraneCircleP3:initialize(unit,my)
@@ -236,6 +249,7 @@ function CraneCircleP3:initialize(unit,my)
 		})
 		map.anim:easy(self.image[i],'opacity',0,255,2)
 	end
+	unit:addBuff(b_craneinstant(),10)
 	self.real = math.random(7)
 	Timer(1,7,function(timer)
 		if #self.image < 1 then
@@ -305,6 +319,7 @@ function CraneCircleP3:strike()
 		wait(0.7)
 		map:removeUpdatable(self)
 		map.camera = self.camera
+		self.unit:removeBuff(b_craneinstant)
 --		table.remove(self.image,i)
 	end):run()
 	self.my.ai:pause(false)

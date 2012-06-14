@@ -37,3 +37,5 @@ function Cloak:draw(x,y)
 	if not x then x,y = self.body:getPosition() end
 	love.graphics.draw(img.Cloak,x,y,0,0.1875,0.1875,128,128)
 end
+
+return Cloak

@@ -111,8 +111,12 @@ function Unit:damage(t,amount,source)
 		end
 	end
 	local crit
-	if type(amount)=='table' and source~=self then
-		amount,crit = unpack(amount)
+	if type(amount)=='table'  then
+		if source==self then
+			amount = amount[1]
+		else
+			amount,crit = unpack(amount)
+		end
 	end
 	if self.hp then
 		if self.armor[t] then

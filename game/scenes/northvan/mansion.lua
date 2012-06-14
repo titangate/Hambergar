@@ -242,6 +242,7 @@ function Mansion:phase5()
 	map:addUnit(KoD)
 	SetCharacter(KoD)
 	map.camera = FollowerCamera(KoD)
+	GetGameSystem():reloadBottompanel()
 --	require 'scenes.northvan.riverrevives'()
 	
 	PlayMusic'music/riverrise.mp3'
@@ -294,7 +295,7 @@ function Mansion:rise1()
 	armywave:registerEventType'death'
 	armywave:run({})
 	self.armywave = armywave
-	GetCharacter().HPRegen = 1000
+--	GetCharacter().HPRegen = 1000
 end
 
 function Mansion:rise2()
@@ -349,8 +350,12 @@ function scenetest()
 	PlayMusic'music/berserker.mp3'
 	GetGameSystem().bossbar = AssassinHPBar:new(function()return my:getHPPercent() end,screen.halfwidth-400,screen.height-100,800)
 	local self = my
-	map:addUnit(TempestWeapon(100,0))
-	my:enableAI()
+	loadAllItems(GetCharacter())
+	local p = HealthPotion()
+	GetCharacter():pickUp(p,10)
+--	map:addUnit(TempestWeapon(100,0))
+--	my:enableAI()
+	my.ai = my:phase3()
 --	my.ai = my:phase4()
 	--map:phase4()
 	--map:rise5()

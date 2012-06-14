@@ -29,3 +29,5 @@ end
 function Paddle:draw(x,y)
 	love.graphics.draw(requireImage'assets/item/paddle.png',x,y,r,1,1,20,32)
 end
+
+return Paddle

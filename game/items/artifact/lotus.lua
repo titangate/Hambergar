@@ -52,7 +52,6 @@ end
 
 function Lotus:unequip(unit)
 	super.unequip(self,unit)
-	unit.timescale = unit.timescale - self.timescale
 	unit:lotus()
 end
 
@@ -78,3 +77,5 @@ function Lotus:draw(x,y)
 	if not x then x,y = self.body:getPosition() end
 	love.graphics.draw(img.Lotus,x,y,0,0.1875,0.1875,128,128)
 end
+
+return Lotus

@@ -32,37 +32,6 @@ function HealthPotion:use(unit)
 	unit:addBuff(b_HealthPotion:new(self.hpregen),self.time)
 	return true
 end
-
-function HealthPotion:fillPanel(panel)
-	panel:addItem(DescriptionAttributeItem:new(function()
-		return self.name end,
-		panel.w,30))
-	panel:addItem(DescriptionAttributeItem:new(function()
-		return "CONSUMABLE" end,
-		panel.w,20))
-	panel:addItem(DescriptionAttributeItem:new(function()
-		return "Increase HP Regeneration within a period of time." end,
-		panel.w,45))
-	panel:addItem(SimpleAttributeItem:new(
-		function()
-		return self.hpregen end,
-		function()
-		return "HP Regeneration" end,
-		'life',panel.w))
-	panel:addItem(SimpleAttributeItem:new(
-		function()
-		return self.time end,
-		function()
-		return "Duration" end,
-		nil,panel.w))
-	panel:addItem(SimpleAttributeItem:new(
-		function()
-		return self.cd end,
-		function()
-		return "Cooldown" end,
-		nil,panel.w))
-end
-
 function HealthPotion:getPanelData()
 	return {
 		title = self.name,
@@ -83,6 +52,8 @@ function HealthPotion:draw(x,y)
 	if not x then x,y = self.body:getPosition() end
 	love.graphics.draw(requireImage'assets/item/potionred.png',x,y,0,0.375,0.375,64,64)
 end
+
+return HealthPotion
 --[[
 BigHealthPotion = HealthPotion:subclass('BigHealthPotion')
 function BigHealthPotion:initialize(x,y)

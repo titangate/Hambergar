@@ -56,3 +56,5 @@ function FinalRadiance:getPanelData()
 		}
 	}
 end
+
+return FinalRadiance

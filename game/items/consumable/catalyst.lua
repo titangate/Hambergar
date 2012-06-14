@@ -65,3 +65,5 @@ end
 
 function Catalyst:update(dt)
 end
+
+return Catalyst

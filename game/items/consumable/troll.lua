@@ -4,7 +4,7 @@ function b_Troll:initialize()
 	self.icon = requireImage'assets/buff/troll.png'
 	self.genre = 'buff'
 	self.p = particlemanager.getsystem'troll'
-	self.p:setLifetime(17)
+	self.p:setLifetime(3600)
 	self.p:start()
 end
 
@@ -49,3 +49,5 @@ function TrollPotion:getPanelData()
 		}
 	}
 end
+
+return TrollPotion

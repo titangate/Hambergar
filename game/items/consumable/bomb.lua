@@ -119,3 +119,5 @@ function Bomb:draw(x,y)
 	if not x then x,y = self.body:getPosition() end
 	love.graphics.draw(img.bomb,x,y,0,1,1,24,24)
 end
+
+return Bomb

@@ -108,3 +108,15 @@ function ItemSlot:draw()
 	love.graphics.draw(img.slotimg,self.x+self.w/2,self.y+self.h/2,0,1,1,32,32)
 	love.graphics.setColor(255,255,255,255)
 end
+
+itemlist = {}
+
+
+function loadAllItems(chr)
+	for i,v in ipairs(itemlist) do
+		local b = v()
+		print (b.class,'about to pickup')
+		if b then chr:pickUp(b) end
+	end
+end
+

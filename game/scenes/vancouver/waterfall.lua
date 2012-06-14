@@ -156,4 +156,8 @@ function scenetest()
 	map:addUnit(u)
 	u = IALSwordsman(0,-300,'enemy')
 	map:addUnit(u)
+	u = RingOfFire(0,0)
+	map:addUnit(u)
+	u = DragonicShield(0,0)
+	map:addUnit(u)
 end

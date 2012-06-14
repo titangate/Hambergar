@@ -11,9 +11,11 @@ function InventoryBase:initialize(unit)
 end
 
 function InventoryBase:addItem(item,stack)
+	assert(item)
 	local t=item.type
 	local n=item.name
 	stack = stack or 1
+	assert(t)
 	self.items[t]=self.items[t] or {}
 	if self.items[t][n] then
 		self.items[t][n].stack = self.items[t][n].stack+stack

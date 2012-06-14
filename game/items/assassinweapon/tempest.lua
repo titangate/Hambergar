@@ -33,7 +33,6 @@ end
 
 TempestEffect = ShootMissileEffect()
 TempestEffect:addAction(function(point,caster,skill,snipe)
---	print (caster,skill)
 	assert(skill)
 	assert(skill.bullettype)
 	local sx,sy
@@ -73,7 +72,6 @@ function Tempest:initialize(unit,level)
 end
 
 function Tempest:setMomentumBullet(state)
---	print ("Momentum",state)
 	if state then
 		self.bullettype = MomentumTempestMissile
 	else
@@ -192,7 +190,6 @@ function TempestMissile:draw()
 	love.graphics.setColor(255,255,255,255)
 end
 
-
 MomentumTempestMissile = MomentumBullet:subclass('MomentumTempestMissile')
 function MomentumTempestMissile:draw()
 	love.graphics.setColor(80,234,255,255)
@@ -200,3 +197,5 @@ function MomentumTempestMissile:draw()
 	love.graphics.draw(requireImage'assets/assassin/tempestflare.png',self.x,self.y,0,1,1,64,32)
 	love.graphics.setColor(255,255,255,255)
 end
+
+return TempestWeapon

@@ -182,3 +182,4 @@ function PistolDWSAlt:setLevel(lvl)
 	self.level = lvl
 end
 
+return Theravada

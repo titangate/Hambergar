@@ -45,3 +45,4 @@ function BookOfJester:draw(x,y)
 	if not x then x,y = self.body:getPosition() end
 	love.graphics.draw(img.feather,x,y,0,1,1,24,24)
 end
+return BookOfJester

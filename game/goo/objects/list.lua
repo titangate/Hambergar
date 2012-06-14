@@ -11,6 +11,7 @@ end
 function goo.list:setSkin()
 end
 function goo.list:update(dt)
+	
 	super.update(self,dt)
 end
 function goo.list:draw( x, y )
@@ -73,6 +74,7 @@ function goo.list:mousepressed(x,y,menuitem)
 		end
 	end
 end
+
 function goo.list:setPos( x, y )
 	super.setPos(self, x, y)
 	self:updateBounds()
@@ -110,10 +112,11 @@ function goo.list:removeItem(key)
 	self:setSize(self.h - i.h - self.style.vertSpacing)
 end
 function goo.list:mousepressed(x,y,k)
+--	print (math.min(math.max(self.y-10,self.parent.h-self.h),0))
 	if k=='wd' then
-		self:setPos(self.x,math.min(math.max(self.y-10,self.parent.h-self.h),0)) -- restrain within container
+		self:setPos(self.x,self.y-10)--math.min(math.max(self.y-10,self.parent.h-self.h),0)) -- restrain within container
 	elseif k=='wu' then
-		self:setPos(self.x,math.min(math.max(self.y+10,self.parent.h-self.h),0))
+		self:setPos(self.x,self.y+10)--math.min(math.max(self.y+10,self.parent.h-self.h),0))
 	end
 end
 

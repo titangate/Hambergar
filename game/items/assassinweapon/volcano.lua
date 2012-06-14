@@ -39,6 +39,7 @@ function CVolcanoWeapon:initialize(x,y)
 	super.initialize(self,'Assassin',x,y)
 	self:setSkill(CVolcano)
 	self.name = 'The CVolcano'
+	print (self.type,'cvolcanotype')
 end
 
 function CVolcanoWeapon:drawBody(x,y,r)
@@ -185,3 +186,5 @@ function MomentumCVolcanoMissile:draw()
 	love.graphics.draw(requireImage'assets/assassin/tempestflare.png',self.x,self.y,0,1,1,64,32)
 	love.graphics.setColor(255,255,255,255)
 end
+
+return CVolcanoWeapon

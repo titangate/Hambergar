@@ -218,6 +218,7 @@ SevenSidedStrikeEffect:addAction(function(point,caster,skill)
 				caster.body:setPosition(b.x-x,b.y-y)
 				caster.x,caster.y = b.x-x,b.y-y
 --				caster.skills.kickp1.effect:effect({normalize(x,y)},caster,caster.skills.kickp1)
+				b:damage('Mind',skill.damage,caster)
 				caster:skilleffect(caster.skills.melee)
 				self:setAngle(angle)
 				if timer.count <= 1 then
@@ -240,6 +241,7 @@ function SevenSidedStrike:initialize(unit)
 	self.available = true
 	self.movementspeedbuffpercent = 12
 	self.manacost = 30
+	self.damage = 100
 end
 
 function SevenSidedStrike:stop()
@@ -250,7 +252,6 @@ function SevenSidedStrike:active()
 	if self:isCD() then
 		return false,'Ability Cooldown'
 	end
-	
 	if self.unit:getMP()<self.manacost then
 		return false,'Not enough MP'
 	end

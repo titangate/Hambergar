@@ -12,7 +12,8 @@ function Weapon:equip(unit)
 --		GetGameSystem():reloadBottompanel()
 --	end
 --	if self.char == 'Assassin' or self.char == 'KingOfDragons' then
-		self.skill:setMomentumBullet(unit.skills.momentumbullet:getLevel()>0)
+	print (unit.skills.momentumbullet:getLevel()>0)
+	self.skillinst:setMomentumBullet(unit.skills.momentumbullet:getLevel()>0)
 --	end
 end
 

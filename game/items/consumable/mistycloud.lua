@@ -55,3 +55,5 @@ function MistyCloud:getPanelData()
 		}
 	}
 end
+
+return MistyCloud

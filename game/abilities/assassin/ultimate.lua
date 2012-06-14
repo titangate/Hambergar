@@ -150,3 +150,22 @@ function DWS:setLevel(lvl)
 	self.level = lvl
 end
 
+DWSActor = Object:subclass'DWSActor'
+
+function DWSActor:initialize(sprite,x,y,r,vx,vy)
+	self.sprite = sprite
+	self.vx,self.vy = vx,vy
+	self.x,self.y = x,y
+	self.r = r
+	self.opacity = 0
+	self.shake = 20
+	map.anim:easy(self,'x',self.x,self.x+vx,1)
+	map.anim:easy(self,'opacity',100,200,1)
+	map.anim:easy(self,'shake',self.shake,0,0.5)
+end
+function DWSActor:update()
+end
+function DWSActor:draw()
+	love.graphics.draw(self.sprite,self.x,self.y,self.r,1,1,self.shake*math.random()+self.sprite:getWidth()/2,
+	self.shake*math.random()+self.sprite:getHeight()/2)
+end

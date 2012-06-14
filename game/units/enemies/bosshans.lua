@@ -257,9 +257,9 @@ function VolcanoActor:update(dt)
 end
 
 function VolcanoActor:draw()
-	love.graphics.setColors(255,255,255,math.min(3-self.dt,1)*255)
+	love.graphics.setColor(255,255,255,math.min(3-self.dt,1)*255)
 	love.graphics.draw(img.volcano,self.x,self.y,self.r,1,1,128,128)
-	love.graphics.setColors(255,255,255,255)
+	love.graphics.setColor(255,255,255,255)
 	love.graphics.draw(self.p)
 end
 

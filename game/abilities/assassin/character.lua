@@ -27,12 +27,12 @@ AssassinCharacterPanel = Object:subclass('AssassinCharacterPanel')
 function AssassinCharacterPanel:initInventory()
 	local i = goo.inventory:new(self.container)
 	i:setPos(20,0)
-	i:setItemtype{LocalizedString'all',LocalizedString'consumable',LocalizedString'amplifier',LocalizedString'trophy',LocalizedString'artifact',LocalizedString'weapon'}
+	i:setItemtype{'all','consumable','amplifier','trophy','artifact','weapon'}
 	i:setInventory(self.unit.inventory)
 	local eq = goo.equipment:new(self.container)
 	eq:setPos(350,50)
 	eq:setInventory(self.unit.inventory)
-	eq:setItemtype{LocalizedString'consumable',LocalizedString'amplifier',LocalizedString'trophy',LocalizedString'artifact',LocalizedString'weapon'}
+	eq:setItemtype{'consumable','amplifier','trophy','artifact','weapon'}
 	local dp = goo.itempanel(self.container)
 	dp:setSize(230,200)
 	dp:setPos(screen.width-250,50)

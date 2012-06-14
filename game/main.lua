@@ -10,7 +10,7 @@ options = {
 	usecontroller = false, -- unimplemented
 	blureffect = true, -- unimplemented
 	particlerate = 1,
-	localization = 'chr',
+	localization = 'eng',
 }
 
 setLocalization(options.localization)

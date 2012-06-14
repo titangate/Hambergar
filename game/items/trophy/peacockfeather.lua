@@ -29,8 +29,8 @@ end
 
 function PeacockFeather:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
 			{text="Given as a token of graditute by one of River's greatest companion."},
 			{data=self.maxhp,image=icontable.life,text="HP Bonus"},

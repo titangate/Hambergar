@@ -20,7 +20,7 @@ local b_continue = nil
 if love.filesystem.exists('checkpoint') then
 	b_continue = goo.menuitem:new( mainmenu )
 	b_continue:setPos( 10, height )
-	b_continue:setText( 'Continue' )
+	b_continue:setText( LocalizedString'Continue' )
 	b_continue:sizeToText()
 	b_continue.onClick = function(self,button)
 		mainmenu:onClose()
@@ -38,7 +38,7 @@ end
 height = height + 50
 local b_startgame = goo.menuitem:new( mainmenu )
 b_startgame:setPos( 10, height )
-b_startgame:setText( 'Demo 1' )
+b_startgame:setText( LocalizedString'Demo 1' )
 b_startgame:sizeToText()
 b_startgame.onClick = function( self, button )
 	require 'scenes.tibet.tibet'
@@ -56,7 +56,7 @@ height = height + 50
 
 local b_grid = goo.menuitem:new( mainmenu )
 b_grid:setPos( 10, height )
-b_grid:setText( 'Demo 2' )
+b_grid:setText( LocalizedString'Demo 2' )
 b_grid:sizeToText()
 b_grid.onClick = function( self, button )
 	
@@ -75,7 +75,7 @@ height = height + 50
 
 local b_test = goo.menuitem:new( mainmenu )
 b_test:setPos( 10, height )
-b_test:setText( 'vancouver test' )
+b_test:setText( LocalizedString'vancouver test' )
 b_test:sizeToText()
 b_test.onClick = function( self, button )
 	require 'scenes.northvan.mansion'
@@ -94,7 +94,7 @@ height = height + 50
 
 local b_test = goo.menuitem( mainmenu )
 b_test:setPos( 10, height )
-b_test:setText( 'King of dragons' )
+b_test:setText( LocalizedString'King of dragons' )
 b_test:sizeToText()
 b_test.onClick = function( self, button )
 	require 'scenes.vancouver.waterfall'
@@ -112,7 +112,7 @@ height = height + 50
 
 local b_option = goo.menuitem:new( mainmenu )
 b_option:setPos( 10, height )
-b_option:setText( 'Options' )
+b_option:setText( LocalizedString'Options' )
 b_option:sizeToText()
 b_option.onClick = function(self,button)
 	anim:easy( mainmenu, 'opacity', 255, 0, 1, 'quadInOut')
@@ -125,7 +125,7 @@ end
 height = height + 50
 local b_editor = goo.menuitem:new ( mainmenu)
 b_editor:setPos(10,height)
-b_editor:setText('SEATTLE')
+b_editor:setText(LocalizedString'SEATTLE')
 b_editor:sizeToText()
 b_editor.onClick = function(self,button)
 	require 'scenes.seattle.seattle'
@@ -142,7 +142,7 @@ end
 height = height + 50
 local b_quit = goo.menuitem:new( mainmenu )
 b_quit:setPos( 10, height )
-b_quit:setText( "Quit Game" )
+b_quit:setText( LocalizedString"Quit Game" )
 b_quit:sizeToText()
 b_quit.onClick = function (self,button)
 	love.event.push('q')

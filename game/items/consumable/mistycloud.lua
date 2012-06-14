@@ -47,11 +47,11 @@ function MistyCloud:use(unit)
 end
 function MistyCloud:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="Temperarily increase evasion."},
-			{image=nil,text="Dodge",data=string.format('%.1f',self.evade*100)},
+			{text=LocalizedString"Temperarily increase evasion."},
+			{image=nil,text=LocalizedString"Dodge",data=string.format('%.1f',self.evade*100)},
 		}
 	}
 end

@@ -11,8 +11,8 @@ end
 
 function StationKeycard:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
 			{text="It says on the back:reh dnif reven lluoy. I don't think I know what it means."},
 		}

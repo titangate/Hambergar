@@ -21,11 +21,11 @@ end
 
 function Cloak:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="Justice be served.",image = icontable.quote},
-			{text="Decrease all negative buffs' druations by half."},
+			{text=LocalizedString"Justice be served.",image = icontable.quote},
+			{text=LocalizedString"Decrease all negative buffs' druations by half."},
 		}
 	}
 end

@@ -52,7 +52,7 @@ function goo.panel:draw( x, y )
 	love.graphics.setLine(1, 'smooth')
 	love.graphics.line( 0, 8, self.w, 8)
 	self:setColor( self.style.titleColor )
-	love.graphics.setFont( self.style.titleFont )
+	sfn( self.style.titleFont )
 	love.graphics.print( self.title, 0, -12)
 end
 function goo.panel:mousepressed(x,y,button)

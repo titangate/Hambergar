@@ -128,6 +128,7 @@ function FilterManager:draw(drawfunc)
 			love.graphics.setCanvas(mask)
 			love.graphics.setBackgroundColor(0,0,0,0)
 			love.graphics.clear()
+			
 			map.camera:apply()
 			for i,v in ipairs(request) do
 				v()

@@ -42,10 +42,10 @@ function TrollPotion:use(unit)
 end
 function TrollPotion:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="U MAD BRO?"},
+			{text=LocalizedString"U MAD BRO?"},
 		}
 	}
 end

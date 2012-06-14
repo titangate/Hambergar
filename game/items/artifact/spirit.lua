@@ -21,8 +21,8 @@ end
 
 function Spirit:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
 			{text="A mystical Spirit that accelerate the time of its bearer."},
 			{data=self.timescale,image=nil,text="Increase bearer timescale"},

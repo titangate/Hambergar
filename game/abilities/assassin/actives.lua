@@ -34,12 +34,12 @@ end
 
 function Stim:getPanelData()
 	return{
-		title = 'STIM',
-		type = 'ACTIVE',
+		title = LocalizedString'STIM',
+		type = LocalizedString'ACTIVE',
 		attributes = {
-			{text = 'Use vitality power to strength assassin for a short period of time. Lose 20% of Maximum HP to initiate. Cannot initiate if your HP if below 20%.'},
-			{text = 'Movement Speed',data = function() return string.format('+%.1f',self.movementspeedbuffpercent*100) end},
-			{text = 'Skill Speed',data = function() return string.format('+%.1f',self.spellspeedbuffpercent*100) end},
+			{text = LocalizedString'Use vitality power to strength assassin for a short period of time. Lose 20% of Maximum HP to initiate. Cannot initiate if your HP if below 20%.'},
+			{text = LocalizedString'Movement Speed',data = function() return string.format('+%.1f',self.movementspeedbuffpercent*100) end},
+			{text = LocalizedString'Skill Speed',data = function() return string.format('+%.1f',self.spellspeedbuffpercent*100) end},
 		}
 	}
 end
@@ -103,12 +103,12 @@ end
 
 function RoundaboutShot:getPanelData()
 	return{
-		title = 'SPRIAL',
-		type = 'ACTIVE',
+		title = LocalizedString'SPRIAL',
+		type = LocalizedString'ACTIVE',
 		attributes = {
-			{text = 'Use your mindpower to create a powerful roundabout shot at all direction. The shot inherent your pistol upgrades.'},
-			{text = 'Shots',data = function()return self.shots end},
-			{text = 'Mindpower cost',data = function()return self.manacost end,image = icontable.mind}
+			{text = LocalizedString'Use your mindpower to create a powerful roundabout shot at all direction. The shot inherent your pistol upgrades.'},
+			{text = LocalizedString'Shots',data = function()return self.shots end},
+			{text = LocalizedString'Mindpower cost',data = function()return self.manacost end,image = icontable.mind}
 		}
 	}
 end
@@ -184,10 +184,10 @@ end
 
 function Dash:getPanelData()
 	return{
-		title = 'DASH',
-		type = 'ACTIVE',
+		title = LocalizedString'DASH',
+		type = LocalizedString'ACTIVE',
 		attributes = {
-			{text = 'Dash for a short distance to avoid incoming attack.'},
+			{text = LocalizedString'Dash for a short distance to avoid incoming attack.'},
 		}
 	}
 end
@@ -292,10 +292,10 @@ end
 
 function b_Invis:getPanelData()
 	return {
-		title = 'Invisibility',
-		type = 'Buff',
+		title = LocalizedString'Invisibility',
+		type = LocalizedString'Buff',
 		attributes = {
-			{text = "You have vanished from enemys' sights."}}
+			{text = LocalizedString"You have vanished from enemys' sights."}}
 	}
 end
 
@@ -344,11 +344,11 @@ end
 
 function Invis:getPanelData()
 	return{
-		title = 'INVISIBILITY',
-		type = 'ACTIVE',
+		title = LocalizedString'INVISIBILITY',
+		type = LocalizedString'ACTIVE',
 		attributes = {
-			{text = 'Use mindpower to generate a spiritual mist, hallucinate enemies and grant yourself invisibility. Using any skill or item will cancel your invisibility. The first strike you fire with invisibility will be a garanteed critical strike'},
-			{text = 'Duration',data = function()return self.invistime end}
+			{text = LocalizedString'Use mindpower to generate a spiritual mist, hallucinate enemies and grant yourself invisibility. Using any skill or item will cancel your invisibility. The first strike you fire with invisibility will be a garanteed critical strike.'},
+			{text = LocalizedString'Duration',data = function()return self.invistime end}
 		}
 	}
 end

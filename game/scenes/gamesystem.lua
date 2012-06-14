@@ -168,8 +168,8 @@ function GameSystem:drawBuffs(buffs)
 			love.graphics.setColor(255,255,255,255)
 			love.graphics.draw(v.icon,startx,y,0,length/rw,length/rh,rw/2,rh/2)
 			love.graphics.setColor(0,0,0,255)
-			love.graphics.setFont(fonts.oldsans12)
-			love.graphics.printf(string.format("%.1f",duration),startx-length/2,y+15,36,'center')
+			sfn(fonts.oldsans12)
+			pfn(string.format("%.1f",duration),startx-length/2,y+15,36,'center')
 			startx = startx + 36
 		end
 	end

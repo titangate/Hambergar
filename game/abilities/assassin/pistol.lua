@@ -16,17 +16,17 @@ end
 
 function WeaponMastery:getPanelData()
 	return{
-		title = 'Weapon Mastery',
-		type = 'PRIMARY WEAPON',
+		title = LocalizedString'Weapon Mastery',
+		type = LocalizedString'PRIMARY WEAPON',
 		attributes = {
-			{text = "Increase the effect of your weapon."},
+			{text = LocalizedString"Increase the effect of your weapon."},
 			--{text = 'Firerate (per second)',data = function()return  string.format('%.1f',1/self.casttime) end},
-			{text = 'DPS',data = function()
+			{text = LocalizedString'DPS',data = function()
 				local s = self.unit.skills.weaponskill
 				if s.damage then
 					return  string.format("%.2f",s.damage/s.casttime) 
 				else
-					return 'N/A'
+					return LocalizedString'N/A'
 				end
 			end},
 		}
@@ -105,11 +105,11 @@ end
 
 function StunBullet:getPanelData()
 	return{
-		title = 'STUN BULLET',
-		type = 'PASSIVE',
+		title = LocalizedString'STUN BULLET',
+		type = LocalizedString'PASSIVE',
 		attributes = {
-			{text = "Assassin inject mindpower into his bullets, chance to stun enemy."},
-			{text = 'Chance',data = function()return  string.format('%.1f',self.stunchance*100) end},
+			{text = LocalizedString"Assassin inject mindpower into his bullets, chance to stun enemy."},
+			{text = LocalizedString'Chance',data = function()return  string.format('%.1f',self.stunchance*100) end},
 		}
 	}
 end
@@ -137,41 +137,14 @@ end
 
 function ExplosiveBullet:getPanelData()
 	return{
-		title = 'EXPLOSIVE BULLET',
-		type = 'PASSIVE',
+		title = LocalizedString'EXPLOSIVE BULLET',
+		type = LocalizedString'PASSIVE',
 		attributes = {
-			{text = "Assassin inject mindpower into his bullets, chance to stun enemy."},
-			{text = 'Chance',data = function()return  string.format('%.1f',self.explosivechance*100) end},
-			{text = 'Impact Force',data = function()return  self.impactforce end},
+			{text = LocalizedString"Assassin tweaks his ammo, make them possible to create a small area impact in target area."},
+			{text = LocalizedString'Chance',data = function()return  string.format('%.1f',self.explosivechance*100) end},
+			{text = LocalizedString'Impact Force',data = function()return  self.impactforce end},
 		}
 	}
-end
-
-function ExplosiveBullet:fillAttPanel(panel)
-	panel:addItem(DescriptionAttributeItem:new(function()
-		return "EXPLOSIVE BULLET" end,
-		panel.w,30))
-	panel:addItem(DescriptionAttributeItem:new(function()
-		return "Assassin tweaks his ammo, make them possible to create a small area impact in target area." end,
-		panel.w,30))
-	panel:addItem(SimpleAttributeItem:new(
-		function()
-		return string.format('%.1f%%',self.explosivechance*100) end,
-		function()
-		return "Chance" end,
-		nil,panel.w))
-	panel:addItem(SimpleAttributeItem:new(
-		function()
-		return self.impactforce end,
-		function()
-		return "Impact Force" end,
-		nil,panel.w))
-	panel:addItem(SimpleAttributeItem:new(
-		function()
-		return self.level end,
-		function()
-		return "Current Level" end,
-		nil,panel.w))
 end
 
 AbsoluteMomentum = Skill:subclass('AbsoluteMomentum')
@@ -194,10 +167,10 @@ end
 
 function AbsoluteMomentum:getPanelData()
 	return{
-		title = 'ABSOLUTE MOMENTUM',
-		type = 'PASSIVE',
+		title = LocalizedString'ABSOLUTE MOMENTUM',
+		type = LocalizedString'PASSIVE',
 		attributes = {
-			{text = "Every bullet you fire will possess absolute momentum, penetrating your enemies non-stopping."},
+			{text = LocalizedString"Every bullet you fire will possess absolute momentum, penetrating your enemies non-stopping."},
 		}
 	}
 end

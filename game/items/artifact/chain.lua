@@ -21,11 +21,11 @@ end
 
 function PrayerBeads:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="A jug fills drop by drop.",image = icontable.quote},
-			{text="Decrease Dash cooldown and cost by half."},
+			{text=LocalizedString"A jug fills drop by drop.",image = icontable.quote},
+			{text=LocalizedString"Decrease Dash cooldown and cost by half."},
 		}
 	}
 end

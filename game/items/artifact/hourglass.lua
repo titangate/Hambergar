@@ -22,11 +22,11 @@ end
 
 function Hourglass:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="A mystical hourglass that accelerate the time of its bearer."},
-			{data=self.timescale,image=nil,text="Increase bearer timescale"},
+			{text=LocalizedString"A mystical hourglass that accelerate the time of its bearer."},
+			{data=self.timescale,image=nil,text=LocalizedString"Increase bearer timescale"},
 		--	{image=nil,text="Armor",data=self.armor},
 		}
 	}

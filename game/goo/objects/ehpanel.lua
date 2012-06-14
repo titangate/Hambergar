@@ -43,10 +43,10 @@ end
 function goo.ehpanel:draw()
 	super.draw(self)
 --	love.graphics.setColor(self.style.backgroundColor)
-	love.graphics.setFont( self.style.titleFont )
+	sfn( self.style.titleFont )
 	
 	self:drawbox(0,-self.titleHeight)
-	love.graphics.printf( self.title, 0,-self.titleHeight ,self.w,'center')
+	pfn( self.title, 0,-self.titleHeight ,self.w,'center')
 end
 function goo.ehpanel:mousepressed(x,y,button)
 	super.mousepressed(self,x,y,button)
@@ -62,7 +62,7 @@ function goo.ehpanel:mousereleased(x,y,button)
 end
 function goo.ehpanel:setTitle( title )
 	self.title = title
-	self.titleHeight = self.style.titleFont:getHeight()*select(2, self.style.titleFont:getWrap(self.title,self.w))
+	self.titleHeight = self.style.titleFont:getHeight()*select(2, fontGetWrap(self.style.titleFont,self.title,self.w))
 end
 function goo.ehpanel:setPos( x, y )
 	super.setPos(self, x, y)

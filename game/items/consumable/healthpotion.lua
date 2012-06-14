@@ -34,13 +34,13 @@ function HealthPotion:use(unit)
 end
 function HealthPotion:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="Increase HP Regeneration within a period of time."},
-			{data=self.hpregen,image=icontable.life,text="HP Regeneration"},
-			{image=nil,text="Duration",data=self.time},
-			{image=nil,text="Cooldown",data=self.cd},
+			{text=LocalizedString"Increase HP Regeneration within a period of time."},
+			{data=self.hpregen,image=icontable.life,text=LocalizedString"HP Regeneration"},
+			{image=nil,text=LocalizedString"Duration",data=self.time},
+			{image=nil,text=LocalizedString"Cooldown",data=self.cd},
 		}
 	}
 end

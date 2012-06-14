@@ -100,8 +100,8 @@ end
 
 function Bomb:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
 			{text="Damage units in area and push them away from the center."},
 			{data=self.damage,image=nil,text="Damage"},

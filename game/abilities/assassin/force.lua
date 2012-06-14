@@ -110,11 +110,11 @@ end
 
 function Snipe:getPanelData()
 	return{
-		title = 'Snipe',
-		type = 'ACTIVE',
+		title = LocalizedString'Snipe',
+		type = LocalizedString'ACTIVE',
 		attributes = {
-			{text = 'Fire a devastating shot.'},
-			{text = 'Damage',data = function()return string.format("%1.f",self.damageamplify*100)..'% weapon damage' end,image = icontable.weapon},
+			{text = LocalizedString'Fire a devastating shot.'},
+			{text = LocalizedString'Damage',data = function()return string.format("%1.f",self.damageamplify*100)..'% weapon damage' end,image = icontable.weapon},
 		}
 	}
 end

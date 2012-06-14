@@ -30,9 +30,9 @@ function goo.itembutton:draw()
 		if self.item.getCDPercent then
 			DrawCD(32,32,self.item:getCDPercent(GetCharacter()))
 		end
-		love.graphics.setFont(self.style.titleFont)
+		sfn(self.style.titleFont)
 		love.graphics.print(self.item.name,80,10)
-		love.graphics.setFont(self.style.descriptionFont)
+		sfn(self.style.descriptionFont)
 		love.graphics.print(self.item:getQuickInfo(),80,40)
 	end
 end

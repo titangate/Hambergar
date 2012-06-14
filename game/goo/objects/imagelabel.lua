@@ -33,11 +33,11 @@ function goo.imagelabel:draw( x, y )
 	end
 	local c = self.textcolor or self.style.textColor
 	self:setColor( c )
-	love.graphics.setFont(self.font or self.style.textFont)
+	sfn(self.font or self.style.textFont)
 	if self.image then
-		love.graphics.printf( self.text, x+self.image:getWidth(), y,self.w,self.align)
+		pfn( self.text, x+self.image:getWidth(), y,self.w,self.align)
 	else
-		love.graphics.printf(self.text,x,y,self.w,self.align)
+		pfn(self.text,x,y,self.w,self.align)
 	end
 end
 
@@ -59,7 +59,7 @@ function goo.imagelabel:textToSize()
 		imagew,imageh = self.image:getWidth(),self.image:getHeight()
 	end
 	local _font = self.font or self.style.textFont or love.graphics.getFont()
-	self.h = math.max(imageh,_font:getHeight()*select(2,_font:getWrap(self.text,self.w)))
+	self.h = math.max(imageh,_font:getHeight()*select(2,fontGetWrap(_font,self.text,self.w)))
 end
 
 return goo.imagelabel

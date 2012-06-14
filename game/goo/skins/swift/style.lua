@@ -15,9 +15,9 @@ requireImage(GOO_SKINPATH..'attritubebackground.png','attritubebackground')
 requireImage(GOO_SKINPATH..'conversationbg.png','conversationbg')
 
 function drawSkillLevel(x,y,level,maxlevel)
-	love.graphics.setFont(fonts.midfont)
+	sfn(fonts.midfont)
 	love.graphics.setColor(0,0,0,255)
-	love.graphics.printf('LEVEL'..level,0,48,64,'center')
+	pfn('LEVEL'..level,0,48,64,'center')
 	love.graphics.setColor(255,255,255,255)
 end
 

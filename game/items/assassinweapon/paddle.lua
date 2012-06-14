@@ -13,13 +13,13 @@ end
 function Paddle:getPanelData()
 	return {
 		title = self.name,
-		type = 'IMPOSSIBLE WEAPON',
+		type = LocalizedString'IMPOSSIBLE WEAPON',
 		attributes = {
-			{text="The ultimate weapon of war, forged in Ms. Chan's cooking fire with recycled line papers. It is known that the holder of this weapon can summon storms and death at will."},
-			{data=200,image=icontable.life,text="HP Bonus"},
-			{data=150,image=icontable.mind,text="Energy Bonus"},
-			{image=nil,text="Movement Speed Bonus",data=string.format("0/%.1f%%",100)},
-			{image=icontable.ionicform,text="Attack",data='1200 Electric'},
+			{text=LocalizedString"The ultimate weapon of war, forged in Ms. Chan's cooking fire with recycled line papers. It is known that the holder of this weapon can summon storms and death at will."},
+			{data=200,image=icontable.life,text=LocalizedString"HP Bonus"},
+			{data=150,image=icontable.mind,text=LocalizedString"Energy Bonus"},
+			{image=nil,text=LocalizedString"Movement Speed Bonus",data=string.format("0/%.1f%%",100)},
+			{image=icontable.ionicform,text=LocalizedString"Attack",data='1200 Electric'},
 		--	{image=nil,text="Armor",data=self.armor},
 		}
 	}

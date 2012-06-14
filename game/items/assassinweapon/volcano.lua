@@ -27,10 +27,10 @@ end
 
 function b_Burn:getPanelData()
 	return {
-		title = 'Stim',
-		type = 'Buff',
+		title = LocalizedString'Burn',
+		type = LocalizedString'Debuff',
 		attributes = {
-			{text = 'Temperarily increase movement speed and attack speed.'}}
+			{text = 'Taking damage over time.'}}
 	}
 end
 
@@ -48,11 +48,11 @@ end
 
 function CVolcanoWeapon:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="M1911, The original Assassin weapon."},
-			{text = 'Basic Damage',data = function()
+			{text=LocalizedString"A sword that wield the rage of the earth."},
+			{text = LocalizedString'Basic Damage',data = function()
 				return 100
 			end}
 		}

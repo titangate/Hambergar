@@ -25,8 +25,8 @@ end
 
 function BookOfJester:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
 			{image=icontable.quote,text="What do you call a yeti in a whorehouse? Him-a-layin'"},
 			{image=icontable.jesterpuzzle},

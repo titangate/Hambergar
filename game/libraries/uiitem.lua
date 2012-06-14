@@ -14,16 +14,16 @@ function HPAttributeItem:initialize(hpfunc,maxhpfunc,w)
 end
 function HPAttributeItem:draw(x,y)
 	love.graphics.draw(img['icontable.life'],x,y)
-	love.graphics.printf('HP',x+20,y,self.w,"left")
+	pfn('HP',x+20,y,self.w,"left")
 	local hp,maxhp = self.hpfunc(),self.maxhpfunc()
-	love.graphics.printf(hp..'/'..maxhp,x,y,self.w,"right")
+	pfn(hp..'/'..maxhp,x,y,self.w,"right")
 end
 MPAttributeItem = HPAttributeItem:subclass('MPAttributeItem')
 function MPAttributeItem:draw(x,y)
 	love.graphics.draw(img['icontable.mind'],x,y)
-	love.graphics.printf('Mind Power',x+20,y,self.w,"left")
+	pfn('Mind Power',x+20,y,self.w,"left")
 	local hp,maxhp = self.hpfunc(),self.maxhpfunc()
-	love.graphics.printf(hp..'/'..maxhp,x,y,self.w,"right")
+	pfn(hp..'/'..maxhp,x,y,self.w,"right")
 end
 SimpleAttributeItem = Object:subclass('SimpleAttributeItem')
 function SimpleAttributeItem:initialize(hpfunc,description,icon,w)
@@ -33,8 +33,8 @@ function SimpleAttributeItem:initialize(hpfunc,description,icon,w)
 end
 function SimpleAttributeItem:draw(x,y)
 	if self.icon then love.graphics.draw(img['icontable.'..self.icon],x,y) end
-	love.graphics.printf(self.description(),x+20,y,self.w,"left")
-	love.graphics.printf(self.hpfunc(),x,y,self.w,"right")
+	pfn(self.description(),x+20,y,self.w,"left")
+	pfn(self.hpfunc(),x,y,self.w,"right")
 end
 
 DescriptionAttributeItem = Object:subclass('DescriptionAttributeItem')
@@ -46,7 +46,7 @@ end
 
 
 function DescriptionAttributeItem:draw(x,y)
-	love.graphics.printf(self.description(),x,y,self.w,"left")
+	pfn(self.description(),x,y,self.w,"left")
 end
 
 requireImage( 'assets/UI/attritubebackground.png','attritubebackground' )
@@ -84,7 +84,7 @@ function AttributeCollection:draw(x,y)
 		y = y - self.h
 	end
 	table.insert(draws,function()
-		love.graphics.setFont(smallfont)
+		sfn(smallfont)
 		love.graphics.drawq(img.attritubebackground,quads.topleft,x-10,y-10)
 		love.graphics.drawq(img.attritubebackground,quads.topright,x+self.w,y-10)
 		love.graphics.drawq(img.attritubebackground,quads.botleft,x-10,y+self.h)
@@ -100,7 +100,7 @@ function AttributeCollection:draw(x,y)
 			v:draw(x,y+5*i+h)
 			h = h+ v.h
 		end
-		love.graphics.setFont(f)
+		sfn(f)
 	end)
 end	
 function AttributeCollection:d_draw(x,y)
@@ -110,7 +110,7 @@ function AttributeCollection:d_draw(x,y)
 		if y+self.h>love.graphics.getHeight() then
 			y = y - self.h
 		end
-			love.graphics.setFont(smallfont)
+			sfn(smallfont)
 			love.graphics.drawq(img.attritubebackground,quads.topleft,x-10,y-10)
 			love.graphics.drawq(img.attritubebackground,quads.topright,x+self.w,y-10)
 			love.graphics.drawq(img.attritubebackground,quads.botleft,x-10,y+self.h)
@@ -126,7 +126,7 @@ function AttributeCollection:d_draw(x,y)
 				v:draw(x,y+5*i+h)
 				h = h+ v.h
 			end
-			love.graphics.setFont(f)
+			sfn(f)
 	end
 
 function AttributeCollection:addItem(item)

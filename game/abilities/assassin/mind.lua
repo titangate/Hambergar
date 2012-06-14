@@ -49,11 +49,11 @@ end
 
 function MindRipfield:getPanelData()
 	return{
-		title = 'Mind Rip Field',
-		type = 'Active Channel',
+		title = LocalizedString'Mind Rip Field',
+		type = LocalizedString'Active Channel',
 		attributes = {
-			{text = "Creates a vortex of concentrated mind power, damage and stun enemies caught."},
-			{text = "Damage",data = function() return self.damage end}
+			{text = LocalizedString"Creates a vortex of concentrated mind power, damage and stun enemies caught."},
+			{text = LocalizedString"Damage",data = function() return self.damage end}
 		}
 	}
 end
@@ -229,11 +229,11 @@ end
 
 function Mind:getPanelData()
 	return{
-		title = 'MIND POWER',
-		type = 'Passive',
+		title = LocalizedString'MIND POWER',
+		type = LocalizedString'Passive',
 		attributes = {
-			{text = "Assassin's source of power. Everytime assassin kills an enemy, he drains the victim's neural energy and supply it as his own."},
-			{text = 'Energy Regen',image = icontable.mind,data = function()return 5*self.level end}
+			{text = LocalizedString"Assassin's source of power. Everytime assassin kills an enemy, he drains the victim's neural energy and supply it as his own."},
+			{text = LocalizedString'Energy Regen',image = icontable.mind,data = function()return 5*self.level end}
 		}
 	}
 end
@@ -250,7 +250,7 @@ end
 b_Qi = Buff:subclass('b_Qi')
 function b_Qi:initialize(evade)
 	self.evade = evade
-	self.genre = 'buff'
+	self.genre = LocalizedString'buff'
 	self.icon = requireImage'assets/icon/innerair.png'
 end
 
@@ -266,10 +266,10 @@ end
 
 function b_Qi:getPanelData()
 	return {
-		title = 'Mysterious Qi',
-		type = 'Buff',
+		title = LocalizedString'Mysterious Qi',
+		type = LocalizedString'Buff',
 		attributes = {
-			{text = 'Temperarily increase evade chance.'}}
+			{text = LocalizedString'Temperarily increase evade chance.'}}
 	}
 end
 
@@ -291,13 +291,13 @@ end
 
 function MysteriousQi:getPanelData()
 	return{
-		title = 'MYSTERIOUS QI',
-		type = 'Passive',
+		title = LocalizedString'MYSTERIOUS QI',
+		type = LocalizedString'Passive',
 		attributes = {
-			{text = "An inner power aligning breath, movement, and awareness for exercise, healing, and meditation."},
-			{text = "Temperarily increase evade chance after executing a critical hit."},
-			{text = 'Duration',data = self.time },
-			{text = 'Evade',data = string.format("%.1f",self.evade*100).."%" },
+			{text = LocalizedString"An inner power aligning breath, movement, and awareness for exercise, healing, and meditation."},
+			{text = LocalizedString"Temperarily increase evade chance after executing a critical hit."},
+			{text = LocalizedString'Duration',data = self.time },
+			{text = LocalizedString'Evade',data = string.format("%.1f",self.evade*100).."%" },
 		}
 	}
 end

@@ -10,17 +10,11 @@ options = {
 	usecontroller = false, -- unimplemented
 	blureffect = true, -- unimplemented
 	particlerate = 1,
+	localization = 'chr',
 }
 
-fonts = {}
-fonts.default24 = love.graphics.newFont(24)
-fonts.oldsans12 = love.graphics.newFont(  'oldsansblack.ttf', 12)
-fonts.oldsans20 = love.graphics.newFont('oldsansblack.ttf', 20)
-fonts.oldsans24 = love.graphics.newFont('oldsansblack.ttf', 24)
-fonts.oldsans32 = love.graphics.newFont('oldsansblack.ttf', 32)
-fonts.bigfont = love.graphics.newFont("awesome.ttf",25)
-fonts.midfont = love.graphics.newFont("awesome.ttf",19)
-fonts.smallfont = love.graphics.newFont("awesome.ttf",13)
+setLocalization(options.localization)
+
 require 'libraries.system'
 require "libraries.mainmenu"
 require 'libraries.controller'
@@ -169,7 +163,7 @@ requireImage( 'gameicon.png','gameicon' )
 function love.load()
 	goo:load()
 	f=love.graphics.newFont("awesome.ttf",20)
-	love.graphics.setFont(f)
+	sfn(f)
 	love.graphics.setIcon(img.gameicon)
 	pushsystem(MainMenu)
 --	UI.load()
@@ -196,7 +190,7 @@ function love.load()
 end
 
 function revertFont()
-	love.graphics.setFont(f)
+	sfn(f)
 end
 
 effects = {}
@@ -259,7 +253,6 @@ end
 function love.draw()
 	love.graphics.setColor(255,255,255)
 	revertFont()
-	
 --	local d = function()
 		currentsystem:draw()
 --	end
@@ -270,7 +263,7 @@ function love.draw()
 		height = height + 15
 	end
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.setFont(fonts.oldsans24)
+	sfn(fonts.oldsans24)
 	love.graphics.print(love.timer.getFPS(),screen.width-100,30)
 end
 

@@ -27,8 +27,8 @@ end
 
 function BookOfRisen:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
 			{text="The pages on this book is surprising clean as if it was untouched for ages"},
 			{image=icontable.quote,text="It is told that the yetis in Whistler are not capable of verbal communication. That's simply not true. After spending years learning their language, I was finally able to write down one of their most well known legend: the Risen. 3000 years ago, one god they worshipped appeared in front of them in the form of a traveller. The blood thirsty yetis ripped his gut out. The death of the god is accompanied with significant change in weather, that's why they were exiled into the snow for years and years to come. They built this temple to remind themselves of what brute force did to them."},

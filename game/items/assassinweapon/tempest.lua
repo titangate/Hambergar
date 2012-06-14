@@ -12,11 +12,11 @@ end
 
 function TempestWeapon:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="M1911, The original Assassin weapon."},
-			{text = 'Basic Damage',data = function()
+			{text=LocalizedString"A weapon of fear and destruction"},
+			{text = LocalizedString'Basic Damage',data = function()
 				return 100
 			end}
 		}
@@ -81,12 +81,12 @@ end
 
 function Tempest:getPanelData()
 	return{
-		title = 'PISTOL',
-		type = 'PRIMARY WEAPON',
+		title = LocalizedString'PISTOL',
+		type = LocalizedString'PRIMARY WEAPON',
 		attributes = {
-			{text = "Purely awesome weapon."},
-			{text = 'Firerate (per second)',data = function()return  string.format('%.1f',1/self.casttime) end},
-			{text = 'Damage',data = function()return  self.damage end},
+			{text = LocalizedString"A weapon of fear and destruction."},
+			{text = LocalizedString'Firerate (per second)',data = function()return  string.format('%.1f',1/self.casttime) end},
+			{text = LocalizedString'Damage',data = function()return  self.damage end},
 		}
 	}
 end

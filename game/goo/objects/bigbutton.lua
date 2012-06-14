@@ -26,8 +26,8 @@ function goo.bigbutton:draw(x,y)
 	love.graphics.draw( self.image.left, x+self.w+w, y )
 	
 	love.graphics.setColor( unpack(self.textColor) )
-	love.graphics.setFont( unpack(self.style.font) )
-	love.graphics.printf( self.text, x+(self.w/2)-250+17, y+30, 500, "center" )
+	sfn( unpack(self.style.font) )
+	pfn( self.text, x+(self.w/2)-250+17, y+30, 500, "center" )
 end
 function goo.bigbutton:updateBounds()
 	local imgH	  = goo.bigbutton.image.left:getHeight()

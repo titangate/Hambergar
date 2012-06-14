@@ -13,11 +13,11 @@ end
 
 function Theravada:getPanelData()
 	return {
-		title = self.name,
-		type = self.type,
+		title = LocalizedString(self.name),
+		type = LocalizedString(self.type),
 		attributes = {
-			{text="M1911, The original Assassin weapon."},
-			{text = 'Basic Damage',data = function()
+			{text=LocalizedString"M1911, The original Assassin weapon."},
+			{text = LocalizedString'Basic Damage',data = function()
 				return 50
 			end}
 		}

@@ -20,7 +20,8 @@ function goo.equipment:setItemtype(itemtype)
 		b.buttontype = 'equipment'
 		table.insert(self.tabs,{v,b})
 		local label = goo.imagelabel(self.invlist.list)
-		label:setText(v)
+		label:setSize(400,20)
+		label:setText(LocalizedString(v))
 		self.invlist.list:addItem(label)
 		self.invlist.list:addItem(b)
 	end

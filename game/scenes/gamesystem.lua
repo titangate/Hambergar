@@ -41,20 +41,20 @@ function GameSystem:initialize()
 		t:setText(string.format("%d",event.damage))
 		anim:easy(t,'opacity',255,0,0.5)
 		Timer(2,1,function()t:destroy()end)
+		t:setSize(love.graphics.getFont():getWidth('Evade!'),50)
 	end,
 	eventtype = 'crit'}
 	gamelistener:register(self.critlistener)
 	
-	
 	self.evadelistener = {
 	handle = function(self,event)
-		print 'evade'
 		local t = goo.imagelabel()
 		t:setTextColor({255,255,255})
 		local x,y = map.camera:transform(event.unit:getPosition())
 		t:setFont(fonts.oldsans20)
 		t:setPos(x+screen.halfwidth,y+screen.halfheight)
-		t:setText('Evade!')
+		t:setText(LocalizedString'Evade!')
+		t:setSize(love.graphics.getFont():getWidth('Evade!'),50)
 		anim:easy(t,'opacity',255,0,0.5)
 		Timer(2,1,function()t:destroy()end)
 	end,
@@ -324,15 +324,30 @@ local retry = GameSystem:addState'retry'
 function retry:keypressed()
 end
 function retry:update(dt)
+	dt = dt /2
+	self.buffs = {}
+	local x,y,walk = controller:GetWalkDirection()
+	map:update(dt)
+	self.hpbar:update(dt)
+	self.mpbar:update(dt)
+	if self.bossbar then self.bossbar:update(dt) end
 end
 
 function retry:enterState()
-	self.retryscreen = goo.retryscreen()
-	self.retryscreen:open()
-	assert(self.retryscreen)
+--	self.retryscreen = goo.retryscreen()
+--	self.retryscreen:open()
+--	assert(self.retryscreen)
 	local pausemenu = love.filesystem.load('mainmenu/retrymenu.lua')()
 	pausemenu:birth()
+	map:disableAI()
 	love.mouse.setVisible(true)
+	map.anim:easy(self,'intensity',0,10,10)
+	map.anim:easy(map,'timescale',1,0,10)
+	self.intensity = 0
+	filtermanager:setFilterArguments('Gaussianblur',{
+		mask = img.dot,
+	--	baseintensity = self.intensity ,
+	})
 end
 function retry:pushedState()
 	retry.enterState(self)
@@ -340,17 +355,24 @@ end
 
 function retry:poppedState()
 	love.mouse.setVisible(false)
-	self.retryscreen:close()
+--	self.retryscreen:close()
 end
 
 function retry:draw()
-	map:draw()
+	filtermanager:requestFilter'Gaussianblur'
+	filtermanager:setFilterArguments('Gaussianblur',{
+		intensity = self.intensity,
+	})
+	
+	filtermanager:draw(function()map:draw()end)
+--	GameSystem.draw(self)
 	self.hpbar:draw()
 	self.mpbar:draw()
 	if bossbar then bossbar:draw() end
 	local x,y = unpack(GetOrderDirection())
+	
 	local px,py = love.mouse.getPosition()
-	love.graphics.setColor(0,0,0,180)
+	love.graphics.setColor(0,0,0,15*self.intensity)
 	love.graphics.rectangle('fill',-1000000,-100000,10000000,1000000)
 	goo:draw()
 end

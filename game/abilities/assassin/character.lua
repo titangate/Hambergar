@@ -162,7 +162,7 @@ function AssassinCharacterPanel:initialize(unit)
 				self.unit.critical = self.unit.critical or {2,0}
 				local d = self.unit.critical
 				local amplify,chance = unpack(d)
-				return string.format('%.1f',chance*100).."% chance deal "..amplify.." times damage"
+				return string.format('%.1f',chance*100)..LocalizedString"% chance deal "..amplify..LocalizedString" times damage"
 			end},
 			
 			{image = nil,text=LocalizedString'Evade',data=

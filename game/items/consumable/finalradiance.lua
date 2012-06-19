@@ -29,7 +29,7 @@ end
 FinalRadiance = Consumable:subclass('FinalRadiance')
 function FinalRadiance:initialize(x,y)
 	super.initialize(self,'consumable',x,y)
-	self.name = "FinalRadiance"
+	self.name = "Final Radiance"
 	self.stack = 1
 	self.maxstack = 1
 	self.time = 4

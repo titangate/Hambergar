@@ -60,6 +60,9 @@ function Gaussianblur:setArguments(tab)
 	for k,v in pairs(tab) do
 		if k=='mask' then
 			self.xf2:send('mask',v)
+		else
+			self.xf:send(k,v)
+			self.xf2:send(k,v)
 		end
 	end
 end

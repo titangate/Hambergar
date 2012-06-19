@@ -27,7 +27,7 @@ end
 MistyCloud = Consumable:subclass('MistyCloud')
 function MistyCloud:initialize(x,y)
 	super.initialize(self,'consumable',x,y)
-	self.name = "MISTYCLOUD"
+	self.name = "MISTY CLOUD"
 	self.stack = 1
 	self.maxstack = 1
 	self.time = 20

@@ -30,12 +30,12 @@ end
 
 function SpiritStone:getPanelData()
 	return {
-		title = self.name,
-		type = 'TROPHY FROM MASTER YUEN',
+		title = LocalizedString(self.name),
+		type = LocalizedString'TROPHY FROM MASTER YUEN',
 		attributes = {
-			{text="The spirit lies within."},
-			{data=self.HPRegen,image=icontable.life,text="HP Regeneration"},
-			{data=self.MPRegen,image=icontable.mind,text="MP Regeneration"},
+			{text=LocalizedString"The spirit lies within."},
+			{data=self.HPRegen,image=icontable.life,text=LocalizedString"HP Regeneration"},
+			{data=self.MPRegen,image=icontable.mind,text=LocalizedString"MP Regeneration"},
 --			{data=self.maxmp,image=icontable.mind,text="Energy Bonus"},
 --			{image=nil,text="Movement Speed Bonus",data=string.format("0/%.1f%%",self.movementspeedbuffpercent*100)},
 		}

@@ -95,7 +95,7 @@ function CutscenePlayer:playConversation(conv,speaker,time)
 	self.speaker = speaker
 	
 	if speaker then
-		self.conv = speaker..' : '..conv
+		self.conv = speaker..LocalizedString' : '..conv
 	else
 		self.conv = conv
 	end
@@ -110,6 +110,7 @@ function CutscenePlayer:draw()
 	love.graphics.push()
 	self.c:draw()
 	love.graphics.pop()
+	love.graphics.setFont(fonts.oldsans24)
 --	for i,v in pairs(self.conv) do
 --		if self.convdt>=i and self.convdt<=v[2]+i then
 		local v = self.conv
@@ -119,6 +120,7 @@ function CutscenePlayer:draw()
 			local w,h = font:getWidth(v)+10,select(2,fontGetWrap(font,v,624))*font:getHeight()+10
 			love.graphics.rectangle('fill',screen.halfwidth - w/2,screen.height - 105 ,w,h)
 			love.graphics.setColor(255,255,255,225)
+--			print (v)
 			pfn(v,200,screen.height - 100,624,'center')
 		end
 --	end

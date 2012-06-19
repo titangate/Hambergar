@@ -160,9 +160,9 @@ end
 function CraneMissileP2:draw()
 	love.graphics.draw(myimg.missile.birdmissile,self.x,self.y,self.body:getAngle(),1,1,300,100)
 	love.graphics.setColor(255,255,255,255)
-	filtermanager:requestFilter('Gaussianblur',function()
-		love.graphics.draw(myimg.missile.birdmissile,self.x,self.y,self.body:getAngle(),1,1,300,100)
-	end)
+--	filtermanager:requestFilter('Gaussianblur',function()
+--		love.graphics.draw(myimg.missile.birdmissile,self.x,self.y,self.body:getAngle(),1,1,300,100)
+--	end)
 end
 
 function CraneMissileP2:setTarget(t)

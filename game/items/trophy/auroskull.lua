@@ -26,11 +26,11 @@ end
 
 function RingOfFire:getPanelData()
 	return {
-		title = self.name,
-		type = 'TROPHY FROM HANS',
+		title = LocalizedString(self.name),
+		type = LocalizedString'TROPHY FROM HANS',
 		attributes = {
-			{text="This ring is boiling hot, the force of life in within."},
-			{data=self.maxhp,image=icontable.life,text="HP Bonus"},
+			{text=LocalizedString"This ring is boiling hot, the force of life in within."},
+			{data=self.maxhp,image=icontable.life,text=LocalizedString"HP Bonus"},
 --			{data=self.maxmp,image=icontable.mind,text="Energy Bonus"},
 --			{image=nil,text="Movement Speed Bonus",data=string.format("0/%.1f%%",self.movementspeedbuffpercent*100)},
 		}

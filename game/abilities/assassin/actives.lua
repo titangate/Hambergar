@@ -344,7 +344,7 @@ end
 
 function Invis:getPanelData()
 	return{
-		title = LocalizedString'INVISIBILITY',
+		title = LocalizedString'Invisibility',
 		type = LocalizedString'ACTIVE',
 		attributes = {
 			{text = LocalizedString'Use mindpower to generate a spiritual mist, hallucinate enemies and grant yourself invisibility. Using any skill or item will cancel your invisibility. The first strike you fire with invisibility will be a garanteed critical strike.'},

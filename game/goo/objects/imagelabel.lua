@@ -35,7 +35,7 @@ function goo.imagelabel:draw( x, y )
 	self:setColor( c )
 	sfn(self.font or self.style.textFont)
 	if self.image then
-		pfn( self.text, x+self.image:getWidth(), y,self.w,self.align)
+		pfn(self.text, x+self.image:getWidth(), y,self.w,self.align)
 	else
 		pfn(self.text,x,y,self.w,self.align)
 	end

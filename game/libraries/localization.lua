@@ -21,7 +21,7 @@ local function switchfonts(loc)
 	end,
 	chr = function()
 		fonts = {}
-		local f = 'heiti.ttf'
+		local f = 'simsun.ttc'
 		fonts.default24 = love.graphics.newFont(24)
 		fonts.oldsans12 = love.graphics.newFont(f, 12)
 		fonts.oldsans20 = love.graphics.newFont(f, 20)
@@ -42,7 +42,7 @@ local function switchfonts(loc)
 		}
 		local pf = love.graphics.printf
 		local fw = 25
-		pfn = function(text,x,y,limit,align)
+		function pfn(text,x,y,limit,align)
 			text = tostring(text)
 			limit = limit or 9999999
 			local f = love.graphics.getFont()
@@ -50,19 +50,21 @@ local function switchfonts(loc)
 				pf(text,x,y,limit,align)
 			else
 				local len = #text
-				local lines = math.ceil(len/3/fw)
+				local lines = math.ceil(len/3/(limit/fw))
 				local h = math.floor(limit/fw)
 				for i=1,lines do
-					pf(string.sub(text,(h*(i-1))*3+1,3*h*i),x,y+(i-1)*fw,999999,align)
+					local txt = string.sub(text,(h*(i-1))*3+1,3*h*i)
+					love.graphics.printf(txt,x,y+(i-1)*fw,limit,align)
 				end
 			end
 		end
 		local sf = love.graphics.setFont
-		sfn = function(font)
+		function sfn(font)
 			sf(font)
-			fw = fontsizes[font]
+			fw = fontsizes[font] or fw
 			
 		end
+		
 		function fontGetWrap(font,text,width)
 			text = tostring(text)
 			limit = limit or 9999999

@@ -29,10 +29,10 @@ end
 
 function b_Stun:getPanelData()
 	return {
-		title = 'Stun',
-		type = 'Debuff',
+		title = LocalizedString'Stun',
+		type = LocalizedString'Debuff',
 		attributes = {
-			{text = 'You can not use your ability or move or attack.'}}
+			{text = LocalizedString'You can not use your ability or move or attack.'}}
 	}
 end
 
@@ -51,6 +51,7 @@ end
 function b_Stim:start(unit)
 	unit.movementspeedbuffpercent = unit.movementspeedbuffpercent + self.movementspeedbuffpercent
 	unit.spellspeedbuffpercent = unit.spellspeedbuffpercent + self.spellspeedbuffpercent
+	filtermanager:setFilterArguments('Gaussianblur',{mask = gbmask})
 end
 function b_Stim:stop(unit)
 	unit.movementspeedbuffpercent = unit.movementspeedbuffpercent - self.movementspeedbuffpercent
@@ -59,10 +60,10 @@ end
 
 function b_Stim:getPanelData()
 	return {
-		title = 'Stim',
-		type = 'Buff',
+		title = LocalizedString'Stim',
+		type = LocalizedString'Buff',
 		attributes = {
-			{text = 'Temperarily increase movement speed and attack speed.'}}
+			{text = LocalizedString'Temperarily increase movement speed and attack speed.'}}
 	}
 end
 

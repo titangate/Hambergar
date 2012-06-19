@@ -32,10 +32,10 @@ function AuroSkull:getPanelData()
 		title = self.name,
 		type = self.type,
 		attributes = {
-			{text="This mysterious skull keeps emiting ghostly light."},
-			{data=self.maxhp,image=icontable.life,text="HP Bonus"},
-			{data=self.maxmp,image=icontable.mind,text="Energy Bonus"},
-			{image=nil,text="Movement Speed Bonus",data=string.format("0/%.1f%%",self.movementspeedbuffpercent*100)},
+			{text=LocalizedString"This mysterious skull keeps emiting ghostly light."},
+			{data=self.maxhp,image=icontable.life,text=LocalizedString"HP Bonus"},
+			{data=self.maxmp,image=icontable.mind,text=LocalizedString"Energy Bonus"},
+			{image=nil,text=LocalizedString"Movement Speed Bonus",data=string.format("0/%.1f%%",self.movementspeedbuffpercent*100)},
 		}
 	}
 end

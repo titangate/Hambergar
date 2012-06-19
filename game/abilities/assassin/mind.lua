@@ -250,7 +250,7 @@ end
 b_Qi = Buff:subclass('b_Qi')
 function b_Qi:initialize(evade)
 	self.evade = evade
-	self.genre = LocalizedString'buff'
+	self.genre = 'buff'
 	self.icon = requireImage'assets/icon/innerair.png'
 end
 

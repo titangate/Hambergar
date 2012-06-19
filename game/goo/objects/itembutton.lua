@@ -31,7 +31,7 @@ function goo.itembutton:draw()
 			DrawCD(32,32,self.item:getCDPercent(GetCharacter()))
 		end
 		sfn(self.style.titleFont)
-		love.graphics.print(self.item.name,80,10)
+		love.graphics.print(string.upper(LocalizedString(self.item.name)),80,10)
 		sfn(self.style.descriptionFont)
 		love.graphics.print(self.item:getQuickInfo(),80,40)
 	end

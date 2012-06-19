@@ -31,11 +31,11 @@ end
 
 function DragonicShield:getPanelData()
 	return {
-		title = self.name,
-		type = 'TROPHY FROM BRANDON',
+		title = LocalizedString(self.name),
+		type = LocalizedString'TROPHY FROM BRANDON',
 		attributes = {
-			{text="TBA"},
-			{data=self.armor,text="Armor"},
+			{text=LocalizedString"TBA"},
+			{data=self.armor,text=LocalizedString"Armor"},
 --			{data=self.maxmp,image=icontable.mind,text="Energy Bonus"},
 --			{image=nil,text="Movement Speed Bonus",data=string.format("0/%.1f%%",self.movementspeedbuffpercent*100)},
 		}

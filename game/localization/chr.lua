@@ -5,13 +5,21 @@ local t = {["Use mindpower to generate a spiritual mist, hallucinate enemies and
 ["ACTIVE"]="主动技能",
 ["Buff"]="技能效果",
 ["Invisibility"]="隐身术",
-["隐身术"] = 1,
 }
-local t2 = require 'localization.chr2'
-for k,v in pairs(t2) do
-	if #v>0 then
-		t[k] = v
+
+local ts = {
+	'localization.chr2',
+	'localization.chr3',
+	'localization.chr4',
+}
+for i,tm in ipairs(ts) do
+	tm = require(tm)
+	for k,v in pairs(tm) do
+		if #v>0 then
+			t[k] = v
+		end
 	end
 end
+
 
 return t

@@ -105,6 +105,10 @@ function Mansion:draw()
 	super.draw(self)
 end
 function Mansion:destroy()
+	self.trigdeath:destroy()
+	if self.armywave then
+		self.armywave:destroy()
+	end
 --	self.exitTrigger:destroy()
 end
 
@@ -208,6 +212,16 @@ function Mansion:wake_loaded()
 	my=MasterYuen()
 	my.controller = 'enemy'
 	map:addUnit(my)
+	self.trigdeath = Trigger(
+		function(trig,event) 
+		if event.unit == GetCharacter() then
+			self.update = function()
+				GetGameSystem():pushState'retry'
+				self.update = nil
+			end
+		end
+		end)
+	self.trigdeath:registerEventType'death'
 end
 
 function Mansion:load(x,y,c)
@@ -275,21 +289,16 @@ function Mansion:rise1()
 	}
 	self.maxspawn = 20
 	local armywave = Trigger(function(trig,event)
-			if event.unit == GetCharacter() then
-				self.update = function()
-					GetGameSystem():pushState'retry'
-				end
-			else
-				if self.count.enemy <= self.maxspawn then
-					for i,v in ipairs(spawnpoints) do
-						local x,y = unpack(v)
-						local u = self.spawnunittype(x,y,'enemy')
-						u.hp = u.hp/2
-						u:enableAI()
-						map:addUnit(u)
-					end
-				end
+	
+		if self.count.enemy <= self.maxspawn then
+			for i,v in ipairs(spawnpoints) do
+				local x,y = unpack(v)
+				local u = self.spawnunittype(x,y,'enemy')
+				u.hp = u.hp/2
+				u:enableAI()
+				map:addUnit(u)
 			end
+		end
 	end)
 	self.spawnunittype = IALSwordsman
 	armywave:registerEventType'death'
@@ -338,7 +347,7 @@ function Mansion:finishmy()
 	Trigger(function()
 		wait(5)
 		require 'scenes.northvan.finishmy'()
-		StopMusic()
+--		StopMusic()
 	end):run()
 end
 
@@ -354,8 +363,8 @@ function scenetest()
 	local p = HealthPotion()
 	GetCharacter():pickUp(p,10)
 --	map:addUnit(TempestWeapon(100,0))
---	my:enableAI()
-	my.ai = my:phase3()
+	my:enableAI()
+--	my.ai = my:phase3()
 --	my.ai = my:phase4()
 	--map:phase4()
 	--map:rise5()

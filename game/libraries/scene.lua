@@ -186,6 +186,12 @@ function Map:removeUnit(...)
 	end
 end
 
+function Map:disableAI()
+	for unit,v in pairs(self.units) do
+		unit.ai = nil
+	end
+end
+
 function Map:update(dt)
 	
 	if self.cutscene and self.cutscene:update(dt)==STATE_SUCCESS then

@@ -40,12 +40,12 @@ function Item:add(b,coll)
 end
 
 function Item:getQuickInfo()
-	local t = {string.upper(self.type)}
+	local t = {LocalizedString(string.upper(self.type))}
 	if self.stack > 1 then
-		table.insert(t,'STACK '..tostring(self.stack))
+		table.insert(t,LocalizedString'STACK '..tostring(self.stack))
 	end
 	if self.equipped then
-		table.insert(t,'EQUIPPED')
+		table.insert(t,LocalizedString'EQUIPPED')
 	end
 	return join(' // ',t)
 end

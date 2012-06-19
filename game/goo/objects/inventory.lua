@@ -21,7 +21,7 @@ function goo.inventory:setItemtype(itemtype)
 		local b = goo.button:new(self)
 		b:setPos(i*60,0)
 		b:setSize(50,30)
-		b:setText(v)
+		b:setText(LocalizedString(v))
 		table.insert(self.tabs,b)
 		b.onClick = function(button)
 			self:switchTab(v)
@@ -48,7 +48,7 @@ function goo.inventory:switchTab(tab)
 	self.invlist.list:setPos(0,0)
 	self.currenttab = tab
 	if self.inv.money then
-		self.text:setText('MONEY '..self.inv.money)
+		self.text:setText(LocalizedString'MONEY '..self.inv.money)
 	end
 end
 

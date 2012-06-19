@@ -37,8 +37,8 @@ function goo.retryscreen:draw()
 		love.graphics.draw(self.p,self.lx,i*100)
 		love.graphics.draw(self.p,self.rx,i*100)
 	end
-	love.graphics.draw(self.style.imgLeft,self.lx,0,0,1,1,self.style.imgLeft:getWidth(),0)
-	love.graphics.draw(self.style.imgRight,self.rx,0,0,1,1,0,0)
+--	love.graphics.draw(self.style.imgLeft,self.lx,0,0,1,1,self.style.imgLeft:getWidth(),0)
+--	love.graphics.draw(self.style.imgRight,self.rx,0,0,1,1,0,0)
 end
 
 function goo.retryscreen:update(dt)

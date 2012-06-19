@@ -313,6 +313,7 @@ function Unit:update(dt)
 	self.allowmelee = true
 	self.controllable = true
 	self.allowactive = true
+	local erasebuff = {}
 	for k,v in pairs(self.buffs) do
 		if k.buff then
 			k:buff(self,dt)
@@ -320,10 +321,13 @@ function Unit:update(dt)
 		if type(v)=='number' and v>=0 then
 			self.buffs[k] = v-dt
 			if self.buffs[k]<=0 then
-				self.buffs[k]=nil
+				table.insert(erasebuff,k)
 				if k.stop then k:stop(self) end
 			end
 		end
+	end
+	for i,v in ipairs(erasebuff) do
+		self.buffs[v] = nil
 	end
 	-- all the buff/debuffs
 	local speedlimit = (self.speedlimit + self.movementspeedbuff) * self.movementspeedbuffpercent

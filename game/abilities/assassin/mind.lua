@@ -8,7 +8,7 @@ MindRipfieldEffect:addAction(function (area,caster,skill)
 	local units = map:findUnitsInArea(area)
 	for k,v in pairs(units) do
 		if v:isKindOf(Unit) then
-			v:addBuff(b_Stun:new(100,nil),1)
+			v:addBuff(b_Stun:new(100,nil),0.2)
 			v:damage('Mind',caster:getDamageDealing(skill.damage,'Mind'),caster)
 		end
 	end
@@ -35,7 +35,7 @@ end
 
 function MindRipfield:setLevel(lvl)
 	self.level = lvl
-	self.damage = 50*lvl
+	self.damage = 100*lvl
 end
 
 function MindRipfield:startChannel()

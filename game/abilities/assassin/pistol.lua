@@ -70,8 +70,12 @@ function WeaponMastery:getEnabled()
 	return enabled
 end
 
-Assassin.weaponbulleteffect = function (unit,caster,skill)
-	unit:damage('Bullet',caster.unit:getDamageDealing(skill.damage,'Bullet'),caster.unit)
+Assassin.weaponbulleteffect = function (unit,caster,skill,snipe)
+	if snipe then
+		unit:damage('Bullet',caster.unit:getDamageDealing(skill.damage*snipe.damageamplify,'Bullet'),caster)
+	else
+		unit:damage('Bullet',caster.unit:getDamageDealing(skill.damage,'Bullet'),caster)
+	end
 	if caster.unit.skills.stunbullet and math.random()< caster.unit.skills.stunbullet.stunchance then
 		unit:addBuff(b_Stun:new(100,nil),0.5)
 	end

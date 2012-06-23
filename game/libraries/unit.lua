@@ -302,7 +302,7 @@ function Unit:update(dt)
 		self.fixture:setUserData(self)
 		self.updateShapeData = nil
 	end
-	if self.ai then
+	if self.ai and not self.ai.paused then
 		local status = self.ai:process(dt,self)
 --		if status == STATE_FINISH then
 --			self.ai = nil
@@ -442,7 +442,7 @@ function Unit:findUnitByType(type)
 end
 
 function Unit:getPosition()
-	return self.body:getPosition()
+	return self.x,self.y
 end
 
 AnimatedUnit = Unit:subclass'AnimatedUnit'
@@ -633,7 +633,6 @@ function Character:drawBuff()
 			--GetGameSystem():indicateBuff(k)
 		end
 	end
-	
 end
 
 local npc = Character:addState'npc'

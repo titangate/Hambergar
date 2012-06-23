@@ -280,6 +280,7 @@ function b_Invis:start(unit)
 			unit:removeBuff(self)
 		end
 	end
+	map:setAIState(true)
 	unit:stop()
 	gamelistener:register(self.inviscancellistener)
 end
@@ -287,6 +288,7 @@ end
 function b_Invis:stop(unit)
 	unit.invisible = false
 	gamelistener:unregister(self.inviscancellistener)
+	map:setAIState(false)
 end
 
 

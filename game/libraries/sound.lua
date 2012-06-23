@@ -15,6 +15,7 @@ function PlayMusic(string)
 end
 
 function PauseMusic(state)
+	if not music_playing then return end
 	if state then
 		music_playing:pause()
 	else

@@ -1,6 +1,6 @@
 
 --local vancouver = require 'scenes.vancouver.vancouver'
-require 'cutscene.cutscene'
+--require 'cutscene.cutscene'
 preload('assassin','commonenemies','tibet','vancouver','kingofdragons')
 
 local Waterfallbg={}
@@ -160,4 +160,8 @@ function scenetest()
 	map:addUnit(u)
 	u = DragonicShield(0,0)
 	map:addUnit(u)
+	
+	local c = CutsceneManager()
+	pushsystem(c)
+	c:play(require'cutscene.northvan.riverrevive')
 end

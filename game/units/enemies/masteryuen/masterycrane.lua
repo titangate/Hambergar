@@ -249,7 +249,7 @@ function CraneCircleP3:initialize(unit,my)
 		})
 		map.anim:easy(self.image[i],'opacity',0,255,2)
 	end
-	unit:addBuff(b_craneinstant(),10)
+	unit:addBuff(b_craneinstant(),-1)
 	self.real = math.random(7)
 	Timer(1,7,function(timer)
 		if #self.image < 1 then

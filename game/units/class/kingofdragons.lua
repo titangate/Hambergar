@@ -61,7 +61,16 @@ function KingOfDragons:getSkillpanelData()
 	assert(self.skills.useitem)
 	return {
 		buttons = {
-			{skill = self.skills.dash,hotkey='b',face=requireImage'assets/icon/dash.png'},
+					{skill = self.skills.dash,hotkey=hotkeys.dash,face=requireImage'assets/icon/dash.png'},
+					{skill = self.skills.roundaboutshot,hotkey=hotkeys.spiral,face=requireImage'assets/icon/spiral.png'},
+					{skill = self.skills.stim,hotkey=hotkeys.stim,face=requireImage'assets/icon/stim.png'},
+					{skill = self.skills.mindripfield,hotkey=hotkeys.mindripfield,face=requireImage'assets/icon/rip.png'},
+					{skill = self.skills.portalofmisery,hotkey=hotkeys.portalofmisery,face=self.skills.weaponskill.icon},
+					{skill = self.skills.mantrashield,hotkey=hotkeys.mantrashield,face=requireImage'assets/icon/mantrashield.png'},
+					{skill = self.skills.dragoneye,hotkey=hotkeys.dragoneye,face=requireImage'assets/icon/summon.png'},
+					{skill = self.skills.dws,hotkey=hotkeys.dws,face=requireImage'assets/icon/dws.png'},
+					{skill = self.skills.useitem,hotkey=hotkeys.useitem,face=self.skills.useitem:getIcon()},
+--[[			{skill = self.skills.dash,hotkey='b',face=requireImage'assets/icon/dash.png'},
 			{skill = self.skills.roundaboutshot,hotkey='r',face=requireImage'assets/icon/spiral.png'},
 			{skill = self.skills.stim,hotkey='e',face=requireImage'assets/icon/stim.png'},
 			{skill = self.skills.mindripfield,hotkey='f',face=requireImage'assets/icon/rip.png'},
@@ -69,7 +78,7 @@ function KingOfDragons:getSkillpanelData()
 			{skill = self.skills.mantrashield,hotkey='v',face=requireImage'assets/icon/mantrashield.png'},
 			{skill = self.skills.dragoneye,hotkey='g',face=requireImage'assets/icon/summon.png'},
 			{skill = self.skills.dws,hotkey='z',face=requireImage'assets/icon/dws.png'},
-			{skill = self.skills.useitem,hotkey='q',face=self.skills.useitem:getIcon()},
+			{skill = self.skills.useitem,hotkey='q',face=self.skills.useitem:getIcon()},]]
 		}
 	}
 end

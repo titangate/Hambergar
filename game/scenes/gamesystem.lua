@@ -110,7 +110,7 @@ end
 
 function GameSystem:continue()
 --	local m = table.load(love.filesystem.read(checkpoint))
-	self:runMap(self.map.class,self.m.checkpoint)
+	self:runMap(self.map,self.m.checkpoint)
 end
 
 function GameSystem:loadobj(label)

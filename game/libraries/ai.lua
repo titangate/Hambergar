@@ -419,6 +419,10 @@ end
 
 function ProAI:pause(state)
 	self.paused = state
+	if state then
+		self.unit.state = 'slide'
+		self.unit:switchChannelSkill()
+	end
 end
 
 function ProAI:process(dt)

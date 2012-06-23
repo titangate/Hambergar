@@ -91,7 +91,7 @@ return {
 ["IMPOSSIBLE WEAPON"]="不可能的武器",
 ["Chance"]="几率",
 ["SEATTLE"]="西雅图",
-["vancouver test"]="温哥华",
+["MASTER YUEN DEMO"]="袁大师",
 ["N/A"]="不可用",
 ["Evade"]="闪避",
 ["SPRIAL"]="雍容大度",

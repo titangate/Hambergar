@@ -192,6 +192,14 @@ function Map:disableAI()
 	end
 end
 
+function Map:setAIState(state)
+	for unit,v in pairs(self.units) do
+		if unit.ai and unit.ai.pause then
+			unit.ai:pause(state)
+		end
+	end
+end
+
 function Map:update(dt)
 	
 	if self.cutscene and self.cutscene:update(dt)==STATE_SUCCESS then

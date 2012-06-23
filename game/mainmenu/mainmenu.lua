@@ -25,12 +25,13 @@ if love.filesystem.exists('checkpoint') then
 	b_continue.onClick = function(self,button)
 		mainmenu:onClose()
 		local gs = require 'scenes.gamesystem'
-		SetGameSystem(gs)
-		GetGameSystem():prepareToContinue('checkpoint')
+		gs:prepareToContinue('checkpoint')
+		pushsystem(gs)
 		pushsystem(loadingscreen)
 		loadingscreen.finished = function ()
-			pushsystem(gs)
-			GetGameSystem():continue()
+--			SetGameSystem(gs)
+			gs:load()
+			gs:continue()
 		end
 	end
 end
@@ -75,7 +76,7 @@ height = height + 50
 
 local b_test = goo.menuitem:new( mainmenu )
 b_test:setPos( 10, height )
-b_test:setText( LocalizedString'vancouver test' )
+b_test:setText( LocalizedString'MASTER YUEN DEMO' )
 b_test:sizeToText()
 b_test.onClick = function( self, button )
 	require 'scenes.northvan.mansion'
@@ -86,7 +87,7 @@ b_test.onClick = function( self, button )
 		gs:load()
 		pushsystem(gs)
 		mainmenu:onClose()
-		GetGameSystem():runMap(Mansion)
+		GetGameSystem():runMap(Mansion,'opening')
 	end
 end
 height = height + 50

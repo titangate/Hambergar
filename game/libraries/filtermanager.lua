@@ -1,3 +1,5 @@
+pixeleffect = {}
+
 FilterManager = Object:subclass'FilterManager'
 function FilterManager:initialize()
 	self.filter = {}
@@ -9,13 +11,19 @@ end
 
 function FilterManager:loadFilters(path)
 	local files = love.filesystem.enumerate(path)
-	for i,v in ipairs(files) do
+--[[	for i,v in ipairs(files) do
 		local file = path..v
 		if love.filesystem.isFile(file) then
 			if string.sub(file,-4)=='.lua' then
 				local c = love.filesystem.load(file)()
 				self:addFilter(c.name,c())
 			end
+		end
+	end]]--
+	for k,v in pairs(options.filters) do
+		if v then
+			local c = require('filters.'..k)
+			self:addFilter(c.name,c())
 		end
 	end
 end
@@ -99,7 +107,7 @@ function FilterManager:update(dt)
 	for _,name in ipairs(self.filterindex) do
 		self.filter[name]:update(dt)
 	end
-	DBGMSG('Canvas count: '..tostring(self.canvascount))
+--	DBGMSG('Canvas count: '..tostring(self.canvascount))
 end
 
 function FilterManager:reset()

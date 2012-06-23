@@ -62,12 +62,8 @@ end)
 
 SnipeEffect = ShootMissileEffect:new()
 SnipeEffect:addAction(function(point,caster,skill)
-	local Missile = skill.bullettype:new(1,3,1000,caster.x,caster.y,unpack(point))
-	Missile.controller = caster.controller..'Missile'
-	Missile.effect = skill.bulleteffect
-	Missile.skill = skill
-	Missile.unit = caster
-	map:addUnit(Missile)
+	local ws =caster.skills.weaponskill
+	ws.effect:effect(point,caster,ws,skill)
 end)
 
 Snipe = ActiveSkill:subclass('Snipe')

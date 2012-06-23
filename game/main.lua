@@ -1,17 +1,15 @@
 --require ('objectlua')
 --Object = objectlua.Object
+
 require 'MiddleClass'
 require 'MindState'
 require 'libraries.localization'
 
+ProFi = require 'ProFi'
+--ProFi:start()
 
-options = {
-	aimassist = true,
-	usecontroller = false, -- unimplemented
-	blureffect = true, -- unimplemented
-	particlerate = 1,
-	localization = 'chr',
-}
+options = require 'option'
+hotkeys = require 'hotkey'
 
 setLocalization(options.localization)
 
@@ -53,7 +51,7 @@ anim = require "anim.anim"
 Blureffect = require 'libraries.blur'
 Lighteffect = require 'libraries.vl'
 require 'units.init'
-require 'cutscene.cutscene'
+require 'cutscene.cutscenepl'
 require 'sampleshader'
 
 local gametimers = {}
@@ -195,7 +193,10 @@ end
 
 effects = {}
 function love.keypressed(k,unicode)
-	
+	if k=='p' then
+		ProFi:stop()
+		ProFi:writeReport( 'MyProfilingReport.txt' )
+	end
 	if currentsystem.keypressed then currentsystem:keypressed(k) end
 	goo:keypressed(k,unicode)
 	k = tonumber(k)
@@ -206,6 +207,7 @@ function love.keypressed(k,unicode)
 		DBGMSG(na.." is "..tostring(effects[na]),1)
 	end
 end
+
 
 function love.keyreleased(k,unicode)
 	if currentsystem.keyreleased then currentsystem:keyreleased(k) end
@@ -264,8 +266,20 @@ function love.draw()
 	end
 	love.graphics.setColor(255,255,255,255)
 	sfn(fonts.oldsans24)
-	love.graphics.print(love.timer.getFPS(),screen.width-100,30)
+--	love.graphics.print(love.timer.getFPS(),screen.width-100,30)
+	local fps = love.timer.getFPS()
+	love.graphics.setCaption(string.format(LocalizedString"Path of Eternity Saviors // frame time: %.2fms (%d fps).", 1000/fps, fps))
 end
 
 
 
+function love.focus(f)
+  if not f then
+  --  text = "UNFOCUSED!!"
+--    print("LOST FOCUS")
+--	love.keypressed'escape'
+  else
+--    text = "FOCUSED!"
+  --  print("GAINED FOCUS")
+  end
+end

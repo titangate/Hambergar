@@ -17,7 +17,7 @@ end
 
 local b_continue = goo.menuitem:new( pausemenu )
 b_continue:setPos( 10, height )
-b_continue:setText( 'Continue' )
+b_continue:setText( LocalizedString'Continue' )
 b_continue:sizeToText()
 b_continue.onClick = function(self,button)
 	GetGameSystem():popState()

@@ -409,7 +409,7 @@ end
 
 function wait(time)
 	local co=coroutine.running ()
-	Timer:new(time,1,function()
+	Timer(time,1,function()
 		print (coroutine.resume(co))
 	end,true,true)
 	coroutine.yield()

@@ -1,5 +1,5 @@
 
-require 'cutscene.cutscene'
+--require 'cutscene.cutscene'
 preload('assassin','commonenemies','tibet','masteryuen','kingofdragons')
 
 local Mansionbg={}
@@ -98,7 +98,21 @@ function Mansion:initialize()
 	assert(m)
 	Mansionbg.m = m
 	self.background = Mansionbg
+	self.savedata = {
+		map = 'scenes.northvan.mansion',
+	}
+--	print ('save data regen')
 end
+
+
+function Mansion:loadCheckpoint(checkpoint)
+	if checkpoint == 'opening' then
+		self:wake_load()
+	elseif checkpoint == 'kod' then
+		self:kod_load()
+	end
+end
+
 
 function Mansion:draw()
 	if GetCharacter():isKindOf(KingOfDragons) then dragongate.predraw() end
@@ -131,6 +145,8 @@ function Mansion:opening_load()
 	map:addUnit(leon2)
 	self:loadDefaultCamera(leon2)
 	leon2.interact = require 'scenes.vancouver.swift-visit-1'
+	
+	
 end
 
 function Mansion:enter_load(character)
@@ -156,7 +172,6 @@ function Mansion:exitMantra()
 --		wait(3)
 		self.background = Mansionbg
 		TEsound.play'sound/exitmantra.wav'
-		TEsound.play'sound/groan.mp3'
 		transition:reset()
 		map:addUpdatable(transition)
 	end):run()
@@ -188,14 +203,16 @@ function Mansion:enter_loaded()
 end
 
 function Mansion:wake_load()
+--	DBGTABLE(GetGameSystem())
 	local leon2 = GetGameSystem():loadobj 'Assassin'
 	leon2.x,leon2.y = 200,0
 	leon2.direction = {0,-1}
 	leon2.controller = 'player'
 	map:addUnit(leon2)
 	SetCharacter(leon2)
-	self:wake_loaded()
 	self:loadDefaultCamera(leon2)
+	print ('wake',self,map)
+	self:wake_loaded()
 end
 
 function Mansion:bloomout()
@@ -209,9 +226,9 @@ function Mansion:bloomout()
 end
 
 function Mansion:wake_loaded()
-	my=MasterYuen()
+	my=MasterYuen(0,-400)
 	my.controller = 'enemy'
-	map:addUnit(my)
+	self:addUnit(my)
 	self.trigdeath = Trigger(
 		function(trig,event) 
 		if event.unit == GetCharacter() then
@@ -222,10 +239,27 @@ function Mansion:wake_loaded()
 		end
 		end)
 	self.trigdeath:registerEventType'death'
+	
+	GetGameSystem().bossbar = AssassinHPBar:new(function()return my:getHPPercent() end,screen.halfwidth-400,screen.height-100,800)
+--	local self = my
+--	loadAllItems(GetCharacter())
+	local p = HealthPotion()
+	GetCharacter():pickUp(p,10)
+	my:enableAI()
+	
+	self.camera = ContainerCamera:new(200,nil,my,GetCharacter())
+	
+	self.savedata.checkpoint = 'opening'
+	GetGameSystem():saveAll()
+	local c = CutsceneManager()
+	pushsystem(c)
+	c:play(require'cutscene.northvan.cutscene')
 end
 
 function Mansion:load(x,y,c)
-	self:wake_load()
+--	print (self,map)	
+--	print ('load',self,map)
+--	self:wake_load()
 end
 
 function testimg()
@@ -237,12 +271,36 @@ end
 
 function Mansion:finish()
 	
-	map:enterMantra()
+--	map:enterMantra()
 	map:bloomout()
 	Trigger(function()
 		wait(5)
 		self:phase5()
 	end):run()
+end
+
+
+function Mansion:kod_load()
+	my=MasterYuen(0,-400)
+	my.controller = 'enemy'
+	self:addUnit(my)
+	self.trigdeath = Trigger(
+		function(trig,event) 
+		if event.unit == GetCharacter() then
+			self.update = function()
+				GetGameSystem():pushState'retry'
+				self.update = nil
+			end
+		end
+		end)
+	self.trigdeath:registerEventType'death'
+	local leon2 = GetGameSystem():loadobj 'Assassin'
+	leon2.x,leon2.y = 200,0
+	leon2.direction = {0,-1}
+	leon2.controller = 'player'
+	map:addUnit(leon2)
+	SetCharacter(leon2)
+	self:phase5()
 end
 
 function Mansion:phase5()
@@ -259,7 +317,19 @@ function Mansion:phase5()
 	GetGameSystem():reloadBottompanel()
 --	require 'scenes.northvan.riverrevives'()
 	
-	PlayMusic'music/riverrise.mp3'
+	--PlayMusic'music/riverrise.mp3'
+	my.body:setPosition(-20000,-20000)
+
+	
+	self.savedata.checkpoint = 'kod'
+	GetGameSystem():saveAll()
+	local c = CutsceneManager()
+	pushsystem(c)
+	PauseMusic(true)
+	c:play(require'cutscene.northvan.riverrevive')
+end
+
+function Mansion:phase6()
 	
 	local epic = {
 		rise1 = 28,
@@ -270,6 +340,9 @@ function Mansion:phase5()
 		rise5 = 180+13,
 		finishmy = 180+56,
 	}
+	for k,v in pairs(epic) do
+		epic[k] = v - 27
+	end
 	Timer(epic.rise1,1,function()self:rise1() end)
 	Timer(epic.rise2,1,function()self:rise2() end)
 	Timer(epic.rise3cut,1,function()self:rise3cut() end)
@@ -277,6 +350,8 @@ function Mansion:phase5()
 	Timer(epic.rise4,1,function()self:rise4() end)
 	Timer(epic.rise5,1,function()self:rise5() end)
 	Timer(epic.finishmy,1,function()self:finishmy() end)
+	
+	print 'phase6'
 end
 
 function Mansion:rise1()
@@ -304,13 +379,14 @@ function Mansion:rise1()
 	armywave:registerEventType'death'
 	armywave:run({})
 	self.armywave = armywave
---	GetCharacter().HPRegen = 1000
+	GetCharacter().HPRegen = GetCharacter().HPRegen + 100
 end
 
 function Mansion:rise2()
 	self:splashText('Mantra Shield',requireImage'assets/assassin/gate.png')
 	GetCharacter().skills.mantrashield:active()
 	self.spawnunittype = IALMachineGunner
+	
 end
 
 function Mansion:rise3cut()
@@ -332,6 +408,7 @@ function Mansion:rise4()
 	GetCharacter():resetCD()
 	GetCharacter().mp = 10000
 	GetCharacter().skills.dws:active()
+	
 end
 
 function Mansion:rise5()
@@ -339,6 +416,7 @@ function Mansion:rise5()
 	self.armywave:destroy()
 	my.hp = my.maxhp/2
 	my.ai = my:rise()
+	my.body:setPosition(0,0)
 end
 
 function Mansion:finishmy()
@@ -346,8 +424,9 @@ function Mansion:finishmy()
 	map:bloomout()
 	Trigger(function()
 		wait(5)
-		require 'scenes.northvan.finishmy'()
+--		require 'scenes.northvan.finishmy'()
 --		StopMusic()
+		map:splashText("MASTER YUEN DEFEATED. THANKS FOR PLAYING.",requireImage'gameicon.png')
 	end):run()
 end
 
@@ -355,16 +434,9 @@ end
 
 function scenetest()
 --	testimg()
-	map.camera = ContainerCamera:new(200,nil,my,GetCharacter())
-	PlayMusic'music/berserker.mp3'
-	GetGameSystem().bossbar = AssassinHPBar:new(function()return my:getHPPercent() end,screen.halfwidth-400,screen.height-100,800)
-	local self = my
-	loadAllItems(GetCharacter())
-	local p = HealthPotion()
-	GetCharacter():pickUp(p,10)
 --	map:addUnit(TempestWeapon(100,0))
-	my:enableAI()
---	my.ai = my:phase3()
+--	my:enableAI()
+	my.ai = my:phase4()
 --	my.ai = my:phase4()
 	--map:phase4()
 	--map:rise5()
@@ -372,3 +444,5 @@ function scenetest()
 	
 
 end
+
+return Mansion

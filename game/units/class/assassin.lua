@@ -156,15 +156,15 @@ function Assassin:getSkillpanelData()
 	assert(self.skills.useitem)
 	return {
 		buttons = {
-			{skill = self.skills.dash,hotkey='b',face=requireImage'assets/icon/dash.png'},
-			{skill = self.skills.roundaboutshot,hotkey='r',face=requireImage'assets/icon/spiral.png'},
-			{skill = self.skills.stim,hotkey='e',face=requireImage'assets/icon/stim.png'},
-			{skill = self.skills.mindripfield,hotkey='f',face=requireImage'assets/icon/rip.png'},
-			{skill = self.skills.weaponskill,hotkey='lb',face=self.skills.weaponskill.icon},
-			{skill = self.skills.invis,hotkey='v',face=requireImage'assets/icon/invis.png'},
-			{skill = self.skills.snipe,hotkey='g',face=requireImage'assets/icon/snipe.png'},
-			{skill = self.skills.dws,hotkey='z',face=requireImage'assets/icon/dws.png'},
-			{skill = self.skills.useitem,hotkey='q',face=self.skills.useitem:getIcon()},
+			{skill = self.skills.dash,hotkey=hotkeys.dash,face=requireImage'assets/icon/dash.png'},
+			{skill = self.skills.roundaboutshot,hotkey=hotkeys.spiral,face=requireImage'assets/icon/spiral.png'},
+			{skill = self.skills.stim,hotkey=hotkeys.stim,face=requireImage'assets/icon/stim.png'},
+			{skill = self.skills.mindripfield,hotkey=hotkeys.mindripfield,face=requireImage'assets/icon/rip.png'},
+			{skill = self.skills.weaponskill,hotkey=hotkeys.weaponskill,face=self.skills.weaponskill.icon},
+			{skill = self.skills.invis,hotkey=hotkeys.invis,face=requireImage'assets/icon/invis.png'},
+			{skill = self.skills.snipe,hotkey=hotkeys.snipe,face=requireImage'assets/icon/snipe.png'},
+			{skill = self.skills.dws,hotkey=hotkeys.dws,face=requireImage'assets/icon/dws.png'},
+			{skill = self.skills.useitem,hotkey=hotkeys.useitem,face=self.skills.useitem:getIcon()},
 		}
 	}
 end

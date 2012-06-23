@@ -377,6 +377,8 @@ function MasterYuen:phase3()
 		self.fail = true
 		self.actor:playAnimation'kneel'
 		map:exitMantra()
+		
+		TEsound.play'sound/groan.mp3'
 		self:stop()
 	end)
 	local failingwait = ProAI_Wait(self,10)

@@ -1,6 +1,6 @@
  require 'scenes.vancouver.vancouver'
 local vancouver = VancouverMap()
-require 'cutscene.cutscene'
+--require 'cutscene.cutscene'
 preload('assassin','swift','commonenemies','tibet','vancouver')
 
 

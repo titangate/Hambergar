@@ -1,6 +1,6 @@
 
 --local vancouver = require 'scenes.vancouver.vancouver'
-require 'cutscene.cutscene'
+--require 'cutscene.cutscene'
 
 
 local Armorybg={}

@@ -3,7 +3,7 @@ return{
 	usecontroller = false, -- unimplemented
 	blureffect = true, -- unimplemented
 	particlerate = 1,
-	localization = 'chr',
+	localization = 'eng',
 	filters = {
 		heathaze = false,
 		blackhole = true,

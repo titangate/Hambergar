@@ -48,7 +48,7 @@ function Gaussianblur:initialize()
 			tc += Texel(texture, texture_coords - intensity * vec2(offset[2],0)/rt_h).rgb * weight[2];
 			number alpha = Texel(mask, texture_coords).a;
 			return color * (vec4(tc,texcolor.a)*alpha)+Texel(origin,texture_coords)*(1-alpha+brightness);
-			}
+		}
 	]]
 	self.priority = 60
 	self.xf = pixeleffect.blur1

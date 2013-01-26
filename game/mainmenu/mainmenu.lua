@@ -54,7 +54,7 @@ b_startgame.onClick = function( self, button )
 	end
 end
 height = height + 50
-
+--[[
 local b_grid = goo.menuitem:new( mainmenu )
 b_grid:setPos( 10, height )
 b_grid:setText( LocalizedString'Demo 2' )
@@ -73,7 +73,7 @@ b_grid.onClick = function( self, button )
 	end
 end
 height = height + 50
-
+]]
 local b_test = goo.menuitem:new( mainmenu )
 b_test:setPos( 10, height )
 b_test:setText( LocalizedString'MASTER YUEN DEMO' )
@@ -110,7 +110,7 @@ b_test.onClick = function( self, button )
 	end
 end
 height = height + 50
-
+--[[
 local b_option = goo.menuitem:new( mainmenu )
 b_option:setPos( 10, height )
 b_option:setText( LocalizedString'Options' )
@@ -148,7 +148,7 @@ b_quit:sizeToText()
 b_quit.onClick = function (self,button)
 	love.event.push('q')
 end
-height = height + 50
+height = height + 50]]
 
 if love.filesystem.exists('checkpoint') then
 	mainmenu:highlightitem(b_continue)
